@@ -1,0 +1,161 @@
+﻿@model RIC.Models.JobIssued.JobIssuedVM
+@using Newtonsoft.Json
+
+@{
+    ViewBag.Title = "JobIssue";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link href="~/Content/CSS/JobIssued/JobIssued.css" rel="stylesheet" />
+<style>
+    canvas {
+
+}
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        debugger;
+        var data = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.JDIssued.Rows[Model.JDIssued.Rows.Count-1].ItemArray))');
+        var time = $.parseJSON('@Html.Raw(JsonConvert.SerializeObject(Model.JDIssued.Columns.Cast<System.Data.DataColumn>().Select(x => x.ColumnName).ToArray()))');
+      
+        data.splice(data.length - 1, 1);
+        data.splice(0, 1);
+        
+        time.splice(time.length - 1, 1);
+        time.splice(0, 1);
+
+        $("#myChart").click(function () {
+        })
+        
+        //["6-8AM", "8-9AM", "9-10AM", "10-11AM", "11-12PM", "12-1PM", "1-2PM", "2-3PM", "3-4PM", "4-5PM", "5-6PM", "6-7PM", "7-8PM", "8-9PM", "9-10PM", "10-11PM", "11-12PM", "12-6AM"],
+        var ctx = document.getElementById("myChart").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: time,
+                datasets: [{
+                    label: 'Total Job Issued In Month Based on Time',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    //backgroundColor: [
+                    //    'rgba(255, 99, 132, 0.2)',
+                    //    'rgba(54, 162, 235, 0.2)',
+                    //    'rgba(255, 206, 86, 0.2)',
+                    //    'rgba(75, 192, 192, 0.2)',
+                    //    'rgba(153, 102, 255, 0.2)',
+                    //    'rgba(255, 159, 64, 0.2)'
+                    //],
+                    //borderColor: [
+                    //    'rgba(255,99,132,1)',
+                    //    'rgba(54, 162, 235, 1)',
+                    //    'rgba(255, 206, 86, 1)',
+                    //    'rgba(75, 192, 192, 1)',
+                    //    'rgba(153, 102, 255, 1)',
+                    //    'rgba(255, 159, 64, 1)'
+                    //],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    });
+</script>
+
+<div class="tab-content clearfix">
+    <div>
+        <br />
+        @using (Html.BeginForm("index", "JobIssued", FormMethod.Post, ""))
+        {  
+            <div style="display: inline-block">
+                <b>Select Clients:</b>
+                @Html.DropDownListFor(G => Model.Client, Model.ClientList, new { @class = "form-control", style = "width: 100%" })
+            </div>
+
+            <div style="display: inline-block">
+                @Html.DropDownListFor(G => Model.Year, Model.YearList, new { @class = "form-control", style = "width: 100%" })
+            </div>
+
+            <div style="display: inline-block">
+                @Html.DropDownListFor(G => Model.Month, Model.MonthList, new { @class = "form-control", style = "width: 100%" })
+            </div>
+
+            <div style="display: inline-block; margin-left: 5%">
+                <input id="btn" type="submit" class="btn btn-primary" value="Fetch" />
+            </div>
+        }
+    </div>
+
+    <br />
+    <br />
+    <div>
+        <canvas id="myChart" width="750" height="165"></canvas>
+    </div>
+    <div class="tab-pane active table-responsive" id="Submissions">
+        @if (Model.JDIssued != null)
+        { 
+            <table class="table table-striped jdtable">
+                <tr>
+                    @foreach (System.Data.DataColumn dc in Model.JDIssued.Columns)
+                    {
+                        <td class="header LabelStyle2">@dc.ColumnName</td>
+                    }
+                </tr>
+
+                @if (Model.JDIssued.Rows.Count > 0)
+                {
+                    int drCount = Model.JDIssued.Rows.Count - 1;
+                    string Class ="";
+                    for (int i = 0; i <= Model.JDIssued.Rows.Count - 1; i++)
+                    {
+                        if (i == drCount)
+                        {
+                             Class = "font-size: 14px; font-weight: bold;";
+                             var vc = Model.JDIssued.Rows[i].ItemArray;
+                        }
+                    <tr>
+                        <td class="LabelStyle2" style="text-align: left;">@Model.JDIssued.Rows[i][0]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][1]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][2]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][3]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][4]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][5]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][6]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][7]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][8]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][9]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][10]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][11]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][12]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][13]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][14]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][15]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][16]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][17]</td>
+                        <td style="@Class">@Model.JDIssued.Rows[i][18]</td>
+                        <td style="font-size: 14px; font-weight: bold;">@Model.JDIssued.Rows[i][19]</td>
+                    </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="20">
+                            <h2 class=""><small>No Data To Display.</small></h2>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+@*   Table null check*@
+
+    </div>
+</div>

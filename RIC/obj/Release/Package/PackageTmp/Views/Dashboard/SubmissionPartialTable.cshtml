@@ -1,0 +1,21 @@
+﻿@using RIC.Models.Dashboard
+@model List<SubmissionPartialTable>
+@using System.Globalization;
+
+<table class="table  table-striped CompanyTbl ">
+    @foreach (var item in Model)
+    {
+        foreach (var days in item.Days)
+        {
+            <span>
+                @item.Days
+            </span>
+            foreach (var hours in days.Hours)
+            {
+                @hours.StartTime       <br />
+                @hours.EndTime      <br />
+                @hours.Submissions  <br />
+            }
+        }
+    }
+</table>

@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33529.622
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RIC", "RIC\RIC.csproj", "{888F2DCA-70D2-47D2-92B7-4B729168C8E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DBLibrary", "DBLibrary\DBLibrary.csproj", "{6B7C1BC6-2899-4857-8F6C-904968EE7626}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{888F2DCA-70D2-47D2-92B7-4B729168C8E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{888F2DCA-70D2-47D2-92B7-4B729168C8E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{888F2DCA-70D2-47D2-92B7-4B729168C8E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{888F2DCA-70D2-47D2-92B7-4B729168C8E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B7C1BC6-2899-4857-8F6C-904968EE7626}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7C1BC6-2899-4857-8F6C-904968EE7626}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B7C1BC6-2899-4857-8F6C-904968EE7626}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B7C1BC6-2899-4857-8F6C-904968EE7626}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05C29C6D-2280-45D6-B8E1-233546E4B961}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://ssi-tfs.corp.sunrise:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = DBLibrary\\DBLibrary.csproj
+		SccProjectName1 = DBLibrary
+		SccLocalPath1 = DBLibrary
+		SccProjectUniqueName2 = RIC\\RIC.csproj
+		SccProjectName2 = RIC
+		SccLocalPath2 = RIC
+	EndGlobalSection
+EndGlobal

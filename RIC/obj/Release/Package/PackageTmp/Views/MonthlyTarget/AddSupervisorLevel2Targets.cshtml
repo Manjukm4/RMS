@@ -1,0 +1,1189 @@
+﻿@model RIC.Models.MonthlyTarget.MonthlyTargetEmpSupervisorLevel2VM
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+@{
+    ViewBag.Title = "AddTargets";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    ViewBag.roles = "Role";
+}
+
+@*<h2>Monthly Target</h2>*@
+<style type="text/css">
+    .textCapitalize {
+        text-transform: capitalize;
+    }
+
+    .custom-checkbox {
+        min-height: 1rem;
+        padding-left: 0;
+        margin-right: 0;
+        cursor: pointer;
+    }
+
+        .custom-checkbox .custom-control-indicator {
+            content: "";
+            display: inline-block;
+            position: relative;
+            width: 30px;
+            height: 10px;
+            background-color: #818181;
+            border-radius: 15px;
+            margin-right: 10px;
+            -webkit-transition: background .3s ease;
+            transition: background .3s ease;
+            vertical-align: middle;
+            margin: 0 16px;
+            box-shadow: none;
+        }
+
+            .custom-checkbox .custom-control-indicator:after {
+                content: "";
+                position: absolute;
+                display: inline-block;
+                width: 18px;
+                height: 18px;
+                background-color: #f1f1f1;
+                border-radius: 21px;
+                box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);
+                left: -2px;
+                top: -4px;
+                -webkit-transition: left .3s ease, background .3s ease, box-shadow .1s ease;
+                transition: left .3s ease, background .3s ease, box-shadow .1s ease;
+            }
+
+        .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator {
+            background-color: #84c7c1;
+            background-image: none;
+            box-shadow: none !important;
+        }
+
+            .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator:after {
+                background-color: #84c7c1;
+                left: 15px;
+            }
+
+        .custom-checkbox .custom-control-input:focus ~ .custom-control-indicator {
+            box-shadow: none !important;
+        }
+
+    .commentsGold {
+        font-size: 20px;
+        color: gold;
+    }
+
+    .commentsGreen {
+        font-size: 20px;
+        color: aquamarine;
+    }
+
+    .popover-content {
+        height: 100px;
+        width: 200px;
+        overflow: auto;
+    }
+
+    .popover-title {
+        font-weight: bold;
+        font-size: 12px;
+    }
+    /*align center*/
+    .flex-parent {
+        display: flex;
+    }
+
+    .jc-center {
+        justify-content: center;
+    }
+
+    button.margin-right {
+        margin-right: 0px;
+    }
+    @@import url('//cdn.datatables.net/1.10.2/css/jquery.dataTables.css');
+
+    td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+    }
+
+    [data-toggle="toggle"] {
+        display: none;
+    }
+</style>
+
+<link href="~/Content/CSS/Account/AddTargets.css" rel="stylesheet" />
+<legend>Monthly Target</legend>
+<div class="container-fluid bg-light SearchContainer ">
+    <form method="post" action="~/MonthlyTarget/SupervisorLevel2Search">
+
+        <div class="row rowCenter">
+
+            <div class="col-md-2">
+                <label>Select Month:</label>
+            </div>
+            <div class="col-md-2 ">
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.Month, Model.MonthList, new { @class = "form-control input-sm chat-input" })
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label>Select Year:</label>
+            </div>
+            <div class="col-md-2 ">
+                <div class="form-group">
+                    @Html.DropDownListFor(m => m.Year, Model.YearList, new { @class = "form-control input-sm chat-input", @id = "yearlist" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center rowCenter">
+            <div class="col-md-2">
+                <div class="flex-parent jc-center">
+                    <button name="submit" value="SearchBtn" type="submit" id="SearchBtn" class="btn btn-primary btn-block" style="margin-left: 55%;">Search</button>
+                    <input type="button" class="btn btn-info" id="ExportExcel" value="Export To Excel" style="margin-left: 5%;" />
+                </div>
+            </div>
+            <div style="margin-left: 6%; padding-top: 1%">
+                <i id="lblyer" style="align-content: center ;">(Yearwise Data Exported For Excel)</i>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="container-fluid bg-light resultContainer">
+    <h3 style="text-align:center">My Goals</h3>
+
+    <div class="tablediv" style="height:auto">
+        @if (Model.EmpSupervisorlevel2 != null)
+        {
+        <table id="UserList" class="table table-striped  table-hover table-bordered table-fixed">
+            <thead class="theadStyle">
+                <tr>
+
+                    <td class="text-center" style="width: 13%">
+                        <label>Employee ID</label>
+                    </td>
+                    <td class="text-center" style="width: 15%">
+                        <label>Employee Name</label>
+                    </td>
+                    <td class="text-center" style="width: 12%">
+                        <label>Account Name</label>
+                    </td>
+                    <td class="text-center" style="width: 7%">
+                        <label>Margin</label>
+                    </td>
+
+                    <td class="text-center" style="width: 7%">
+                        <label>Starts</label>
+                    </td>
+                    <td class="tableHead text-center" width="6%">
+                        <label>Submissions</label>
+                    </td>
+                    <td class="tableHead text-center" width="6%">
+                        <label>Interviews</label>
+                    </td>
+                    <td class="tableHead text-center" width="6%">
+                        <label>Hires</label>
+                    </td>
+                    <td class="tableHead text-center" style="width: 17%">
+                        <label>Team Comments</label><br />
+                        <i class='fas fa-comments' style='font-size:24px' title="Please enter the support details needed from team to achieve the goals"></i>
+                    </td>
+                    <td class="tableHead text-center" style="width: 17%">
+                        <label>Supervisor Comments</label><br />
+                        <i class='fas fa-comments' style='font-size:24px' title="Please enter the support needed from supervisor to achieve the goals"></i>
+                    </td>
+                    <td class="text-center" style="width: 10%">
+                        <label>Action</label>
+                    </td>
+                </tr>
+
+            </thead>
+            <tbody>
+
+                @using (Html.BeginForm("SaveSupervisorLevel2Targets", "MonthlyTarget", FormMethod.Post))
+
+                {
+                if (Model.IsDisable == false)
+                {
+                <tr>
+
+                    <td class="text-center">
+                        @Html.TextBox("Emp_Cd", Model.EmpSupervisorlevel2.Emp_Cd, new { disabled = "true" })
+                        <input type="hidden" name="Month" value="@Model.Month" />
+                        <input type="hidden" name="Year" value="@Model.Year" />
+
+                    </td>
+                    <td class="text-center">
+                        @Html.TextBox("Emp_Name", Model.EmpSupervisorlevel2.Emp_Name, new { disabled = "true", style = "width:170px;" })
+                    </td>
+                    <td class="text-center">
+                        @Html.TextBox("Account_Name", Model.EmpSupervisorlevel2.Account_Name, new { required = "required", style = "width:140px;", id = "accountnamebox" })
+                    </td>
+                    <td class="text-center">
+                        @Html.TextBox("Margin", Model.EmpSupervisorlevel2.Margin, new { required = "required", style = "width:75px;", id = "margintxtbox" })
+                    </td>
+
+                    <td class="text-center">
+                        @Html.TextBox("Starts", Model.EmpSupervisorlevel2.Starts, new { required = "required", style = "width:75px;", id = "startsbox" })
+                    </td>
+                    <td class="text-center">
+                        @Html.TextBox("SubmissionTarget", Model.EmpSupervisorlevel2.SubmissionTarget, new { id = "submissiontarget", style = "width:80px;" })
+                    </td>
+
+                    <td class="text-center">
+                        @Html.TextBox("InterviewTarget", Model.EmpSupervisorlevel2.InterviewTarget, new { id = "interviewtarget",  style = "width:80px;" })
+                    </td>
+
+                    <td class="text-center">
+                        @Html.TextBox("HireTarget", Model.EmpSupervisorlevel2.HireTarget, new { id = "hiretarget", style = "width:80px;" })
+                    </td>
+
+                    <td class="text-center">
+
+                        @Html.TextArea("Team_Comments", Model.EmpSupervisorlevel2.Team_Comments, new { id = "teamcommentstxtbox", @class = "form-control input-sm chat-input chkEdit" })
+
+                    </td>
+                    <td class="text-center">
+
+                        @Html.TextArea("Supervisor_Comments", Model.EmpSupervisorlevel2.Supervisor_Comments, new { id = "supervisorcommentsbox", required = "required", @class = "form-control input-sm chat-input chkEdit" })
+
+                    </td>
+
+                    <td class="text-center">
+
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="Emp_Cd" value="@Model.EmpSupervisorlevel2.Emp_Cd" />
+                        <input type="hidden" name="Emp_Name" value="@Model.EmpSupervisorlevel2.Emp_Name" />
+
+                        <input name="submit" id="submit" value="Submit" onclick="submitdata()" type="submit" class="btn btn-primary btn-block" />
+
+
+                    </td>
+
+                </tr>
+                }
+                else
+                {
+            <tr>
+
+                <td>
+                    @Html.TextBox("Emp_Cd", Model.EmpSupervisorlevel2.Emp_Cd, new { disabled = "true" })
+                    <input type="hidden" name="Month" value="@Model.Month" />
+                    <input type="hidden" name="Year" value="@Model.Year" />
+
+                </td>
+                <td class="textCapitalize">
+                    @Html.TextBox("Emp_Name", Model.EmpSupervisorlevel2.Emp_Name, new { disabled = "true", style = "width:170px;" })
+                </td>
+                <td class="textCapitalize">
+                    @Html.TextBox("Account_Name", Model.EmpSupervisorlevel2.Account_Name, new { disabled = "true", style = "width:140px;" })
+                </td>
+                <td class="textCapitalize">
+                    @Html.TextBox("Margin", Model.EmpSupervisorlevel2.Margin, new { disabled = "true", style = "width:75px;" })
+                </td>
+
+                <td class="textCapitalize">
+                    @Html.TextBox("Starts", Model.EmpSupervisorlevel2.Starts, new { disabled = "true", style = "width:75px;" })
+                </td>
+
+                <td class="text-center">
+                    @Html.TextBox("SubmissionTarget", Model.EmpSupervisorlevel2.SubmissionTarget, new { disabled = "true", id = "submissiontarget", style = "width:80px;" })
+                </td>
+
+                <td class="text-center">
+                    @Html.TextBox("InterviewTarget", Model.EmpSupervisorlevel2.InterviewTarget, new { id = "interviewtarget", disabled = "true", style = "width:80px;" })
+                </td>
+
+                <td class="text-center">
+                    @Html.TextBox("HireTarget", Model.EmpSupervisorlevel2.HireTarget, new { id = "hiretarget", disabled = "true", style = "width:80px;" })
+                </td>
+                <td class="text-center">
+
+                    @Html.TextArea("Team_Comments", Model.EmpSupervisorlevel2.Team_Comments, new { disabled = "true", @class = "form-control input-sm chat-input chkEdit" })
+
+                </td>
+                <td class="text-center">
+
+                    @Html.TextArea("Supervisor_Comments", Model.EmpSupervisorlevel2.Supervisor_Comments, new { disabled = "true", @class = "form-control input-sm chat-input chkEdit" })
+
+                </td>
+
+                <td class="text-center">
+
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="Emp_Cd" value="@Model.EmpSupervisorlevel2.Emp_Cd" />
+                    <input type="hidden" name="Emp_Name" value="@Model.EmpSupervisorlevel2.Emp_Name" />
+
+                    <input name="submit" id="submit" value="Submit" type="submit" class="btn btn-primary btn-block" disabled />
+
+
+                </td>
+
+            </tr>
+
+                }
+                }
+
+
+
+
+            </tbody>
+        </table>
+        }
+    </div>
+    @if (Model.EmpSupervisorList.Any())
+    {
+    <h3 style="text-align:center">Supervisor Goals</h3>
+    <div class="tablediv" style="height:auto">
+
+        <table id="UserList" class="table table-striped  table-hover table-bordered table-fixed toptable">
+            <thead class="theadStyle">
+                <tr>
+
+                    <td class="text-center" style="width: 10%">
+                        <label>Employee ID</label>
+                    </td>
+                    <td class="text-center" style="width: 15%">
+                        <label>Employee Name</label>
+                    </td>
+                    <td class="text-center" style="width: 10%">
+                        <label>Account Name</label>
+                    </td>
+                    <td class="text-center" style="width: 5%">
+                        <label>Margin</label>
+                    </td>
+                    <td class="text-center" style="width: 5%">
+                        <label>Starts</label>
+                    </td>
+                    <td class="text-center" style="width: 5%">
+                        <label>Submissions</label>
+                    </td>
+                    <td class="text-center" style="width: 5%">
+                        <label>Interviews</label>
+                    </td>
+                    <td class="text-center" style="width: 5%">
+                        <label>Hires</label>
+                    </td>
+
+
+
+                    <td class="tableHead text-center" style="width: 16%">
+                        <label>Team Comments</label><br />
+                        <i class='fas fa-comments' style='font-size:24px' title="Please enter the support details needed from team to achieve the goals"></i>
+                    </td>
+                    <td class="tableHead text-center" style="width: 16%">
+                        <label>Supervisor Comments</label><br />
+                        <i class='fas fa-comments' style='font-size:24px' title="Please enter the support needed from supervisor to achieve the goals"></i>
+                    </td>
+                    <td class="text-center" style="width: 8%">
+                        <label>Status</label>
+                    </td>
+                    <td class="text-center" style="width: 10%">
+                        <label>Action</label>
+                    </td>
+                </tr>
+            </thead>
+
+
+            @foreach (var item in Model.EmpSupervisorList.Where(e => e.Role != "Employee").ToList())
+            {
+            using (Html.BeginForm("AcceptTargetsBySupervisorLevel2", "MonthlyTarget", FormMethod.Post))
+
+            {
+            if (Model.IsDisable == false)
+            {
+
+        <tr>
+            <td class="text-center">
+                <table style="width: 100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        @*@if (item.EmployeeList == null)
+                        {*@
+
+                        <td>
+                            <span style="float:left" class="glyphicon glyphicon-plus-sign empcdclsplus">
+                            </span>
+                            <span style="float:left" class="glyphicon glyphicon-minus-sign empcdclsminus">
+                            </span>
+                        </td>
+                        @*}*@
+                        <td>
+                            @Html.TextBox("Emp_Cd", item.Emp_Cd, new { disabled = "true", style = "width:80px;" })
+
+                            <input type="hidden" name="Month" value="@Model.Month" />
+                            <input type="hidden" name="Year" value="@Model.Year" />
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td class="text-center">
+                @*@Html.DisplayFor(m => m.Emp_Name)*@
+                @Html.TextBox("Emp_Name", item.Emp_Name, new { disabled = "true", style = "width:190px;" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("Account_Name", item.Account_Name, new { style = "width:130px;" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("Margin", item.Margin, new { style = "width:70px;" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("Starts", item.Starts, new { style = "width:70px;" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("SubmissionTarget", item.SubmissionTarget, new { style = "width:70px;" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("InterviewTarget", item.InterviewTarget, new { style = "width:70px;" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("HireTarget", item.HireTarget, new { style = "width:70px;" })
+            </td>
+
+
+            <td class="text-center">
+                @Html.TextArea("Team_Comments", item.Team_Comments, new { @class = "form-control input-sm chat-input chkEdit" })
+            </td>
+            <td class="text-center">
+                @Html.TextArea("Supervisor_Comments", item.Supervisor_Comments, new { @class = "form-control input-sm chat-input chkEdit" })
+            </td>
+            <td class="text-center">
+                @Html.Label("Status", item.Status)
+            </td>
+            <td class="text-center">
+
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Emp_Cd" value="@item.Emp_Cd" />
+                <input type="hidden" name="Emp_Name" value="@item.Emp_Name" />
+
+
+                @if (item.Status == "Accepted")
+                {
+                    <input name="updatedata" id="update" value="Update" type="submit" class="btn btn-primary btn-block btn-supervisor" />
+
+
+                }
+                else if (item.Status == "Pending")
+                {
+                    <input name="savedata" id="savedata" value="Save" type="submit" class="btn btn-primary btn-block btn-supervisor" />
+
+                }
+                else /*if(item.Status == "Submitted")*/
+                {
+                    <input name="Approve" id="Approve" value="Approve" type="submit" class="btn btn-primary btn-block btn-supervisor" />
+
+                }
+
+            </td>
+
+
+
+        </tr>         
+                        
+
+                        if (item.EmployeeList != null && item.EmployeeList.Any())
+                        {
+            <tr>
+                <td colspan="12">
+                    <table class="table table-striped  table-hover table-bordered table-fixed innertable">
+                        <thead class="theadStyle">
+                            <tr>
+
+                                <td class="tableHead text-center" style="width: 10%">
+                                    <label>Employee ID</label>
+                                </td>
+                                <td class="tableHead text-center" style="width: 14%">
+                                    <label>Employee Name</label>
+                                </td>
+                                <td class="tableHead text-center" style="width: 6%">
+                                    <label>Margin</label>
+                                </td>
+
+                                <td class="tableHead text-center" style="width: 6%">
+                                    <label>Submissions</label>
+                                </td>
+                                <td class="tableHead text-center" style="width: 6%">
+                                    <label>Interviews</label>
+                                </td>
+                                <td class="tableHead text-center" style="width: 6%">
+                                    <label>Hires</label>
+                                </td>
+                                <td class="tableHead text-center" style="width: 17%">
+                                    <label>Team Comments</label><br />
+                                    <i class='fas fa-comments' style='font-size:24px' title="Please enter the support needed from team to achieve the goals"></i>
+                                </td>
+                                <td class="tableHead text-center" style="width: 17%">
+                                    <label>Supervisor Comments</label><br />
+                                    <i class='fas fa-comments' style='font-size:24px' title="Please enter the support needed from supervisor to achieve the goals"></i>
+                                </td>
+                                <td class="tableHead text-center" style="width: 10%">
+                                    <label>Status</label>
+                                </td>
+                                <td class="text-center" style="width: 8%">
+                                    <label>Action</label>
+                                </td>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item1 in item.EmployeeList)
+                            {
+                            using (Html.BeginForm("AcceptTargetsBySupervisor", "MonthlyTarget", FormMethod.Post))
+
+                            {
+                            if (Model.IsDisable == false)
+                            {
+
+
+                            <tr>
+
+                                <td class="text-center">
+
+                                    @Html.TextBox("Emp_Cd", item1.Emp_Cd, new { disabled = "true", style = "width:100px;" })
+                                    <input type="hidden" name="Month" value="@Model.Month" />
+                                    <input type="hidden" name="Year" value="@Model.Year" />
+
+                                </td>
+                                <td class="text-center">
+                                    @*@Html.DisplayFor(m => m.Emp_Name)*@
+                                    @Html.TextBox("Emp_Name", item1.Emp_Name, new { disabled = "true", style = "width:190px;" })
+                                </td>
+                                <td class="text-center">
+                                    @*@Html.DisplayFor(m => m.Emp_Name)*@
+                                    @Html.TextBox("Margin", item1.Margin, new { style = "width:70px;", @class = "mymargin" })
+                                </td>
+
+                                <td class="text-center">
+
+
+                                    @Html.TextBox("SubmissionTarget", item1.SubmissionTarget, new { required = "required", style = "width:70px;", @class = "subtarget" })
+
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.TextBox("InterviewTarget", item1.InterviewTarget, new { required = "required", style = "width:70px;", @class = "intetarget" })
+
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.TextBox("HireTarget", item1.HireTarget, new { required = "required", style = "width:70px;", @class = "hiretarget" })
+
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.TextArea("Team_Comments", item1.Team_Comments, new { @class = "form-control input-sm chat-input chkEdit teamcomments" })
+
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.TextArea("Supervisor_Comments", item1.Supervisor_Comments, new { @class = "form-control input-sm chat-input chkEdit supervisorcomments"})
+
+                                </td>
+                                <td class="text-center">
+                                    @*@Html.DisplayFor(m => m.Emp_Name)*@
+                                    @Html.Label("Status", item1.Status, new { @name = "statustxt", @class = "statustxt" })
+                                </td>
+
+
+                                <td class="text-center">
+
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="Emp_Cd" value="@item1.Emp_Cd" />
+                                    <input type="hidden" name="Emp_Name" value="@item1.Emp_Name" />
+
+
+                                    @if (item1.Status == "Accepted")
+                                    {
+                                    <input name="updatedata" id="update" value="Update" type="button" class="btn btn-primary btn-block btn-employee" />
+
+
+                                    }
+                                    else if (item1.Status == "Pending")
+                                    {
+                                    <input name="savedata" id="savedata" value="Save" type="button" class="btn btn-primary btn-block btn-employee" />
+
+                                    }
+                                    else /*if(item.Status == "Submitted")*/
+                                    {
+                                    <input name="Approve" id="Approve" value="Approve" type="button" class="btn btn-primary btn-block btn-employee" />
+
+                                    }
+
+
+                                </td>
+
+                            </tr>
+                            }
+                            else
+                            {
+                            <tr>
+
+                                <td class="text-center">
+
+                                    @Html.TextBox("Emp_Cd", item1.Emp_Cd, new { disabled = "true", style = "width:100px;" })
+                                    <input type="hidden" name="Month" value="@Model.Month" />
+                                    <input type="hidden" name="Year" value="@Model.Year" />
+
+                                </td>
+                                <td class="text-center">
+                                    @*@Html.DisplayFor(m => m.Emp_Name)*@
+                                    @Html.TextBox("Emp_Name", item1.Emp_Name, new { disabled = "true", style = "width:190px;" })
+                                </td>
+                                <td class="text-center">
+                                    @*@Html.DisplayFor(m => m.Emp_Name)*@
+                                    @Html.TextBox("Margin", item1.Margin, new { style = "width:70px;", disabled = "true" })
+                                </td>
+
+                                <td class="text-center">
+
+
+                                    @Html.TextBox("SubmissionTarget", item1.SubmissionTarget, new { required = "required", style = "width:70px;", disabled = "true" })
+
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.TextBox("InterviewTarget", item1.InterviewTarget, new { required = "required", style = "width:70px;", disabled = "true" })
+
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.TextBox("HireTarget", item1.HireTarget, new { required = "required", style = "width:70px;", disabled = "true" })
+
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.TextArea("Team_Comments", item1.Team_Comments, new { @class = "form-control input-sm chat-input chkEdit", disabled = "true" })
+
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.TextArea("Supervisor_Comments", item1.Supervisor_Comments, new { @class = "form-control input-sm chat-input chkEdit", disabled = "true" })
+
+                                </td>
+                                <td class="text-center">
+                                    @*@Html.DisplayFor(m => m.Emp_Name)*@
+                                    @Html.Label("Status", item1.Status, new { @name = "statustxt", disabled = "true" })
+                                </td>
+
+
+                                <td class="text-center">
+
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="Emp_Cd" value="@item1.Emp_Cd" />
+                                    <input type="hidden" name="Emp_Name" value="@item1.Emp_Name" />
+
+
+                                    @if (item1.Status == "Accepted")
+                                    {
+                                    <input name="updatedata" id="update" value="Update" type="button" class="btn btn-primary btn-block btn-employee" disabled />
+
+
+                                    }
+                                    else if (item1.Status == "Pending")
+                                    {
+                                    <input name="savedata" id="savedata" value="Save" type="button" class="btn btn-primary btn-block btn-employee" disabled />
+
+                                    }
+                                    else /*if(item.Status == "Submitted")*/
+                                    {
+                                    <input name="Approve" id="Approve" value="Approve" type="button" class="btn btn-primary btn-block btn-employee" disabled />
+
+                                    }
+
+
+                                </td>
+
+                            </tr>
+                            }
+
+                            }
+
+
+                            }
+
+                        </tbody>
+
+                    </table>
+                </td>
+            </tr>
+
+            }
+
+
+            }
+            else
+            {
+        <tr>
+
+            <td class="text-center">
+                <table style="width: 100%" cellpadding="0" cellspacing="0" border="0">
+                    <tr>
+                        <td>
+                            <span style="float:left" class="glyphicon glyphicon-plus-sign empcdclsplusdisabled">
+                            </span>
+                            <span style="float:left" class="glyphicon glyphicon-minus-sign empcdclsminus">
+                            </span>
+                        </td>
+                        <td>
+                            @Html.TextBox("Emp_Cd", item.Emp_Cd, new { disabled = "true", style = "width:80px;" })
+
+                            <input type="hidden" name="Month" value="@Model.Month" />
+                            <input type="hidden" name="Year" value="@Model.Year" />
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+            <td class="text-center">
+                @*@Html.DisplayFor(m => m.Emp_Name)*@
+                @Html.TextBox("Emp_Name", item.Emp_Name, new { disabled = "true", style = "width:200px;" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("Account_Name", item.Account_Name, new { disabled = "true", style = "width:140px;" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("Margin", item.Margin, new { disabled = "true", style = "width:75px;" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("Starts", item.Starts, new { disabled = "true", style = "width:75px;" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("SubmissionTarget", item.SubmissionTarget, new { style = "width:70px;", disabled = "true" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("InterviewTarget", item.InterviewTarget, new { style = "width:70px;", disabled = "true" })
+            </td>
+            <td class="text-center">
+                @Html.TextBox("HireTarget", item.HireTarget, new { style = "width:70px;", disabled = "true" })
+            </td>
+
+
+
+            <td class="text-center">
+                @Html.TextArea("Team_Comments", item.Team_Comments, new { disabled = "true", @class = "form-control input-sm chat-input chkEdit" })
+            </td>
+            <td class="text-center">
+                @Html.TextArea("Supervisor_Comments", item.Supervisor_Comments, new { disabled = "true", @class = "form-control input-sm chat-input chkEdit" })
+            </td>
+            <td class="text-center">
+                @Html.Label("Status", item.Status, new { disabled = "true" })
+            </td>
+
+
+            <td class="text-center">
+
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Emp_Cd" value="@item.Emp_Cd" />
+                <input type="hidden" name="Emp_Name" value="@item.Emp_Name" />
+
+
+                @if (item.Status == "Accepted")
+                {
+                    <input name="updatedata" disabled id="update" value="Update" type="submit" class="btn btn-primary btn-block" />
+
+
+                }
+                else if (item.Status == "Pending")
+                {
+                    <input name="savedata" disabled id="savedata" value="Save" type="submit" class="btn btn-primary btn-block" />
+
+                }
+                else /*if(item.Status == "Submitted")*/
+                {
+                    <input name="Approve" id="Approve" disabled value="Approve" type="submit" class="btn btn-primary btn-block" />
+
+                }
+
+            </td>
+
+
+        </tr>
+            }
+            }
+
+
+            }
+
+        </table>
+
+    </div>
+
+    <h3 style="text-align:center">Recruiter Goals</h3>
+
+    <div class="tablediv" style="height:auto">
+
+        <table id="UserList" class="table table-striped  table-hover table-bordered table-fixed">
+            <thead class="theadStyle">
+                <tr>
+
+                    <td class="tableHead text-center" style="width: 10%">
+                        <label>Employee ID</label>
+                    </td>
+                    <td class="tableHead text-center" style="width: 14%">
+                        <label>Employee Name</label>
+                    </td>
+                    <td class="tableHead text-center" style="width: 6%">
+                        <label>Margin</label>
+                    </td>
+
+                    <td class="tableHead text-center" style="width: 6%">
+                        <label>Submissions</label>
+                    </td>
+                    <td class="tableHead text-center" style="width: 6%">
+                        <label>Interviews</label>
+                    </td>
+                    <td class="tableHead text-center" style="width: 6%">
+                        <label>Hires</label>
+                    </td>
+                    <td class="tableHead text-center" style="width: 17%">
+                        <label>Team Comments</label><br />
+                        <i class='fas fa-comments' style='font-size:24px' title="Please enter the support needed from team to achieve the goals"></i>
+                    </td>
+                    <td class="tableHead text-center" style="width: 17%">
+                        <label>Supervisor Comments</label><br />
+                        <i class='fas fa-comments' style='font-size:24px' title="Please enter the support needed from supervisor to achieve the goals"></i>
+                    </td>
+                    <td class="tableHead text-center" style="width: 10%">
+                        <label>Status</label>
+                    </td>
+                    <td class="text-center" style="width: 8%">
+                        <label>Action</label>
+                    </td>
+                </tr>
+            </thead>
+
+
+            <tbody>
+
+                @foreach (var item in Model.EmpSupervisorList.Where(e => e.Role == "Employee").ToList())
+                {
+                using (Html.BeginForm("AcceptTargetsBySupervisorLevel2", "MonthlyTarget", FormMethod.Post))
+
+                {
+                if (Model.IsDisable == false)
+                {
+
+                <tr>
+
+                    <td class="text-center">
+                        @Html.TextBox("Emp_Cd", item.Emp_Cd, new { disabled = "true", style = "width:100px;" })
+                        <input type="hidden" name="Month" value="@Model.Month" />
+                        <input type="hidden" name="Year" value="@Model.Year" />
+
+                    </td>
+                    <td class="text-center">
+                        @*@Html.DisplayFor(m => m.Emp_Name)*@
+                        @Html.TextBox("Emp_Name", item.Emp_Name, new { disabled = "true", style = "width:190px;" })
+                    </td>
+                    <td class="text-center">
+                        @*@Html.DisplayFor(m => m.Emp_Name)*@
+                        @Html.TextBox("Margin", item.Margin, new { style = "width:70px;" })
+                    </td>
+
+                    <td class="text-center">
+
+
+                        @Html.TextBox("SubmissionTarget", item.SubmissionTarget, new { required = "required", style = "width:70px;" })
+
+                    </td>
+                    <td class="text-center">
+
+                        @Html.TextBox("InterviewTarget", item.InterviewTarget, new { required = "required", style = "width:70px;" })
+
+                    </td>
+                    <td class="text-center">
+
+                        @Html.TextBox("HireTarget", item.HireTarget, new { required = "required", style = "width:70px;" })
+
+                    </td>
+                    <td class="text-center">
+
+                        @Html.TextArea("Team_Comments", item.Team_Comments, new { @class = "form-control input-sm chat-input chkEdit" })
+
+                    </td>
+                    <td class="text-center">
+
+                        @Html.TextArea("Supervisor_Comments", item.Supervisor_Comments, new { @class = "form-control input-sm chat-input chkEdit" })
+
+                    </td>
+                    <td class="text-center">
+                        @*@Html.DisplayFor(m => m.Emp_Name)*@
+                        @Html.Label("Status", item.Status)
+                    </td>
+
+
+                    <td class="text-center">
+
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="Emp_Cd" value="@item.Emp_Cd" />
+                        <input type="hidden" name="Emp_Name" value="@item.Emp_Name" />
+
+
+                        @if (item.Status == "Accepted")
+                        {
+                        <input name="updatedata" id="update" value="Update" type="submit" class="btn btn-primary btn-block" />
+
+
+                        }
+                        else if (item.Status == "Pending")
+                        {
+                        <input name="savedata" id="savedata" value="Save" type="submit" class="btn btn-primary btn-block" />
+
+                        }
+                        else /*if(item.Status == "Submitted")*/
+                        {
+                        <input name="Approve" id="Approve" value="Approve" type="submit" class="btn btn-primary btn-block" />
+
+                        }
+
+
+                    </td>
+
+                </tr>
+                }
+                else
+                {
+                <tr>
+
+                    <td class="text-center">
+                        @Html.TextBox("Emp_Cd", item.Emp_Cd, new { disabled = "true", style = "width:100px;" })
+                        <input type="hidden" name="Month" value="@Model.Month" />
+                        <input type="hidden" name="Year" value="@Model.Year" />
+
+                    </td>
+                    <td class="text-center">
+                        @*@Html.DisplayFor(m => m.Emp_Name)*@
+                        @Html.TextBox("Emp_Name", item.Emp_Name, new { disabled = "true", style = "width:190px;" })
+                    </td>
+                    <td class="text-center">
+                        @*@Html.DisplayFor(m => m.Emp_Name)*@
+                        @Html.TextBox("Margin", item.Margin, new { disabled = "true", style = "width:70px;" })
+                    </td>
+
+                    <td class="text-center">
+
+
+                        @Html.TextBox("SubmissionTarget", item.SubmissionTarget, new { required = "required", disabled = "true", style = "width:70px;" })
+
+                    </td>
+                    <td class="text-center">
+
+                        @Html.TextBox("InterviewTarget", item.InterviewTarget, new { required = "required", disabled = "true", style = "width:70px;" })
+
+                    </td>
+                    <td class="text-center">
+
+                        @Html.TextBox("HireTarget", item.HireTarget, new { required = "required", disabled = "true", style = "width:70px;" })
+
+                    </td>
+                    <td class="text-center">
+
+                        @Html.TextArea("Team_Comments", item.Team_Comments, new { @class = "form-control input-sm chat-input chkEdit", disabled = "true" })
+
+                    </td>
+                    <td class="text-center">
+
+                        @Html.TextArea("Supervisor_Comments", item.Supervisor_Comments, new { @class = "form-control input-sm chat-input chkEdit", disabled = "true" })
+
+                    </td>
+                    <td class="text-center">
+                        @*@Html.DisplayFor(m => m.Emp_Name)*@
+                        @Html.Label("Status", item.Status, new { disabled = "true" })
+                    </td>
+
+
+                    <td class="text-center">
+
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="Emp_Cd" value="@item.Emp_Cd" />
+                        <input type="hidden" name="Emp_Name" value="@item.Emp_Name" />
+
+
+                        @if (item.Status == "Accepted")
+                        {
+                        <input name="submit" id="update" value="Update" type="submit" class="btn btn-primary btn-block" disabled />
+
+
+
+                        }
+                        else if (item.Status == "Pending")
+                        {
+                        <input name="submit" id="savedata" value="Save" type="submit" class="btn btn-primary btn-block" disabled />
+
+                        }
+                        else if (item.Status == "Submitted")
+                        {
+                        <input name="Approve" id="Approve" value="Approve" type="submit" class="btn btn-primary btn-block" disabled />
+
+                        }
+
+
+                    </td>
+
+                </tr>
+
+                }
+                }
+
+
+                }
+
+            </tbody>
+        </table>
+
+    </div>
+
+    }
+
+</div>
+
+<script>
+
+    $(document).ready(function () {
+               $("#ExportExcel").click(function(){
+              var dateyear = parseInt($('#yearlist').val());
+          //  var RequestedDate = $datePickerValue.split("-")[1].trim();
+
+
+              window.location.href = '@Url.Action("ExportToExcel", "MonthlyTarget")?RequestedDate=' + dateyear;
+
+        });
+
+        $("#startsbox").on("input", function (evt) {
+            var self = $(this);
+            self.val(self.val().replace(/\D/g, ""));
+            if ((evt.which < 48 || evt.which > 57)) {
+                evt.preventDefault();
+            }
+        });
+
+        $("#margintxtbox").on("input", function (evt) {
+            var self = $(this);
+            self.val(self.val().replace(/[^0-9\.]/g, ''));
+            if ((evt.which != 46 || self.val().indexOf('.') != -1) && (evt.which < 48 || evt.which > 57)) {
+                evt.preventDefault();
+            }
+
+        });
+        $("#save").click(function () {
+
+        });
+    });
+    function submitdata() {
+        if ($("#supervisorcommentsbox").val() == "" || $("#startsbox").val() == 0 || $("#accountnamebox").val() == ""
+            || $("#margintxtbox").val() == 0) {
+            $('#submit').prop('disabled', false);
+        }
+        else {
+            alert("Targets Submitted Successfully");
+
+        }
+
+    }
+
+
+    $(".empcdclsplus").click(function () {
+
+        $(this).parent().children('.empcdclsminus').show();
+
+        $(this).closest('table').closest('tr').next('tr').find('.innertable').show();
+
+        $(this).hide();
+
+    });
+
+    $(".empcdclsminus").click(function () {
+
+        $(this).closest('table').closest('tr').next('tr').find('.innertable').hide();
+        $(this).parent().children('.empcdclsplus').show();
+        $(this).hide();
+
+
+    });
+
+    $(document).ready(function () {
+
+        $('.innertable').hide();
+        //$(".empcdclsplus").show();
+        $(".empcdclsminus").hide();
+
+        $('.btn-supervisor').on('click', function () {
+            var val = $(this).val();
+            if (val == "Approve") {
+                alert('Targets Approved Successfully');
+            }
+            else if (val == "Save") {
+                alert('Targets Saved Successfully');
+
+            }
+            else if (val == "Update") {
+                alert('Targets Updated Successfully');
+            }
+
+        });
+
+        $('.btn-employee').on('click', function () {
+            //alert("Employee");
+            var empcd = $(this).parent().children('[name="Emp_Cd"]').val();
+            var empname = $(this).parent().children('[name="Emp_Name"]').val();
+            var margin = $(this).closest('tr').find('td:eq(2)').find('.mymargin').val();
+            var subtarget = $(this).closest('tr').find('td:eq(3)').find('.subtarget').val();
+            var interviewtarget = $(this).closest('tr').find('td:eq(4)').find('.intetarget').val()
+            var hiretarget = $(this).closest('tr').find('td:eq(5)').find('.hiretarget').val()
+            var teamcomm = $(this).closest('tr').find('td:eq(6)').find('.teamcomments').val()
+            var supervisorcomm = $(this).closest('tr').find('td:eq(7)').find('.supervisorcomments').val()
+            //var statustxt = $(this).closest('tr').find('td:eq(8)').find('.statustxt').val()
+            var monthemp = $(this).parent().children('[name="Month"]').val();
+            var yearemp = $(this).parent().children('[name="Year"]').val();
+            //alert(empcd);
+            //alert(empname);
+            //alert(margin);
+            //alert(subtarget);
+            //alert(interviewtarget);
+            //alert(hiretarget);
+            //alert(teamcomm);
+            //alert(supervisorcomm);
+
+            $.ajax({
+                type: "GET",
+                url: "./AcceptTargetsBySupervisorbyAjax",
+                contentType: "application/json; charset=utf-8",
+                data: {
+                    "Emp_Cd": empcd, "Emp_Name": empname, "Margin": margin, "SubmissionTarget": subtarget, "InterviewTarget": interviewtarget, "HireTarget": hiretarget,
+                    "Team_Comments": teamcomm, "Supervisor_Comments": supervisorcomm, /*"Status": statustxt,*/ "Month": monthemp, "Year": yearemp
+                },
+                datatype: "json",
+                success: function (data) {
+
+                    $(window).load();
+                    //alert(data);
+
+                },
+
+            });
+
+            //alert(statustxt);
+
+            var val = $(this).val();
+            if (val == "Approve") {
+                alert('Targets Approved Successfully');
+            }
+            else if (val == "Save") {
+                alert('Targets Saved Successfully');
+
+            }
+            else if (val == "Update") {
+                alert('Targets Updated Successfully');
+            }
+
+        });
+
+
+    });
+</script>
+

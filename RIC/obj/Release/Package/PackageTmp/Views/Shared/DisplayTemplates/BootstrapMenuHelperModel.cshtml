@@ -1,0 +1,140 @@
+﻿@model MvcSiteMapProvider.Web.Html.Models.MenuHelperModel
+@using System.Web.Mvc.Html
+@using MvcSiteMapProvider.Web.Html.Models
+
+<style>
+    .dropdown
+    {
+        cursor: pointer;
+    }
+    /*.badge-notify{
+   background:red;
+   position:relative;
+   top: -20px;
+   left: -35px;
+}*/
+/**/
+nav .badge {
+background: #67a994;
+    border-color: #67a994;
+   
+}
+nav .badge {
+   
+    font-size: 12px;
+    
+}
+
+
+
+
+    /*nav .badge {
+    display: block;
+    font-size: 20px;
+    position: absolute;
+    top: -19px;
+    right: 33px;
+    line-height: 24px;
+    height: 25px;
+    padding: 0 5px;
+    font-family: Arial, sans-serif;
+    color: white;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.25);
+    border: 1px solid;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 1px rgba(0, 0, 0, 0.08);
+    box-shadow: inset 0 1px rgba(255, 255, 255, 0.3), 0 1px 1px rgba(0, 0, 0, 0.08);
+}*/
+/**/
+
+</style>
+
+
+@helper  TopMenu(List<SiteMapNodeModel> nodeList)
+{
+    
+    <nav id="bootstrapMenu" class="navbar navbar-default" role="navigation">
+
+
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    @foreach (SiteMapNodeModel node in nodeList)
+                    {
+                        string url = node.IsClickable ? node.Url : "#";
+
+                        if (!node.Children.Any())
+                        {
+                            if (node.Key == "Review" && int.Parse(Session["NotificationCount"].ToString()) != 0)
+                            {
+                                
+                                <li><a href="@url"> @node.Title <span class="badge">@Session["NotificationCount"]</span></a></li>
+                            }
+                            else { 
+                                 <li><a href="@url">@node.Title</a></li>
+                                 }
+                        }
+                        else if (node.Title == "User")
+                        {
+                            //name updated as captialiaze.
+                        <li class="dropdown"><a class="dropdown-toggle textCapitalize" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-user"></span>
+                                 @if (@Session["DisplayName"] != null)
+                                      {
+                                        @Session["DisplayName"].ToString()
+                                      }
+                            <span class="caret"></span></a>
+                            @DropDownMenu(node.Children)</li>
+                        }
+                       
+                     
+                        else
+                        {
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">@node.Title <span class="caret"></span></a>@DropDownMenu(node.Children)</li>
+                        }
+
+                        if (node != nodeList.Last())
+                        {
+                        <li class="divider-vertical"></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+}
+
+@helper DropDownMenu(SiteMapNodeModelList nodeList)
+{
+    <ul class="dropdown-menu" role="menu">
+        @foreach (SiteMapNodeModel node in nodeList)
+        {
+            if (node.Title == "Separator")
+            {
+                <li class="divider"></li>
+                continue;
+            }
+
+            string url = node.IsClickable ? node.Url : "#";
+
+            if (!node.Children.Any())
+            {
+                if (node.Title == "Logout")
+                {
+                  <li><a href="@url"><span class="glyphicon glyphicon-log-out"></span>@node.Title</a></li>
+                
+                }
+                else
+                { 
+                    <li><a href="@url">@node.Title</a></li>
+                }
+            }
+            else
+            {
+                 <li class="dropdown-submenu"><a href="@url">@node.Title</a>@DropDownMenu(node.Children)</li>
+            }
+        }
+    </ul>
+}
+
+@TopMenu(Model.Nodes)

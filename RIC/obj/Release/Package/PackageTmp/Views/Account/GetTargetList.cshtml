@@ -1,0 +1,156 @@
+﻿@model IEnumerable<RIC.Models.Account.TargetSubIntHire>
+
+@{
+    ViewBag.Title = "GetTargetList";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+ thead th {
+    background-color: #337ab7;
+    color: white;
+   
+}
+ table, th, td {
+  border: 1px solid black;
+}
+
+ .TextAlignCenter {
+    text-align: center;
+}
+ 
+div.pager {
+    text-align: center;
+    margin: 1em 0;
+}
+
+div.pager span {
+    display: inline-block;
+    width: 1.8em;
+    height: 1.8em;
+    line-height: 1.8;
+    text-align: center;
+    cursor: pointer;
+    background: #000;
+    color: #fff;
+    margin-right: 0.5em;
+}
+
+div.pager span.active {
+    background: #c00;
+}
+
+    LabelName {
+        text-align:left;
+    }
+   
+    .textCapitalize
+    {
+        text-transform: capitalize;
+    }
+
+</style>
+
+
+<h3 style="text-align:center;font-weight:bold">Required Targets</h3>
+
+
+<table class="table table-bordered table-striped" id="TargetTable">
+    <thead>
+    <tr>
+        <th class="LabelName">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RE_Emp_Cd)
+        </th>
+        <th class="LabelName">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RE_Jobdiva_User_Name)
+        </th>
+        
+        <th class="TextAlignCenter">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().Designation)
+        </th>
+        <th class="TextAlignCenter">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RE_Joining_Date)
+        </th>
+        <th class="TextAlignCenter">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RE_Resign_Date)
+        </th>
+          <th class="TextAlignCenter">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().EffectiveFromDate)
+        </th>
+          <th class="TextAlignCenter">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().EffectiveToDate)
+        </th>
+        <th class="TextAlignCenter">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_MonthlySubmissions)
+        </th>
+           <th class="TextAlignCenter">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Monthly_Interviews)
+        </th>
+           <th class="TextAlignCenter">
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Monthyl_Hire)
+        </th>
+    </tr>
+        </thead>
+    <tbody id="fbody">
+@foreach (var item in Model) {
+    <tr>
+         <td class="LabelName">
+            @Html.DisplayFor(modelItem => item.RE_Emp_Cd)
+        </td >
+        <td class="LabelName textCapitalize">
+            @Html.DisplayFor(modelItem => item.RE_Jobdiva_User_Name)
+        </td>
+       
+        <td class="TextAlignCenter">
+            @Html.DisplayFor(modelItem => item.Designation)
+        </td>
+        <td class="TextAlignCenter">
+            @Html.DisplayFor(modelItem => item.RE_Joining_Date)
+        </td>
+         <td class="TextAlignCenter">
+            @Html.DisplayFor(modelItem => item.RE_Resign_Date)
+        </td>
+        <td class="TextAlignCenter">
+            @Html.DisplayFor(modelItem => item.EffectiveFromDate)
+        </td>
+        <td class="TextAlignCenter">
+            @Html.DisplayFor(modelItem => item.EffectiveToDate)
+        </td>
+        <td class="TextAlignCenter">
+            @Html.DisplayFor(modelItem => item.RS_MonthlySubmissions)
+        </td>
+        <td class="TextAlignCenter">
+            @Html.DisplayFor(modelItem => item.RS_Monthly_Interviews)
+        </td>
+        <td class="TextAlignCenter">
+            @Html.DisplayFor(modelItem => item.RS_Monthyl_Hire)
+        </td>
+    </tr>
+}
+        </tbody>
+
+</table>
+ 
+<div class="col-md-12 text-center">
+    <ul class="pagination pagination-sm pager" id="myPager"></ul>
+</div>
+<script>
+    
+    $(document).ready(function () {
+        var t = $('#TargetTable').DataTable({
+            searching: true
+        });
+
+
+      
+        $('input[type=search]').keyup(function () {
+            var value = $(this).val().toLowerCase();
+            $("#TargetTable tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        })
+    });
+
+
+
+</script>

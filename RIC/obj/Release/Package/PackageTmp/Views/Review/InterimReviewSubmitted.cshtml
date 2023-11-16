@@ -1,0 +1,174 @@
+﻿@model IEnumerable<RIC.Models.Review.InterimReviewSubmittedModel>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+@{
+    ViewBag.Title = "ViewAllReviews";
+    //Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    Layout = "~/Views/Review/Index.cshtml";
+    string directorRoleName = System.Configuration.ConfigurationManager.AppSettings["DirectorRole"];
+    string HrRoleName = System.Configuration.ConfigurationManager.AppSettings["HRRole"];
+    string tlRoleName = System.Configuration.ConfigurationManager.AppSettings["TLRole"];
+}
+<style>
+    .linkStyle
+    {
+        color: white;
+        padding: 7px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .linkStyle:hover, .linkStyle:active
+        {
+            text-decoration: none;
+        }
+
+    #ReviewTbl_length
+    {
+        display: none;
+    }
+
+      .tooltip
+    {
+        opacity: inherit;
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+        z-index: auto;
+    }
+
+        .tooltip .tooltiptext
+        {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 0px 0;
+            position: absolute;
+            z-index: 100;
+        }
+        .tooltip:hover .tooltiptext
+        {
+            visibility: visible;
+        }
+</style>
+<h2 style="text-align: center">Reviews</h2>
+<div class="dropdown">   
+        <a class="linkStyle btn-primary" href="@Url.Action("AddInterimReview")"><span class="glyphicon glyphicon-plus"></span>&nbsp Add Review</a>
+        <a class="linkStyle btn-primary" href="@Url.Action("InterimDrafts")"><span class="fas fa-pen-square"></span>&nbsp Drafts</a>
+</div>
+<div style="height: 50%" class="table-responsive">
+    <table id="ReviewTbl" class="table table-striped table-bordered">
+
+        <thead>
+            <tr>
+                <th style="text-align: center">
+                    @Html.DisplayNameFor(model => model.ReviewDate)
+                </th>        
+                <th>
+                    @Html.DisplayNameFor(model => model.CandidateName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ManagerName)
+                </th>
+
+                <th style="text-align: center">
+                    @Html.DisplayNameFor(model => model.ReviewStatus)
+                </th>               
+                <th style="text-align: center">
+                    @Html.DisplayNameFor(model => model.NextReviewDate)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody >
+            @foreach (var item in Model)
+            {
+                var style = (item.NotificationCount > 0) ? "background-color: antiquewhite" : "";
+                <tr  style="@style">
+                    <td style="text-align: center" >
+                        @Html.DisplayFor(modelItem => item.ReviewDate)
+                    </td>            
+                    <td class="textCapitalize">
+                        @Html.DisplayFor(modelItem => item.CandidateName)
+                    </td>
+                    <td class="textCapitalize">
+                        @Html.DisplayFor(modelItem => item.ManagerName)
+                    </td>                                        
+                    <td style="text-align: center">
+                          @if (item.ReviewStatus == "InProgress")
+                                {
+                              
+                                    <span class="tooltip">
+                                        <i style="font-size: 24px" class="fa ">&#xf251;</i>
+                                        <span class="tooltiptext">
+                                            @foreach (var u in item.PendingReviewers)
+                                            {
+                                                @u <br /> 
+                                            }                                          
+                                        </span>
+                                    </span>                                  
+                                }
+                          else if (item.ReviewStatus == "Completed")
+                          {
+                                    <i class="fa fa-check-circle" style="font-size: 24px; color: green"></i>
+                          }
+                          else if (item.ReviewStatus == "Released")
+                          { 
+                                    <span style="color: #1d6cb3">@Html.DisplayFor(m => item.ReviewStatus)</span>
+                          }
+                          else
+                          { 
+                                    <span style="color: red">@Html.DisplayFor(m => item.ReviewStatus)</span>  
+                          }                       
+                    </td>               
+                    <td style="text-align: center">
+                        @Html.DisplayFor(modelItem => item.NextReviewDate)
+                    </td>
+                    <td style="text-align:center">                        
+                       <a href="@Url.Action("Details",new{ id = item.ReviewID, retUrl = Request.Url.ToString() })" data-toggle="tooltip" data-placement="bottom" title="View Details"> <span class="fa fa-eye"></span> </a>
+                        &nbsp;
+                        @if (ViewBag.showEditBtn == true)
+                        { 
+                      <a href="@Url.Action("EditInterimReview",new{ id = item.ReviewID, retUrl = Request.Url.ToString() })" data-toggle="tooltip" data-placement="bottom" title="Edit Details"> <span class="glyphicon glyphicon-pencil"></span> </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div style= "margin: 140px auto; " class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div style="text-align: center; padding: 0px;" class="modal-header">
+                <button type="button"  style="margin: 0px" class="close" data-dismiss="modal"><span style="color: #f30625;" class="glyphicon glyphicon-remove"></span></button>
+                <h4 style="color:#b5023d" class="modal-title">Discard Review</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label style="color:darkcyan" for="comment">Additional Comment:</label>
+                    <textarea style="min-height: 190px" class="form-control" rows="5" id="comment"></textarea>
+                </div>
+            </div>
+            <div style=" padding: 4px;" class="modal-footer">
+                <button type="button" class="btn btn-success">Submit</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#bootstrapMenu a[href="/Review/ViewAllReviews"]').addClass("activeNav");
+       $('#ReviewTbl').DataTable({
+            "order": []
+        });
+    });
+</script>

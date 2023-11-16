@@ -1,0 +1,160 @@
+﻿body {
+    
+}
+
+   
+.FeedbackDiv
+{
+        font-size: 13px;
+}
+
+ .DivBorder
+    {
+        border: 1px solid black;
+    }
+
+    .DivHeight
+    {
+        height: 53px; font-size:1vw; font-size-adjust: 0.58; overflow:inherit;
+    }
+.AttrFont
+{
+    font-size: 11px;
+}
+
+    .user-rating
+    {
+        direction: rtl;
+        font-size: 20px;
+        unicode-bidi: bidi-override;
+        padding: 10px 30px;
+        display: inline-block;
+    }
+
+        .user-rating input
+        {
+            opacity: 0;
+            position: relative;
+            left: -15px;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        .user-rating span.star:before
+        {
+            color: #777777;
+            content: "ï€†";
+            /*padding-right: 5px;*/
+        }
+
+        .user-rating span.star
+        {
+            display: inline-block;
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: normal;
+            position: relative;
+            z-index: 1;
+        }
+
+        .user-rating span
+        {
+            margin-left: -15px;
+        }
+
+            .user-rating span.star:before
+            {
+                color: #777777;
+                content: "\f006";
+                /*padding-right: 5px;*/
+            }
+
+        .user-rating input:hover + span.star:before, .user-rating input:hover + span.star ~ span.star:before, .user-rating input:checked + span.star:before, .user-rating input:checked + span.star ~ span.star:before
+        {
+            color: #ffd100;
+            content: "\f005";
+        }
+
+    .selected-rating
+    {
+        color: #ffd100;
+        font-weight: bold;
+        font-size: 3em;
+    }
+
+    .HeaderStyle {
+    TEXT-ALIGN: -webkit-center;
+    color: #802d34 !important;
+    font-size: larger;
+    padding-top: 6px;
+     font-weight:bold;
+    }
+.Header
+{
+    font-weight:bold;   
+}
+
+.textArea
+{
+   width: -webkit-fill-available;
+   height: -webkit-fill-available;
+}
+.divFrom
+{
+  width:85%;margin:auto;height:100%;border:none;        webkit-box-shadow: none;     box-shadow: none;
+  -webkit-transition: none;    -o-transition: none;     transition: none; 
+}
+
+
+.reviewCheckBox
+{
+   margin:0px;
+    padding: 8px;
+}
+
+.MainHeader
+{
+    padding:10px; 
+}
+.ReviewTbl tr td,th 
+{
+ border:1px solid black !important;
+ border-collapse:collapse;
+ vertical-align: middle !important;
+}
+.textArea1
+{
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  min-height: 53px;
+}
+/*input[type=radio]:checked ~ .check {
+  border: 5px solid #0DFF92;
+}*/
+ .submissionAnalysys, .submissionAnalysys th, .submissionAnalysys td 
+    {
+        border: 1px solid black !important;
+        border-collapse: collapse;
+         padding: 4px !important; 
+       
+    }
+   .LabelHeadStyle1
+    {
+      background-color: #656565;
+      color: white;
+      font-size: 15px;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+   .LabelStyle2 
+   {
+        text-align: left;
+        letter-spacing: 1px;
+        font-size: 13px;
+        font-weight: bold;
+        background-color: #EED !important;
+       
+    }

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<RIC.Models.Account.ReportingHistoryVM>
+@{
+    ViewBag.Title = "ReportingHistory";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<legend>
+    <h2>Reporting History</h2>
+</legend>
+
+
+
+        <span>@Html.ActionLink("Back", "ViewUsers", new { First_Name= ViewBag.Firstname,Emp_Code=ViewBag.Empcode,RoleID=ViewBag.RoleIdFilter,filterDdl=ViewBag.FilterName,Page=ViewBag.Page}, new { @class="btn btn-info",@id="backId",@style="margin-left: 95%;margin-top:-1%"}) </span>
+<div class="divTable">
+    <table class="table table-hover table-bordered ">
+        <thead style="background-color: #337ab7; color: white;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FromDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ToDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ManagerName)
+                </th>
+                <th>Action</th>
+            </tr>
+            @{
+                bool enableEdit = true;
+            }
+        </thead>
+        @if (Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                using (Html.BeginForm("Delete", "Account", new { id = item.Id, FirstName = ViewBag.Firstname, Empid = ViewBag.Empcode, Role = ViewBag.RoleIdFilter, FilterName = ViewBag.FilterName, Page = ViewBag.Page }, FormMethod.Post, new { }))
+{     
+            <tr>
+                <td>
+                    @item.FromDate.Value.ToString("MM/dd/yyyy")
+                </td>
+                <td>
+                    @if (item.ToDate != null)
+                    { 
+                        @item.ToDate.Value.ToString("MM/dd/yyyy")
+                    }
+                    else
+                    { 
+                        @: NA
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManagerName)
+                </td>
+                <td>
+                    @if (enableEdit)
+                    {
+                        enableEdit = false;
+                        <b>@Html.ActionLink("Edit", "EditReportingHistory", new {id = item.Id, FirstName= ViewBag.Firstname,Empid=ViewBag.Empcode,Role=ViewBag.RoleIdFilter,FilterName=ViewBag.FilterName,Page=ViewBag.Page},new {@class="btn btn-primary"}) </b>
+                    }
+                   <button type="submit" class="btn btn-danger"  onclick="return ConfirmDelete();" value="Delete">Delete</button>
+                    
+                </td>
+                
+            </tr>
+            }
+        }
+        }
+        else
+        {
+            @:<tr bgcolor="#eaeaea"><td class="noborder"></td><td class="text-center noborder" ><b >No records found.</b></td><td class="noborder"></td><td class="noborder"></td></tr>
+        }
+    </table>
+</div>
+
+<style>
+    tr:nth-child(even) 
+    {
+        background-color: #f2f2f2;
+    }
+    .noborder {
+        border-style: hidden !important;
+    }
+</style>
+<script>
+    function ConfirmDelete()
+    {
+      var x = confirm("Are you sure you want to delete?");
+      if (x)
+          return true;
+      else
+        return false;
+    }
+</script>    

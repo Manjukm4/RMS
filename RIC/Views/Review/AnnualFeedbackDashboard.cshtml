@@ -1,0 +1,516 @@
+﻿@model  IEnumerable<RIC.Models.Review.AnnualFeedbackDashboardVM>
+@{
+    ViewBag.Title = "AnnualFeedbackDashboard";
+    Layout = "~/Views/Review/Index.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<style>
+ .tooltip-inner {
+    white-space:pre-wrap;
+}
+</style>
+<h2 style="text-align: center">Feedback Dashboard</h2>
+<div class="row">
+    <div class="panel panel-default panel-table">
+        <div class="panel-heading">
+            <div class="row">
+                @if ((bool)ViewBag.ShowRequestBtn)
+                { 
+                    <div class="col col-xs-6">
+                        <button type="button" id="ReleaseBtnPopup" class="btn btn-info btn-sm" data-toggle="modal" data-target="#ReleaseReqModel">Release For Review</button>
+                        <div id="ExportDiv"></div>
+                        <h3 class="panel-title"></h3>
+                    </div>
+                    <div class="col col-xs-6 text-left">
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="panel-body">
+            <table id="UserTable" class="table table-striped table-bordered table-list textCapitalize">
+                <thead>
+                    <tr>
+                        @if ((bool)ViewBag.ShowRequestBtn)
+                        {
+                            <th>#</th>
+                        }
+                        <th class="TableHeader">Employee ID</th>
+                        <th class="TableHeader">Employee Name</th>
+                        <th class="TableHeader">Reporting To </th>
+                        <th class="TableHeader text-center">Release Date</th>
+                        <th class="TableHeader text-center">Status </th>
+                        <th   class="TableHeader text-center">Role</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var style = (item.NotificationCount > 0) ? "background-color: antiquewhite" : "";
+                        <tr  style="@style">
+
+                            @if ((bool)ViewBag.ShowRequestBtn)
+                            { 
+                                <td>
+                                    @if (item.ShowCheckBox)
+                                    { 
+                                        <label class="custom-control custom-checkbox">
+                                            <input id="@item.EmployeeID" data-EmpID="@item.EmployeeID" data-LeadReviewerID="@item.LeadReviewerId"
+                                     data-FormID="@item.FormID"
+                                     type="checkbox" class="custom-control-input">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    }
+                                    else
+                                    {
+                                        <label class="custom-control custom-checkbox">
+                                            <input id="" data-EmpID="@item.EmployeeID" data-LeadReviewerID="@item.LeadReviewerId"
+                                        data-FormID="@item.FormID"     disabled      type="checkbox" class="custom-control-input">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                    }
+                                </td>
+                            }
+                            <td>@item.EmployeeID </td>
+                            <td>@item.EmployeeName</td>
+                            <td>@item.ReportingTo</td>
+                            <td class="text-center">@Html.DisplayFor(m => item.LastReviewDate)</td>
+                            <td class="text-center">
+                                @if (item.Status == "InProgress")
+                                {
+                                  string tooltipText = "";
+                                       foreach (var u in item.reviewers)
+                                       {
+                                           tooltipText += u.ToString() + System.Environment.NewLine;
+                                       }
+                                       if (!item.HrReviewStatus)
+                                        {
+                                            tooltipText += item.HrName;
+                                        }                                            
+                                    <i style="font-size: 24px" data-toggle="tooltip" data-placement="bottom"  title="@tooltipText" class="fa ">&#xf251;</i>                                                                                                        
+                                }
+                                else if (item.Status == "Completed")
+                                {
+                                    <i class="fa fa-check-circle" style="font-size: 24px; color: green"></i>
+                                }
+                                else if (item.Status == "Released")
+                                { 
+                                    <span style="color: #1d6cb3">@Html.DisplayFor(m => item.Status)</span>
+                                }
+                                else
+                                { 
+                                    <span style="color: red">@Html.DisplayFor(m => item.Status)</span>  
+                                }
+                            </td>
+                            <td class="text-center">@item.UserRole</td>
+                            <td>
+                                <button  data-empID="@item.EmployeeID" data-toggle="tooltip" data-placement="bottom" title="View Details" type="button" onclick="ShowReviewDetails('@item.EmployeeID')">
+                                    <em class="fas fa-info-circle ReviewDetails"></em>
+                                </button>
+                                @if (item.NotificationCount > 0&& false)
+                                { 
+                                    <span style="margin: -9px; position: absolute" class="badge">@item.NotificationCount</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="panel-footer">
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg ">
+        <div id='myModalContent' class="textCapitalize">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 style="text-align: center;" class="modal-title">@ViewBag.Header</h4>
+                </div>
+                <div id="divModel" class="modal-body">
+
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#home">Annual Reviews</a></li>
+                        <li><a data-toggle="tab" href="#menu1">Interim Reviews</a></li>
+                        <li><a data-toggle="tab" href="#menu2">Reporting History</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+                            <table style="width: 100%" id="ReviewListTbl">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Reporting To</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div id="menu1" class="tab-pane fade in">
+                            <table style="width: 100%" id="InterimReviewListTbl">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Reporting To</th>
+                                        <th>Status</th>
+                                        <th>Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div id="menu2" class="tab-pane fade">
+                            <table style="width: 100%" id="RepoartingHistoryTbl">
+                                <thead>
+                                    <tr>
+                                        <th>Employee Name</th>
+                                        <th>Reporting To</th>
+                                        <th>From Date</th>
+                                        <th>To Date</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--release request model.-->
+<div class="modal fade" id="ReleaseReqModel" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Select Reviewers</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group multiple-form-group" data-max="5">
+                    <div class="form-group input-group">
+                        @Html.DropDownList("RE_Reviewer_List", Enumerable.Empty<SelectListItem>(), new { onchange = "ReviewerDdlSelectedChange()", required = "required", @class = "form-control  selectInput Reviewer_List textCapitalize", @style = "  z-index: 0" })
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default btn-add">
+                                +					
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="requestBtn" type="button" disabled class="btn btn-sm btn-info btn-create">Submit</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $.fn.tableExport.xlsx = {
+            defaultClass: "xlsx",
+            buttonContent: "Export to xlsx",
+            mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            fileExtension: ".xlsx"
+        };
+        $('#UserTable').tableExport({
+            headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+            footers: false,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+            formats: ["xlsx"],    // (String[]), filetypes for the export
+            fileName: "id",                    // (id, String), filename for the downloaded file
+            bootstrap: true,                   // (Boolean), style buttons using bootstrap
+            position: "bottom",                 // (top, bottom), position of the caption element relative to table
+            ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file(s)
+            ignoreCols: null,                  // (Number, Number[]), column indices to exclude from the exported file(s)
+            //ignoreCSS: ".tableexport-ignore",  // (selector, selector[]), selector(s) to exclude from the exported file(s)
+            // emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
+            trimWhitespace: true              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
+
+        });
+        var order;
+        @if ((bool)ViewBag.ShowRequestBtn)
+        {            
+          @: order = [[4, "desc"]];
+        }
+        else
+        {
+          @: order = [[3, "desc"]]
+        }
+        var userTable = $('#UserTable').DataTable({
+            "order": []
+        });
+        //---
+        $('#ReleaseBtnPopup').click(function () {
+            var UserList = [];
+            userTable.$('input[type="checkbox"]').each(function () {
+                // If checkbox is checked
+                if (this.checked) {
+                    item = {}
+                    item["EmpID"] = $(this).attr('data-EmpID');
+                    item["FormID"] = $(this).attr('data-FormID');
+                    item["LeadReviewerID"] = $(this).attr('data-LeadReviewerID');
+                    item["ReviewerList"] = reviewerList;
+                    UserList.push(item)
+                }
+            });   
+            if (UserList.length == 0) {
+                alert('Please select the users')
+                return false;
+            }
+        });
+        $('#requestBtn').click(function () {
+            event.target.checkValidity();
+            var reviewerList = [];
+            var valid = true;
+            $('.Reviewer_List').each(function () {               
+                if ($(this).val() == null || $(this).val() == "") {
+                    $(this).focus();
+                    valid = false;
+                    return false;
+                }
+                else {
+                    reviewerList.push($(this).val())
+                }
+            });
+            if (valid) {
+
+                var UserList = [];
+                userTable.$('input[type="checkbox"]').each(function () {
+                    // If checkbox is checked
+                    if (this.checked) {
+                        item = {}
+                        item["EmpID"] = $(this).attr('data-EmpID');
+                        item["FormID"] = $(this).attr('data-FormID');
+                        item["LeadReviewerID"] = $(this).attr('data-LeadReviewerID');
+                        item["ReviewerList"] = reviewerList;
+                        UserList.push(item)
+
+                    }
+                });
+
+                if (UserList.length == 0) {
+                    alert('Please select the users')
+                }
+                else {
+                    var ReviewList = JSON.stringify(UserList);
+                    $.ajax(
+                        {
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            type: 'POST',
+                            url: '@Url.Action("AnnualFeedbackDashboard", "Review")',
+                            data: ReviewList,
+                            success: function (response) {
+                                alert(response.responseText)
+                                location.reload();
+                            },
+                            failure: function (response) {
+                                alert(response)
+                                $('#result').html(response);
+                            }
+                        }, 200);
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+        });
+        $(function () {
+            var addFormGroup = function (event) {
+                event.preventDefault();
+                var $formGroup = $(this).closest('.form-group');
+                var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+                var $formGroupClone = $formGroup.clone();             
+                $(this)
+                    .toggleClass('btn-default btn-add btn-danger btn-remove ')
+                    .html('–');
+                $formGroupClone.find('input').val('');
+                $formGroupClone.insertAfter($formGroup);
+
+                var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
+                    $lastFormGroupLast.find('.btn-add').attr('disabled', true);
+                }
+                $("#requestBtn").attr('disabled', true)
+            };
+            var removeFormGroup = function (event) {
+                event.preventDefault();
+                var $formGroup = $(this).closest('.form-group');
+                var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+
+                var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
+                    $lastFormGroupLast.find('.btn-add').attr('disabled', false);
+                }
+                $formGroup.remove();
+            };
+            var countFormGroup = function ($form) {
+                return $form.find('.form-group').length;
+            };
+            $(".form-group:last").on('change', function () {
+                if ($(this).find('option:selected').text() == "Select Reporting Manager")
+                    $("#requestBtn").attr('disabled', true)
+                else
+                    $("#requestBtn").attr('disabled', false)
+            });
+            $(document).on('click', '.btn-add', addFormGroup);
+            $(document).on('click', '.btn-remove', removeFormGroup);
+        });
+        addReviewerList()
+        function addReviewerList() {            
+            $.getJSON('@Url.Action("GetReviewerList", "Review")', function (data) {
+                $('<option>',
+                      {
+                          value: null,
+                          text: "--Select--",
+                      }).val(data.Value).appendTo(".selectInput");
+                // $("#RE_Mgr_ID").append($("<option Value=null></option>").html("Select Reporting Manager"));
+                $.each(data, function (i, data) {
+                    $('<option>',
+                   {
+                       value: data.Value,
+                       text: data.Text,
+                       selected: false
+                   }).val(data.Value).appendTo(".selectInput");
+                });
+                return false;
+            });
+        }
+    });
+    function ShowReviewDetails(employeeID) {
+        $('#myModal').modal('show');
+        var table = $('#ReviewListTbl').DataTable({
+            destroy: true,
+            "ajax": {
+                url: '@Url.Action("GetAnnualReviewListByUser", "Review")',
+                type: "GET",
+                data: { empCd: employeeID },
+                datatype: "json",
+                dataSrc: ""
+            },
+            "columns": [
+
+                { "data": "EmployeeName" },
+                { "data": "leadReviewerName" },
+                {
+                    "data": "ReviewStatus",
+                    "mRender": function (data, type, row, meta) {
+                        if (data == 'Completed') {
+                            return '<i class="fa fa-check-circle" style="font-size: 24px; color: green"></i>';
+                        }
+                        else if (data == "Released") {
+                            return '<span style="color: #1d6cb3">' + data + '</span>'
+                        }
+                        else {
+                            return '<i style="font-size: 24px" class="fa">&#xf251;</i>';
+                        }
+                    }
+                },
+                { "data": "ReviewDate" },
+                 {
+                     "data": "ReviewID",
+                     //"ReviewStatus": "ReviewStatus",
+                     "mRender": function (data, type, row, meta) {
+                         var ReviewStatus = row['ReviewStatus'];
+                         if (ReviewStatus == "Completed")
+                         {
+                             return '<a class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="View Details" href="../Review/AnnualFeedbackDetails?reviewID=' + data + '&returnUrl=' + window.location.href + '"><em class="fas fa-info-circle"></em></a>'
+                         }
+                         else
+                         {
+                             return '<a class="btn btn-default" disabled href="#' + window.location.href + '"><em class="fas fa-info-circle"></em></a>'                            
+                         }
+                     }
+                 }
+            ]
+        });
+        //bind the interim review list
+        var InterimReviewListTbl = $('#InterimReviewListTbl').DataTable({
+            destroy: true,
+            "ajax": {
+                url: '@Url.Action("GetInterimReviewListByUser", "Review")',
+                type: "GET",
+                data: { empCd: employeeID },
+                datatype: "json",
+                dataSrc: ""
+            },
+            "columns": [
+                { "data": "EmployeeName" },
+                { "data": "leadReviewerName" },
+                {
+                    "data": "ReviewStatus",
+                    "mRender": function (data, type, row, meta) {
+                        if (data == 'Completed') {
+                            return '<i class="fa fa-check-circle" style="font-size: 24px; color: green"></i>';
+                        }
+                        else if (data == "Released") {
+                            return '<span style="color: #1d6cb3">' + data + '</span>'
+                        }
+                        else {
+                            return '<i style="font-size: 24px" class="fa">&#xf251;</i>';
+                        }
+                    }
+                },
+                { "data": "ReviewDate" },
+                 {
+                     "data": "ReviewID",
+                     //"ReviewStatus": "ReviewStatus",
+                     "mRender": function (data, type, row, meta) {
+                         var ReviewStatus = row['ReviewStatus'];
+                         if (ReviewStatus == "Released") {
+                             return '<a class="btn btn-default" disabled href="#' + window.location.href + '"><em class="fas fa-info-circle"></em></a>'
+                         }
+                         else {
+                             return '<a class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="View Details" href="../Review/Details?id=' + data + '&retUrl=' + window.location.href + '"><em class="fas fa-info-circle"></em></a>'
+                         }
+                     }
+                 }
+            ]
+        });
+        // bind the repoarting history
+        var RepoartingHistoryTbl = $('#RepoartingHistoryTbl').DataTable({
+            destroy: true,
+            "ajax": {
+                url: '@Url.Action("GetRepoartingHistory", "Review")',
+                   type: "GET",
+                   data: { empCd: employeeID },
+                   datatype: "json",
+                   dataSrc: ""
+               },
+               "columns":
+                   [
+                       { "data": "EmployeeName" },
+                       { "data": "ReportingTo" },
+                       { "data": "FromDate" },
+                       { "data": "ToDate" }
+                   ]
+           });
+           return false
+       }
+       function ReviewerDdlSelectedChange() {
+           debugger;
+           var valid = false;
+           $('.Reviewer_List').each(function () {
+               if ($(this).val() == null || $(this).val() == "") {
+                   $(this).focus();
+                   valid = false;
+                   return false;
+               }
+               else {
+                   valid = true;
+               }
+           });
+           if (valid)
+               $("#requestBtn").attr('disabled', false)
+           else
+               $("#requestBtn").attr('disabled', true)
+       }
+</script>

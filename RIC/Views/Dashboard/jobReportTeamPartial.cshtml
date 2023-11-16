@@ -1,0 +1,1935 @@
+﻿@model RIC.Models.TeamDashboardListModel_Main
+@using RIC.CustomHelper
+
+@{
+    List<DateTime> datelst = new List<DateTime>();
+}
+ 
+<style>
+    .tt {
+        padding-top: 1px;
+    }
+    .field-tip {
+        /*   display: none;*/
+        position: absolute;
+        width: auto;
+        background-color: aqua;
+        color: black;
+        text-align: center;
+        border-radius: 9px;
+        padding-left: 4px;
+        position: absolute;
+        z-index: 2;
+        text-align: center;
+        max-height: 178px;
+        height: 18px;
+        font-size: 12px;
+        padding-top: 1px;
+        padding-top: 3px;
+    }
+
+</style>
+<input type="text" class="form-control" placeholder="Search" style="width: 20%;margin-left: 79.9%;" id="filter" name="filter">
+
+<div class="row">
+
+    <div class="tab" role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist " id="PanelId">
+            <li role="presentation" class="active"><a href="#Submissions" aria-controls="home" role="tab" data-toggle="tab">Submissions</a></li>
+            <li role="presentation"><a href="#Interviews" aria-controls="profile" role="tab" data-toggle="tab">Interviews</a></li>
+            <li role="presentation"><a href="#Hires" aria-controls="messages" role="tab" data-toggle="tab">Hires</a></li>
+
+            <li role="presentation"><a href="#InCallConnected" aria-controls="messages" role="tab" data-toggle="tab">Call Connected(In)</a></li>
+            <li role="presentation"><a href="#InVoiceMessages" aria-controls="messages" role="tab" data-toggle="tab">Voice Messages(In)</a></li>
+            <li role="presentation"><a href="#InTotalDuration" aria-controls="messages" role="tab" data-toggle="tab">Total Duration(In)</a></li>
+
+            <li role="presentation"><a href="#OutCallConnected" aria-controls="messages" role="tab" data-toggle="tab">Call Connected(Out)</a></li>
+            <li role="presentation"><a href="#OutVoiceMessages" aria-controls="messages" role="tab" data-toggle="tab">Voice Messages(Out)</a></li>
+            <li role="presentation"><a href="#AccessLog" aria-controls="messages" role="tab" data-toggle="tab">User Access Log</a></li>
+            <li role="presentation"><a href="#OutTotalDuration" aria-controls="messages" role="tab" data-toggle="tab">Total Duration(Out)</a></li>
+        </ul>
+    </div>
+</div>
+<div class="tab-content clearfix textCapitalize">
+
+    @if (Model.TeamDashboardListModel.Count() != 0)
+    {
+
+
+        <div class="tab-pane active table-responsive" id="Submissions">
+            @*<label class="" style="text-align:left;text-transform:none; padding-left:5px;vertical-align:middle;padding-bottom:6px"><b>A:Absent as per USER LOG activity</b></label>*@
+            <div style="width: 100%; ">
+
+                <div style="padding:0px 20px 20px 20px;font-size: smaller;" class="">
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label> Date</label></div>
+                        <div style="width:3%" class="column "></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+                                @{
+
+                                    int mon1 = Model.TeamDashboardListModel.FirstOrDefault().Month.FirstOrDefault().date.Month;
+
+                                    int yer1 = Model.TeamDashboardListModel.FirstOrDefault().Month.FirstOrDefault().date.Year;
+                                    DateTime dt = new DateTime(yer1, mon1, @header.date.Day);
+                                    datelst.Add(dt);
+                                }
+                            </div>}
+                        <div style="width:4%" class="column">&nbsp;</div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        <div style="width:3%" class="column "><label>Tar.</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            // width = width + 0.01F;
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>}
+                        <div style="width:4%" class="column"><label>Total</label></div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Total</label></div>
+                        <div style="width:3%" class="column "><label>   </label></div>
+                        @*total for the day*@
+                        @{ // DateTime dt = DateTime.Today.AddDays(-0);
+
+                            float width1 = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            foreach (DateTime dtl in datelst)
+                            {
+                                float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                                int? td = Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).
+                                           Select(s => s.Month.Where(e => e.date == dtl)).Sum(s => s.FirstOrDefault().Submission);
+                                if (dtl > DateTime.Today.Date && dtl.Month == DateTime.Today.Month)
+                                {
+
+
+                                    <div style="width:@width%" class="column">
+                                        <label>  </label>
+                                    </div> }
+                                else
+                                {
+                                    if (ViewData["Holidays"] != null)
+                                    {
+                                        var hday = ViewData["Holidays"] as List<DateTime>;
+                                        if (hday.Contains(dtl))
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label title="Holiday" class="tt">H</label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label>@td</label>
+                                            </div>
+                                        }
+                                    }
+                                }
+
+                            }
+                            <div style="width:4%" class="column tableTotalStyle">
+                                <label>@Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).FirstOrDefault().Submission_Month</label>
+                            </div>
+
+                            //<div style="width:3%" class="column "><label>@td</label></div>
+                        }
+                    </div>
+
+                    @ShowSubmissionTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "SubTable", 0)
+                    @helper ShowSubmissionTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+
+
+
+                            @foreach (var item in foos)
+                            {
+
+                                //var items = Model.Where(s => s.MgrCd + "T" == item.EmpCd
+                                //    && (s.MgrName == s.Job_Diva_User_Name ? s.MgrName == item.Job_Diva_User_Name && s.Id == item.Id : s.MgrName == item.Job_Diva_User_Name)
+                                //    ).ToList();
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                if (@ViewBag.Role == "Accounting Manager")
+                                {
+                                    empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                    //string mgrcd = item.MgrCd;
+                                    if (item.Id.Contains("SBS0210"))
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                    }
+                                    else
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                                    }
+
+                                }
+
+                                //else
+                                //{
+                                //      empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                //     items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                //}
+
+
+                                if (items.Count() > 0)
+                                {
+                                    string targetID = "Submission_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer" class="fas fa-user-plus spanClick" data-toggle="collapse" data-target="#@targetID"></a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        <div style="width:3%" class="column TableTargetStyle">
+                                            @Math.Round(item.Submissions_Target)
+                                        </div>
+                                        @foreach (var submissionData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @if (submissionData.Submission != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID" data-FromDate="@submissionData.date" data-ToDate="@submissionData.date" data-IndividualRecord="No">@submissionData.Submission</a> }
+                                                else
+                                                {
+                                                    @*@submissionData.Submission*@
+                                                    if (ViewData["Holidays"] != null)
+                                                    {
+                                                        var hday = ViewData["Holidays"] as List<DateTime>;
+
+                                                        if (hday.Contains(submissionData.date))
+                                                        {
+
+                                                            <p title="Holiday" class="tt">H</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            @submissionData.Submission
+                                                        }
+                                                    }
+                                                }
+                                            </div>}
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @if (item.Submission_Month != 0 && empID != "Total")
+                                            {
+                                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID" data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-IndividualRecord="No">
+                                                    <label>@item.Submission_Month</label>
+                                                </a> }
+                                            else
+                                            {
+                                                <label>@item.Submission_Month </label>}
+                                        </div>
+                                    </div>
+                                    @ShowSubmissionTree(items, targetID, padding + 15) }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class=" column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        <div style="width:3%" class="column TableTargetStyle">
+                                            @Math.Round(@item.Submissions_Target)
+                                        </div>
+                                        @foreach (var submissionData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle">
+                                                @if (submissionData.Submission != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID" data-FromDate="@submissionData.date" data-ToDate="@submissionData.date" data-IndividualRecord="Yes">@submissionData.Submission</a> }
+                                                else
+                                                {
+                                                    if (ViewData["Holidays"] != null)
+                                                    {
+                                                        var hday = ViewData["Holidays"] as List<DateTime>;
+
+                                                        if (hday.Contains(submissionData.date))
+                                                        {
+                                                            <p title="Holiday" class="tt">H</p>
+
+                                                        }
+                                                        else if (submissionData.Attendance == "Absent")
+                                                        {
+                                                            <p title="Absent as per USER LOG activity" class="tt">A</p>
+                                                        }
+                                                        else
+                                                        { @submissionData.Submission}
+                                                }
+
+
+                                                @*@submissionData.Submission*@
+
+                                            }
+
+                                            </div>}
+                                        <div style="width:4%" class="column tableTotalStyle">
+
+                                            @if (item.Submission_Month != 0 && item.EmpCd != "Total")
+                                            {
+                                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID" data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-IndividualRecord="Yes">
+                                                    <label>  @item.Submission_Month</label>
+                                                </a> }
+                                            else
+                                            {
+                                                <label> @item.Submission_Month </label>}
+
+                                        </div>
+                                    </div>}
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        //-----------Accesslog start
+        // Accesslog Module Added By Shivakumar On 28/05/2021
+        <div class="tab-pane  table-responsive" id="AccessLog">
+            <div style="width: 100%; ">
+                <div style="padding: 20px;font-size: smaller;" class="">
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label> Date</label></div>
+                        <div style="width:3%" class="column "></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column">&nbsp;</div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        <div style="width:3%" class="column "><label>Tar.</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column"><label>Total</label></div>
+                    </div>
+
+                    @ShowAccessLogTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "AccessLog", 0)
+                    @helper ShowAccessLogTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {
+                        float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+                            @foreach (var item in foos)
+
+                            {
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+
+                                if (@ViewBag.Role == "Accounting Manager")
+                                {
+                                    empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                    //string mgrcd = item.MgrCd;
+                                    if (item.Id.Contains("SBS0210"))
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                    }
+                                    else
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                                    }
+
+                                }
+
+                                @*<a href="@Url.Action("DashboardData", "DashboardWeekelyData", new { empId = empID})" class="fas fa-info-circle">*@
+
+
+
+                                @*<i class="fas fa-info-circle" title="Performance Report"></i>*@
+                                @*</a>*@
+                                @*@Html.ActionLink("Report", "DashboardData",null, new { empId = empID },
+                                    new {@class = "fas fa-info-circle" })*@
+                                if (items.Count() > 0)
+
+                                {
+
+                                    string targetID = "AccessLog_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer" class="fas fa-user-plus spanClick" data-toggle="collapse" data-target="#@targetID">
+                                                </a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+
+
+                                            </label>
+
+                                            <a href="@Url.Action("DashboardData", "DashboardWeekelyData", new { empId = empID})" class="fa fa-eye" title="View Performance Report">
+                                            </a>
+
+
+                                            @*@Html.ActionLink("Click Me", "DashboardData", "DashboardWeekelyData",new { empId = empID },null)*@
+
+                                        </div>
+
+                                        <div style="width:3%" class="column TableTargetStyle">
+                                            @Math.Round(item.Submissions_Target)
+                                        </div>
+                                        @foreach (var submissionData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+
+                                                @if (submissionData.Submission != 0 && empID != "Total")
+                                                {
+                                                    @*<a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID"
+                                                        data-FromDate="@submissionData.date" data-ToDate="@submissionData.date" data-IndividualRecord="No">@submissionData.Submission</a>*@ }
+                                                else
+                                                {
+                                                    @submissionData.Submission}
+                                            </div>}
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @if (item.Submission_Month != 0 && empID != "Total")
+                                            {
+                                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID" data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-IndividualRecord="No">
+                                                    @item.Submission_Month
+                                                </a> }
+                                            else
+                                            {
+                                                @item.Submission_Month}
+                                        </div>
+                                    </div>
+                                    @ShowAccessLogTree(items, targetID, padding + 15) }
+                                else
+                                {
+
+                                    string targetID = "Access" + item.EmpCd;
+                                    var catgorylist = Model.AccessLogResults.Where(m => m.RC_Emp_Cd == item.EmpCd).ToList();
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+
+                                                @if (catgorylist.Count > 0)
+                                                {
+                                                    <a style="cursor:pointer" class="fas fa-user-plus spanClick" data-toggle="collapse" data-target="#@targetID">
+                                                    </a>
+                                                    @Html.DisplayFor(modelItem => item.Job_Diva_User_Name) }
+                                                else
+                                                {
+                                                    @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)}
+
+
+                                            </label>
+                                            <a href="@Url.Action("DashboardData", "DashboardWeekelyData", new { empId = empID})" class="fa fa-eye" title="View Performance Report">
+                                            </a>
+                                        </div>
+                                        <div style="width:3%" class="column TableTargetStyle">
+                                            @Math.Round(item.Submissions_Target)
+
+
+                                        </div>
+                                        @foreach (var submissionData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @if (submissionData.Submission != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID" data-FromDate="@submissionData.date" data-ToDate="@submissionData.date" data-IndividualRecord="No">
+                                                        @*@submissionData.Submission*@
+                                                    </a> }
+                                                else
+                                                {
+                                                    @*@submissionData.Submission*@}
+                                            </div>}
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @if (item.Submission_Month != 0 && empID != "Total")
+                                            {
+                                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID" data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-IndividualRecord="No">
+                                                    @*@item.Submission_Month*@
+                                                </a> }
+                                            else
+                                            {
+                                                @*@item.Submission_Month*@}
+                                        </div>
+                                    </div> if (catgorylist.Count > 0)
+                                    {
+                                        <div class="collapse " id="@targetID">
+
+                                            @foreach (var data in catgorylist.Select(x => x.Category).Distinct())
+                                            {
+
+                                                <div class="row">
+                                                    <div class=" column Col1Width Tableheader">
+
+                                                        <label style="@paddingStyle">
+
+                                                            @data
+
+                                                        </label>
+                                                    </div>
+                                                    <div style="width:3%" class="column TableTargetStyle">
+                                                        0
+                                                    </div>
+                                                    @foreach (var header in item.Month)
+                                                    {
+                                                        int defaultValue = 0;
+                                                        var catresdate = catgorylist.Where(c => c.RC_Date.Value.Day == header.date.Day).Where(d => d.Category == data);
+                                                        <div style="width:@width%" class="column tableRowStyle1">
+
+                                                            @if (@catgorylist.Where(c => c.RC_Date.Value.Day == header.date.Day).Where(d => d.Category == data).Any())
+                                                            {
+
+                                                                <a href="javascript:void(0);" class="avbcd" data-Jr="Submission" data-empCD="@empID" data-category="@catgorylist.Where(c => c.RC_Date.Value.Day == header.date.Day).Where(d => d.Category == data).FirstOrDefault().Category" data-clickeddate="@catgorylist.Where(c => c.RC_Date.Value.Day == header.date.Day).Where(d => d.Category == data).FirstOrDefault().RC_Date" data-FromDate="@item.FromDate" data-ToDate="@item.ToDate">
+                                                                    @catgorylist.Where(c => c.RC_Date.Value.Day == header.date.Day).Where(d => d.Category == data).FirstOrDefault().CategoryCount
+
+                                                                </a> }
+                                                            else if (header.date.Day <= DateTime.Now.Day)
+                                                            {
+                                                                @defaultValue}
+
+
+                                                        </div>}
+                                                </div>}
+                                        </div>}
+                                }
+                            }
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+        //-----------
+        <div class="tab-pane table-responsive" id="Interviews">
+            @*<label class="labelleft" style="text-align: left; padding-left: 5px; vertical-align: middle;text-transform:none"><b>A:Absent as per USER LOG activity</b></label>*@
+            <div style="width: 100%; display:block ">
+                <div style="padding: 20px;font-size: smaller;" class="">
+
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Date</label></div>
+                        <div style="width:3%" class="column "></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+
+                            </div>}
+                        <div style="width:4%" class="column">&nbsp;</div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        <div style="width:3%" class="column "><label>Tar.</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>}
+                        <div style="width:4%" class="column"><label>Total</label></div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Total</label></div>
+                        <div style="width:3%" class="column "><label>   </label></div>
+                        @*total for the day*@
+                        @{ // DateTime dt = DateTime.Today.AddDays(-0);
+
+                            //  float width1 = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            foreach (DateTime dtl in datelst)
+                            {
+                                float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                                int? td = Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).
+                                           Select(s => s.Month.Where(e => e.date == dtl)).Sum(s => s.FirstOrDefault().Interview);
+                                if (dtl > DateTime.Today.Date && dtl.Month == DateTime.Today.Month)
+                                {
+
+
+                                    <div style="width:@width%" class="column">
+                                        <label>  </label>
+                                    </div> }
+                                else
+                                {
+                                    if (ViewData["Holidays"] != null)
+                                    {
+                                        var hday = ViewData["Holidays"] as List<DateTime>;
+                                        if (hday.Contains(dtl))
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label title="Holiday" class="tt">H</label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label>@td</label>
+                                            </div>
+                                        }
+                                    }
+                                }
+
+                            }
+                            <div style="width:4%" class="column tableTotalStyle">
+                                <label>@Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).FirstOrDefault().Interview_Month</label>
+                            </div>
+
+                            //<div style="width:3%" class="column "><label>@td</label></div>
+                        }
+                    </div>
+                    @BindInterviewTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "InterviewTable", 0)
+                    @helper BindInterviewTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+                            @foreach (var item in foos)
+                            {
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                if (@ViewBag.Role == "Accounting Manager")
+                                {
+                                    empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                    //string mgrcd = item.MgrCd;
+                                    if (item.Id.Contains("SBS0210"))
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                    }
+                                    else
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                                    }
+
+                                }
+
+                                if (items.Count() > 0)
+                                {
+                                    string targetID = "Interview_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer" class="fas fa-user-plus spanClick" data-toggle="collapse" data-target="#@targetID">
+                                                </a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        <div style="width:3%" class="column TableTargetStyle">
+                                            @Math.Round(item.Interviews_Target)
+                                        </div>
+                                        @foreach (var interviewsData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @if (interviewsData.Interview != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle " data-Jr="interview" data-empCD="@empID" data-FromDate="@interviewsData.date" data-ToDate="@interviewsData.date" data-IndividualRecord="No">
+                                                        @interviewsData.Interview
+                                                    </a> }
+                                                else
+                                                {
+                                                    @*@interviewsData.Interview*@
+                                                    if (ViewData["Holidays"] != null)
+                                                    {
+                                                        var hday = ViewData["Holidays"] as List<DateTime>;
+
+                                                        if (hday.Contains(interviewsData.date))
+                                                        {
+
+                                                            <p title="Holiday" class="tt">H</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            @interviewsData.Interview
+                                                        }
+                                                    }
+                                                }
+                                            </div>}
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @if (item.Interview_Month != 0 && empID != "Total")
+                                            {
+                                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="interview" data-empCD="@empID" data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-IndividualRecord="No">
+                                                    <label>@item.Interview_Month</label>
+                                                </a> }
+                                            else
+                                            {
+                                                <label>@item.Interview_Month</label>}
+                                        </div>
+                                    </div>
+                                    @BindInterviewTree(items, targetID, padding + 15) }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class=" column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        <div style="width:3%" class="column TableTargetStyle">
+                                            @Math.Round(item.Interviews_Target)
+                                        </div>
+                                        @foreach (var interviewsData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle">
+                                                @if (interviewsData.Interview != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle " data-Jr="interview" data-empCD="@empID" data-FromDate="@interviewsData.date" data-ToDate="@interviewsData.date" data-IndividualRecord="Yes">
+                                                        @interviewsData.Interview
+                                                    </a> }
+                                                else
+                                                {
+                                                    if (ViewData["Holidays"] != null)
+                                                    {
+                                                        var hday = ViewData["Holidays"] as List<DateTime>;
+
+                                                        if (hday.Contains(interviewsData.date))
+                                                        {
+                                                            <p title="Holiday" class="tt">H</p> }
+                                                        else if (interviewsData.Attendance == "Absent")
+                                                        {
+                                                            <p title="Absent as per USER LOG activity" class="tt">A</p>
+                                                        }
+                                                        else
+                                                        { @interviewsData.Interview}
+                                                    @*@interviewsData.Interview*@
+                                                }
+                                            }
+                                            </div>}
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @if (item.Interview_Month != 0 && empID != "Total")
+                                            {
+                                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="interview" data-empCD="@empID" data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-IndividualRecord="Yes">
+                                                    <label>@item.Interview_Month</label>
+                                                </a> }
+                                            else
+                                            {
+                                                <label>@item.Interview_Month</label>}
+                                        </div>
+                                    </div>}
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane table-responsive" id="Hires">
+            @*<label class="labelleft" style="text-align:left;text-transform:none ;padding-left:5px;vertical-align:middle"><b>A:Absent as per USER LOG activity</b></label>*@
+            <div style="width: 100%; display:block ">
+                <div style="padding: 20px;font-size: smaller;" class="">
+
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Date</label></div>
+                        <div style="width:3%" class="column "></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+
+                            </div>}
+                        <div style="width:4%" class="column">&nbsp;</div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        <div style="width:3%" class="column "><label>Tar.</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>}
+                        <div style="width:4%" class="column"><label>Total</label></div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Total</label></div>
+                        <div style="width:3%" class="column "><label>   </label></div>
+                        @*total for the day*@
+                        @{ // DateTime dt = DateTime.Today.AddDays(-0);
+
+                            //   float width1 = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            foreach (DateTime dtl in datelst)
+                            {
+                                float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                                int? td = Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).
+                                           Select(s => s.Month.Where(e => e.date == dtl)).Sum(s => s.FirstOrDefault().Hire);
+                                if (dtl > DateTime.Today.Date && dtl.Month == DateTime.Today.Month)
+                                {
+
+
+                                    <div style="width:@width%" class="column">
+                                        <label>  </label>
+                                    </div> }
+                                else
+                                {
+                                    if (ViewData["Holidays"] != null)
+                                    {
+                                        var hday = ViewData["Holidays"] as List<DateTime>;
+                                        if (hday.Contains(dtl))
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label title="Holiday" class="tt">H</label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label>@td</label>
+                                            </div>
+                                        }
+                                    }
+                                }
+
+                            }
+                            <div style="width:4%" class="column tableTotalStyle">
+                                <label>@Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).FirstOrDefault().Hire_Month</label>
+                            </div>
+
+                            //<div style="width:3%" class="column "><label>@td</label></div>
+                        }
+                    </div>
+                    @BindHiresTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "HiresTable", 0)
+                    @helper BindHiresTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {float width = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+                            @foreach (var item in foos)
+                            {
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                if (@ViewBag.Role == "Accounting Manager")
+                                {
+                                    empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                    //string mgrcd = item.MgrCd;
+                                    if (item.Id.Contains("SBS0210"))
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                    }
+                                    else
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                                    }
+
+                                }
+                                if (items.Count() > 0)
+                                {
+                                    string targetID = "Hires_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer" class="fas fa-user-plus spanClick" data-toggle="collapse" data-target="#@targetID">
+                                                </a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        <div style="width:3%" class="column TableTargetStyle">
+                                            @Math.Round(@item.Hires_Target)
+                                        </div>
+                                        @foreach (var hireData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @if (hireData.Hire != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire" data-empCD="@empID" data-FromDate="@hireData.date" data-ToDate="@hireData.date" data-IndividualRecord="No">
+                                                        @hireData.Hire
+                                                    </a> }
+                                                else
+                                                {
+                                                    @*@hireData.Hire*@
+                                                    if (ViewData["Holidays"] != null)
+                                                    {
+                                                        var hday = ViewData["Holidays"] as List<DateTime>;
+
+                                                        if (hday.Contains(hireData.date))
+                                                        {
+
+                                                            <p title="Holiday" class="tt">H</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            @hireData.Hire
+                                                        }
+                                                    }
+                                                }
+                                            </div>}
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @if (item.Hire_Month != 0 && empID != "Total")
+                                            {
+                                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire" data-empCD="@empID" data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-IndividualRecord="No">
+                                                    <label>@item.Hire_Month</label>
+                                                </a> }
+                                            else
+                                            {
+                                                <label>
+                                                    @item.Hire_Month
+                                                </label>
+                                            }
+                                        </div>
+                                    </div>
+                                    @BindHiresTree(items, targetID, padding + 15) }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class=" column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        <div style="width:3%" class="column TableTargetStyle">
+                                            @Math.Round(@item.Hires_Target)
+                                        </div>
+                                        @foreach (var hireData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle">
+                                                @if (hireData.Hire != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire" data-empCD="@empID" data-FromDate="@hireData.date" data-ToDate="@hireData.date" data-IndividualRecord="Yes">
+                                                        @hireData.Hire
+                                                    </a> }
+                                                else
+                                                {
+                                                    @*@hireData.Hire*@
+                                                    if (ViewData["Holidays"] != null)
+                                                    {
+                                                        var hday = ViewData["Holidays"] as List<DateTime>;
+
+                                                        if (hday.Contains(hireData.date))
+                                                        {
+                                                            <p title="Holiday" class="tt">H</p> }
+                                                        else if (hireData.Attendance == "Absent")
+                                                        {
+                                                            <p title="Absent as per USER LOG activity" class="tt">A</p>
+                                                        }
+                                                        else
+                                                        { @hireData.Hire}
+
+                                                }
+                                            }
+                                            </div>}
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @if (item.Hire_Month != 0 && empID != "Total")
+                                            {
+                                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire" data-empCD="@empID" data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-IndividualRecord="Yes">
+                                                    <label>@item.Hire_Month</label>
+                                                </a> }
+                                            else
+                                            {
+                                                <label>@item.Hire_Month</label>}
+                                        </div>
+                                    </div>}
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane table-responsive" id="InCallConnected">
+            <div style="width: 100%; display:block ">
+                <div style="padding: 20px;font-size: smaller;" class="">
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Date</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+
+                            </div>
+                        }
+                        <div style="width:4%" class="column">&nbsp;</div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        @* <div style="width:3%" class="column "><label>Tar.</label></div>*@
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column"><label>Total</label></div>
+                    </div>
+
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Total</label></div>
+
+                        @*total for the day*@
+                        @{ // DateTime dt = DateTime.Today.AddDays(-0);
+
+                            // float width1 = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            foreach (DateTime dtl in datelst)
+                            {
+                                float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                                int? td = Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).
+                                           Select(s => s.Month.Where(e => e.date == dtl)).Sum(s => s.FirstOrDefault().In_CallConnected);
+                                if (dtl > DateTime.Today.Date && dtl.Month == DateTime.Today.Month)
+                                {
+
+
+                                    <div style="width:@width%" class="column">
+                                        <label>  </label>
+                                    </div> }
+                                else
+                                {
+                                    if (ViewData["Holidays"] != null)
+                                    {
+                                        var hday = ViewData["Holidays"] as List<DateTime>;
+                                        if (hday.Contains(dtl))
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label title="Holiday" class="tt">H</label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label>@td</label>
+                                            </div>
+                                        }
+                                    }
+                                }
+
+                            }
+                            <div style="width:4%" class="column tableTotalStyle">
+                                <label>@Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).FirstOrDefault().In_CallConnected_Month</label>
+                            </div>
+
+                            //<div style="width:3%" class="column "><label>@td</label></div>
+                        }
+                    </div>
+                    @BindInCallConnectedTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "InCallConnectedTable", 0)
+                    @helper BindInCallConnectedTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {
+                        float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+                            @foreach (var item in foos)
+                            {
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                if (@ViewBag.Role == "Accounting Manager")
+                                {
+                                    empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                    //string mgrcd = item.MgrCd;
+                                    if (item.Id.Contains("SBS0210"))
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                    }
+                                    else
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                                    }
+
+                                }
+                                if (items.Count() > 0)
+                                {
+                                    string targetID = "InCallConnected_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer"
+                                                   class="fas fa-user-plus spanClick"
+                                                   data-toggle="collapse"
+                                                   data-target="#@targetID">
+                                                </a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var callConnectedData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @callConnectedData.In_CallConnected
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @item.In_CallConnected_Month
+                                        </div>
+                                    </div>
+                                    @BindInCallConnectedTree(items, targetID, padding + 15)
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class=" column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var callConnectedData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle">
+                                                @callConnectedData.In_CallConnected
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @item.In_CallConnected_Month
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane table-responsive" id="InVoiceMessages">
+            <div style="width: 100%; display:block ">
+                <div style="padding: 20px;font-size: smaller;" class="">
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Date</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column">&nbsp;</div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        @* <div style="width:3%" class="column "><label>Tar.</label></div>*@
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column"><label>Total</label></div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Total</label></div>
+
+                        @*total for the day*@
+                        @{ // DateTime dt = DateTime.Today.AddDays(-0);
+
+                            // float width1 = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            foreach (DateTime dtl in datelst)
+                            {
+                                float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                                int? td = Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).
+                                           Select(s => s.Month.Where(e => e.date == dtl)).Sum(s => s.FirstOrDefault().In_VoiceMessages);
+                                if (dtl > DateTime.Today.Date && dtl.Month == DateTime.Today.Month)
+                                {
+
+
+                                    <div style="width:@width%" class="column">
+                                        <label>  </label>
+                                    </div> }
+                                else
+                                {
+                                    if (ViewData["Holidays"] != null)
+                                    {
+                                        var hday = ViewData["Holidays"] as List<DateTime>;
+                                        if (hday.Contains(dtl))
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label title="Holiday" class="tt">H</label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label>@td</label>
+                                            </div>
+                                        }
+                                    }
+                                }
+
+                            }
+                            <div style="width:4%" class="column tableTotalStyle">
+                                <label>@Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).FirstOrDefault().In_VoiceMessages_Month</label>
+                            </div>
+
+                            //<div style="width:3%" class="column "><label>@td</label></div>
+                        }
+                    </div>
+                    @BindInVoiceConnectedTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "InVoiceConnectedTable", 0)
+                    @helper BindInVoiceConnectedTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {
+                        float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+                            @foreach (var item in foos)
+                            {
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                if (@ViewBag.Role == "Accounting Manager")
+                                {
+                                    empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                    //string mgrcd = item.MgrCd;
+                                    if (item.Id.Contains("SBS0210"))
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                    }
+                                    else
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                                    }
+
+                                }
+                                if (items.Count() > 0)
+                                {
+                                    string targetID = "InVoiceConnected_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer"
+                                                   class="fas fa-user-plus spanClick"
+                                                   data-toggle="collapse"
+                                                   data-target="#@targetID">
+                                                </a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var voiceMessagesData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @voiceMessagesData.In_VoiceMessages
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @item.In_VoiceMessages_Month
+                                        </div>
+                                    </div>
+                                    @BindInVoiceConnectedTree(items, targetID, padding + 15)
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class=" column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+
+                                        @foreach (var voiceMessagesData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle">
+                                                @voiceMessagesData.In_VoiceMessages
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @item.In_VoiceMessages_Month
+
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane table-responsive" id="InTotalDuration">
+            <div style="width: 100%; display:block ">
+                <div style="padding: 20px;font-size: smaller;" class="">
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Date</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column">&nbsp;</div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column"><label>Total</label></div>
+                    </div>
+                    @BindInDurationTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "InDurationTable", 0)
+                    @helper BindInDurationTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {
+                        float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+                            @foreach (var item in foos)
+                            {
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                if (@ViewBag.Role == "Accounting Manager")
+                                {
+                                    empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                    //string mgrcd = item.MgrCd;
+                                    if (item.Id.Contains("SBS0210"))
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                    }
+                                    else
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                                    }
+
+                                }
+                                if (items.Count() > 0)
+                                {
+                                    string targetID = "InDuration_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer" class="fas fa-user-plus spanClick" data-toggle="collapse" data-target="#@targetID"></a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var totalDurationData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @CustomHelper.TimeSpanString(totalDurationData.In_TotalDuration)
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @CustomHelper.TimeSpanString(item.In_TotalDuration_Month)
+                                        </div>
+                                    </div>
+                                    @BindInDurationTree(items, targetID, padding + 15)
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class=" column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var totalDurationData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle">
+                                                @CustomHelper.TimeSpanString(totalDurationData.In_TotalDuration)
+
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @CustomHelper.TimeSpanString(item.In_TotalDuration_Month)
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane table-responsive" id="OutCallConnected">
+            @*<label class="labelleft" style="text-align: left; padding-left: 5px; vertical-align: middle;text-transform:none"><b>A:Absent as per USER LOG activity</b></label>*@
+            <div style="width: 100%; display:block ">
+                <div style="padding: 20px;font-size: smaller;" class="">
+
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Date</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+                            </div>}
+                        <div style="width:4%" class="column">&nbsp;</div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>}
+                        <div style="width:4%" class="column"><label>Total</label></div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Total</label></div>
+
+                        @*total for the day*@
+                        @{ // DateTime dt = DateTime.Today.AddDays(-0);
+
+                            // float width1 = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            foreach (DateTime dtl in datelst)
+                            {
+                                float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                                int? td = Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).
+                                           Select(s => s.Month.Where(e => e.date == dtl)).Sum(s => s.FirstOrDefault().Out_CallConnected);
+                                if (dtl > DateTime.Today.Date && dtl.Month == DateTime.Today.Month)
+                                {
+
+
+                                    <div style="width:@width%" class="column">
+                                        <label>  </label>
+                                    </div> }
+                                else
+                                {
+                                    if (ViewData["Holidays"] != null)
+                                    {
+                                        var hday = ViewData["Holidays"] as List<DateTime>;
+                                        if (hday.Contains(dtl))
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label title="Holiday" class="tt">H</label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label>@td</label>
+                                            </div>
+                                        }
+                                    }
+                                }
+
+                            }
+                            <div style="width:4%" class="column tableTotalStyle">
+                                <label>@Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).FirstOrDefault().Out_CallConnected_Month</label>
+                            </div>
+
+                            //<div style="width:3%" class="column "><label>@td</label></div>
+                        }
+                    </div>
+                    @BindOutCallConnectedTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "OutCallConnectedTable", 0)
+                    @helper BindOutCallConnectedTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+                            @foreach (var item in foos)
+                            {
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                if (@ViewBag.Role == "Accounting Manager")
+                                {
+                                    empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                    //string mgrcd = item.MgrCd;
+                                    if (item.Id.Contains("SBS0210"))
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                    }
+                                    else
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                                    }
+
+                                }
+                                if (items.Count() > 0)
+                                {
+                                    string targetID = "OutCallConnected_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer" class="fas fa-user-plus spanClick" data-toggle="collapse" data-target="#@targetID">
+                                                </a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var callConnectedData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @*@callConnectedData.Out_CallConnected*@
+                                                @if (ViewData["Holidays"] != null)
+                                                {
+                                                    var hday = ViewData["Holidays"] as List<DateTime>;
+
+
+                                                    if (hday.Contains(callConnectedData.date))
+                                                    {
+                                                        if (hday.Count > 0 && callConnectedData.date < DateTime.Now.Date)
+                                                        {
+                                                            <p title="Holiday" class="tt">H</p>
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        @callConnectedData.Out_CallConnected
+                                                    }
+                                                }
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @item.Out_CallConnected_Month
+                                        </div>
+                                    </div>
+                                    @BindOutCallConnectedTree(items, targetID, padding + 15) }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class=" column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var callConnectedData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle">
+                                                @if (@callConnectedData.Out_CallConnected == 0)
+                                                {
+                                                    @*if (callConnectedData.Attendance == "Absent")
+                                                        {
+                                                            <p>A</p> }
+                                                        else
+                                                        { @callConnectedData.Out_CallConnected}*@
+
+                                                    if (ViewData["Holidays"] != null)
+                                                    {
+                                                        var hday = ViewData["Holidays"] as List<DateTime>;
+
+                                                        if (hday.Contains(callConnectedData.date))
+                                                        {
+                                                            <p title="Holiday" class="tt">H</p> }
+                                                        else if (callConnectedData.Attendance == "Absent")
+                                                        {
+                                                            <p title="Absent as per USER LOG activity" class="tt">A</p>
+                                                        }
+                                                        else
+                                                        { @callConnectedData.Out_CallConnected}
+
+                                                }
+
+
+
+                                            }
+                                            else
+                                            { @callConnectedData.Out_CallConnected}
+                                            </div>}
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @item.Out_CallConnected_Month
+                                        </div>
+                                    </div>}
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>//TeamDashboardListModel_Main
+
+        //Html.Partial("_OutVoiceMessage", Model);
+        <div class="tab-pane table-responsive" id="OutVoiceMessages">
+            <div style="width: 100%; display:block ">
+                <div style="padding: 20px;font-size: smaller;" class="">
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Date</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column">&nbsp;</div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column"><label>Total</label></div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Total</label></div>
+
+                        @*total for the day*@
+                        @{ // DateTime dt = DateTime.Today.AddDays(-0);
+
+                            // float width1 = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            foreach (DateTime dtl in datelst)
+                            {
+                                float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                                int? td = Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).
+                                           Select(s => s.Month.Where(e => e.date == dtl)).Sum(s => s.FirstOrDefault().Out_VoiceMessages);
+                                if (dtl > DateTime.Today.Date && dtl.Month == DateTime.Today.Month)
+                                {
+
+
+                                    <div style="width:@width%" class="column">
+                                        <label>  </label>
+                                    </div> }
+                                else
+                                {
+                                    if (ViewData["Holidays"] != null)
+                                    {
+                                        var hday = ViewData["Holidays"] as List<DateTime>;
+                                        if (hday.Contains(dtl))
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label title="Holiday" class="tt">H</label>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div style="width:@width%" class="column">
+                                                <label>@td</label>
+                                            </div>
+                                        }
+                                    }
+                                }
+
+                            }
+                            <div style="width:4%" class="column tableTotalStyle">
+                                <label>@Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).FirstOrDefault().Out_VoiceMessages_Month</label>
+                            </div>
+
+                            //<div style="width:3%" class="column "><label>@td</label></div>
+                        }
+                    </div>
+                    @BindOutVoiceMessagesTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "OutVoiceMessagesTable", 0)
+                    @helper BindOutVoiceMessagesTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {
+                        float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+                            @foreach (var item in foos)
+                            {
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                if (@ViewBag.Role == "Accounting Manager")
+                                {
+                                    empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                    //string mgrcd = item.MgrCd;
+                                    if (item.Id.Contains("SBS0210"))
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                    }
+                                    else
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                                    }
+
+                                }
+                                if (items.Count() > 0)
+                                {
+                                    string targetID = "OutVoiceMessages_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer"
+                                                   class="fas fa-user-plus spanClick"
+                                                   data-toggle="collapse"
+                                                   data-target="#@targetID">
+                                                </a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var voiceMessagesData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @voiceMessagesData.Out_VoiceMessages
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @item.Out_VoiceMessages_Month
+                                        </div>
+                                    </div>
+                                    @BindOutVoiceMessagesTree(items, targetID, padding + 15)
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class=" column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var voiceMessagesData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle">
+                                                @voiceMessagesData.Out_VoiceMessages
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @item.Out_VoiceMessages_Month
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+
+        <div class="tab-pane table-responsive" id="OutTotalDuration">
+            <div style="width: 100%; display:block ">
+                <div style="padding: 20px;font-size: smaller;" class="">
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Date</label></div>
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column">&nbsp;</div>
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        @* <div style="width:3%" class="column "><label>Tar.</label></div>*@
+                        @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                        {
+                            float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>
+                        }
+                        <div style="width:4%" class="column"><label>Total</label></div>
+                    </div>
+                    @BindOutDurationTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "OutDurationTable", 0)
+                    @helper BindOutDurationTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {
+                        float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+                            @foreach (var item in foos)
+                            {
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                if (@ViewBag.Role == "Accounting Manager")
+                                {
+                                    empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                    //string mgrcd = item.MgrCd;
+                                    if (item.Id.Contains("SBS0210"))
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                                    }
+                                    else
+                                    {
+                                        items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                                    }
+
+                                }
+                                if (items.Count() > 0)
+                                {
+                                    string targetID = "OutDuration_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer"
+                                                   class="fas fa-user-plus spanClick"
+                                                   data-toggle="collapse"
+                                                   data-target="#@targetID">
+                                                </a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var outDuration in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @CustomHelper.TimeSpanString(outDuration.Out_TotalDuration)
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @CustomHelper.TimeSpanString(item.Out_TotalDuration_Month)
+                                        </div>
+                                    </div>
+                                    @BindOutDurationTree(items, targetID, padding + 15)
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class=" column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                            </label>
+                                        </div>
+                                        @foreach (var outDuration in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle">
+                                                @CustomHelper.TimeSpanString(outDuration.Out_TotalDuration)
+                                            </div>
+                                        }
+                                        <div style="width:4%" class="column tableTotalStyle">
+                                            @CustomHelper.TimeSpanString(item.Out_TotalDuration_Month)
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+    }
+</div>
+<script>
+
+    //toggle the first row.
+    $('#SubTable').toggle();
+    $('#AccessLogTable').toggle();
+    $('#InterviewTable').toggle();
+    $('#HiresTable').toggle();
+    $('#InCallConnectedTable').toggle();
+    $('#InVoiceConnectedTable').toggle();
+    $('#OutCallConnectedTable').toggle();
+    $('#OutVoiceMessagesTable').toggle();
+    $('#InDurationTable').toggle();
+    $('#OutDurationTable').toggle();
+    //change the toggle icon.
+    $('.spanClick').click(function () {
+        var cs = $(this).attr("class");
+        //console.log(cs);
+        if (cs.indexOf('fas fa-user-plus') != -1)
+        {
+            $(this).removeClass('fas fa-user-plus').addClass('fas fa-user-minus');
+            if ($("#filter").val().trim() != "") {
+                var teamFilterId = $(this).attr("data-target");
+                if ($(teamFilterId).find(".collapse").length <= 1) {
+                    $(teamFilterId).find(".row").show();
+                }
+            }
+
+        }
+        else
+        {
+            $(this).removeClass('fas fa-user-minus').addClass('fas fa-user-plus');
+
+        }
+    });
+
+    var TeamDetailPostBackURL = '@Url.Action("ViewDetailsPopup")';
+
+    var TeamDetailPostBackURL1 = '@Url.Action("AccessLogViewDetailsPopup")';
+    $(".avbcd").click(function () {
+        var $buttonClicked = $(this);
+        var CurentDate = $buttonClicked.attr('data-clickeddate');
+        var empCD = $buttonClicked.attr('data-empCD');//data-category
+        var category = $buttonClicked.attr('data-category');
+          $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL1,
+                contentType: "application/json; charset=utf-8",
+              data: { "CurentDate": CurentDate, "empCd": empCD,"category" : category},
+                datatype: "json",
+                success: function (data) {
+                    $('#myModalContent').html(data);
+                  //  $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                }
+            });
+    });
+    $(".tt").tooltip({
+        tooltipClass: "field-tip",
+        classes: {
+            "ui-tooltip": "highlight"
+        }
+        
+    });
+     // $(function () {
+    $(".anchorDetail").click(function () {
+
+         // var empCD = $("#HdnEmpCD").val();
+         var $buttonClicked = $(this);
+         var fromDate = $buttonClicked.attr('data-FromDate');
+         var toDate = $buttonClicked.attr('data-ToDate');
+         var jr = $buttonClicked.attr('data-Jr');
+         var empCD = $buttonClicked.attr('data-empCD');
+         var getIndividualRecord = $buttonClicked.attr('data-IndividualRecord');
+         var options = { "backdrop": "static", keyboard: true };
+         $.ajax({
+             type: "GET",
+             url: TeamDetailPostBackURL,
+             contentType: "application/json; charset=utf-8",
+             data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "empCd": empCD, "getIndividualRecord": getIndividualRecord },
+             datatype: "json",
+             success: function (data) {
+                 $('#myModalContent').html(data);
+                 $('#myModal').modal(options);
+                 $('#myModal').modal('show');
+             },
+             error: function () {
+             }
+         });
+
+
+     });
+
+     $(document).ready(function () {
+         getId('#SubTable');
+         getId('#AccessLogTable');
+
+         var $currentTabId = '#' + $(".active .collapse:eq(0)").attr("id");
+         $("#PanelId li a").click(function () {
+
+             getId('#' + $($(this).attr("href")).find(".collapse:eq(0)").attr("id"));
+             $currentTabId = '#' + $($(this).attr("href")).find(".collapse:eq(0)").attr("id");
+             $("#filter").keyup();
+         });
+
+         $("#filter").on("keyup", function () {
+             var $getCurrentTabId = '#' + $(".active .collapse:eq(0)").attr("id");
+             if ($getCurrentTabId != $currentTabId) {
+                 $getCurrentTabId = $currentTabId;
+             }
+             var value = $(this).val().trim().toLowerCase();
+             var array1 = new Array();
+             if (value.length > 0) {
+                 $($getCurrentTabId).find(".collapse").addClass("in");
+                 $($getCurrentTabId).find(".spanClick:gt(0)").removeClass('fa-user-plus').addClass('fas fa-user-minus');
+             }
+             else {
+                 $($getCurrentTabId).find(".collapse").removeClass("in");
+                 getId($getCurrentTabId);
+                 $($getCurrentTabId).find(".collapse:gt(0)").removeClass("in");
+                 $($getCurrentTabId).find(".spanClick:gt(0)").removeClass('fa-user-minus').addClass('fa-user-plus');
+             }
+             $($getCurrentTabId).find(".row").filter(function () {
+                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                 if ($(this).text().toLowerCase().indexOf(value) > -1) {
+                     array1 = new Array();
+                     array1.push($(this).parent().attr("id"));
+                 }
+             });
+             if (value.length > 0) {
+                 if (array1.length > 0) {
+                     for (var i = 0; i < array1.length; i++) {
+                         getParentId(array1[i]);
+                     }
+                 }
+                 else if (array1.length == 0) {
+                     getParentId(array1[0]);
+                 }
+             }
+         });
+
+        
+
+     });
+
+     function getId(PanelId) {
+         $(PanelId).find(".collapse:eq(0)").addClass("in");
+         $(PanelId).find(".spanClick:eq(0)").removeClass('fas fa-user-plus').addClass('fas fa-user-minus');
+     }
+
+    function getParentId(parentId) {
+        var $generateId = '#' + parentId;
+        $($generateId).prev().show();
+        if ($($generateId).parent().attr("id") != "" || $($generateId).parent().attr("id") != undefined)
+            getParentId($($generateId).parent().attr("id"));
+    }
+
+
+</script>

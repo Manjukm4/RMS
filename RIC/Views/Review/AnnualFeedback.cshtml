@@ -1,0 +1,297 @@
+﻿@model IEnumerable<RIC.Models.Review.AnnualFeedbackWM>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+@{
+    ViewBag.Title = "AnnualFeedback";
+    Layout = "~/Views/Review/Index.cshtml";
+    //var allEmpdata = ViewData["EmpData"] as IEnumerable<RIC.Models.Review.AnnualFeedbackWM>;
+    var dirEmpData = ViewData["VRMList"] as IEnumerable<RIC.Models.Review.AnnualFeedbackWM>;
+
+}
+<style>
+    .panel-table .panel-body {
+        padding: 0;
+    }
+
+        .panel-table .panel-body .table-bordered {
+            border-style: none;
+            margin: 0;
+        }
+
+            .panel-table .panel-body .table-bordered > thead > tr > th:first-of-type {
+                text-align: center;
+                width: 100px;
+            }
+
+            .panel-table .panel-body .table-bordered > thead > tr > th:last-of-type,
+            .panel-table .panel-body .table-bordered > tbody > tr > td:last-of-type {
+                border-right: 0px;
+            }
+
+            .panel-table .panel-body .table-bordered > thead > tr > th:first-of-type,
+            .panel-table .panel-body .table-bordered > tbody > tr > td:first-of-type {
+                border-left: 0px;
+            }
+
+            .panel-table .panel-body .table-bordered > tbody > tr:first-of-type > td {
+                border-bottom: 0px;
+            }
+
+            .panel-table .panel-body .table-bordered > thead > tr:first-of-type > th {
+                border-top: 0px;
+            }
+
+    .panel-table .panel-footer .pagination {
+        margin: 0;
+    }
+
+    /*
+    used to vertically center elements, may need modification if you're not using default sizes.
+    */
+    .panel-table .panel-footer .col {
+        line-height: 34px;
+        height: 34px;
+    }
+
+    .panel-table .panel-heading .col h3 {
+        line-height: 30px;
+        height: 30px;
+    }
+
+    .panel-table .panel-body .table-bordered > tbody > tr > td {
+        line-height: 34px;
+    }
+
+    .TableHeader {
+        white-space: nowrap;
+        text-align: center;
+    }
+
+    #FeedbackRequestTbl td {
+        text-align: center;
+    }
+
+    .detailsCol {
+        width: 18%;
+    }
+</style>
+
+<h2 style="text-align: center">Annual Feedback</h2>
+<div class="row">
+    <div class="panel panel-default panel-table">
+        @*  <div class="panel-heading">
+            </div>*@
+        <div class="panel-body">
+
+            <table id="FeedbackRequestTbl" class="table table-striped table-bordered table-list textCapitalize">
+                <thead>
+                    <tr>
+                        <th style="width: 25%; text-align:left " class="TableHeader">
+                            @Html.DisplayNameFor(model => model.EmployeeName)
+                        </th>
+                        <th style="width: 20%;text-align:left" class="TableHeader">
+                            @Html.DisplayNameFor(model => model.IssuedBy)
+                        </th>
+                        @if (ViewData["EmpData"] != null)
+                        {
+                            <th style="width: 20%;text-align:left" class="TableHeader">
+                                @Html.DisplayNameFor(model => model.ReportingTo)
+                            </th>
+
+                            <th style="width: 20%;text-align:left" class="TableHeader">
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+
+                            @*<th style="width: 20%;text-align:left" class="TableHeader">
+                @Html.DisplayNameFor(model => model.reviewers)
+            </th>*@
+                        }
+                        <th style="width: 15%" class="TableHeader">
+                            @Html.DisplayNameFor(model => model.ReviewDate)
+                        </th>
+                        <th style="width: 15%" class="TableHeader" @*class="detailsCol textAlignCenter"*@>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        var style = item.HighlightRow ? "background-color: antiquewhite" : "";
+                    <tr style="@style">
+                        <td style=" text-align:left ">
+                            @Html.DisplayFor(modelItem => item.EmployeeName)
+                        </td>
+                        <td style=" text-align:left ">
+                            @Html.DisplayFor(modelItem => item.IssuedBy)
+                        </td>
+                        @if (ViewData["EmpData"] != null)
+                        {
+                            <td style=" text-align:left ">
+                                @Html.DisplayFor(modelItem => item.ReportingTo)
+                                </td>
+
+                            <td class="text-center">
+                                @if (item.Status == "InProgress")
+                                {
+                                    string tooltipText = "Reviewers:\n";
+
+                                    if (item.ReviewDate.Year.ToString() == DateTime.Now.Year.ToString())
+                                    {
+                                        foreach (var u in item.reviewers)
+                                        {
+                                            tooltipText += u + System.Environment.NewLine;
+                                        }
+
+                                    }
+                                    <i style="font-size: 24px" data-toggle="tooltip" data-placement="bottom" title="@tooltipText" class="fa ">&#xf251;</i>
+
+                                }
+                                else if (item.Status == "Completed")
+                                {
+                                    <i class="fa fa-check-circle" style="font-size: 24px; color: green"></i>
+                                }
+                                else if (item.Status == "Released")
+                                {
+                                    <span style="color: #1d6cb3">@Html.DisplayFor(m => item.Status)</span>
+                                }
+                                else
+                                {
+                                    <span style="color: red">@Html.DisplayFor(m => item.Status)</span>
+                                }
+
+                            </td>
+                            }
+                            @*@if (ViewData["EmpData"] != null)
+            {
+                <td>
+                    @if (item.Status != "Not Released")
+                    {
+
+                        string reviewername = "";
+
+                        foreach (var u in item.reviewers)
+                        {
+                            reviewername += u + ";";
+
+                        }
+
+                       @Html.DisplayName(reviewername)
+
+                    }
+
+                </td>
+            }*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReviewDate)
+                            </td>
+
+                            <td>
+                                @if (ViewData["EmpData"] != null)
+                                {
+                                    if (dirEmpData.ToList().Find(d => d.ReviewID == item.ReviewID) != null)
+                                    {
+
+
+                                        if (item.FirstSubmission)
+                                        {
+                                            if (item.Status == "Released")
+                                            {
+                                                <a class="btn btn-info btn-sm" href="@Url.Action("AddAnnualFeedback", new { id = item.ReviewID, ReturnUrl = Request.Url })">
+                                                    Add Review
+                                                </a>
+                                            }
+                                            else if (item.Status == "Not Released")
+                                            {
+
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            if (item.Status == "Released")
+                                            {
+                                                <a class="btn btn-info btn-sm" href="@Url.Action("AddReviewerFeedback", new { id = item.ReviewID, ReturnUrl = Request.Url })">
+                                                    Add Review
+                                                </a>
+                                            }
+                                            else if (item.Status == "Not Released")
+                                            {
+
+                                            }
+
+
+                                            else if (item.Status == "InProgress")
+                                            {
+
+                                                foreach (var u in item.reviewers)
+                                                {
+                                                    if (u == "V R Manjunathan" || u == "manjunathan, v r")
+                                                    {
+                                                        <a class="btn btn-info btn-sm" href="@Url.Action("AddReviewerFeedback", new { id = item.ReviewID, ReturnUrl = Request.Url })">
+                                                            Add Review
+                                                        </a>
+
+                                                    }
+
+                                                }
+
+
+                                            }
+
+                                        }
+                                        if (item.Status == "Completed" || item.Status == "InProgress")
+                                        {
+                                            <a class="btn btn-info btn-sm" href="@Url.Action("AnnualFeedbackDetails", new { ReviewId = item.ReviewID, returnUrl = Request.Url })">View Review</a>
+
+                                        }
+
+
+                                    }
+
+                                    else
+                                    {
+                                        if (item.Status == "Completed" || item.Status == "InProgress")
+                                        {
+                                            <a class="btn btn-info btn-sm" href="@Url.Action("AnnualFeedbackDetails", new { ReviewId = item.ReviewID, returnUrl = Request.Url })">View Review</a>
+                                        }
+
+                                    }
+
+                                }
+
+                                @if (ViewData["EmpData"] == null)
+                                {
+                                    if (item.FirstSubmission)
+                                    {
+
+                                        <a class="btn btn-info  detailsBtn" href="@Url.Action("AddAnnualFeedback", new { id = item.ReviewID, ReturnUrl = Request.Url })">
+                                            Add Review
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-info  detailsBtn" href="@Url.Action("AddReviewerFeedback", new { id = item.ReviewID, ReturnUrl = Request.Url })">
+                                            Add Review
+                                        </a>
+                                    }
+
+
+                                }
+
+
+                                @*    @Html.ActionLink("Details", "Details", new { id=item.ReviewID }) *@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @* <div class="panel-footer">
+            </div>*@
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var t = $('#FeedbackRequestTbl').DataTable({
+        });
+    });
+
+</script>

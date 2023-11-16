@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "GetViews";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+
+    body {
+        font-size: 14px;
+    }
+
+    .Subcontainer {
+        margin: 0px;
+        width: 100%;
+        border: 2px solid #898a8c;
+        height: 646px;        
+        overflow-x:auto;
+        border-radius: 10px;
+    }
+
+    .list-group-item {
+        margin-bottom: 2%;
+    }
+
+    .list-group-item-dark {
+        background-color: #fff;
+    }
+
+    .container {
+        max-width: 1900px;
+    }
+
+    .divCol {
+        display: grid;
+    }
+
+    .table td {
+        padding: 0.30rem;
+    }
+
+    .table th {
+        padding: 0.50rem;
+    }
+
+    /* Toggel control*/
+    .custom-checkbox {
+        min-height: 1rem;
+        padding-left: 0;
+        margin-right: 0;
+        cursor: pointer;
+    }
+
+    .custom-control {
+        display: contents;
+    }
+
+    .list-group-item {
+        margin-bottom: 1%;
+    }
+    .bg-primary{
+        color: white;
+    font-size: 26px;
+    background-color: #656565;
+    }
+    .custom-checkbox .custom-control-indicator {
+        content: "";
+        display: inline-block;
+        position: relative;
+        width: 40px;
+        height: 10px;
+        background-color: #818181;
+        border-radius: 15px;
+        margin-right: 10px;
+        -webkit-transition: background .3s ease;
+        transition: background .3s ease;
+        vertical-align: middle;
+        margin: 0 16px;
+        box-shadow: none;
+    }
+
+        .custom-checkbox .custom-control-indicator:after {
+            content: "";
+            position: absolute;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background-color: #f1f1f1;
+            border-radius: 21px;
+            box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);
+            left: -2px;
+            top: -4px;
+            -webkit-transition: left .3s ease, background .3s ease, box-shadow .1s ease;
+            transition: left .3s ease, background .3s ease, box-shadow .1s ease;
+        }
+
+    .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator {
+        background-color: #818181;
+        background-image: none;
+        box-shadow: none !important;
+    }
+
+        .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator:after {
+            background-color: #ff3300;
+            left: 25px;
+        }
+
+    .custom-checkbox .custom-control-input:focus ~ .custom-control-indicator {
+        box-shadow: none !important;
+    }
+
+    .linkClass {
+        background-color: #e4e4e4 !important;
+        color: #1f8ae8 !important;
+        font-weight: bold !important;
+    }
+
+    .list-click {
+        cursor: pointer;
+        background-color: #eeeedd;
+        font-weight: 600;
+    }
+
+      .card
+    {
+        margin-top:1px;
+    }
+
+    .card .card-body
+    {
+        padding-top: 3px;
+        padding-bottom: 3px;
+
+    }
+    /**/
+</style>
+
+<script>
+    var SelectedView;
+    $(document).ready(function () {
+
+        $('.list-click').click(function () {
+            $('#divParaContainer').empty();
+            SelectedView = $(this);
+            $('.list-click').removeClass("linkClass");
+            $(this).addClass("linkClass");
+            //Load search parameters for views.
+            $('#divParaContainer').load('../SQLViews/SearchParameters_Partial?View=' + $(this).data("token"));    
+            $('.Subcontainer').scrollTop(0);
+        });
+    });
+
+</script>
+
+<div class="card h2">
+    <div class="card-body bg-primary text-white text-center">
+        Search Views Parameters
+    </div>
+</div>
+
+<div class="container Subcontainer">
+    <div class="row" style="margin-top: 10px;">
+        @* Right side view list *@
+        <div class="col-sm-4">
+            <div class="list-group">
+                @foreach (var Item in Model)
+                {
+                    if (Item.RV_DisplayName != null)
+                    {
+                        <a data-token="@Item.TABLE_NAME" class="list-click list-group-item list-group-item-action list-group-item-dark" title="@Item.RV_Description">@Item.RV_DisplayName</a>
+                    }
+                    else
+                    {
+                        <a data-token="@Item.TABLE_NAME" class="list-click list-group-item list-group-item-action list-group-item-dark" title="@Item.RV_Description">@Item.TABLE_NAME</a>
+                    }
+                }
+            </div>
+        </div>
+        @* Left side search parameter list *@
+        <div id="divParaContainer" class="col-sm-8">
+            @* Ajax to SearchParameters_Partial.cshtml *@
+        </div>
+     </div>
+</div>
+

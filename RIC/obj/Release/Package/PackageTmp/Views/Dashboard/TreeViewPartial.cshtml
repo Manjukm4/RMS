@@ -1,0 +1,194 @@
+﻿@model IEnumerable<RIC.Models.Dashboard.TreeViewPartial>
+@using  RIC.CustomHelper
+<script src="~/Content/JS/Dashboard/TreeViewPartial.js"></script>
+<style>
+    .ul
+    {
+        padding-right: 0px;
+    }
+    .liStyle
+    {
+        text-align: left;
+        background-color: #4d5158;
+        padding: 0px;
+        border: 1px solid #727a88;
+    }
+    .listStyle2
+    {       
+        text-align: left;
+        background-color: #35383d;
+        padding: 0px;
+        border: 1px solid #727a88;
+    }
+    .TextStyle
+    {
+        font-size: 15px;
+        font-weight: normal;
+        color: #ffffff;
+        padding: 19px 5px;
+    }
+    .TextStyle:hover
+     {
+        color: #92ebec !important;
+        text-decoration: none;
+    }
+
+    #searchTextbox::-ms-clear
+    { 
+        display: none; 
+    }
+</style>
+<div id="divnav" style="float: left; padding-left: 10px; padding-top: 10px">
+    <div id="mySidenav" class="sidenav">
+        <div>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        </div>
+        <div class="input-group col-md-12" style="width: 87%; padding-left: 5px">
+            <input type="text" id="searchTextbox" class="form-control" onkeyup="" placeholder="Search for names..">
+            <span class="input-group-btn">
+                <button class="btn btn-danger" type="button">
+                    <span class=" glyphicon glyphicon-search"></span>
+                </button>
+            </span>
+        </div>
+          <br />
+        <div>
+            <label class="teamSizeLbl">Team Size : @Model.Count()</label>
+        </div>
+      
+        <div style="margin-bottom: 200px;">
+            <!-- cd-accordion-menu -->
+            @if (Model.Count() != 0)
+            {
+                if (ViewBag.role == "Accounting Manager")
+                {
+                    @ShowTree(Model.Where(s => s.MgrCD == null), "list-group", "MyNav")
+                }
+                else
+                {
+                    @ShowTree(Model.Where(s => s.EmpLvl == 0), "list-group", "MyNav")
+                }
+
+            }
+
+
+            <div id="treeViewId" style="padding: 0px;" class="col-md-12 ">
+                @helper ShowTree(IEnumerable<RIC.Models.Dashboard.TreeViewPartial> foos, string ulClass, string id = null)
+                {
+                <ul id="@id" class="@ulClass">
+                    @if (foos.FirstOrDefault().MgrCD != "Directors")
+                    {
+                        @*if (ViewBag.role == "Accounting Manager" && foos.FirstOrDefault().MgrCD!=null)
+            {
+                <li class="list-group-item list-group-item-secondary listStyle2">
+                    <label class="nav-toggle nav-header TextStyle">
+                        @Html.ActionLink(foos.FirstOrDefault().ManagerName, "Index", new { empCd = foos.FirstOrDefault().MgrCD, getIndividualRecord = "Yes" }, new { @class = "TextStyle textCapitalize" })
+                    </label>
+                </li>
+            }
+            else
+            {
+                <li class="list-group-item list-group-item-secondary listStyle2">
+                    <label class="nav-toggle nav-header TextStyle">
+                        @Html.ActionLink(foos.FirstOrDefault().ManagerName, "Index", new { empCd = foos.FirstOrDefault().MgrCD, getIndividualRecord = "Yes" }, new { @class = "TextStyle textCapitalize" })
+                    </label>
+                </li>
+            }*@
+
+                        <li class="list-group-item list-group-item-secondary listStyle2">
+                            <label class="nav-toggle nav-header TextStyle">
+                                @Html.ActionLink(foos.FirstOrDefault().ManagerName, "Index", new { empCd = foos.FirstOrDefault().MgrCD, getIndividualRecord = "Yes" }, new { @class = "TextStyle textCapitalize" })
+                            </label>
+                        </li>
+
+                    }
+                    @foreach (var foo in foos)
+                    {
+                        var items = Model.Where(s => s.MgrCD == foo.EmpCD).ToList();
+                        if (items.Count() > 0)
+                        {
+                            int count = items.Count() + 1;
+                            <li class="list-group-item list-group-item-secondary liStyle">
+                                <label class="nav-toggle nav-header TextStyle">
+                                    <span class="nav-toggle-icon glyphicon glyphicon-chevron-right"></span>
+                                    @Html.ActionLink(foo.EmployeeName, "Index", new { empCd = foo.EmpCD }, new { @class = "TextStyle textCapitalize" })
+                                    (@CustomHelper.GetCountFromTreePartial(Model, foo.EmpCD))
+                                </label>
+                                @ShowTree(items, "list-group ulToggle")
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="list-group-item list-group-item-secondary listStyle2">
+                                <label class="nav-toggle nav-header TextStyle">
+                                    @Html.ActionLink(foo.EmployeeName, "Index", new { empCd = foo.EmpCD }, new { @class = "TextStyle textCapitalize" })
+                                </label>
+                            </li>
+
+                        }
+                    }
+                </ul>
+                }
+            </div>
+        </div>
+    </div>
+    <span style="font-size: 30px; cursor: pointer" data-tooltip title="Menu" onclick="openNavi();">
+        <i class="fas fa-users"></i>
+    </span>
+</div>
+<script>
+    $('ul.ulToggle').toggle();
+    $('label.nav-toggle span').click(function () {
+
+        $(this).parent().parent().children('ul.ulToggle').toggle(300);
+
+        var cs = $(this).attr("class");
+        if (cs == 'nav-toggle-icon glyphicon glyphicon-chevron-right') {
+            $(this).removeClass('glyphicon-chevron-right').addClass('glyphicon-chevron-down');
+            if ($('#searchTextbox').val().trim() != "") {
+                var teamFilterIndex = $(this).parent().parent().index();
+                if ($("#mySidenav li:eq('" + teamFilterIndex + "')").find("ul").length <= 1) {
+                    $(this).parent().parent().children('ul .ulToggle:eq(0)').find("li").show();
+                }
+                
+            }
+        }
+        if (cs == 'nav-toggle-icon glyphicon glyphicon-chevron-down') {
+            $(this).removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-right');
+        }
+    });
+    $(document).ready(function () {
+
+        $(".closebtn").click(function () {
+                $('#searchTextbox').val("");
+                $('#searchTextbox').keyup();
+        });
+
+
+
+        $('#searchTextbox').keyup(function () {           
+            var searchText = $(this).val().toUpperCase();
+            var $searchRow = $("#MyNav li");
+            if (searchText.trim() == "") {
+                $searchRow.find("span").addClass("glyphicon-chevron-right");
+                $searchRow.find("span").removeClass("glyphicon-chevron-down");
+                $("#MyNav ul").hide();
+
+            } else {
+                $searchRow.find("span").removeClass("glyphicon-chevron-right");
+                $searchRow.find("span").addClass("glyphicon-chevron-down");
+                $("#MyNav ul").show();
+
+            }  
+            $searchRow.each(function () {
+                a = $(this).find('a')[0];
+                if (a != null) {
+                    var currentLiText = $(this).text().toUpperCase();       
+                    showCurrentLi = currentLiText.indexOf(searchText) !== -1;                    
+                    $(this).toggle(showCurrentLi);
+                }
+            });
+        });
+
+    });
+</script>

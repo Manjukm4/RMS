@@ -1,0 +1,1003 @@
+﻿@model Tuple<List<RIC.Models.Client.ClientDashboardQuaterly>, List<RIC.Models.Client.ClientDashboardMonthly>>
+
+
+<style>
+    .TextAlignCenter {
+        text-align: center;
+    }
+
+    /*.Quarter1 {
+        background-color: #d3ebff;
+    }
+
+    .Quarter2 {
+        background-color: #ffd9d9 !important;
+    }
+
+    .Quarter3 {
+        background-color: #ebffc0 !important;
+    }
+
+    .Quarter4 {
+        background-color: #adefd6;
+    }*/
+
+    .table, .table th, .table td {
+        border: 1px solid black !important;
+        padding: 6px !important;
+    }
+
+        .table td {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            vertical-align: middle !important;
+        }
+
+    .datecss {
+        background-color: beige;
+        font-size: 13px;
+        border: 1px solid #909290;
+        font-weight: 700;
+        width: 3%;
+    }
+
+    .custab {
+        border: 1px solid #ccc;
+        padding: 5px;
+        /*margin: 5% 0;*/
+        box-shadow: 3px 3px 2px #ccc;
+        transition: 0.5s;
+    }
+
+        .custab:hover {
+            box-shadow: 3px 3px 0px transparent;
+            transition: 0.5s;
+        }
+
+    tr:nth-child(odd) {
+        background-color: #eee;
+    }
+
+    .Quarter, .QuarterHead {
+        display: none;
+    }
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
+
+
+<table class="table table-bordered table-striped custab" style="border: 1px solid #909290;" id="tblpartial">
+    <thead>
+        <tr>
+            <th class="datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().RJ_Company)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Requirements)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Responded)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().TotPercentage)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Submissions)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Interviews)
+            </th>
+
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Hires)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().SubByInterview)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().SubByHire)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().InterviewByHire)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody id="fbody">
+        @foreach (var item in Model.Item1)
+        {
+            <tr>
+                <td class="datecss">
+                    <a style="cursor:pointer;" class="fas fa-user-plus spanClick"></a>
+                    @item.RJ_Company
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    
+                    @*@Html.DisplayFor(model => item.TotalRequirements)*@
+                    @if (item.TotalRequirements > 0)
+                    {
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                           data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q4EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.TotalRequirements)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.TotalRequirements)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+
+                    @Html.DisplayFor(model => item.TotalResponse)
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+
+                    @Html.DisplayFor(model => item.TotPercentage)%
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @if (item.TotalSubmissons > 0)
+                    {
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                           data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q4EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.TotalSubmissons)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.TotalSubmissons)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @if (item.TotalInterviews > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                           data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q4EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.TotalInterviews)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.TotalInterviews)
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @if (item.TotalHires > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                           data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q4EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.TotalHires)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.TotalHires)
+                    }
+
+                </td>
+                <td class="TextAlignCenter">
+                    @Html.DisplayFor(model => item.TotalSubByInterview)%
+                </td>
+                <td class="TextAlignCenter">
+                    @Html.DisplayFor(model => item.TotalSubByHire)%
+                </td>
+                <td class="TextAlignCenter">
+                    @Html.DisplayFor(model => item.TotalInterviewByHire)%
+                </td>
+
+            </tr>
+            <tr class="QuarterHead">
+                <td class="datecss">
+                    <a style="cursor:pointer;padding-left: 15px;" class="fas fa-user-plus quarterClick"></a>
+                    Quarter 1
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    
+                    @*@Html.DisplayFor(model => item.Q1Requirements)*@
+                    @if (item.Q1Requirements > 0)
+                    {
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                           data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q1EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q1Requirements)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q1Requirements)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+
+                    @Html.DisplayFor(model => item.Q1Responded)
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+
+                    @Html.DisplayFor(model => item.Q1Percentage)%
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @if (item.Q1Submissions > 0)
+                    {
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                           data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q1EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q1Submissions)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q1Submissions)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @if (item.Q1Interviews > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                           data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q1EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q1Interviews)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q1Interviews)
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @if (item.Q1Hires > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                           data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q1EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q1Hires)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q1Hires)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @Html.DisplayFor(model => item.Q1SubByInterview)%
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @Html.DisplayFor(model => item.Q1SubByHire)%
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @Html.DisplayFor(model => item.Q1InterviewByHire)%
+                </td>
+            </tr>
+
+            var items1 = Model.Item2.Where(s => s.RJ_Company == item.RJ_Company && (s.Monthnum == 1 || s.Monthnum == 2 || s.Monthnum == 3)).ToList();
+
+            foreach (var data in items1)
+            {
+                <tr class="Quarter">
+                    <td class="datecss">
+                        <span style="padding-left:30px">@data.MonthName</span>
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        
+                        @*@Html.DisplayFor(model => data.RequirementsCount)*@
+                        @if (data.RequirementsCount > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.RequirementsCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.RequirementsCount)
+                        }
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.Respond)
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.Percentage)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.SubmissonCount > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.SubmissonCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.SubmissonCount)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.InterviewCount > 0)
+                        {
+
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.InterviewCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.InterviewCount)
+                        }
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.HireCount > 0)
+                        {
+
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.HireCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.HireCount)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.SubByInterview)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.SubByHire)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.InterviewByHire)%
+                    </td>
+                </tr>
+
+            }
+
+            <tr class="QuarterHead">
+                <td class="datecss">
+                    <a style="cursor:pointer;padding-left: 15px;" class="fas fa-user-plus quarterClick"></a>
+                    Quarter 2
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    
+                    @*@Html.DisplayFor(model => item.Q2Requirements)*@
+                    @if (item.Q2Requirements > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                           data-FromDate="@item.Q2StartDate" data-ToDate="@item.Q2EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q2Requirements)
+
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q2Requirements)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+
+                    @Html.DisplayFor(model => item.Q2Responded)
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+
+                    @Html.DisplayFor(model => item.Q2Percentage)%
+
+                </td>
+                <td class="TextAlignCenter Quarter2">
+                    @if (item.Q2Submissions > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                           data-FromDate="@item.Q2StartDate" data-ToDate="@item.Q2EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q2Submissions)
+
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q2Submissions)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter2">
+                    @if (item.Q2Interviews > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                           data-FromDate="@item.Q2StartDate" data-ToDate="@item.Q2EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q2Interviews)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q2Interviews)
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter2">
+
+                    @if (item.Q2Hires > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                           data-FromDate="@item.Q2StartDate" data-ToDate="@item.Q2EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q2Hires)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q2Hires)
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter2">
+                    @Html.DisplayFor(model => item.Q2SubByInterview)%
+                </td>
+                <td class="TextAlignCenter Quarter2">
+                    @Html.DisplayFor(model => item.Q2SubByHire)%
+                </td>
+                <td class="TextAlignCenter Quarter2">
+                    @Html.DisplayFor(model => item.Q2InterviewByHire)%
+                </td>
+            </tr>
+
+            var items2 = Model.Item2.Where(s => s.RJ_Company == item.RJ_Company && (s.Monthnum == 4 || s.Monthnum == 5 || s.Monthnum == 6)).ToList();
+
+            foreach (var data in items2)
+            {
+                <tr class="Quarter">
+                    <td class="datecss">
+                        <span style="padding-left:30px">@data.MonthName</span>
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        
+                        @*@Html.DisplayFor(model => data.RequirementsCount)*@
+                        @if (data.RequirementsCount > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.RequirementsCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.RequirementsCount)
+                        }
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.Respond)
+                    </td>
+
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.Percentage)%
+                    </td>
+
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.SubmissonCount > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.SubmissonCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.SubmissonCount)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.InterviewCount > 0)
+                        {
+
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.InterviewCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.InterviewCount)
+                        }
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.HireCount > 0)
+                        {
+
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.HireCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.HireCount)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.SubByInterview)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.SubByHire)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.InterviewByHire)%
+                    </td>
+                </tr>
+
+            }
+
+
+            <tr class="QuarterHead">
+                <td class="datecss">
+                    <a style="cursor:pointer;padding-left: 15px;" class="fas fa-user-plus quarterClick"></a>
+                    Quarter 3
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    
+                    @*@Html.DisplayFor(model => item.Q3Requirements)*@
+                    @if (item.Q3Requirements > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                           data-FromDate="@item.Q3StartDate" data-ToDate="@item.Q3EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q3Requirements)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q3Requirements)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+
+                    @Html.DisplayFor(model => item.Q3Responded)
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+
+                    @Html.DisplayFor(model => item.Q3Percentage)%
+
+                </td>
+                <td class="TextAlignCenter Quarter3">
+
+                    @if (item.Q3Submissions > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                           data-FromDate="@item.Q3StartDate" data-ToDate="@item.Q3EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q3Submissions)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q3Submissions)
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter3">
+
+                    @if (item.Q3Interviews > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                           data-FromDate="@item.Q3StartDate" data-ToDate="@item.Q3EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q3Interviews)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q3Interviews)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter3">
+
+                    @if (item.Q3Hires > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                           data-FromDate="@item.Q3StartDate" data-ToDate="@item.Q3EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q3Hires)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q3Hires)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter3">
+                    @Html.DisplayFor(model => item.Q3SubByInterview)%
+                </td>
+                <td class="TextAlignCenter Quarter3">
+                    @Html.DisplayFor(model => item.Q3SubByHire)%
+                </td>
+                <td class="TextAlignCenter Quarter3">
+                    @Html.DisplayFor(model => item.Q3InterviewByHire)%
+                </td>
+            </tr>
+
+            var items3 = Model.Item2.Where(s => s.RJ_Company == item.RJ_Company && (s.Monthnum == 7 || s.Monthnum == 8 || s.Monthnum == 9)).ToList();
+
+            foreach (var data in items3)
+            {
+                <tr class="Quarter">
+                    <td class="datecss">
+                        <span style="padding-left:30px">@data.MonthName</span>
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        
+                        @*@Html.DisplayFor(model => data.RequirementsCount)*@
+                        @if (data.RequirementsCount > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.RequirementsCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.RequirementsCount)
+                        }
+
+
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.Respond)
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.Percentage)%
+                    </td>
+
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.SubmissonCount > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.SubmissonCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.SubmissonCount)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.InterviewCount > 0)
+                        {
+
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.InterviewCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.InterviewCount)
+                        }
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.HireCount > 0)
+                        {
+
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.HireCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.HireCount)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.SubByInterview)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.SubByHire)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.InterviewByHire)%
+                    </td>
+                </tr>
+
+            }
+
+            <tr class="QuarterHead">
+                <td class="datecss">
+                    <a style="cursor:pointer;padding-left: 15px;" class="fas fa-user-plus quarterClick"></a>
+                    Quarter 4
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    
+                    @*@Html.DisplayFor(model => item.Q4Requirements)*@
+                    @if (item.Q4Requirements > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                           data-FromDate="@item.Q4StartDate" data-ToDate="@item.Q4EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q4Requirements)
+
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q4Requirements)
+                    }
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+
+                    @Html.DisplayFor(model => item.Q4Responded)
+
+                </td>
+                <td class="TextAlignCenter Quarter1">
+
+                    @Html.DisplayFor(model => item.Q4Percentage)%
+
+                </td>
+                <td class="TextAlignCenter Quarter4">
+                    @if (item.Q4Submissions > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                           data-FromDate="@item.Q4StartDate" data-ToDate="@item.Q4EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q4Submissions)
+
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q4Submissions)
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter4">
+                    @if (item.Q4Interviews > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                           data-FromDate="@item.Q4StartDate" data-ToDate="@item.Q4EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q4Interviews)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q4Interviews)
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter4">
+
+                    @if (item.Q4Hires > 0)
+                    {
+
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                           data-FromDate="@item.Q4StartDate" data-ToDate="@item.Q4EndDate" data-company="@item.RJ_Company">
+                            @Html.DisplayFor(model => item.Q4Hires)
+                        </a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(model => item.Q4Hires)
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter4">
+                    @Html.DisplayFor(model => item.Q4SubByInterview)%
+                </td>
+                <td class="TextAlignCenter Quarter4">
+                    @Html.DisplayFor(model => item.Q4SubByHire)%
+                </td>
+                <td class="TextAlignCenter Quarter4">
+                    @Html.DisplayFor(model => item.Q4InterviewByHire)%
+                </td>
+            </tr>
+
+            var items4 = Model.Item2.Where(s => s.RJ_Company == item.RJ_Company && (s.Monthnum == 10 || s.Monthnum == 11 || s.Monthnum == 12)).ToList();
+
+            foreach (var data in items4)
+            {
+                <tr class="Quarter">
+                    <td class="datecss">
+                        <span style="padding-left:30px">@data.MonthName</span>
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        
+                        @*@Html.DisplayFor(model => data.RequirementsCount)*@
+                        @if (data.RequirementsCount > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.RequirementsCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.RequirementsCount)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+
+                        @Html.DisplayFor(model => data.Respond)
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.Percentage)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.SubmissonCount > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.SubmissonCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.SubmissonCount)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.InterviewCount > 0)
+                        {
+
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.InterviewCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.InterviewCount)
+                        }
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (data.HireCount > 0)
+                        {
+
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate" data-company="@item.RJ_Company">
+                                @Html.DisplayFor(model => data.HireCount)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => data.HireCount)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.SubByInterview)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.SubByHire)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => data.InterviewByHire)%
+                    </td>
+                </tr>
+
+            }
+
+        }
+
+    </tbody>
+
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg ">
+        <div id='myModalContent'></div>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function () {
+
+        var TeamDetailPostBackURL = '../ClientMonthyDashboard/DetailsViewPopup';
+        // $(function () {
+        $(".anchorDetail").click(function () {
+
+            //debugger;
+            // var empCD = $("#HdnEmpCD").val();
+            var $buttonClicked = $(this);
+            var fromDate = $buttonClicked.attr('data-FromDate');
+            var toDate = $buttonClicked.attr('data-ToDate');
+            var jr = $buttonClicked.attr('data-Jr');
+            var company = $buttonClicked.attr('data-company');
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "company": company },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                    //$("#myModal").dialog();
+                },
+                error: function () {
+                    //alert("Dynamic content load failed.");
+                }
+            });
+        });
+
+
+        $(".spanClick").click(function () {
+            var $rowIndex = $(this).closest('td').parent()[0].sectionRowIndex;
+            var $row = $(".QuarterHead");
+           // debugger;
+            if ($(this).attr("class").includes("plus")) {
+                $(this).attr("class", "fas fa-user-minus spanClick");
+
+                if ($rowIndex == 0) {
+                    $row.slice($rowIndex, $rowIndex + 4).show();
+                } else {
+                    var $getRowPosition = ($rowIndex / 17) * 4;
+                    $row.slice($getRowPosition, $getRowPosition + 4).show();
+                }
+                HideQuarter($rowIndex);
+            }
+            else {
+                $(this).attr("class", "fas fa-user-plus spanClick");
+
+                if ($rowIndex == 0) {
+                    $row.slice($rowIndex, $rowIndex + 4).hide();
+                    $(".Quarter").slice($rowIndex, $rowIndex + 12).hide();
+                } else {
+                    var $getMonthRowPosition = ($rowIndex / 17) * 12;
+                    var $getQuarterRowPosition = ($rowIndex / 17) * 4;
+                    $row.slice($getQuarterRowPosition, $getQuarterRowPosition + 4).hide();
+                    $(".Quarter").slice($getMonthRowPosition, $getMonthRowPosition + 12).hide();
+                }
+            }
+            $rowIndex = 0;
+        });
+
+
+        $(".quarterClick").click(function () {
+            var $rowIndex = $(this).closest('td').parent()[0].sectionRowIndex;
+            var $row = $(".Quarter");
+            if ($(this).attr("class").includes("plus")) {
+                $(this).attr("class", "fas fa-user-minus spanClick");
+                $("#tblpartial tbody tr").slice($rowIndex + 1, $rowIndex + 4).show();
+            }
+            else {
+                $(this).attr("class", "fas fa-user-plus spanClick");
+                $("#tblpartial tbody tr").slice($rowIndex + 1, $rowIndex + 4).hide();
+
+            }
+        });
+    });
+
+    function HideQuarter(rowIndex) {
+        var $tableRow = $("#tblpartial tbody");
+        $tableRow.find("tr:eq('" + (rowIndex + 1) + "')").find("td:eq(0) a").attr("class", "fas fa-user-plus quarterClick");;
+        $tableRow.find("tr:eq('" + (rowIndex + 5) + "')").find("td:eq(0) a").attr("class", "fas fa-user-plus quarterClick");
+        $tableRow.find("tr:eq('" + (rowIndex + 9) + "')").find("td:eq(0) a").attr("class", "fas fa-user-plus quarterClick");
+        $tableRow.find("tr:eq('" + (rowIndex + 13) + "')").find("td:eq(0) a").attr("class", "fas fa-user-plus quarterClick");
+
+
+    }
+
+</script>

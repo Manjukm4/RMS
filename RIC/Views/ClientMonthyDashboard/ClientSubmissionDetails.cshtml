@@ -1,0 +1,244 @@
+﻿@model RIC.Models.Client.ClientSubmissionView
+@{
+    ViewBag.Title = "ClientDetailsByQuaterly";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+
+    .panel-primary > .panel-heading {
+        color: #fff;
+        background-color: #337ab7;
+        border-color: #337ab7;
+    }
+
+    .textCapitalize {
+        text-transform: capitalize;
+    }
+
+    .LblHeader {
+        font-size: x-large;
+        padding-right: 20px;
+        padding-left: 20px;
+        vertical-align: -webkit-baseline-middle;
+    }
+
+    .panel-heading {
+        /* padding: 10px 15px; */
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    .heading {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    #ClientQuaterlyPartial {
+        height: 577px;
+        overflow: auto;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js">
+</script>
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title heading">Submission Dashboard</h1>
+        </div>
+        @*<div class="row">
+            <div class="panel panel-primary DivBorder">
+                   <div style="text-align: center;padding:0%" class="panel-heading headingStyle affix" data-spy="affix" data-offset-top="5">
+                 <label class="LblHeader">
+                     Client Dashboard For Quarterly
+
+                 </label>
+             </div>*@
+        @{
+            string monday = ViewBag.mondayOfLastWeek;
+            string friday = ViewBag.FridayOfLastWeek;
+        }
+
+        @using (Html.BeginForm("ClientSubmissionDetails", "ClientMonthyDashboard", FormMethod.Post, new { @name = "submission" }))
+        {
+            <input type='hidden' value='@ViewBag.Empcd' id='empCd' name="empCd" />
+
+
+            <div class="row" style="margin-top: 3%;">
+                <div class="form-row col-md-12" style="margin-left: 3%;">
+                    <div class="form-group col-md-4">
+                        <div class=" col-md-2">
+                            @Html.LabelFor(model => model.YearSelectList, new { @class = "form" })
+                        </div>
+                        <div class=" col-md-6">
+                            @Html.DropDownListFor(model => model.YearSelectList, Model.YearSelectList, new { @id = "ddlyear", @class = "form-control" })
+                        </div>
+                    </div>
+                    @if (User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])
+                       || User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["StaffingDirector"])
+                       )
+                    {
+                        <div class="form-group col-md-4">
+                            <div class=" col-md-3">
+                                @Html.Label("Account Manager", new { @class = "form" })
+                            </div>
+                            <div class=" col-md-7">
+                                @Html.DropDownListFor(model => model.AMSelectList, Model.AMSelectList, new { @class = "form-control", @id = "ddlAM" })
+                            </div>
+
+                        </div>
+                    }
+                    <div class="form-group col-md-4">
+                        <div class=" col-md-2">
+                            @Html.LabelFor(model => model.ClientList, new { @class = "form" })
+                        </div>
+                        <div class=" col-md-9">
+                            @Html.DropDownListFor(model => model.ClientList, Model.ClientList, new { @class = "form-control", @id = "ddlClient" })
+                        </div>
+
+                    </div>
+
+                    @if (User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])
+                      || User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["StaffingDirector"])
+                      )
+                    {
+                        <div class="form-group col-md-12" style="text-align: center;">
+                            <div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                <input type="submit" class="btn btn-primary" value="Search" id="btnSearch" />
+                            </div>
+
+
+                            @*<div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                    <input type="button" class="btn btn-primary" value="Export" id="btnexport" />
+                                </div>*@
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group col-md-4" style="text-align: center;">
+                            <div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                <input type="submit" class="btn btn-primary" value="Search" id="btnSearch" />
+                            </div>
+
+
+                            @*<div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                    <input type="button" class="btn btn-primary" value="Export" id="btnexport" />
+                                </div>*@
+                        </div>
+                    }
+
+                </div>
+
+                <div class="form-group col-md-12">
+                    <div class="col-md-6">
+                        <div class=" col-md-3">
+                            <label for="inputEmail4">From Date</label>
+                        </div>
+                        <div class=" col-md-6">
+                            @Html.TextBox("FromDate", monday, new { placeholder = "MM-DD-YYYY", @class = "form-control input-sm chat-input input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class=" col-md-3">
+                            <label for="inputEmail4">To Date</label>
+                        </div>
+                        <div class="col-md-6">
+                            @Html.TextBox("ToDate", friday, new { placeholder = "MM-DD-YYYY", @class = "form-control input-sm chat-input input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+        }
+
+    </div>
+
+</div>
+<div id="ClientQuaterlyPartial"></div>
+
+<script>
+
+    $(document).ready(function () {
+        var jobRepartPartialUrl = '@Url.Action("ClientSubmissionDeatilsPartial")';
+        var $getYear = parseInt($("#ddlyear").val());
+        var $getClient = $("#ddlClient").val();
+        var $empCd = $('#empCd').val();
+        var $AM = $("#ddlAM").val();
+        var $FromDT = $('#FromDate').val();
+        var $ToDt= $("#ToDate").val();
+        $.ajax({
+            type: "GET",
+            url: jobRepartPartialUrl,
+            contentType: "application/json; charset=utf-8",
+            data: { "EmpCd": $empCd, "Year": $getYear, "Client": $getClient, "Account": $AM, "FromDate": $FromDT, "ToDate":$ToDt},
+            datatype: "json",
+            success: function (data) {
+                $('#ClientQuaterlyPartial').html(data);
+
+            },
+            error: function () {
+                //alert("Dynamic content load failed.");
+            }
+        });
+
+        $("#ddlAM").change(function () {
+            document.forms["submission"].submit();
+        });
+
+        $("#btnexport").click(function () {
+        let table = document.getElementsByTagName("table");
+        TableToExcel.convert(table[0], { // html code may contain multiple tables so here we are refering to 1st table tag
+           name: `ClientSubmissionDeatils.xlsx`, // fileName you could use any name
+           sheet: {
+              name: 'Sheet 1' // sheetName
+           }
+        });
+    });
+        //datepicker
+        $('#FromDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
+            ,
+            onSelect: function (selected) {
+
+                //var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate());
+                $("#ToDate").datepicker("option", "minDate", dt);
+            }
+        });
+        $('#ToDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+                //var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate() - 1);
+                $("#FromDate").datepicker("option", "maxDate", dt);
+            }
+        });
+
+    });
+
+
+
+
+</script>

@@ -1,0 +1,230 @@
+﻿@model RIC.Models.Dashboard.UserDashboard
+@{
+    ViewBag.Title = "UserDashboard";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link href="~/Content/CSS/Dashboard/ProgressDashboard.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js" type="text/javascript"></script>
+<style>
+    .listStyle
+    {
+         border: none !important;
+            background-color: transparent;
+    }
+    .ulStyle
+    {
+          background-color: transparent;    height: auto ;    overflow: auto;     border: none;
+    }
+
+    .resizable
+    {
+        padding: 0px;
+        background-color: #fbfbfb;    height: fit-content !important;
+    }
+    .paneHeaderlStyle
+    {
+            background-color: white !important;     text-align: center;
+    }
+</style>
+<div class="row">
+    <div class="col-md-11 text-center">
+        <h3>User Dashboard</h3>
+    </div>
+    <div class="col-md-1 align-self-end">
+        <button id="SettingPopup" class="align-self-end btn btn-primary" type="button"><i class="fas fa-cog"></i></button>
+    </div>
+</div>
+@{
+    int? width1 = Model.List1.Count() == 0 || Model.List1.Max(m => m.ColumnWidth) == 0 ? (int?)null : Model.List1.Max(m => m.ColumnWidth);
+    int? width2 = Model.List2.Count() == 0 || Model.List2.Max(m => m.ColumnWidth) == 0 ? (int?)null : Model.List2.Max(m => m.ColumnWidth);
+    int? width3 = Model.List3.Count() == 0 || Model.List3.Max(m => m.ColumnWidth) == 0 ? (int?)null : Model.List3.Max(m => m.ColumnWidth);
+
+    string listAstyle = width1 == null ? null :"width:"+ width1.ToString() + "%";
+    string listBstyle = width2 == null ? null : "width:" + width2.ToString() + "%";
+    string listCstyle = width3 == null ? null : "width:" + width3.ToString() + "%";
+ }
+<div  id="list-A" style="@listAstyle" class="col-md-4 resizable border">
+    <ul id="Ul1" style="" class="sortable form-control panel-resizable ulStyle">
+        @foreach (var item in Model.List1)
+        { 
+            <li id="@item.Id" class="list-group-item listStyle">
+                <div class="panel panel-default">
+                    <div class="panel-heading paneHeaderlStyle">@item.PanelName  <i style="float: right; cursor:pointer" class="fas fa-times-circle delete text-right"></i></div>
+                    <div class="panel-body">
+                       @{Html.RenderAction(item.ActionName);}
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+<div  id="list-B" style="@listBstyle" class="col-md-4 resizable">
+      <ul id="Ul2" style="" class="sortable form-control panel-resizable ulStyle">
+        @foreach (var item in Model.List2)
+        { 
+            <li id="@item.Id" class="list-group-item listStyle">
+                <div class="panel panel-default">
+                    <div class="panel-heading paneHeaderlStyle">@item.PanelName <i style="float: right; cursor:pointer" class="fas fa-times-circle delete "></i></div>
+                    <div class="panel-body">
+                          @{Html.RenderAction(item.ActionName);}
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+<div  id="list-C" style="@listCstyle" class="col-md-4 resizable">
+      <ul id="Ul3" style="" class="sortable form-control panel-resizable ulStyle">
+         @foreach (var item in Model.List3)
+        { 
+            <li id="@item.Id" class="list-group-item listStyle">
+                <div class="panel panel-default">
+                    <div class="panel-heading paneHeaderlStyle">@item.PanelName <i style="float: right; cursor:pointer" class="fas fa-times-circle delete text-right"></i></div>
+                    <div class="panel-body">
+                          @{Html.RenderAction(item.ActionName);}
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+<div class="modal fade product_view" id="product_view">
+    <div id="myModalContent" class="modal-dialog modal-lg">
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        //setting popup --------------------------------------------------------------------------------------------
+        $("#SettingPopup").click(function ()
+        {
+        var settingsPostBackURL = '@Url.Action("AddPanelsPopup")';
+        $.ajax({
+            type: "GET",
+            url: settingsPostBackURL,
+            contentType: "application/json; charset=utf-8",
+            //  data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+            datatype: "json",
+            success: function (data) {
+
+                $('#myModalContent').html(data);
+                //  $('#product_view').modal(options);
+                $('#product_view').modal('show');
+                //$("#myModal").dialog();
+            },
+            error: function () {
+                //alert("Dynamic content load failed.");
+            }
+        });
+    });
+//----------------------------------------------------------------------------------------------------------------
+//-----update the row number---------------
+        $(function () {
+        var oldList, newList, item;
+        $('.sortable').sortable({
+            start: function (event, ui) {
+                item = ui.item;
+                newList = oldList = ui.item.parent().parent();
+            },
+            stop: function (event, ui) {
+                updateRowsInDb()
+            },
+            change: function (event, ui) {
+                if (ui.sender) newList = ui.placeholder.parent().parent();
+            },
+            connectWith: ".sortable"
+        }).disableSelection();
+    });
+   
+    $(".sortable .delete").click(function () {
+        var r = confirm("Are you sure you would like to remove this panel?");
+        if (r == true) {
+            $(this).closest('li').remove();
+            updateRowsInDb()
+        } else {
+           // txt = "You pressed Cancel!";
+        }
+      
+    });
+    function updateRowsInDb()
+    {
+        var itemList = []
+        var itemOrder1 =  $('#Ul1').sortable("toArray");
+        var itemOrder2 =  $('#Ul2').sortable("toArray");
+        var itemOrder3 =  $('#Ul3').sortable("toArray");
+       
+        for (var i = 0; i < itemOrder1.length; i++) {
+            itemList.push({
+                            'Id': parseInt(itemOrder1[i]),
+                            'SortOrder':parseInt(i),
+                            'ColumnNumber': parseInt(1),
+                            'PanelSelected': true,
+                            'ColumnWidth': $("#list-A").width() / $('#list-A').parent().width() * 100
+                        });
+          //  alert("Position 1: " + i + " ID: " + itemOrder1[i]);
+        }
+        for (var i = 0; i < itemOrder2.length; i++) {
+            itemList.push({
+                                'Id': itemOrder2[i],
+                                'SortOrder': i,
+                                'ColumnNumber': 2,
+                                'PanelSelected': true,
+                                'ColumnWidth': $("#list-B").width() / $('#list-B').parent().width() * 100
+                            });
+            //alert("Position 2: " + j + " ID: " + itemOrder2[j]);
+        }
+        for (var i = 0; i < itemOrder3.length; i++) {
+            itemList.push({
+                            'Id': itemOrder3[i],
+                            'SortOrder': i,
+                            'ColumnNumber': 3,
+                            'PanelSelected': true,
+                            'ColumnWidth': $("#list-C").width() / $('#list-C').parent().width() * 100
+                        });
+            //alert("Position 3: " + i + " ID: " + itemOrder3[i]);
+        }
+        console.log($('#list-A').width());
+        console.log($('#list-B').width());
+        console.log($('#list-C').width());
+        $.ajax({
+            url: '@Url.Action("AddPanelsPopup")',
+            dataType: 'json',
+            type: 'post',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(itemList),
+            success: function (data, textStatus, jQxhr) {
+               // $('#response pre').html(data);
+            },
+            error: function (jqXhr, textStatus, errorThrown) {
+                debugger
+                console.log(errorThrown);
+            }
+        });
+    }
+ //----------------------------------------------------
+//resizable pannels.
+    $('.resizable').resizable({
+        handles: 'e',
+        alsoResizeReverse: '#mirror',
+        autoHide: true,
+        ghost: true,
+    });
+    var rtime;
+    var timeout = false;
+    var delta = 200;
+    $('.resizable').resize(function () {
+        rtime = new Date();
+        if (timeout === false) {
+            timeout = true
+            setTimeout(resizeend, delta);           
+        };
+    });
+    function resizeend() {
+        if (new Date() - rtime < delta) {
+            setTimeout(resizeend, delta);
+        }
+        else{
+            timeout = false;
+            updateRowsInDb();           // alert('Done resizing');
+        }}
+    });
+</script>

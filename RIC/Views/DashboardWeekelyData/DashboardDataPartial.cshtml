@@ -1,0 +1,315 @@
+﻿@*@model RIC.Models.SearchEmployeeData*@
+@using System.Globalization;
+ 
+ 
+<style>
+    @@import url('//cdn.datatables.net/1.10.2/css/jquery.dataTables.css');
+
+    td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+    }
+
+    [data-toggle="toggle"] {
+        display: none;
+    }
+</style>
+<html>
+<head>
+
+
+
+    <meta name="viewport" content="width=device-width" />
+    <title>DashboardData</title>
+    <style>
+
+        table, td, th {
+            border: 1px solid black;
+        }
+
+        .container {
+            padding: 25px;
+            padding-top: 140px;
+            width: 100%;
+        }
+
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            /*table-layout: fixed;*/
+            background-color: #EDEDED;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 15px;
+            border-color: #d2d2d2;
+            border-width: 5px;
+            box-shadow: 0 1px 0 #cfcfcf;
+        }
+
+        h4 {
+            border: 0 solid #fff;
+            border-bottom-width: 1px;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .wrapper {
+            text-align: center;
+        }
+    </style>
+
+
+
+</head>
+<body>
+    <div>
+
+        <br />
+        @{
+            DateTime date = ViewBag.date;
+            string stdate = ViewBag.weekstdate;
+            string enddate = ViewBag.weekenddate;
+        }
+        @*<div style="text-align:center"> <b>From @stdate-To @enddate</b></div>*@
+        @*<table align="center">
+            <thead>
+
+                <tr aglin="center">
+
+                    <th class="labelcenter">
+                        @if (ViewBag.ShowPreviousBtn == "N")
+                        {
+                            <button id='' class="btn btn-primary" disabled="disabled">
+                                <i class="fas fa-angle-double-left"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button id='previousMontBtn' class="btn btn-primary">
+                                <i class="fas fa-angle-double-left"></i>
+                            </button>
+                        }
+                        &nbsp;&nbsp;
+                        @{
+                            DateTime date = ViewBag.date;
+                            string stdate = ViewBag.weekstdate;
+                            string enddate = ViewBag.weekenddate;
+                        }
+                        @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month)
+                        @date.Year
+                        From @stdate-To @enddate
+                        &nbsp;&nbsp;
+                        <button id="nextMonthBtn" class="btn btn-primary">
+                            <i class="fas fa-angle-double-right"></i>
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+        </table>*@
+
+        @if (ViewData["Emp"] != null)
+        {
+            var report = ViewData["Emp"] as List<DashboardWeekelyData>;
+    <table align="center">
+
+        <tr>
+
+            <th>
+                Employee Name :
+
+                @*<a href="~/Views/DashboardWeekelyData/DashboardData.cshtml">
+                <i class="fas fa-info-circle" title="Performance Report"></i></a>*@
+
+            </th>
+
+            <td align="left">@report[0].RE_Employee_Name</td>
+
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+
+        <tr>
+
+            <th> Reporting To :</th>
+
+            <td align="left">@report[0].MgrName </td>
+
+            <td align="center" style="width:15%"><b>Monday</b></td>
+            <td align="center" style="width:15%"><b>Tuesday</b></td>
+            <td align="center" style="width:15%"><b>Wednesday</b></td>
+            <td align="center" style="width:15%"><b>Thursday</b></td>
+            <td align="center" style="width:15%"><b>Friday</b></td>
+
+        </tr>
+
+        <tr>
+            <th> Login Time :</th>
+            <td></td>
+            @foreach (var item in report.Select(x => x.Login_Time).ToList())
+            {
+                <td align="center">@item</td>
+            }
+        </tr>
+        <tr>
+            <th>Logout :</th>
+            <td></td>
+            @foreach (var item in report.Select(x => x.Last_Activity_Timing).ToList())
+            {
+                <td align="center">@item</td>
+
+            }
+        </tr>
+        <tr>
+            <th>Req's Worked On :</th>
+            <td></td>
+            @foreach (var item in report.Select(x => x.RC_Req_Worked_On).ToList())
+            {
+                <td align="center">@item</td>
+
+            }
+
+        </tr>
+        <tr>
+            <th>Calls :</th>
+            <td></td>
+            @foreach (var item in report.Select(x => x.RC_Dailed).ToList())
+            {
+                <td align="center">@item</td>
+
+            }
+
+        </tr>
+        <tr>
+            <th>Submission :</th>
+            <td></td>
+            @foreach (var item in report.Select(x => x.Submissions).ToList())
+            {
+                <td align="center">@item</td>
+
+            }
+
+        </tr>
+        <tr>
+            <th style="text-align: justify">Notes :</th>
+            <td></td>
+            @foreach (var item in report.Select(x => x.RC_Description).ToList())
+            {
+                if (item == "NA")
+                {
+                    <td style="text-align:center">@item</td>
+                }
+                else
+                {
+                    <td>@item</td>
+
+                }
+
+
+            }
+
+
+        </tr>
+        <tr>
+
+            <th colspan="2" align="center">Unusual breaks (more than 20 mins between activity):</th>
+            @{int i = 0;}
+            @foreach (var item in report.Select(x => x.Break_In_Minutes).ToList())
+            {
+                @*<td align="center">@item</td>*@
+            var empCD = @ViewBag.EmpCd;
+            var StartDays = ViewBag.weekstdate;
+
+        <td align="center">
+
+            @if (item != 0)
+            {
+
+                <a href="@Url.Action("BreaksDetails", "DashboardWeekelyData", new { empCD =empCD,getDate=StartDays,addDays=i})" title="View Break Details Report">
+                    @item
+                </a>
+            }
+            else
+            {
+                @item
+            } min(s)
+            @{ i++;
+
+            }
+        </td>
+                 
+                
+
+
+            }
+        </tr>
+        <tr>
+            <th colspan="2" valign="top" style="height:150px">Other Observations :</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+        </tr>
+
+    </table>
+        }
+
+    </div>
+
+    <script>
+        function format(value) {
+            return value;
+        }
+        $(document).ready(function () {
+
+            var stdate= '@ViewBag.weekstdate';
+            var enddate='@ViewBag.weekenddate';
+            var setdate = stdate + " - " + enddate;
+            $("#sdate").text(setdate);
+
+            var table = $('#example').DataTable({});
+
+            // Add event listener for opening and closing details
+            $('#example').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    // Open this row
+                    row.child(format(tr.data('child-value'))).show();
+                    tr.addClass('shown');
+                }
+            });
+
+           
+
+        });
+
+
+    </script>
+    <script>
+        //$(function () {
+        //    $("#table").treeFy({
+        //        treeColumn: 0
+        //    });
+        //});
+    </script>
+    
+
+</body>
+</html>

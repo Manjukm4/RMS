@@ -1,0 +1,275 @@
+﻿@model RIC.Models.GaugeViewModel
+@*<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>*@
+<script src="~/Content/TreeView/js/main.js"></script>
+
+
+<div class="panel panel-default">
+			<div id="panelHeading" class="panel-heading" data-spy="affix" data-offset-top="5">
+				@if (User.Identity.IsAuthenticated)
+				{
+					if (ViewBag.showTreeview==true)
+					{
+						Html.RenderAction("TreeViewPartial");
+					}
+				}
+
+				<label style="font-size: x-large;">
+					@*Target for this month 
+				   
+					 (@Model.RemainingDays days to go)*@
+                    @ViewBag.lableText
+
+				</label><br />
+				<label>Remaining :</label>
+				<label class="lableStyle">
+					Submissions 
+					@if (Model.SubmissionTarget > Model.TotalSubmissionMonth)
+						 {
+							 int subLeft = Model.SubmissionTarget - Model.TotalSubmissionMonth;
+											<span style="color: red;">@subLeft </span> 
+						 }
+						 else
+						 {
+							 int subLeft = Model.TotalSubmissionMonth - Model.SubmissionTarget;
+						
+											<span style="color: green">+ @subLeft</span>
+						 }/
+				</label>
+
+				<label class="lableStyle">
+					Interviews   
+					@if (Model.InterviewsTarget > Model.TotalInterviewsMonth)
+						 {
+							 int intLeft = Model.InterviewsTarget - Model.TotalInterviewsMonth;
+											<span style="color: red;">@intLeft</span>
+						 }
+						 else
+						 { 
+											<span style="color: green">0 </span>
+						 }/
+				</label>
+
+				<label class="lableStyle">
+					Hires   
+					@if (Model.HiresTarget > Model.TotalHiresMonth)
+						 {
+							 int hiresLeft = Model.HiresTarget - Model.TotalHiresMonth;
+											<span style="color: red;">@hiresLeft</span> 
+						 }
+						 else
+						 { 
+											<span style="color: green">0 </span>
+						 }
+				</label>
+
+			</div>
+			<div class="panel-body">
+				<div class="form-group col-md-4 ">
+					<div class="chartTitle" style="">
+						<label>Submissions  @Model.TotalSubmissionMonth  / @Model.SubmissionTarget</label>
+					</div>
+                  
+					<div class="chart" id="SubmissionChart" data-tooltip title="Click to view submissions"  data-Jr="Submission"  data-FromDate="@Model.StartDateOfMonth"  data-ToDate="@Model.EndDateOfMonth">
+                      
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<div class="chartTitle">
+						<label>Interviews @Model.TotalInterviewsMonth  / @Model.InterviewsTarget</label>
+					</div>
+					<div class="chart" id="InterviewsChart" data-tooltip title="Click to view interviews" data-Jr="interview"  data-FromDate="@Model.StartDateOfMonth"  data-ToDate="@Model.EndDateOfMonth" >
+                        
+					</div>
+				</div>
+				<div class="form-group col-md-4 ">
+					<div class="chartTitle">
+						<label>Hires @Model.TotalHiresMonth  / @Model.HiresTarget</label>
+					</div>
+					<div class="chart" id="HiresChart" data-tooltip title="Click to view hires" data-Jr="Hire"  data-FromDate="@Model.StartDateOfMonth"  data-ToDate="@Model.EndDateOfMonth"  ></div>
+				</div>
+			</div>
+		</div>
+
+<script>
+	var DetailPostBackURL = '@Url.Action("ViewDetailsPopup")';
+	// $(function () {
+	$("#SubmissionChart").click(function () {
+	    //debugger;
+		var empCD = $("#HdnEmpCD_").val();
+		var $buttonClicked = $(this);
+		var fromDate = $buttonClicked.attr('data-FromDate');
+		var toDate = $buttonClicked.attr('data-ToDate');
+		var jr = $buttonClicked.attr('data-Jr');
+		var getIndividualRecords = $("#HdnGetIndividualRecords").val();
+		var options = { "backdrop": "static", keyboard: true };
+		$.ajax({
+			type: "GET",
+			url: DetailPostBackURL,
+			contentType: "application/json; charset=utf-8",
+			data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+			datatype: "json",
+			success: function (data) {
+
+				$('#myModalContent').html(data);
+				$('#myModal').modal(options);
+				$('#myModal').modal('show');
+				//$("#myModal").dialog();
+			},
+			error: function () {
+				//alert("Dynamic content load failed.");
+			}
+		});
+	});
+
+	$("#InterviewsChart").click(function () {
+
+		var empCD = $("#HdnEmpCD_").val();
+		var $buttonClicked = $(this);
+		var fromDate = $buttonClicked.attr('data-FromDate');
+		var toDate = $buttonClicked.attr('data-ToDate');
+		var jr = $buttonClicked.attr('data-Jr');
+		var getIndividualRecords = $("#HdnGetIndividualRecords").val();
+		var options = { "backdrop": "static", keyboard: true };
+		$.ajax({
+			type: "GET",
+			url: DetailPostBackURL,
+			contentType: "application/json; charset=utf-8",
+			data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+			datatype: "json",
+			success: function (data) {
+
+				$('#myModalContent').html(data);
+				$('#myModal').modal(options);
+				$('#myModal').modal('show');
+				//$("#myModal").dialog();
+			},
+			error: function () {
+				//alert("Dynamic content load failed.");
+			}
+		});
+	});
+
+	$("#HiresChart").click(function () {
+
+		var empCD = $("#HdnEmpCD_").val();
+		var $buttonClicked = $(this);
+		var fromDate = $buttonClicked.attr('data-FromDate');
+		var toDate = $buttonClicked.attr('data-ToDate');
+		var jr = $buttonClicked.attr('data-Jr');
+		var getIndividualRecords = $("#HdnGetIndividualRecords").val();
+		var options = { "backdrop": "static", keyboard: true };
+		$.ajax({
+			type: "GET",
+			url: DetailPostBackURL,
+			contentType: "application/json; charset=utf-8",
+			data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+			datatype: "json",
+			success: function (data) {
+
+				$('#myModalContent').html(data);
+				$('#myModal').modal(options);
+				$('#myModal').modal('show');
+				//$("#myModal").dialog();
+			},
+			error: function () {
+			//	alert("Dynamic content load failed.");
+			}
+		});
+	});
+
+
+
+
+
+</script>
+
+
+
+@*<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>*@
+<script>
+
+	$(document).ready(function () {
+
+
+	    /* affix the header after scroll below header */
+	   // $("#panelHeading").affix({ offset: { top: $("header").outerHeight(true) } });
+	    $("#panelHeading").affix();
+	    //$('[data-toggle="tooltip"]').tooltip();
+	  
+		// add active style to div tab.
+
+@*           var element = document.getElementById("@Model.CurrentWeek");
+		element.classList.add("active");*@
+
+		
+		// Load google charts
+		//google.charts.load('current', { 'packages': ['corechart'] });
+		google.charts.load('current', { 'packages': ['gauge'] });// load the gauge chart.
+		//google.charts.setOnLoadCallback(SubmissionChart);
+		//google.charts.setOnLoadCallback(InterviewsChart);
+		//google.charts.setOnLoadCallback(HiresChart);
+		google.charts.setOnLoadCallback(SubmissiondrawGaugeChart);
+		google.charts.setOnLoadCallback(InterviewsGaugeChart);
+		google.charts.setOnLoadCallback(HiresGaugeChart);
+		function SubmissiondrawGaugeChart() {
+			var Submission = parseInt('@Model.TotalSubmissionMonth');
+			var Target = parseInt('@Model.SubmissionTarget');
+			drawGaugeChart(Target, Submission, 'SubmissionChart', 'Submissions')
+		}
+		function InterviewsGaugeChart() {
+			var Interviews = parseInt('@Model.TotalInterviewsMonth');
+			var Target = parseInt('@Model.InterviewsTarget');
+			drawGaugeChart(Target, Interviews, 'InterviewsChart', 'Interviews')
+		}
+		function HiresGaugeChart() {
+			var totalHiresMonth = parseInt('@Model.TotalHiresMonth');
+			var Target = parseInt('@Model.HiresTarget');
+			drawGaugeChart(Target, totalHiresMonth, 'HiresChart', 'Hires')
+		}
+		function drawGaugeChart(target, achivement, divID, text) {
+			var ticksArr;
+
+			if (target >= 30) {
+				var tic1 = Math.round(target * 1 / 4);
+				var tic2 = Math.round(target * 2 / 4);
+				var tic3 = Math.round(target * 3 / 4);
+				//var tic4 = Math.round( target * 4 / 5);
+				ticksArr = ['0', tic1, tic2, tic3, target];
+			}
+			var data1 = google.visualization.arrayToDataTable([
+			['Label', 'Value'],
+		   // [text, achivement]
+		   ['', 0]
+			]);
+
+			var data = google.visualization.arrayToDataTable([
+			  ['Label', 'Value'],
+			 // [text, achivement]
+			 ['', achivement]
+			]);
+			var options = {
+				legend: 'none',
+				max: target,
+				// width: 400, height: 120,
+				width: 200, height: 200,
+				redFrom: 0, redTo: target / 2,
+				yellowFrom: target / 2, yellowTo: target * (3 / 4),
+				greenFrom: target * (3 / 4), greenTo: target,
+				minorTicks: 3,
+				animation: {
+					duration: 4000,
+					easing: 'out',
+				}
+				,
+				majorTicks: ticksArr
+			};
+			var chart = new google.visualization.Gauge(document.getElementById(divID));
+			chart.draw(data1, options);
+			chart.draw(data, options);
+
+		}
+		var list = document.getElementsByTagName("text")[0];
+		$('#chartArea').attr('font-size', 8);
+		// Draw the chart and set the chart values
+	});
+</script>

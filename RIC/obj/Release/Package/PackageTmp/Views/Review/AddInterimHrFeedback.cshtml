@@ -1,0 +1,268 @@
+﻿@model RIC.Models.Review.HrInterimReviewModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<style>
+    .HeaderStyle
+    {
+        text-align: center;
+    }
+
+    form
+    {
+        width: 95%;
+        margin: auto;
+    }
+
+    .textArea
+    {
+        width: 100%;
+        height: 150px !important;
+    }
+
+    .TableStyle
+    {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .ReviewDiv
+    {
+        margin-bottom: 0px;
+        background-color: whitesmoke;
+        padding: 25px;
+    }
+
+    .linkStyle
+    {
+        color: white;
+        padding: 7px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .linkStyle:hover, .linkStyle:active
+        {
+            text-decoration: none;
+        }
+
+    /*.row
+    {
+        margin-top: 40px;
+        padding: 0 10px;
+    }*/
+
+    .clickable
+    {
+        cursor: pointer;
+    }
+
+    .panel-heading span
+    {
+        margin-top: -20px;
+        font-size: 15px;
+    }
+</style>
+@using(@Html.BeginForm())
+{
+   @Html.HiddenFor(model => model.ReviewID)
+    <input type="hidden" id="ReviewerNames" name="ReviewerNames"/>
+<div style="margin: auto; width: 70%" class="form-row">
+    <div style="margin-bottom: 0px;" class="form-group col-md-12 ReviewDiv">
+        <h2 style="text-decoration: underline; margin-top: 0px;" class="HeaderStyle">Add Review</h2>
+        <br>
+        <div style="margin-bottom: 0px;" class="form-group col-md-12 ">
+            <div class="form-group col-md-12">
+                <div style="padding-left: 0px; margin-bottom: 7px;" class="form-group col-md-6">
+                    <label for="inputEmail4">@Html.DisplayNameFor(model => model.CandidateName) :</label>
+                    <span class="textCapitalize">@Html.DisplayFor(model => model.CandidateName)</span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">@Html.DisplayNameFor(model => model.ReviewerName) :</label>
+                    <span class="textCapitalize">@Html.DisplayFor(model => model.ReviewerName)</span>
+                </div>
+
+            </div>
+            <div class="form-group col-md-12">
+                <div style="padding-left: 0px; margin-bottom: 7px;" class="form-group col-md-6">
+                    <label for="inputEmail4">@Html.DisplayNameFor(model => model.FromDate) :</label>
+                    <span>@Html.DisplayFor(model => model.FromDate) </span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">@Html.DisplayNameFor(model => model.ToDate) :</label>
+                    <span>@Html.DisplayFor(model => model.ToDate)</span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <table class="table table-bordered TableStyle">
+                <thead>
+                    <tr class="bg-primary">
+                        <td></td>
+                        <td>@Html.DisplayNameFor(model => model.Submissions)</td>
+                        <td>@Html.DisplayNameFor(model => model.Interviews)</td>
+                        <td>@Html.DisplayNameFor(model => model.Hires)</td>
+                        <td>@Html.DisplayNameFor(model => model.Calls)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Achievements</th>
+                        <td>@Html.DisplayFor(model => model.Submissions)</td>
+                        <td>@Html.DisplayFor(model => model.Interviews)</td>
+                        <td>@Html.DisplayFor(model => model.Hires)</td>
+                        <td>@Html.DisplayFor(model => model.Calls)</td>
+                    </tr>
+                    <tr>
+                        <th>Target For Next Review</th>
+                        <td>@Html.DisplayFor(model => model.SubmissionTarget)</td>
+                        <td>@Html.DisplayFor(model => model.InterviewTarget)</td>
+                        <td>@Html.DisplayFor(model => model.HireTarget)</td>
+                        <td>@Html.DisplayFor(model => model.CallsTarget)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        @* <div class="form-group col-md-12"><label>Reviewers:</label></div>*@
+        @foreach (var item in Model.ReviewerDtl)
+        { 
+            <div class="form-group  col-md-12 DivPadding">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <label class="textCapitalize getreviewname">@item.ReviewerName</label>
+                        </h3>
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Findings:</label>
+                            </div>
+                            <div class="col-md-8">
+                                @if (item.Status == "Completed")
+                                { 
+                                    @item.Findings
+                                }
+                                else
+                                {
+                                    <i style="font-size: 15px" class="fa ">&#xf251;</i>
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Improvements Required:</label>
+                            </div>
+                            <div class="col-md-8">
+                                @if (item.Status == "Completed")
+                                {
+                                    @item.Improvement
+                                }
+                                else
+                                {
+                                    <i style="font-size: 15px" class="fa ">&#xf251;</i>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+         <div class="form-group  col-md-12 DivPadding">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <label class="textCapitalize">@Model.DirectorName</label>
+                        </h3>
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Comments:</label>
+                            </div>
+                            <div class="col-md-8">
+                                @Model.DirectorFeedback
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+
+
+        <div class="form-group  col-md-6 DivPadding">
+            <label for="inputEmail4">@Html.DisplayNameFor(model => model.NextReviewDate):</label>
+            <span>@Html.DisplayFor(model => model.NextReviewDate)</span>
+        </div>
+
+        <div class="form-group  col-md-12 DivPadding">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        <label>@Html.DisplayNameFor(m => m.HrFeedback)</label>
+                    </h3>                   
+                </div>
+                <div class="panel-body">
+                    
+                    @Html.ValidationMessageFor(m => m.HrFeedback, null, new {@class="alert-danger" })
+                       
+                    @Html.TextAreaFor(m => m.HrFeedback, new { required = "required",  @class = "form-control pb-cmnt-textarea textArea", placeholder = "Write your comments here!" })
+                    
+                </div>
+            </div>
+        </div>    
+        
+        <br />
+        <div class="form-group">
+                <div class="form-group  col-md-12 text-center">
+                    <button type="submit" style="margin-right: 35px;" class="btn btn-primary">Submit</button>
+                    <a class="linkStyle btn-primary" href="@ViewBag.retUrl">Back To List</a>
+                    @*<button type="submit" class="btn btn-primary">Save As Draft</button>*@
+                </div>
+        </div>
+    </div>
+</div>
+}
+
+<script>
+    $(document).ready(function () {
+        // add the active tab in review and feedback 
+        $('#bootstrapMenu a[href="/Review/ViewAllReviews"]').addClass("activeNav");
+        $(document).on('click', '.panel-heading span.clickable', function (e) {
+            var $this = $(this);
+            if (!$this.hasClass('panel-collapsed')) {
+                $this.parents('.panel').find('.panel-body').slideUp();
+                $this.addClass('panel-collapsed');
+                $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-down');
+
+            } else {
+                $this.parents('.panel').find('.panel-body').slideDown();
+                $this.removeClass('panel-collapsed');
+                $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-up');
+            }
+        })
+
+
+        $("button").click(function () {
+            var $reviewNames = "";
+            var count = 0;
+            $(".getreviewname").each(function () {
+                if (count == 0)
+                    $reviewNames += $(this).text().replace(",", "");
+                else
+                    $reviewNames += "," + $(this).text().replace(",", "");
+                count++;
+            });
+            $("#ReviewerNames").val($reviewNames);
+
+         
+        });
+    });
+</script>

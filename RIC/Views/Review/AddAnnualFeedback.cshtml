@@ -1,0 +1,199 @@
+﻿@model RIC.Models.Review.AddAnnualFeedbackWM
+@{
+  
+    ViewBag.Title = "AddAnnualFeedback";
+    //Layout = "~/Views/Review/Index.cshtml";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link href="~/Content/CSS/Review/AddAnnualFeedback.css" rel="stylesheet" />
+<div class="form-control divFrom">
+  <a href="@ViewBag.ReturnUrl" type="button" class="btn btn-default navbar-btn pull-left">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+<h2 style="text-align: center">Add Annual Feedback</h2>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.ReviewId)
+    <div class="row FeedbackDiv">
+        <div class="col-sm-3 DivBorder divHigtt Header MainHeader">@Html.DisplayNameFor(m => m.EmployeeName)</div>
+        <div class="col-sm-5 DivBorder divHigtt MainHeader">@Html.DisplayFor(m => m.EmployeeName)</div>
+        <div class="col-sm-2 DivBorder divHigtt Header MainHeader">@Html.DisplayNameFor(m => m.JoiningDate)</div>
+        <div  class="col-sm-2 DivBorder divHigtt MainHeader">@Html.DisplayFor(m => m.JoiningDate)</div>
+
+        <div  class="col-sm-3 DivBorder divHigtt Header MainHeader">@Html.DisplayNameFor(m => m.Designation)</div>
+        <div  class="col-sm-5 DivBorder divHigtt MainHeader">@Html.DisplayFor(m => m.Designation)</div>
+        <div  class="col-sm-2 DivBorder divHigtt Header MainHeader">@Html.DisplayNameFor(m=>m.ReviewDate)</div>
+        <div  class="col-sm-2 DivBorder divHigtt MainHeader">@Html.DisplayFor(m=>m.ReviewDate)</div>
+
+        <div  class="col-sm-3 DivBorder divHigtt Header MainHeader">Evaluation of Performance</div>
+        <div  class="col-sm-2 DivBorder divHigtt Header MainHeader">Weightage</div>
+        <div  class="col-sm-3 DivBorder divHigtt Header MainHeader">
+            Rating (on a scale of 1-5) 
+        </div>
+        <div class="col-sm-4 DivBorder divHigtt Header MainHeader">
+            Comments
+        </div>
+
+        @foreach (var item in Model.FeedbackFields)
+        {
+            if (item.IsHeader)
+            {
+            <div class="col-sm-12 DivBorder divHigtt  Header HeaderStyle">@item.FieldName</div>
+            }
+            else
+            { 
+            <div class="col-sm-3 DivBorder divHigtt Header">
+              @item.FieldName </div>
+            <div style="text-align:center" class="col-sm-2 DivBorder divHigtt Header">
+                @item.Weightage
+            </div>        
+            <div style="padding: 0px;" class="col-sm-3 DivBorder divHigtt">
+                <div class="radio radio reviewCheckBox">
+                    <label class="radio-inline ">
+                        @Html.RadioButton("Rating_" + item.fieldID.ToString(), "1", true)1                                                
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButton("Rating_" + item.fieldID.ToString(), "2") 2
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButton("Rating_" + item.fieldID.ToString(), "3") 3
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButton("Rating_" + item.fieldID.ToString(), "4") 4
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButton("Rating_" + item.fieldID.ToString(), "5") 5
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-4 DivBorder divHigtt">
+                @Html.TextArea("Comment_" + item.fieldID.ToString(), new { @class = "textArea", placeholder = "Add Comments" })
+            </div>
+            }
+        }
+        <div class="col-sm-3 DivBorder divHigtt Header">Additional Comments</div>
+        <div class="col-sm-9 DivBorder divHigtt">
+            @Html.TextArea("AdditionalComments", new {@class="textArea",placeholder="Add Comments." })            
+        </div>
+        <div class="col-sm-3 DivBorder divHigtt Header">Improvements Recommended</div>
+        <div class="col-sm-9 DivBorder divHigtt">
+            @Html.TextArea("ImprovementsRecommended", new {@class="textArea",placeholder="Add Comments" })
+        </div>
+    </div>
+
+    <div style="margin:auto;width:50%" id="ReviewerDiv">
+        <label>Add Reviewers</label>
+        <div class="form-group multiple-form-group" data-max="5">
+            <div class="form-group input-group">
+                @Html.DropDownList("RE_Reviewer_List", Enumerable.Empty<SelectListItem>(), "Select Reporting Manager", new { required = "required", @class = "form-control  selectInput", @style = "  z-index: 0" })
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-add">
+                        +					
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div style="width:40%; margin:auto">
+            <input type="submit" style="margin-right:20px" class="btn btn-primary" value="Submit" />
+            <input type="reset" class="btn btn-danger" value="Reset" /> 
+        </div>
+    </div>  
+}
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $(function () {
+
+            var addFormGroup = function (event) {
+                event.preventDefault();
+
+                var $formGroup = $(this).closest('.form-group');
+                var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+                var $formGroupClone = $formGroup.clone();
+
+
+                //$formGroup.find('.selectInput').prop("disabled", true);
+
+                $(this)
+                    .toggleClass('btn-default btn-add btn-danger btn-remove ')
+                    .html('–');
+
+                $formGroupClone.find('input').val('');
+                $formGroupClone.insertAfter($formGroup);
+
+                var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
+                    $lastFormGroupLast.find('.btn-add').attr('disabled', true);
+                }
+            };
+
+            var removeFormGroup = function (event) {
+                event.preventDefault();
+
+                var $formGroup = $(this).closest('.form-group');
+                var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+
+                var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
+                    $lastFormGroupLast.find('.btn-add').attr('disabled', false);
+                }
+
+                $formGroup.remove();
+            };
+
+            var countFormGroup = function ($form)
+            {
+                return $form.find('.form-group').length;
+            };
+
+            $(document).on('click', '.btn-add', addFormGroup);
+            $(document).on('click', '.btn-remove', removeFormGroup);
+
+        });
+        addReviewerList()
+
+        function addReviewerList() {
+
+
+            $.getJSON('@Url.Action("GetReviewerList", "Account")', function (data) {
+
+
+                $('<option>',
+                      {
+                          value: null,
+                          text: "Select Reporting Manager",
+
+                      }).val(data.Value).appendTo(".selectInput");
+
+                // $("#RE_Mgr_ID").append($("<option Value=null></option>").html("Select Reporting Manager"));
+                $.each(data, function (i, data) {
+                    // bind the dropdown list using json result                    
+                    @* if (data.Value == '@Model.RE_Mgr_ID') {
+
+                        $('<option>',
+                       {
+
+                           value: data.Value,
+                           text: data.Text,
+                           selected: true//sete selected 
+                       }).val(data.Value).appendTo("#RE_Mgr_ID");
+                    }
+                    else {*@
+
+                    $('<option>',
+                   {
+                       value: data.Value,
+                       text: data.Text,
+                       selected: false
+                   }).val(data.Value).appendTo(".selectInput");
+
+                    //}
+                });
+                //$("#RE_Mgr_ID value=" + .ToString()+"").attr("selected", "true");
+                return false;
+            });
+        }
+    });
+</script>

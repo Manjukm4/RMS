@@ -1,0 +1,284 @@
+﻿@model RIC.Models.Review.AddAnnualFeedbackWM
+
+@{
+  
+    ViewBag.Title = "AddAnnualFeedback";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link href="~/Content/CSS/Review/AddAnnualFeedback.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css?/v1">
+<div class="form-control divFrom">
+  <a href="@ViewBag.ReturnUrl" type="button" class="btn btn-default navbar-btn pull-left">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+ </a>
+<h2 style="text-align: center">Add Annual Feedback</h2>
+   <h6>
+     <a href="#" style="float:right" type="button" class="" data-toggle="modal" data-target="#InterimReviewPopup">View Interim Reviews</a>
+   </h6>
+   <br />
+   <div class=" col-md-12 ">
+       @*@if (Model.submissionAnalysys != null)*@
+       @if (Model.QuarterSubmissionAnalysys.Count >0)
+       {
+
+           <table class="table table-bordered table-striped  submissionAnalysys">
+               <thead>
+                   <tr>
+                       <th class="LabelHeadStyle1">Particulars</th>
+                       <th style="text-align:center" class="LabelHeadStyle1">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter1</th>
+                       <th style="text-align:center" class="LabelHeadStyle1">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter2</th>
+                       <th style="text-align:center" class="LabelHeadStyle1">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter3</th>
+                       <th style="text-align:center" class="LabelHeadStyle1">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter4</th>
+                       <th style="text-align:center" class="LabelHeadStyle1">Total</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   <tr>
+                       <th class="LabelStyle2">Submissions</th>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q1Submissions</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q2Submissions</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q3Submissions</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q4Submissions</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().TotalSubmissons</td>
+                   </tr>
+                   <tr>
+                       <th class="LabelStyle2">Interviews</th>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q1Interviews</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q2Interviews</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q3Interviews</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q4Interviews</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().TotalInterviews</td>
+                   </tr>
+                   <tr>
+                       <th class="LabelStyle2">Hires</th>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q1Hires</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q2Hires</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q3Hires</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q4Hires</td>
+                       <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().TotalHires</td>
+                   </tr>
+               </tbody>
+           </table>
+                  }
+   </div>
+@if (false) { 
+@:@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.ReviewId)
+    <div class="row FeedbackDiv">
+        <div class="col-sm-3 DivBorder DivHeight Header MainHeader">@Html.DisplayNameFor(m => m.EmployeeName)</div>
+        <div  class="col-sm-5 DivBorder DivHeight MainHeader textCapitalize">@Html.DisplayFor(m => m.EmployeeName)</div>
+        <div class="col-sm-2 DivBorder DivHeight Header MainHeader">@Html.DisplayNameFor(m => m.JoiningDate)</div>
+        <div  class="col-sm-2 DivBorder DivHeight MainHeader">@Html.DisplayFor(m => m.JoiningDate)</div>
+
+        <div class="col-sm-3 DivBorder DivHeight Header MainHeader">@Html.DisplayNameFor(m => m.Designation)</div>
+        <div  class="col-sm-5 DivBorder DivHeight MainHeader">@Html.DisplayFor(m => m.Designation)</div>
+        <div class="col-sm-2 DivBorder DivHeight Header MainHeader">@Html.DisplayNameFor(m => m.ReviewDate)</div>
+        <div  class="col-sm-2 DivBorder DivHeight MainHeader">@Html.DisplayFor(m => m.ReviewDate)</div>
+
+        <div class="col-sm-3 DivBorder DivHeight Header MainHeader">Evaluation of Performance</div>
+        <div class="col-sm-2 DivBorder DivHeight Header MainHeader">Weightage</div>
+        <div  class="col-sm-3 DivBorder DivHeight Header MainHeader">
+            Rating (on a scale of 1-5) 
+        </div>
+        <div class="col-sm-4 DivBorder DivHeight Header MainHeader">
+            Comments
+        </div>
+
+        @foreach (var item in Model.FeedbackFields)
+        {
+            if (item.IsHeader)
+            {
+            <div class="col-sm-12 DivBorder DivHeight HeaderStyle Header">@item.FieldName</div>
+            }
+            else
+            { 
+            <div class="col-sm-3 DivBorder DivHeight Header">@item.FieldName</div>
+            <div class="col-sm-2 DivBorder DivHeight">
+                @item.Weightage
+            </div>        
+            <div style="padding: 0px;" class="col-sm-3 DivBorder DivHeight">
+                <div class="radio radio">
+                    <label class="radio-inline ">
+                        @Html.RadioButton("Rating_" + item.fieldID.ToString(), "1", true)1                                                
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButton("Rating_" + item.fieldID.ToString(), "2") 2
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButton("Rating_" + item.fieldID.ToString(), "3") 3
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButton("Rating_" + item.fieldID.ToString(), "4") 4
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButton("Rating_" + item.fieldID.ToString(), "5") 5
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-4 DivBorder DivHeight">
+                @Html.TextArea("Comment_" + item.fieldID.ToString(), new { required = "required", @class = "textArea", placeholder = "Add Comments" })
+            </div>
+            }
+        }
+        <div class="col-sm-3 DivBorder DivHeight Header">Additional Comments</div>
+        <div class="col-sm-9 DivBorder DivHeight">
+            @Html.TextArea("AdditionalComments", new { required = "required", @class = "textArea", placeholder = "Add Comments." })            
+        </div>
+        <div class="col-sm-3 DivBorder DivHeight Header">Improvements Recommended</div>
+        <div class="col-sm-9 DivBorder DivHeight">
+            @Html.TextArea("ImprovementsRecommended", new { required = "required", @class = "textArea", placeholder = "Add Comments" })
+        </div>
+
+    </div>
+
+    <div style="margin:auto;width:50%" id="ReviewerDiv">
+      
+        <div style="width:40%; padding-top:10px; margin:auto">
+            <input type="submit" style="margin-right:20px" class="btn btn-primary" value="Submit" />
+            <input type="reset" class="btn btn-danger" value="Reset" /> 
+        </div>
+    </div>  
+}
+}
+</div>
+ <!-- Modal -->
+        <div class="modal fade" id="InterimReviewPopup" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Interim Reviews</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table id="InterimReviewTbl" class="table">
+                            <thead>
+                                <tr>
+                                    <th>Reviewer Name</th>
+                                    <th>Review Date</th>
+                                    <th>From Date</th>
+                                    <th>To Date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.InterimReviewDetails)
+                                { 
+                                    <tr>
+                                        <td>@Html.DisplayFor(m => item.ReviewerName)</td>
+                                        <td>@Html.DisplayFor(m => item.Date)</td>
+                                        <td>@Html.DisplayFor(m => item.FromDate)</td>
+                                        <td>@Html.DisplayFor(m => item.ToDate)</td>
+                                        <td>@Html.ActionLink("Details", "Details", new { id = item.InterimReviewID, retUrl = Request.Url })</td>
+                                    </tr>                            
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+@using (Html.BeginForm()) 
+{   @Html.HiddenFor(m => m.ReviewId)
+<table style="width:84%;margin:auto" class="table table-bordered table-striped ReviewTbl">
+    <tr>
+        <th  style="width: 35%;">@Html.DisplayNameFor(m => m.EmployeeName)</th>
+        <td style="width:15%;" class="textCapitalize" >@Html.DisplayFor(m => m.EmployeeName)</td>
+        <th style="width:25%">@Html.DisplayNameFor(m => m.JoiningDate)</th>
+        <td style="width:25%;">@Html.DisplayFor(m => m.JoiningDate)</td>
+    </tr>
+    <tr>
+        <th>@Html.DisplayNameFor(m => m.Designation)</th>
+        <td>@Html.DisplayFor(m => m.Designation)</td>
+        <th>@Html.DisplayNameFor(m => m.ReviewDate)</th>
+        <td>@Html.DisplayFor(m => m.ReviewDate)</td>
+    </tr>
+    <tr>
+         <th>Evaluation of Performance</th>
+         <th>Weightage (%)</th>
+         <th>Rating (on a scale of 1-5)</th>
+         <th>Comments</th>
+    </tr>
+    @{bool showWeightage = true;}
+     @foreach (var item in Model.FeedbackFields)
+        {
+            if (item.IsHeader)
+            {
+                showWeightage = true;
+            <tr>
+               <th colspan="4" class="HeaderStyle Header">@item.FieldName</th> 
+            </tr>
+            }
+            else
+            { 
+                <tr>
+                    <th style="">@item.FieldName</th>
+                    @if (showWeightage)
+                    {
+                        showWeightage = false;
+                    <td rowspan="@item.TotalRecords" style="vertical-align: middle; text-align: center;font-size: 14px; background-color: white;">
+                         @item.Weightage
+                    </td>
+                    }
+                    <td style="text-align:center">
+                        <div>
+                                <div class="radio radio">
+                                <label class="radio-inline ">
+                                    @Html.RadioButton("Rating_" + item.fieldID.ToString(), "1", true)1                                                
+                                </label>
+                                <label class="radio-inline">
+                                    @Html.RadioButton("Rating_" + item.fieldID.ToString(), "2") 2
+                                </label>
+                                <label class="radio-inline">
+                                    @Html.RadioButton("Rating_" + item.fieldID.ToString(), "3") 3
+                                </label>
+                                <label class="radio-inline">
+                                    @Html.RadioButton("Rating_" + item.fieldID.ToString(), "4") 4
+                                </label>
+                                <label class="radio-inline">
+                                    @Html.RadioButton("Rating_" + item.fieldID.ToString(), "5") 5
+                                </label>
+                            </div>
+                        </div>
+                    </td>
+                    <td style="padding:0px;margin:0px">
+                        @Html.TextArea("Comment_" + item.fieldID.ToString(), new { required = "required", @class = "textArea1", placeholder = "Add Comments" })
+                    </td>
+                </tr>           
+            }
+        }
+        <tr>
+            <th>Additional Comments</th>
+            <td colspan="3" style="padding:0px;margin:0px">
+                @Html.TextArea("AdditionalComments", new { required = "required", @class = "textArea1", placeholder = "Add Comments." })            
+            </td>
+        </tr>
+        <tr>
+            <th>Improvements Recommended</th>
+            <td colspan="3" style="padding:0px;margin:0px">
+                @Html.TextArea("ImprovementsRecommended", new { required = "required", @class = "textArea1", placeholder = "Add Comments" })
+            </td>
+        </tr>
+    <tr>
+        <td colspan="4">
+            <div style="margin:auto;width:50%" id="ReviewerDiv">      
+            <div style="width:40%; padding-top:10px; margin:auto">
+                <input type="submit" style="margin-right:20px" class="btn btn-primary" value="Submit" />
+                <input type="reset" class="btn btn-danger" value="Reset" /> 
+            </div>
+            </div>  
+        </td>
+    </tr>
+</table>
+}
+
+<script>
+    $(document).ready(function () {
+        var InterimReviewTbl = $('#InterimReviewTbl').DataTable();
+    });
+</script>

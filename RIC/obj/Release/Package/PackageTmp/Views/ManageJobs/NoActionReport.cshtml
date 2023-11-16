@@ -1,0 +1,265 @@
+﻿@model RIC.Models.ManageJobsVM.CheckOutReportView
+
+@{
+    ViewBag.Title = "CheckOutReport";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<script src="https://cdn.rawgit.com/rainabba/jquery-table2excel/1.1.0/dist/jquery.table2excel.min.js"></script>
+
+<style>
+    .ui-autocomplete {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        max-height: 150px;
+    }
+
+    .btn-toolbar .btn, .btn-toolbar .btn-group, .btn-toolbar .input-group {
+        float: right;
+        background-color: #337ab7;
+        color: white;
+        margin-top: -3%;
+    }
+
+    .textCapitalize {
+        text-transform: capitalize;
+    }
+
+    .panel-heading {
+        font-weight: 600;
+    }
+</style>
+
+<legend>No Action Report</legend>
+@using (Html.BeginForm())
+{
+    <input type='hidden' value='@ViewBag.Empcd' id='empCd' name="empCd" />
+    
+    <div class="container ">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-primary DivBorder">
+                    <div class="panel-heading DivBorder panelHead font-weight-bold">Search Criteria</div>
+                    <div class="panel-body">
+                        <div class="form-row tblPading">
+
+                            <div class="form-group col-md-12">
+
+                                <div class="form-group  col-md-4">
+                                    <div class="col-md-6" style="display:grid">
+                                        <label for="inputEmail4">From Date</label>
+                                        <small>(Job Issued Date)</small>
+                                    </div>
+                                    <div class=" col-md-6">
+                                        @Html.TextBoxFor(model => model.FromDate, "{0:MM-dd-yyyy}", new { autocomplete = "off", placeholder = "MM-DD-YYYY", @class = "form-control input-sm chat-input input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                                    </div>
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <div class=" col-md-6" style="display:grid">
+                                        <label for="inputEmail4">To Date</label>
+                                        <small>(Job Issued Date)</small>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(model => model.ToDate, "{0:MM-dd-yyyy}", new { autocomplete = "off", placeholder = "MM-DD-YYYY", @class = "form-control input-sm chat-input input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <div class="col-md-6">
+                                        <label for="inputEmail4">JobDiva Status</label>
+                                    </div>
+                                    <div class=" col-md-6">
+                                        @Html.DropDownListFor(model => model.GetJobStatus, Model.JobStatusList, new { @id = "ddlJobStatus", @class = "form-control" })
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="form-group col-md-4">
+                                    <div class=" col-md-6">
+                                        <label for="inputEmail4">JobDiva Ref No.</label>
+                                    </div>
+                                    <div class=" col-md-6">
+                                        @Html.TextBoxFor(model => model.JobdivaRefSelected, new { @class = "form-control input-sm getValue" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <div class="col-md-6">
+                                        <label for="inputEmail4">Client ID</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @Html.TextBoxFor(model => model.ClientIDSelected, new { @class = "form-control input-sm getValue" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin: auto; width: 25%; padding-left: 7%" class="form-group">
+                            <div class="form-group col-md-6">
+                                <input type="submit" class="btn btn-primary" value="Search" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input id="ResetBtn" type="reset" class="btn btn-danger" value="Clear" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    if (ViewBag.ShowTable == true)
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading panelHead">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-4 ">
+                                    <span class="glyphicon glyphicon-list-alt" style="padding-top: 7px;"></span>Search Result
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-4">
+                                    <div style="z-index: 0;" class="input-group">
+                                        <input type="text" id="myInputTextField" class="form-control input-md" name="search">
+                                        <div class="input-group-btn">
+                                            <button type="button" class="btn btn-md btn-warning"><span class=" glyphicon glyphicon-search"></span></button>
+
+                                            <input type="button" value="Export To Excel" class="btn" style="margin-left: 228%;color:black" onclick="exportexcel()" />
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body table-responsive">
+
+                            <table id="OperationalTable" class="table table-hover ">
+                                <thead>
+                                    <tr>
+                                        <th>@Html.DisplayNameFor(m => m.NoActionReport.FirstOrDefault().JobDivaRef)</th>
+                                        <th>@Html.DisplayNameFor(m => m.NoActionReport.FirstOrDefault().JobIssueDate)</th>
+                                        <th>@Html.DisplayNameFor(m => m.NoActionReport.FirstOrDefault().ClientRef)</th>
+                                        <th>@Html.DisplayNameFor(m => m.NoActionReport.FirstOrDefault().JobDivaStatus)</th>
+                                        <th>@Html.DisplayNameFor(m => m.NoActionReport.FirstOrDefault().Company)</th>
+                                        <th>@Html.DisplayNameFor(m => m.NoActionReport.FirstOrDefault().JobTitle)</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.NoActionReport)
+                                    {
+                                        <tr>
+                                            <td>@item.JobDivaRef</td>
+                                            <td>@item.JobIssueDate</td>
+                                            <td>@item.ClientRef</td>
+                                            <td>@item.JobDivaStatus</td>
+                                            <td>@item.Company</td>
+                                            <td>@item.JobTitle</td>
+
+                                        </tr>
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+
+
+<script>
+
+    $('#ResetBtn').click(function () {
+        var jobRepartPartialUrl = '@Url.Action("NoActionreport")';
+        window.location.replace(jobRepartPartialUrl);
+    });
+
+
+
+    var $clientTable = $('#OperationalTable').DataTable({
+        searching: false,
+        "oLanguage": {
+            "sEmptyTable": "No Records Found"
+        }
+    });
+
+
+    $('#FromDate').datepicker({
+        dateFormat: 'mm-dd-yy',
+        maxDate: new Date(),
+
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        }
+            ,
+        onSelect: function (selected) {
+
+            //var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate());
+            $("#ToDate").datepicker("option", "minDate", dt);
+        }
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'mm-dd-yy',
+        maxDate: new Date(),
+
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        },
+        onSelect: function (selected) {
+         //var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate() - 1);
+            $("#FromDate").datepicker("option", "maxDate", dt);
+        }
+    });
+
+    $(document).ready(function () {
+        $("#myInputTextField").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#OperationalTable tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+    });
+
+
+    function exportexcel() {
+
+        $clientTable.destroy();
+
+        $("#OperationalTable").table2excel({
+            name: "Table2Excel",
+            filename: "No Action Report",
+            fileext: ".xls"
+        });
+
+        $clientTable = $('#OperationalTable').DataTable({
+            searching: false,
+            "oLanguage": {
+                "sEmptyTable": "No Records Found"
+            }
+        });
+    }
+
+</script>
+
+
+
+
+

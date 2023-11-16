@@ -1,0 +1,141 @@
+﻿@model  List<DBLibrary.RIC_QuarterlyIncentive>
+@using System.Web.Mvc;
+@{
+    ViewBag.Title = "QuarterlyIncentive";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<link href="~/Content/CSS/TeamDashboard.css?V1.1" rel="stylesheet" />
+<link href="~/Content/CSS/TeamDashboardGraph.css" rel="stylesheet" />
+<link href="~/Content/CSS/Dashboard/bootstrap-treefy.css" rel="stylesheet" />
+<script src="~/Content/JS/Dashboard/bootstrap-treefy.js"></script>
+
+<style>
+
+
+    .alignCSS {
+        text-align: center;
+    }
+
+    .Incentive {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 700;
+        font-size: x-large;
+    }
+</style>
+
+<div id="exTab1" class="container">
+
+
+    @using (Html.BeginForm("GetQuarterlyListPartial", "Incentives", FormMethod.Get))
+    {
+
+        <div class="panel panel-default">
+
+            <div style="text-align: center;" class="panel-heading headingStyle affix-top" data-spy="affix" data-offset-top="5">
+                <label class="Incentive">
+                    Quarterly Incentives
+                </label>
+            </div>
+            <div class="row" style="margin-top: 3%;">
+                <div class="form-row col-md-12" style="margin-left: 3%;">
+                    <div class="form-group col-md-4">
+                        <div class=" col-md-2">
+                            @Html.Label("Year", new { @class = "form" })
+                        </div>
+                        <div class=" col-md-6" style="margin-left:-20px">
+                            @Html.DropDownList("Year", ViewBag.years as List<SelectListItem>, new { @id = "ddlyear", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class=" col-md-2">
+
+                            @Html.Label("Quarter", new { @class = "form" })
+                        </div>
+                        <div class=" col-md-6">
+
+                            @Html.DropDownList("Quarter", ViewBag.quaters as List<SelectListItem>, new { @id = "ddlquater", @class = "form-control" })
+
+                        </div>
+                    </div>
+                    @if (!User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["EmployeeRole"]))
+                    {
+                        <div class="form-group col-md-4">
+                            <div class=" col-md-2">
+                                @Html.Label("Employee", new { @class = "form" })
+                            </div>
+                            <div class=" col-md-8" style=" margin-left: 20px;">
+                                @Html.DropDownList("Employee", ViewBag.listofemployee as List<SelectListItem>, "All", new { @id = "employee", @class = "form-control" })
+                            </div>
+
+                        </div>
+                    }
+
+
+                    <div class="form-group col-md-12" style="text-align: center;">
+                        <div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                            <input type="button" class="btn btn-primary" value="Search" id="btnSearch" />
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <div class="Gettinglist"></div>
+
+
+    }
+
+</div>
+
+
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+       if ('@User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["EmployeeRole"])' == 'True' || '@User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["TLRole"])' == 'True' || '@User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["ManagerRole"])' == 'True' || '@User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])' == 'True') {
+
+           var years = $("#ddlyear option:selected").val();
+           var quaterly = $("#ddlquater option:selected").text();
+               var employeeId = $("#employee option:selected").val();
+               $.get('@Url.Action("GetQuarterlyListPartial")', { years, quaterly, employeeId }, function (data) {
+                   $(".Gettinglist").html(data);
+               });
+           }
+
+        $("#btnSearch").click(function () {
+
+             var PostBackURL ='@Url.Action("GetQuarterlyListPartial")';
+
+            var years = $("#ddlyear option:selected").val();
+            var quaterly = $("#ddlquater option:selected").text();
+            var employeeId = $("#employee option:selected").val();
+            $.ajax({
+                type: "GET",
+                url: PostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "years": years, "quaterly": quaterly,"employeeId":employeeId },
+                success: function (data) {
+                    $(".Gettinglist").html(data);
+                },
+                error: function () {
+
+                }
+            });
+
+        });
+
+
+    });
+
+</script>

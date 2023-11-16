@@ -1,0 +1,156 @@
+﻿@model RIC.Models.TeamDashboardListModel_Main
+@using RIC.CustomHelper
+
+
+@{
+    List<DateTime> datelst = new List<DateTime>();
+}
+
+<div class="tab-pane table-responsive" id="OutVoiceMessages">
+    <div style="width: 100%; display:block ">
+        <div style="padding: 20px;font-size: smaller;" class="">
+            <div class="row Tableheader">
+                <div class="column Col1Width"><label>Date</label></div>
+                @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                {
+                    float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                    <div style="width:@width%" class="column">
+                        <label> @header.date.Day</label>
+                    </div>
+                }
+                <div style="width:4%" class="column">&nbsp;</div>
+            </div>
+            <div class="row Tableheader">
+                <div class="column Col1Width"><label>Day</label></div>
+                @foreach (var header in Model.TeamDashboardListModel.FirstOrDefault().Month)
+                {
+                    float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                    <div style="width:@width%" class="column">
+                        <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                    </div>
+                }
+                <div style="width:4%" class="column"><label>Total</label></div>
+            </div>
+            <div class="row Tableheader">
+                <div class="column Col1Width"><label>Total</label></div>
+
+                @*total for the day*@
+                @{ // DateTime dt = DateTime.Today.AddDays(-0);
+
+                    // float width1 = (float)73 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                    foreach (DateTime dtl in datelst)
+                    {
+                        float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                        int? td = Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).
+                                   Select(s => s.Month.Where(e => e.date == dtl)).Sum(s => s.FirstOrDefault().Out_VoiceMessages);
+                        if (dtl > DateTime.Today.Date && dtl.Month == DateTime.Today.Month)
+                        {
+
+
+                            <div style="width:@width%" class="column">
+                                <label>  </label>
+                            </div> }
+                        else
+                        {
+                            if (ViewData["Holidays"] != null)
+                            {
+                                var hday = ViewData["Holidays"] as List<DateTime>;
+                                if (hday.Contains(dtl))
+                                {
+                                    <div style="width:@width%" class="column">
+                                        <label title="Holiday" class="tt">H</label>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="width:@width%" class="column">
+                                        <label>@td</label>
+                                    </div>
+                                }
+                            }
+                        }
+
+                    }
+                    <div style="width:4%" class="column tableTotalStyle">
+                        <label>@Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0).FirstOrDefault().Out_VoiceMessages_Month</label>
+                    </div>
+
+                    //<div style="width:3%" class="column "><label>@td</label></div>
+                }
+            </div>
+            @BindOutVoiceMessagesTree(Model.TeamDashboardListModel.Where(s => s.EmployeeLvl == 0), "OutVoiceMessagesTable", 0)
+            @helper BindOutVoiceMessagesTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+            {
+                float width = (float)76 / (float)Model.TeamDashboardListModel.FirstOrDefault().Month.Count();
+                string paddingStyle = "padding-left:" + padding + "px";
+                <div class="collapse " id="@id">
+                    @foreach (var item in foos)
+                    {
+                        var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                        var items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                        if (@ViewBag.Role == "Accounting Manager")
+                        {
+                            empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                            //string mgrcd = item.MgrCd;
+                            if (item.Id.Contains("SBS0210"))
+                            {
+                                items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+                            }
+                            else
+                            {
+                                items = Model.TeamDashboardListModel.Where(s => s.MgrCd + "T" == item.EmpCd && !s.Id.Contains("SBS0210")).ToList();
+
+                            }
+
+                        }
+                        if (items.Count() > 0)
+                        {
+                            string targetID = "OutVoiceMessages_" + item.EmpCd + "_" + item.Id;
+                            <div class="row">
+                                <div class="column Col1Width Tableheader">
+                                    <label style="@paddingStyle">
+                                        <a style="cursor:pointer"
+                                           class="fas fa-user-plus spanClick"
+                                           data-toggle="collapse"
+                                           data-target="#@targetID">
+                                        </a>
+                                        @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                    </label>
+                                </div>
+                                @foreach (var voiceMessagesData in item.Month)
+                                {
+                                    <div style="width:@width%" class="column tableRowStyle1">
+                                        @voiceMessagesData.Out_VoiceMessages
+                                    </div>
+                                }
+                                <div style="width:4%" class="column tableTotalStyle">
+                                    @item.Out_VoiceMessages_Month
+                                </div>
+                            </div>
+                            @BindOutVoiceMessagesTree(items, targetID, padding + 15)
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class=" column Col1Width Tableheader">
+                                    <label style="@paddingStyle">
+                                        @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                    </label>
+                                </div>
+                                @foreach (var voiceMessagesData in item.Month)
+                                {
+                                    <div style="width:@width%" class="column tableRowStyle">
+                                        @voiceMessagesData.Out_VoiceMessages
+                                    </div>
+                                }
+                                <div style="width:4%" class="column tableTotalStyle">
+                                    @item.Out_VoiceMessages_Month
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

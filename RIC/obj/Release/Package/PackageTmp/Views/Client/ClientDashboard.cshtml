@@ -1,0 +1,42 @@
+﻿@*@model IEnumerable<RIC.Models.Client.ClientDashboardModel>*@
+
+
+<script src="~/Content/JS/Client/ClientDashboard.js"></script>
+<link href="~/Content/CSS/Client/ClientDashboard.css" rel="stylesheet" />
+@*<link href="~/Content/CSS/TeamDashboardGraph.css" rel="stylesheet" />*@
+<input type='hidden' value='0' id='HidMonth' />
+@{
+    ViewBag.Title = "ClientDashboard";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@*<h2>ClientDashboard</h2>*@
+<style>
+
+    #ClientTablePartial {
+      height: 674px;
+      overflow: auto;
+    }
+</style>
+
+<div id="exTab1" class="container">
+    <div class="panel panel-default ">
+        <div style="text-align: center;" class="panel-heading headingStyle" data-spy="affix" data-offset-top="5">
+            <button id='previousMonthBtn' class="btn btn-primary"><i class="fas fa-angle-double-left"></i></button>
+            <label  class="LblHeader" >
+                Dashboard by clients (<label id="monthTextLable"></label>)
+            </label>
+            <button id='nextMonthBtn' class="btn btn-primary"><i class="fas fa-angle-double-right"></i> </button>
+
+        </div>
+        <div id="ClientTablePartial" class="panelStyle"></div>
+    </div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg ">
+        <div id='myModalContent'></div>
+    </div>
+</div>
+

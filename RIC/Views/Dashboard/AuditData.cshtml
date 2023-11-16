@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "AuditData";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link href="~/Content/CSS/Dashboard.css?v1.2" rel="stylesheet" />
+ 
+
+<center>
+    <h2>Audit Data</h2>
+</center>
+@if (ViewBag.role == "Accounting Manager")
+{
+    <label>@Html.ActionLink("Back", "ClientMonthyDashboardDisplayView", "ClientMonthyDashboard",null, new { @class = "btn btn-primary", @id = "backId", @style = "margin-left: 95%;margin-top:0%" })</label>
+}
+else
+{
+    <label>@Html.ActionLink("Back", "Index",null, new { @class = "btn btn-primary", @id = "backId", @style = "margin-left: 95%;margin-top:0%" })</label>}
+<div class="container">
+
+    <div class="form-group col-md-6 " style="left:26%">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th colspan="4" align="center" class="labelcenter">
+                        <b>Last Data Load Run Time (EST)</b>
+                    </th>
+                </tr>
+            </thead>
+            <tr>
+                <th class="labelcenter Table1HeadBg">JobDiva</th>
+
+                <th class="labelcenter Table1HeadBg">Shoretel</th>
+
+                <th class="labelcenter Table1HeadBg">8x8</th>
+
+                <th class="labelcenter Table1HeadBg">Access Log</th>
+            </tr>
+            <tr>
+                <td>@ViewBag.JD</td>
+                <td>@ViewBag.ST</td>
+                <td>@ViewBag.EC</td>
+                <td>@ViewBag.AL</td>
+            </tr>
+        </table>
+    </div>
+</div>

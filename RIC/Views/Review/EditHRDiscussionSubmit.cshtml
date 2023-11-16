@@ -1,0 +1,136 @@
+﻿@model RIC.Models.Review.EditHRDiscussionDraftModel
+@{
+    ViewBag.Title = "EditHRDiscussionSubmit";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+<style>
+    .HeaderStyle {
+        text-align: center;
+    }
+
+    form {
+        width: 95%;
+        margin: auto;
+    }
+
+    .TableStyle {
+        margin-top: 4%;
+        margin-bottom: 0px;
+    }
+
+    .textArea {
+        width: 100%;
+        height: 150px !important;
+    }
+
+    .DivPadding {
+        /*padding-left: 35px;*/
+    }
+
+    .ReviewDiv {
+        margin-bottom: 0px;
+        background-color: whitesmoke;
+        padding: 25px;
+    }
+
+    .btn-group-vertical > .btn.active, .btn-group-vertical > .btn:active, .btn-group-vertical > .btn:focus, .btn-group-vertical > .btn:hover, .btn-group > .btn.active, .btn-group > .btn:active, .btn-group > .btn:focus, .btn-group > .btn:hover {
+        z-index: 0;
+        opacity: 1;
+    }
+
+    .CheckBoxStyle {
+        opacity: 0.70;
+    }
+
+    .linkStyle {
+        color: white;
+        padding: 7px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .linkStyle:hover, .linkStyle:active {
+            text-decoration: none;
+        }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Discussionid)
+
+    <div style="margin: auto; width: 70%" class="form-row">
+        <div style="margin-bottom: 0px;" class="form-group col-md-12 ReviewDiv">
+            <h2 style="text-decoration: underline; margin-top: 0px;" class="HeaderStyle">HR Discussion</h2>
+            <br>
+            <div style="margin-bottom: 0px;" class="form-group col-md-12 ">
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Select Employee</label>
+                        @Html.DropDownListFor(s => s.EmpCd, Model.CandidateList, "--Select--", new { @class = " form-control textCapitalize",disabled = "disabled" })
+
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Discussion Date</label>
+                        @Html.TextBoxFor(s => s.DiscussionDate, new { @class = "form-control  input-group date" ,disabled = "disabled"})
+
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Select Agenda Type</label>
+                        @Html.DropDownListFor(s => s.AgendaType, Model.AgendaTypeList, "--Select--", new { @class = "form-control",disabled = "disabled" })
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Description</label>
+                        @Html.TextBoxFor(s => s.Description, new { @class = "form-control",disabled = "disabled" })
+
+                    </div>
+                </div>
+
+                <div class="form-group  col-md-12 DivPadding ">
+                    <label for="inputAddress">Discussion Notes</label>
+                    @Html.TextAreaFor(s => s.DiscussionNotes, new { @class = "form-control pb-cmnt-textarea textArea",disabled = "disabled" })
+
+                </div>
+
+                <div class="form-group  col-md-12 DivPadding ">
+                    <label for="inputAddress">Action Items</label>
+                    @Html.TextAreaFor(s => s.ActionItems, new { @class = "form-control pb-cmnt-textarea textArea",disabled = "disabled" })
+
+                </div>
+
+                <div class="form-group  col-md-6 DivPadding">
+                    <label>Next Meetup Date:</label>
+                    @Html.TextBoxFor(s => s.NextMeetUpDate, new { @class = "form-control", placeholder = "MM-DD-YYYY",disabled = "disabled" })
+                </div>
+                <div class="form-group  col-md-12 DivPadding ">
+                    <label for="inputAddress">HR Internal Comments</label>
+                    @Html.TextAreaFor(s => s.HRInternalComments, new { @class = "form-control pb-cmnt-textarea textArea",disabled = "disabled"})
+
+                </div>
+                <div class="form-group  col-md-12 DivPadding ">
+                    <label for="inputAddress">Additional Comments</label>
+                    @Html.TextAreaFor(s => s.AdditionalComments, new { required = "required", @class = "form-control pb-cmnt-textarea textArea", placeholder = "Write your Additional Comments here!" })
+
+                </div>
+                <div class="form-group">
+                    <div class="form-group  col-md-12 text-center">
+                        <div class="form-group  col-md-10 DivPadding">
+                            <button type="submit" id="SaveBtn" name="submit" style="margin-right: 55px;margin-left: 55px" class="btn btn-primary">Update</button>
+                            <a class="linkStyle btn-primary" href="@Url.Action("HRDiscussionSubmitted")">Back To List</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}

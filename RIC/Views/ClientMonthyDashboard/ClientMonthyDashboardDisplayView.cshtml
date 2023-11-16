@@ -1,0 +1,354 @@
+﻿
+@using System.Globalization;
+
+@model RIC.Models.Client.ClientMonthlyReportview
+
+<input type='hidden' value='0' id='HidMonth' />
+
+@{
+    ViewBag.Title = "ClientMonthyDashboard";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<link href="~/Content/CSS/TeamDashboard.css?V1.1" rel="stylesheet" />
+<link href="~/Content/CSS/TeamDashboardGraph.css" rel="stylesheet" />
+<link href="~/Content/CSS/Dashboard/bootstrap-treefy.css" rel="stylesheet" />
+<script src="~/Content/JS/Dashboard/bootstrap-treefy.js"></script>
+
+<style>
+    @@import url('//cdn.datatables.net/1.10.2/css/jquery.dataTables.css');
+
+    td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+    }
+
+    [data-toggle="toggle"] {
+        display: none;
+    }
+
+    .affix {
+        position: fixed;
+        width: 94%;
+    }
+</style>
+<input type="hidden" value="" id="selectedAM" name="selectedAM" />
+<div id="exTab1" class="container">
+    <div class="panel panel-default ">
+        <div style="text-align: center;" class="panel-heading headingStyle affix" data-spy="affix" data-offset-top="5">
+            @*<button id='previousMonthBtn' class="btn btn-primary"><i class="fas fa-angle-double-left"></i></button>*@
+            <label class="LblHeader">
+                Client Dashboard
+                @*<label id="monthTextLable"></label>*@
+            </label>
+            @*<button id='nextMonthBtn' class="btn btn-primary"><i class="fas fa-angle-double-right"></i> </button>*@
+
+        </div>
+        @using (Html.BeginForm("ClientMonthyDashboardDisplayView", "ClientMonthyDashboard", FormMethod.Get, new { @name = "Month" }))
+        {
+            <div class="row" style="margin-top: 3%;">
+                <div class="form-row col-md-12" style="margin-left: 3%;">
+                    <div class="form-group col-md-4">
+                        <div class=" col-md-2">
+                            @Html.LabelFor(model => model.QuaterSelectList, new { @class = "form" })
+                        </div>
+                        <div class=" col-md-6">
+                            @Html.DropDownList("Quarter", Model.QuaterSelectList, new { @class = "form-control", @id = "ddlQuater" })
+                            @*@Html.DropDownListFor(model => model.QuaterSelectList, Model.QuaterSelectList, new { @id = "ddlQuater", @class = "form-control" })*@
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div class=" col-md-2">
+                            @Html.LabelFor(model => model.MonthList, new { @class = "form" })
+                        </div>
+                        <div class=" col-md-6">
+                            @Html.DropDownList("Month", Model.MonthList, new { @class = "form-control", @id = "ddlMonth" })
+                            @*@Html.DropDownListFor(model => model.MonthList, Model.MonthList, new { @id = "ddlMonth", @class = "form-control" })*@
+                        </div>
+                    </div>
+                    @if (User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])
+                       || User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["StaffingDirector"])
+                       )
+                    {
+                        <div class="form-group col-md-4">
+                            <div class=" col-md-3">
+                                @Html.Label("Account Manager", new { @class = "form" })
+                            </div>
+                            <div class=" col-md-7">
+                                @*@Html.DropDownListFor(model => model.AMSelectList, Model.AMSelectList, new { @class = "form-control", @id = "ddlAM" })*@
+                                @Html.DropDownList("AMList", Model.AMSelectList, new { @class = "form-control", @id = "ddlAM" })
+                            </div>
+
+                        </div>
+                    }
+                    <div class="form-group col-md-4">
+                        <div class=" col-md-2">
+                            @Html.LabelFor(model => model.ClientList, new { @class = "form" })
+                        </div>
+                        <div class=" col-md-9">
+                            @Html.DropDownListFor(model => model.ClientList, Model.ClientList, new { @class = "form-control", @id = "ddlClient" })
+                        </div>
+
+                    </div>
+
+                    @if (User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])
+                      || User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["StaffingDirector"])
+                      )
+                    {
+                        <div class="form-group col-md-12" style="text-align: center;">
+                            <div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                <input type="submit" class="btn btn-primary" value="Search" id="btnSearch" />
+                            </div>
+
+
+                            @*<div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                    <input type="button" class="btn btn-primary" value="Export" id="btnexport" />
+                                </div>*@
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group col-md-12" style="text-align: center;">
+                            <div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                <input type="submit" class="btn btn-primary" value="Search" id="btnSearch" />
+                            </div>
+
+
+                            @*<div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                    <input type="button" class="btn btn-primary" value="Export" id="btnexport" />
+                                </div>*@
+                        </div>
+                    }
+
+                </div>
+
+
+            </div>
+        }
+
+        <div id="ClientReportPartial" class="panelStyle"></div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg ">
+        <div id='myModalContent'></div>
+    </div>
+</div>
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+       // changeButtonState()
+        var months = ["January", "February", "March", "April", "May", "June",
+               "July", "August", "September", "October", "November", "December"];
+        var month = $("#HidMonth").val();
+        var jobRepartPartialUrl = '@Url.Action("ClientMonthlyPartial")';
+        var Quater = $("#ddlQuater").val();
+        var month = $("#ddlMonth").val();
+        var AM = $("#ddlAM").val();
+        var Client = $("#ddlClient").val();
+        if (AM == undefined) {
+            AM = 'All';
+        }
+        var empCd='@ViewBag.Empcd'
+       // alert(Quater + ',' + month + ',' + AM + ',' + Client + ',' +empCd)
+        $.ajax({
+            type: "GET",
+            url: jobRepartPartialUrl,
+            contentType: "application/json; charset=utf-8",
+            data: { "month": month, "empCd": empCd, "AM": AM, "Client": Client, "Quater":Quater},
+            datatype: "json",
+            success: function (data) {
+                $('#ClientReportPartial').html(data);
+
+            },
+            error: function () {
+                //alert("Dynamic content load failed.");
+            }
+        });
+
+        //var date = new Date();
+        //var m = date.getMonth();
+        //$('#monthTextLable').text(months[m]);
+
+        //divLoader
+
+
+        //$("#previousMonthBtn").click(function () {
+
+        //    //debugger;
+        //    //disable the buttons.
+        //    $("#nextMontBtn").prop('disabled', true);
+        //    $("#previousMontBtn").prop('disabled', true);
+
+        //    var month = $("#HidMonth").val();
+        //    var monthInt = parseInt(month) - 1;
+        //    $("#HidMonth").val(monthInt);
+        //    $.ajax({
+        //        type: "GET",
+        //        url: jobRepartPartialUrl,
+        //        contentType: "application/json; charset=utf-8",
+        //        data: { "month": monthInt },
+        //        datatype: "json",
+        //        success: function (data) {
+        //            $('#ClientReportPartial').html(data);
+
+
+        //        },
+        //        error: function () {
+        //            // alert("Dynamic content load failed.");
+        //        }
+        //    });
+        //    var date = new Date();
+        //    date.setMonth(date.getMonth() + monthInt);
+        //    var m = date.getMonth();
+        //    $('#monthTextLable').text(months[m]);
+        //    changeButtonState()
+        //    return false;
+        //});
+
+        //$("#nextMonthBtn").click(function () {
+        //    //disable the buttons.
+        //    $("#nextMontBtn").prop('disabled', true);
+        //    $("#previousMontBtn").prop('disabled', true);
+        //    var month = $("#HidMonth").val();
+        //    var monthInt = parseInt(month) + 1;
+        //    $("#HidMonth").val(monthInt);
+
+        //    $.ajax({
+        //        type: "GET",
+        //        url: jobRepartPartialUrl,
+        //        contentType: "application/json; charset=utf-8",
+        //        data: { "month": monthInt },
+        //        datatype: "json",
+        //        success: function (data) {
+
+
+        //            $('#ClientReportPartial').html(data);
+
+
+        //        },
+        //        error: function () {
+        //            // alert("Dynamic content load failed.");
+        //        }
+        //    });
+
+        //    var date = new Date();
+        //    date.setMonth(date.getMonth() + monthInt);
+        //    var m = date.getMonth();
+        //    $('#monthTextLable').text(months[m]);
+        //    changeButtonState()
+        //    return false;
+        //});
+
+        $("#ddlQuater").change(function () {
+            var quater = parseInt($("#ddlQuater").val());
+
+            var start = 1; var end = 1;
+            var list = $("#ddlMonth");
+            list.html('');
+            var monnum = 0;
+
+            if (quater == 1) {
+                start = 0;end=3
+            }
+            else if (quater == 2) {
+                start = 3; end = 6
+            } else if (quater == 3) {
+                start = 6; end = 9
+            } else if (quater == 4) {
+                start = 9; end = 12
+            }
+            var monthsQuater = months.slice(start, end);
+          //  debugger;
+            $.each(monthsQuater, function (index, item) {
+             //   alert(item); alert(index);
+                monnum = start +1;
+                list.append(new Option(item, monnum));
+            });
+
+
+        });
+
+
+        $("#btnSearch").click(function (event) {
+            var month1 = $("#ddlMonth").val();
+            var AM1 = $("#ddlAM").val();
+            var Client1 = $("#ddlClient").val();
+            if (AM1 == undefined) {
+                AM1 = 'All';
+            }
+            $.ajax({
+                type: "GET",
+                url: jobRepartPartialUrl,
+                contentType: "application/json; charset=utf-8",
+                data: { "month": month1, "empCd": empCd, "AM": AM1, "Client": Client1 },
+                datatype: "json",
+                success: function (data) {
+                    $('#ClientReportPartial').html('');
+                    $('#ClientReportPartial').html(data);
+
+                },
+                error: function () {
+                    //alert("Dynamic content load failed.");
+                }
+            });
+            event.preventDefault();
+        });
+        $("#ddlAM").change(function () {
+            var AM1 = $("#ddlAM").val();
+            $("#selectedAM").val(AM1);
+           // alert(AM1);
+            //$("#ddlAM").val(AM1);
+            document.forms["Month"].submit();
+
+            $("#ddlAM select").val(AM1);
+//alert($("#ddlAM").val());
+        });
+
+
+    });
+
+    function changeButtonState() {
+
+        var month = $("#HidMonth").val();
+
+
+        if (month == 0) {
+            $("#nextMonthBtn").prop('disabled', true);
+            $("#previousMonthBtn").prop('disabled', false);
+        }
+        else if (month == -2) {
+            $("#nextMonthBtn").prop('disabled', false);
+            $("#previousMonthBtn").prop('disabled', true);
+
+        }
+        else {
+            $("#nextMonthBtn").prop('disabled', false);
+            $("#previousMonthBtn").prop('disabled', false);
+        }
+
+
+    }
+
+
+</script>
+
+
+
+
+
+
+
+
+

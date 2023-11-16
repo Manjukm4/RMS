@@ -1,0 +1,47 @@
+﻿@model DBLibrary.Sp_Break_details
+
+
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    ViewBag.Title = "BreaksDetails";
+}
+
+<h2 align="center">Breaks Details</h2>
+<label>@Html.ActionLink("Back", "DashboardData", new { empId = ViewBag.EmpCd }, new { @class = "btn btn-info", @id = "backId", @style = "margin-left: 95%;margin-top:0%" })</label>
+<div class="table-responsive">
+    <table align="center" border="1">
+
+        <tbody>
+
+            @if (ViewData["Emp"] != null)
+            {
+                var report = ViewData["Emp"] as List<DBLibrary.Sp_Break_details>;
+                <tr>
+                    <th> Time Minutes</th>
+                    <td></td>
+                    @foreach (var item in report.Select(x => x.Log_Time_Min).ToList())
+                    {
+                        <td align="center">@item</td>
+                    }
+                </tr>
+                <tr>
+                    <th> Category</th>
+                    <td></td>
+                    @foreach (var item in report.Select(x => x.RC_Category).ToList())
+                    {
+                        <td align="center">@item</td>
+                    }
+                </tr>
+                <tr>
+                    <th> Description</th>
+                    <td></td>
+                    @foreach (var item in report.Select(x => x.RC_Description).ToList())
+                    {
+                        <td align="center">@item</td>
+                    }
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>

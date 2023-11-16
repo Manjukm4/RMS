@@ -1,0 +1,605 @@
+﻿    #MainBody
+    {
+        font-family: 'Trebuchet MS', Verdana, Arial;
+    }
+
+
+    .table, .table th, .table td
+    {
+        border: 1px solid black !important;
+        border-collapse: collapse;
+        /*padding: 4px !important;*/
+        padding: 4px 0px 4px 0px !important;
+    }
+
+        /*.table th
+    {
+        padding-left: 2px !important;           padding-right: 2px !important;          text-align: center !important;
+        vertical-align: middle !important;
+    }*/
+        .table td
+        {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+
+        .table tr
+        {
+            /*background-color: aliceblue;*/
+        }
+
+        .table th
+        {
+            white-space: nowrap;
+            /*background-color: #d4d4d4;*/
+        }
+
+        .table thead tr:first-child th
+        {
+            background-color: #656565;
+             /*background-color: #40a6db;*/
+            color: white;
+            font-size: x-large;
+        }
+
+
+
+.MainTableHeadBg
+{
+    font-weight: bold;    background-color: #EED;
+}
+.Table1HeadBg
+{
+    font-weight: bold;    background-color: #EED;
+}
+.Table2HeadBg
+{
+    font-weight: bold;    background-color: #EED;
+}
+.CallStatisticsTableHeadBg
+{
+    font-weight: bold;    background-color: #EED !important;
+}
+
+
+.CallConnectedInHeadBg
+{
+    font-weight: bold;    background-color: #9adee0;
+}
+.CallCountInBg
+{
+       background-color: #cfe6e6;
+}
+
+.CallConnectedInTotalBg
+{
+      background-color: #83d1d8;
+}
+.VoiceMessageInHeadBg
+{
+
+    font-weight: bold;    background-color: #ffd972;
+}
+
+.VoiceMessageInBg
+{
+      background-color: #f1e0b3;
+}
+.VoiceMessageTotalInBg
+{
+        background-color: #e0c479;
+}
+
+.DurationHeadInBg
+{
+    font-weight: bold;    background-color: #8dbce4; 
+
+}
+.DurationInBg
+{
+         background-color: #d7e6f3; font-size:11px;
+}
+.TotalDurationInBg
+{
+        background-color: #abceec; font-size:11px;
+}
+
+
+
+
+.CallConnectedOutHeadBg
+{
+    font-weight: bold;    background-color: #9adee0;
+}
+.CallCountOutBg
+{
+     background-color: #cfe6e6;
+}
+
+.CallConnectedOutTotalBg
+{
+    background-color: #83d1d8;
+}
+
+.VoiceMessageOutHeadBg
+{
+
+    font-weight: bold;    background-color: #ffd972;
+}
+
+.VoiceMessageOutBg
+{
+       background-color: #f1e0b3;
+}
+.VoiceMessageTotalOutBg
+{
+        background-color: #e0c479;
+}
+
+.DurationHeadOutBg
+{
+     background-color: #8dbce4;   font-weight: bold;
+
+}
+.DurationOutBg
+{
+        background-color: #d7e6f3; font-size:11px;
+}
+.TotalDurationOutBg
+{
+        background-color: #abceec; font-size:11px;
+}
+
+
+
+
+
+    .chartTitle
+    {
+        text-align: center;
+        font-size: large;
+    }
+
+    .panel-heading
+    {
+        text-align: left;
+        font-weight:bold;
+    }
+
+    .chart
+    {
+        height: auto;
+        margin: 0 auto;
+        position: relative;
+        text-align: center;
+        /*border: 1px solid red;*/
+        width: 200px;
+    }
+
+.SubmissionsHeadBg
+{
+    text-align: left;           padding-left: 5px;          letter-spacing: 1px;            font-size: 13px;
+    font-weight: bold;          background-color:  #5facec !important;                  color: black;
+}
+
+.InterviewHeadBg
+{
+    text-align: left;           padding-left: 5px;          letter-spacing: 1px;            font-size: 13px;
+    font-weight: bold;          background-color: #ff8989 !important;                color: black;
+}
+
+.HiresHeadBg
+{
+    text-align: left;           padding-left: 5px;          letter-spacing: 1px;            font-size: 13px;
+    font-weight: bold;          background-color: #b1d85b !important;                   color: black;
+}
+
+.SubmissionsCountBg
+{
+    background-color: #d3ebff;
+}
+.InterviewsCountBg
+{
+    background-color: #ffd9d9;
+}
+.HiresCountBg
+{
+    background-color: #ebffc0;
+}
+
+.SubmissionsTotalBg
+{
+     background-color: #78c2ff;
+}
+.InterviewTotalBg
+{
+    background-color: #ffb0b0;
+}
+.HiresTotalBg
+{
+    background-color: #d4ff77;
+}
+
+
+.SubmissionsTable1HeadBg
+{
+    letter-spacing: 1px;            font-size: 13px;        font-weight: bold;          background-color:  #5facec !important;            color: black;
+}
+.InterviewTable1HeadBg
+{
+    letter-spacing: 1px;            font-size: 13px;        font-weight: bold;          background-color:  #ff8989 !important;            color: black;
+}
+.HiresTable1HeadBg
+{
+    letter-spacing: 1px;            font-size: 13px;        font-weight: bold;          background-color:  #b1d85b !important;            color: black;
+}
+
+
+.InCallBg
+{
+    text-align: left;           padding-left: 5px;          letter-spacing: 1px;            font-size: 13px;
+    font-weight: bold;          background-color:  #5facec !important;                  color: black;
+}
+.OutCallBg
+{
+    text-align: left;           padding-left: 5px;          letter-spacing: 1px;            font-size: 13px;
+    font-weight: bold;          background-color: #b1d85b !important;                   color: black;
+}
+
+
+.InCallCountBg
+{
+    background-color: #d3ebff;
+}
+.OutCallCountBg
+{
+    background-color: #ebffc0;
+}
+
+.InCallTotalBg
+{
+     background-color: #78c2ff;     font-weight: bold;
+}
+.OutCallTotalBg
+{
+    background-color: #d4ff77;      font-weight: bold;
+}
+
+
+
+    .lableStyle
+    {
+        padding-right: 5px;
+    }
+
+    /*.panel-heading
+    {
+        padding: 0px 0px;
+    }*/
+
+    .chart text
+    {
+        /*font-size: 15px;*/
+    }
+
+    .labelleft
+    {
+        text-align: left;
+        padding-left: 5px;
+        letter-spacing: 1px;
+    }
+
+    .labelcenter
+    {
+        text-align: center;
+        padding: 0 5px 0 5px;
+        letter-spacing: 1px;
+    }
+
+    .labeltextstyle1
+    {
+        text-align: left;           padding-left: 5px;          letter-spacing: 1px;            font-size: 13px;
+        font-weight: bold;
+    }
+
+    .form-group
+    {
+        text-align: center;
+        height: auto;
+        margin: 0 auto;
+        padding-right: 0px;
+        padding-left: 0px;
+    }
+
+  .userName{
+    font-size: large;
+    text-align: center;
+    width: 100%;
+    color: #b95252f5;
+}
+.tablerowWidth
+{
+    width:7%;
+   vertical-align: middle;
+}
+.tableRowWidth2
+{
+    width:13%;
+}
+
+.linkColor
+{
+    color:black;
+}
+.modal-lg 
+{   
+    width: 96%;  padding-top: 3%; 
+}
+
+ #divModel
+    {
+        max-height: 500px;
+        max-width: 100%;
+        overflow: auto;
+    }    
+    .tablePopup th
+    {
+        text-align:center;
+        cursor: pointer;
+    }
+
+
+
+/*chart lable   */
+/** {text-rendering: optimizeLegibility; font-size:99%; }
+svg g g {
+
+    font-size:0px;
+  
+}*/
+ svg g path:first-of-type{
+      /*light green*/ 
+    fill:#9fdf17;
+}
+svg g path:nth-of-type(2)
+{
+    /*light yellow*/ 
+     fill:#ffcc52 ;
+}
+svg g path:nth-of-type(3)
+{
+     /*light red*/ 
+     fill: #ff6242;
+}
+svg g circle:first-of-type
+{
+    fill:#9c9c81;
+}
+svg g circle:nth-of-type(2)
+{
+    fill:#eaeae4;
+}
+
+
+
+svg g g circle:first-of-type
+{
+    fill:#09baf7;
+}
+svg g g path:first-of-type
+{
+    fill:#f3deecbf;
+}
+
+/*.positionFixed
+{
+    position: fixed;
+    width: 90%;
+    z-index: 100;
+}
+.marginTop
+{
+        margin-top: 4%;
+}*/
+
+.affix {
+    top: 11.47%;
+    width:96.49%;
+    z-index: 100;
+  }
+
+  .affix + .container-fluid 
+  {
+      padding-top: 20%;
+  }
+
+  
+
+
+#SubmissionChart
+{
+    cursor:pointer
+}
+
+#InterviewsChart
+{
+    cursor:pointer
+}
+#HiresChart
+{
+    cursor:pointer
+}
+.panel-body {
+    padding: 0px;
+}
+
+
+
+
+
+    .panel-group .panel {
+        border-radius: 0;
+        box-shadow: none;
+        border-color: #EEEEEE;
+    }
+
+    .panel-default > .panel-heading {
+        padding: 0;
+        border-radius: 0;
+        color: #212121;
+        background-color: #FAFAFA;
+        border-color: #EEEEEE;
+    }
+
+    .panel-title {
+        font-size: 14px;
+    }
+
+    .panel-title > a {
+        display: block;
+        padding: 15px;
+        text-decoration: none;
+    }
+
+    .more-less {
+        float: right;
+        color: #212121;
+    }
+
+    .panel-default > .panel-heading + .panel-collapse > .panel-body {
+        border-top-color: #EEEEEE;
+    }
+.padingoPX{
+    padding: 0px 0px 0px 0px;
+}
+
+
+
+
+
+
+.step {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-family: 'SansaPro-SemiBold';
+    font-size: 25px;
+    color: #fff;
+    line-height: 50px;
+    text-align: center !important;
+    background: #00abff;
+    transition: all 1s;
+}
+
+.step-ok {
+    width: 50px; 
+    height: 50px;
+    border-radius: 50%;
+    font-family: 'SansaPro-SemiBold';
+    font-size: 25px;
+    color: #fff;
+    line-height: 50px;
+    text-align: center !important;
+    background: #39B54A;
+}
+
+.step-fll-prev {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-family: 'SansaPro-Bold';
+    font-size: 30px !important;
+    text-align: center !important;
+    cursor: pointer;
+}
+
+.step-fll {
+    color: #fff;
+    background: #283897;
+    margin-left: 3px;
+    line-height: 38px;
+}
+
+.step-prev {
+    color: #283897;
+    background: #FFF;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #283897;
+    margin-left: -5px;
+    line-height: 35px;
+}
+
+.step-fll-prev i {
+    font-size: 30px !important;
+}
+
+.step-text {
+    /*font-family: 'SansaPro-SemiBold';*/
+    font-size: 18px;
+    /*padding-left: 46px;*/
+    padding-top: 12px;
+}
+
+.panel-default {
+    border-color: transparent;
+}
+
+.panel {
+    margin-bottom: 20px;
+    background-color: transparent;
+    border: 0px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 0px 0px rgba(0,0,0,0.05);
+    box-shadow: 0 0px 0px rgba(0,0,0,0.05);
+}
+
+.panel-default>.panel-heading {
+    color: #333;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.panel-group .panel-heading+.panel-collapse .panel-body {
+    border-top: 0px solid #ddd;
+}
+
+.line-wizard {
+    position: absolute;
+    width: 2px;
+    background-color: #CCCCCC;
+    z-index: -1;
+}
+
+.l1 {
+    height: 214px;
+    margin-top: -44px;
+    margin-left: 25px;
+}
+
+.l2 {
+    height: 217px;
+    margin-top: -45px;
+    margin-left: 25px;
+}
+
+.l3 {
+    height: 131px;
+    margin-top: -199px;
+    margin-left: 25px;
+}
+
+
+.progressBarLbl
+{
+    color: black;
+    font-size: 13px;
+    padding-top: 4px;
+}
+
+.panelLblTextLeft
+{
+    text-align:left;
+}

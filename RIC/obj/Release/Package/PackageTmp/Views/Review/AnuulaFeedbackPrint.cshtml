@@ -1,0 +1,329 @@
+﻿@model RIC.Models.Review.AnnualFeedbackDetailsVM
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <style>
+            .RowWidth
+            {
+            width: 30%;
+            }
+            @@page 
+            {
+            size:  auto;   /* auto is the initial value */
+            margin: 10px;  /* this affects the margin in the printer settings */
+            }
+ 
+    @@media print {
+            footer {
+            position: fixed;
+            bottom: 0;
+           
+            text-align: center;
+            font-size: 3px;
+            color: black;
+            }
+            footer {
+            display: none;
+            }
+            }
+   @@media print {
+  @@page { margin: 0; }
+  body { margin: 9px; }
+}
+    .textCapitalize {
+        text-transform: capitalize;
+    }  
+
+</style>
+</head>
+<body>
+    <div style="padding:2px" class="col-md-5 col-sm-4">
+      <img src="~/Image/SBS_Trans_Logo_small.png" style="display: inline-block; max-height: 70px">
+    </div>
+    <h2 style="text-align: center">Review Feedback </h2>
+
+
+        <table class="table table-bordered ">
+        <tr>
+            <td style="width:31%">
+                <label>@Html.DisplayNameFor(m => m.EmployeeID) </label>&nbsp/&nbsp<label>@Html.DisplayNameFor(m => m.EmployeeName)</label>
+            </td>
+            <td class="textCapitalize">@Html.DisplayFor(m => m.EmployeeID) / @Html.DisplayFor(m => m.EmployeeName)</td>
+            <td> <label>@Html.DisplayNameFor(m => m.JoiningDate) </label></td>
+            <td>@Html.DisplayFor(m => m.JoiningDate)</td>
+        </tr>
+        <tr>
+            <td>
+                <label>@Html.DisplayNameFor(m => m.Designation)</label>
+            </td>
+            <td>
+                @Html.DisplayFor(m => m.Designation)
+            </td>
+            <td>
+                <label>@Html.DisplayNameFor(m => m.ReviewDate)</label>
+            </td>
+            <td>
+                @Html.DisplayFor(m => m.ReviewDate)
+            </td>
+        </tr>
+        
+            </table>
+
+    <div style="border:none" class="row">
+            <div class=" col-md-12 ">
+                @if (Model.QuarterSubmissionAnalysys.Count >0)
+                { 
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Particulars</th>
+                            <th style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter1</th>
+                            <th style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter2</th>
+                            <th style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter3</th>
+                            <th style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter4</th>
+                            <th style="text-align:center">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>Submissions</th>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q1Submissions</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q2Submissions</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q3Submissions</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q4Submissions</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().TotalSubmissons</td>
+                        </tr>
+                        <tr>
+                            <th>Interviews</th>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q1Interviews</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q2Interviews</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q3Interviews</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q4Interviews</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().TotalInterviews</td>
+                        </tr>
+                        <tr>
+                            <th>Hires</th>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q1Hires</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q2Hires</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q3Hires</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q4Hires</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().TotalHires</td>
+                        </tr>
+                    </tbody>
+                </table>
+                }
+            </div>
+        </div>
+     <table class="table table-bordered tbl" >
+         <tr>
+            <td><label>Evaluation of Performance</label></td>
+            @{
+                int ratingColspan = ViewBag.showCommnets == "Yes" ? 0 :Model.ShowAvgRating?2:3;  
+             }
+             <td colspan="@ratingColspan">
+                    <label>Rating (on a scale of 1-5)</label>
+                </td> 
+            @if (Model.ShowAvgRating)
+            { 
+              <td>  <label>Avg Rating</label></td>
+            }    
+            @if (ViewBag.showCommnets == "Yes")
+            { 
+                <td colspan="2">
+                    <label>Comments</label>
+                </td>
+            }
+        </tr>
+        @foreach (var header in Model.AttributHeaders)
+        {
+            <tr>
+                <td colspan="4" style="text-align: center;">
+                    <label>@Html.DisplayFor(m => header.HeaderName) </label>
+                </td>
+            </tr>        
+            foreach (var item in header.Attributes)
+            {       
+            <tr>
+                <td class="RowWidth" >
+                    <label>@item.AttrName</label>
+                </td>
+
+                 <td colspan="@ratingColspan" style="width:25%">
+                        @foreach (var reviewer in item.rating)
+                        {                       
+                            <label style="font-style:italic; font-weight:normal;font-size:14px">@reviewer.ReviewerName</label>                   
+                            @reviewer.Rating <span>/ 5</span>   <br />               
+                        }
+                    </td>
+                  @if (Model.ShowAvgRating)
+                  { 
+                     <td>
+                             @Math.Round(Convert.ToDecimal(item.rating.Average(a => a.Rating)), 1)
+                    </td>   
+                  }
+
+             
+
+
+                @if (ViewBag.showCommnets == "Yes")
+                { 
+                    <td colspan="4">
+                        @foreach (var reviewer in item.rating)
+                        {
+                            <label style="font-style:italic; font-weight:normal;font-size:14px">@reviewer.ReviewerName:</label>  @reviewer.Comments <br />
+                        }
+                    </td>
+                }
+            </tr>
+            }
+        }
+        @if (Model.ShowHrReview == true)
+        { 
+            <tr>
+                <td colspan="4" style="text-align: center">
+                    <label>HR Review </label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Leave Taken / Leaves taken on LOP</label>
+                </td>
+                <td colspan="3">
+                    @Html.DisplayFor(m => m.Hr_LeaveTaken) /  @Html.DisplayFor(m => m.Hr_LeaveTakenOnLop)
+                </td>
+            </tr>                  
+            <tr>
+                <td>
+                    <label>Warnings given in the last 12 months</label>
+                </td>
+                <td colspan="3">
+                    @Html.DisplayFor(m => m.Hr_Warnings)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Shows loyalty to Sunrise company values.</label>
+                </td>
+                <td colspan="3">
+                    @Model.Hr_CompanyValue / 5                
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Is behaving according to our cultural values.</label>
+                </td>
+                <td colspan="3">
+                    @Model.Hr_CultValue / 5                    
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Respects differences in culture between people</label>
+                </td>
+                <td colspan="3">
+                    @Model.Hr_CultPeople / 5
+                   @* @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= Model.Hr_CultPeople)
+                        { 
+                        <span class="fa fa-star checked starStyle"></span>
+                        }
+                        else
+                        { 
+                        <span class="fa fa-star starStyle"></span>                        
+                        }
+                    }*@
+                </td>
+            </tr>
+            if (ViewBag.showCommnets == "Yes")
+            { 
+            <tr>
+                <td colspan="4" style="text-align: center">
+                    <label>General</label>
+                </td>
+            </tr>
+            }
+        }
+        @if (Model.ShowAvgRating)
+        { 
+          <tr>
+             <td>
+               <label>Average Rating</label>  
+            </td>
+              @if (ViewBag.showCommnets == "Yes")
+              { 
+                   <td></td>
+              }
+              else { 
+              <td colspan="2"></td>
+              }
+             <td colspan="2">                                 
+                    @Html.DisplayFor(m => m.AverageRating)
+             </td>
+        </tr>      
+        }
+        @if (ViewBag.showCommnets == "Yes")
+        { 
+            <tr>
+                <td>
+                    <label>Additional Comments</label>
+                </td>
+                <td colspan="3">
+                    @foreach (var additionalComments in Model.AdditionalComments)
+                    { 
+                        <div class="row ">
+                            <div class=" col-md-3 ">
+                                <label>@additionalComments.ReviewerName :</label>
+                            </div>
+                            <div class=" col-md-9">
+                                @additionalComments.Comments
+                            </div>
+                        </div>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Improvements Recommended</label>
+                </td>
+                <td colspan="3">
+                    @foreach (var improvementComments in Model.ImprovementsRecommended)
+                    { 
+                        <div class="row ">
+                            <div class=" col-sm-3 ">
+                                <label>@improvementComments.ReviewerName :</label>
+                            </div>
+                            <div class=" col-sm-9">
+
+                                @improvementComments.Comments
+                            </div>
+                        </div>
+                    }
+                </td>
+            </tr>         
+        }
+    </table>
+
+        <footer class="form-control" style="font-size: 11px;margin:-11px;text-align:center">
+        Confidential
+        </footer>
+       
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        window.print();
+        window.close();
+    });
+</script>
+<style>
+    .form-control {
+    border-color: none;
+    border:none;
+    }
+</style>

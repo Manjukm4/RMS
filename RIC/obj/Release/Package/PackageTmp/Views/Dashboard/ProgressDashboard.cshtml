@@ -1,0 +1,546 @@
+﻿@{
+    ViewBag.Title = "ProgressDashboard";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link href="~/Content/CSS/Dashboard/ProgressDashboard.css" rel="stylesheet" />
+<div class="text-center">
+    <h3 style="color: #3c5b76">Bangalore Group Weekly Performance - 05/27 - 05/31</h3>
+</div>
+<div style="padding: 10px;">
+    <div class="row ">
+        <div class="col-md-3">
+            <div class="card border-info mx-sm-1 p-3 ">
+                <div class="card border-info shadow text-info p-3 my-card"></div>
+                <div class="text-info text-center mt-3">
+                    <h4>Submissions</h4>
+                </div>
+                <div class="text-info text-center mt-2">
+                    <h2>70/100</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border  border-success mx-sm-1 p-3">
+                <div class="card border-success shadow text-success p-3 my-card"></div>
+                <div class="text-success text-center mt-3">
+                    <h4>Interviews</h4>
+                </div>
+                <div class="text-success text-center mt-2">
+                    <h2>35/50</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-danger mx-sm-1 p-3 ">
+                <div class="card border-danger shadow text-danger p-3 my-card"></div>
+                <div class="text-danger text-center mt-3">
+                    <h4>Offers</h4>
+                </div>
+                <div class="text-danger text-center mt-2">
+                    <h2>15/30</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card border-warning mx-sm-1 p-3">
+                <div class="card border-warning shadow text-warning p-3 my-card"></div>
+                <div class="text-warning text-center mt-3">
+                    <h4>Starts</h4>
+                </div>
+                <div class="text-warning text-center mt-2">
+                    <h2>15/30</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="padding-top: 20px;" class="row">
+        <div class="col-md-8">
+            <div style="padding: 0px; margin: 0px" class="col-md-12">
+                <div class="card border-Dark  b mx-sm-1 p-3">
+                    <div style="padding: 35px 10px 25px 10px;" class="container-fluid">
+
+                       <canvas id="myChart"></canvas>
+                       @* <div class="col-md-3">
+                            <div id="SubmissionChart" data-tooltip title="Click to view submissions" data-jr="Submission" style="cursor: pointer;" class="c100 p76 md green">
+                                <span>70%</span>
+                                <div class="slice">
+                                    <div class="bar"></div>
+                                    <div class="fill"></div>
+                                </div>
+                            </div>
+                            <label style="text-align: center; padding: 20px 0px 0px 10px;">Submissions 70/100 </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="SubmissionChart" data-tooltip title="Click to view submissions" data-jr="Submission" style="cursor: pointer;" class="c100 p65 md yellow">
+                                <span>70%</span>
+                                <div class="slice">
+                                    <div class="bar"></div>
+                                    <div class="fill"></div>
+                                </div>
+                            </div>
+                            <label style="text-align: center; padding: 20px 0px 0px 29px;">Interviews 35/50 </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="SubmissionChart" data-tooltip title="Click to view submissions" data-jr="Submission" style="cursor: pointer;" class="c100 p50 md red">
+                                <span>70%</span>
+                                <div class="slice">
+                                    <div class="bar"></div>
+                                    <div class="fill"></div>
+                                </div>
+                            </div>
+                            <label style="text-align: center; padding: 20px 0px 0px 34px;">Offers 15/30 </label>
+                        </div>
+                        <div class="col-md-3">
+                            <div id="SubmissionChart" data-tooltip title="Click to view submissions" data-jr="Submission" style="cursor: pointer;" class="c100 p50 md red">
+                                <span>70%</span>
+                                <div class="slice">
+                                    <div class="bar"></div>
+                                    <div class="fill"></div>
+                                </div>
+                            </div>
+                            <label style="text-align: center; padding: 20px 0px 0px 41px;">Starts 15/30 </label>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0px; margin: 30px 0px 0px 0px" class="col-md-12">
+                <div class="panel with-nav-tabs panel-default">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs justify-content-end">
+                            <li>
+                                <label style="padding: 0px 100px 0px 13px;">Organization Performance Indicators</label></li>
+                            <li class="active"><a href="#tab1default" data-toggle="tab">Submissions Insight</a></li>
+                            <li><a href="#tab2default" data-toggle="tab">Interviews Insight</a></li>
+                            <li><a href="#tab3default" data-toggle="tab">Starts Insight</a></li>
+                        </ul>
+                    </div>
+                    <div style="height: 360px; overflow: auto;" class="panel-body">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="tab1default">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Recruiter Name</th>
+                                            <th># Days Present</th>
+                                            <th>Submissions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="tab2default">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Recruiter Name</th>
+                                            <th># Days Present</th>
+                                            <th>Submissions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="tab-pane fade" id="tab3default">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Recruiter Name</th>
+                                            <th># Days Present</th>
+                                            <th>Submissions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashwini Gowda</td>
+                                            <td>4</td>
+                                            <td>15</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Goutham Gowda</td>
+                                            <td>4</td>
+                                            <td>13</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div style="padding: 0px; margin: 0px" class="col-md-12">
+                <div class="card border-Dark  b mx-sm-1 p-3">
+                    <div class="card border-success shadow text-success p-3 my-card"></div>
+                    <div class="text-center mt-3">
+                        <h4>Submissions Insight</h4>
+                    </div>
+                    <div style="padding: 10px;" class=" text-center mt-2">
+                        <canvas id="SubmissionsInsight"></canvas>
+                      @*  <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info  mt-2">
+                                <h5>10 and Above:    4</h5>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info text-center mt-2">
+                                <h5>7 - 9 Range    :21</h5>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info text-center mt-2">
+                                <h5>5 - 6 Range    :17</h5>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info text-center mt-2">
+                                <h5>4 and Below    :45</h5>
+                            </div>
+                        </div>*@
+
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0px; margin: 30px 0px 0px 0px" class="col-md-12">
+                <div class="card border-Dark  b mx-sm-1 p-3">
+                    <div class="card border-success shadow text-success p-3 my-card"></div>
+                    <div class="text-center mt-3">
+                        <h4>Interviews Insight</h4>
+                    </div>
+                    <div style="padding: 10px;" class=" text-center mt-2">
+                         <canvas id="InterviewsInsight"></canvas>
+                      @*  <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info  mt-2">
+                                <h5>3 And Above:    3</h5>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info text-center mt-2">
+                                <h5>2 Interviews    :3</h5>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info text-center mt-2">
+                                <h5>1 Interviews    :22</h5>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info text-center mt-2">
+                                <h5>0 Interviews    :63</h5>
+                            </div>
+                        </div>*@
+
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 0px; margin: 30px 0px 0px 0px" class="col-md-12">
+                <div class="card border-Dark  b mx-sm-1 p-3">
+                    <div class="card border-success shadow text-success p-3 my-card"></div>
+                    <div class="text-center mt-3">
+                        <h4>Starts Insight</h4>
+                    </div>
+                    <div style="padding: 10px;" class=" text-center mt-2">
+                         <canvas id="StartsInsight"></canvas>
+                       @* <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info  mt-2">
+                                <h5>3 And Above:    3</h5>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info text-center mt-2">
+                                <h5>2 Interviews    :3</h5>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info text-center mt-2">
+                                <h5>1 Interviews    :22</h5>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 5px;" class="card border-info mx-sm-1 p-3 ">
+                            <div class="card border-info shadow text-info p-3 my-card"></div>
+                            <div class="text-info text-center mt-3"></div>
+                            <div class="text-info text-center mt-2">
+                                <h5>0 Interviews    :63</h5>
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* https://github.com/emn178/chartjs-plugin-labels *@
+<script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js" type="text/javascript"></script>
+<script>  
+    $(document).ready(function () {
+
+        var ctxSubmissionsInsight = document.getElementById('SubmissionsInsight').getContext('2d');
+        SubmissionsInsightdata = {
+            datasets: [{
+                data: [4, 21, 17, 45],
+                backgroundColor: [
+                     '#91e3ff',
+                    '#77ffbf',
+                    '#f4ff91',
+                    '#f97a7a',
+                ]
+            }],
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: ['> = 10 ', '7 - 9', '5 - 6', '>4'],
+        };
+        var SubmissionsInsightPieChart = new Chart(ctxSubmissionsInsight, {
+            type: 'pie',
+            data: SubmissionsInsightdata,
+            options: {
+                plugins: {
+                    labels: {
+                        render: 'value',
+                        fontSize: 12,
+                        fontColor: '#000'
+                    }
+                }
+            }
+        });
+
+
+
+        var ctxInterviewsInsight = document.getElementById('InterviewsInsight').getContext('2d');
+        InterviewsInsightdata = {
+            datasets: [{
+                data: [2, 3, 22, 63],
+                backgroundColor: [
+                     '#91e3ff',
+                    '#77ffbf',
+                    '#f4ff91',
+                    '#f97a7a',
+                ]
+            }],
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: ['> = 3 ', '2', '1', '0'],
+        };
+        var InterviewsInsightPieChart = new Chart(ctxInterviewsInsight, {
+            type: 'pie',
+            data: InterviewsInsightdata,
+            options: {
+                plugins: {
+                    labels: {
+                        render: 'value',
+                        fontSize: 12,
+                        fontColor: '#000'
+                    }
+                }
+            }
+        });
+
+
+
+        var ctxStartsInsight = document.getElementById('StartsInsight').getContext('2d');
+        StartsInsightdata = {
+            datasets: [{
+                data: [1, 5,50],
+                backgroundColor: [
+                    '#77ffbf',
+                    '#f4ff91',
+                    '#f97a7a',
+                ]
+            }],
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: ['>2', '1', '0'],
+        };
+        var StartsInsightPieChart = new Chart(ctxStartsInsight, {
+            type: 'pie',
+            data: StartsInsightdata,
+            options: {
+                plugins: {
+                    labels: {
+                        render: 'value',
+                        fontSize: 12,
+                        fontColor: '#000'
+                    }
+                }
+            }
+        });
+
+
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                datasets: [{
+                    label: 'Submissions',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }, {
+                    label: 'Interviews',
+                    data: [5,3, 2, 5, 6, 0],
+                    backgroundColor: [                        
+                        'rgba(54, 162, 235, 0.2)'
+                    ],
+                    borderColor: [                   
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                },
+                {
+                    label: 'Starts',
+                    data: [15, 12, 10, 7, 6, 1],
+                    backgroundColor: ['rgba(255, 206, 86, 0.2)'],
+                    borderColor: ['rgba(255, 206, 86, 1)'],
+                    borderWidth: 1
+                }
+                ]
+            },
+            //options: {
+            //    scales: {
+            //        yAxes: [{
+            //            ticks: {
+            //                beginAtZero: true
+            //            }
+            //        }]
+            //    }
+            //}
+        });
+    });
+</script>

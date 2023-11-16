@@ -1,0 +1,215 @@
+﻿@model RIC.Models.Client.ClientReportView
+
+@{
+    ViewBag.Title = "ClientPositionDetails";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+
+<script src="~/Content/JS/Client/js_bootstrap-multiselect.js"></script>
+
+@*<link href="~/Content/CSS/Client/css_bootstrap.min.css" rel="stylesheet" />*@
+<link href="~/Content/CSS/Client/css_bootstrap-multiselect.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/gh/linways/table-to-excel@v1.0.4/dist/tableToExcel.js">
+</script>
+
+<style>
+
+    .th {
+        border-top: 1px solid #dddddd;
+        border-bottom: 1px solid #dddddd;
+        border-right: 1px solid #dddddd;
+    }
+
+        .th:first-child {
+            border-left: 1px solid #dddddd;
+        }
+
+    table.dataTable thead {
+        background-color: Highlight;
+        color: white;
+        column-width: 200px;
+    }
+
+    .heading {
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    /*   #ClientQuaterlyPartial {
+        height: 577px;
+        overflow: auto;
+    }*/
+</style>
+
+
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h1 class="panel-title heading" style="text-align:center">Position Dashboard</h1>
+        </div>
+        @{
+            var ddlyer = (IEnumerable<SelectListItem>)ViewBag.YearSelectList;
+
+        }
+
+        @* @using (Html.BeginForm())*@
+        @using (Html.BeginForm("ClientPositionDetails", "ClientMonthyDashboard", FormMethod.Post, new { @name = "position" }))
+        {
+            <input type='hidden' value='@ViewBag.Empcd' id='empCd' name="empCd" />
+
+
+            <div class="row" style="margin-top: 3%;">
+                <div class="form-row col-md-12" style="margin-left: 3%;">
+                    <div class="form-group col-md-4">
+                        <div class=" col-md-2">
+                            @Html.Label("Year", new { @class = "form" })
+                        </div>
+                        <div class=" col-md-6">
+                            @*@Html.DropDownList("YearSelectList", null, new { @id = "ddlyear", @class = "form-control" })*@
+                            @Html.DropDownListFor(model => model.GetYear, Model.YearSelectList, new { @id = "ddlyear", @class = "form-control" })
+                        </div>
+                    </div>
+
+                    @if (User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])
+                        || User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["StaffingDirector"])
+                        )
+                    {
+                        <div class="form-group col-md-4">
+                            <div class=" col-md-3">
+                                @Html.Label("Account Manager", new { @class = "form" })
+                            </div>
+                            <div class=" col-md-7">
+                                @Html.DropDownListFor(model => model.AMSelectList, Model.AMSelectList, new { @class = "form-control", @id = "ddlAM" })
+                            </div>
+
+                        </div>
+                    }
+                    <div class="form-group col-md-4">
+                        <div class=" col-md-2">
+                            @Html.LabelFor(model => model.Client, new { @class = "form" })
+                        </div>
+                        <div class=" col-md-9">
+                            @*@Html.ListBoxFor(model => model.ClientSelected, Model.ClientList, new { @class = "form-control", @id = "ddlClient", @style = "height:110px;width:240px" })*@
+                            @Html.ListBoxFor(model => model.ClientSelected, Model.ClientList, new { @class = "listbox", @id = "ddlClient", @style = "height:110px;width:240px" })
+                        </div>
+
+                    </div>
+                    @*<div class="form-group col-md-1">
+                            <div class="form-group col-md-6">
+                                <input type="submit" class="btn btn-primary" value="Search" id="btnSearch" />
+                            </div>
+                        </div>
+                        <div class="form-group col-md-1">
+                            <div class="form-group col-md-6">
+                                <input type="button" class="btn btn-primary" value="Export" id="btnexport" />
+                            </div>
+                        </div>*@
+                    @if (User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])
+                       || User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["StaffingDirector"])
+                       )
+                    {
+                        <div class="form-group col-md-12" style="text-align: center;">
+                            <div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                <input type="submit" class="btn btn-primary" value="Search" id="btnSearch" />
+                            </div>
+
+
+                            <div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                <input type="button" class="btn btn-primary" value="Export" id="btnexport" />
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group col-md-4" style="text-align: center;">
+                            <div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                <input type="submit" class="btn btn-primary" value="Search" id="btnSearch" />
+                            </div>
+
+
+                            <div class="form-group " style="display: inline-block; vertical-align: middle; ">
+                                <input type="button" class="btn btn-primary" value="Export" id="btnexport" />
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+
+
+            </div>
+
+
+        }
+
+    </div>
+
+</div>
+<div id="ClientQuaterlyPartial" style="padding-left:35%"></div>
+
+<script>
+
+    $(document).ready(function () {
+        var jobRepartPartialUrl = '@Url.Action("ClientPositionDetailsPartial")';
+        var $getYear = parseInt($("#ddlyear").val());
+        var $getClient = $("#ddlClient").val();
+        var $empCd = $('#empCd').val();
+        var $AM = $("#ddlAM").val();
+        var client = $getClient + "";
+        //if ($getClient != null) {
+        //    jQuery.each($getClient, function (i, val) {
+        //        client += val + ',';
+        //    });
+        //    client = client.substring(0, client.length - 1);
+        //    //alert(client);
+        //}
+        $.ajax({
+            type: "GET",
+            url: jobRepartPartialUrl,
+            contentType: "application/json; charset=utf-8",
+            data: { "EmpCd": $empCd, "Year": $getYear, "Client": client, "Account": $AM },
+            datatype: "json",
+            success: function (data) {
+                $('#ClientQuaterlyPartial').html(data);
+
+            },
+            error: function () {
+                //alert("Dynamic content load failed.");
+            }
+        });
+
+
+        $("#btnexport").click(function () {
+        let table = document.getElementsByTagName("table");
+        TableToExcel.convert(table[0], { // html code may contain multiple tables so here we are refering to 1st table tag
+           name: `ClientPosition.xlsx`, // fileName you could use any name
+           sheet: {
+              name: 'Sheet 1' // sheetName
+           }
+        });
+        });
+
+        $("#ddlAM").change(function () {
+            document.forms["position"].submit();
+        });
+
+
+    });
+
+
+
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.listbox').multiselect({
+            includeSelectAllOption: true
+        });
+    });
+</script>

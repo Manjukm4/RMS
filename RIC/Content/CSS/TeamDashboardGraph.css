@@ -1,0 +1,20 @@
+﻿body
+{
+}
+
+.affix
+{
+    top: 11.47%;
+    width: 96.4%;
+    z-index: 100;
+}
+
+.affix + .container-fluid
+{
+    padding-top: 20%;
+}
+
+.headingStyle
+{
+    padding: 1px 10px;
+}

@@ -1,0 +1,171 @@
+﻿@model  RIC.Models.Review.PrintHRDiscussion
+@{
+    ViewBag.Title = "PrintHRDiscussion";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+
+    .linkStyle {
+        color: white;
+        padding: 7px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .linkStyle:hover, .linkStyle:active {
+            text-decoration: none;
+        }
+</style>
+@using (Html.BeginForm())
+{
+    <table style="margin:auto;width:80%;margin-bottom: 0px;background-color:whitesmoke;padding:25px;" class="printDiscussion">
+        <thead>
+            <tr style="text-decoration:underline;text-align:center;margin-top:0px">
+                <th>
+                    <h2 style="text-align:center">HR Discussion</h2>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="height: 20px"></td>
+            </tr>
+            <tr>
+                <td>
+                    <table align="center" style="width:90%; background-color:whitesmoke; height: 70px" cellpadding="0" cellspacing="0" border="1">
+                        <tr>
+                            <td style="width: 15%; text-align: left; padding-left: 5px">
+                                <label>Candidate Name</label>
+                            </td>
+                            <td style="width: 35%; text-align: left; padding-left: 5px">
+                                @Html.DisplayFor(model => model.CandidateName)
+                            </td>
+                            <td style="width: 15%; text-align: left; padding-left: 5px">
+                                <label>Discussion Date</label>
+                            </td>
+                            <td style="width: 35%; text-align: left; padding-left: 5px">
+                                @Html.DisplayFor(model => model.DiscussionDate)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left; padding-left: 5px">
+                                <label>Agenda Type</label>
+                            </td>
+                            <td style="text-align: left; padding-left: 5px">
+                                @Html.DisplayFor(model => model.AgendaType)
+                            </td>
+                            <td style="text-align: left; padding-left: 5px">
+                                <label>Description</label>
+                            </td>
+                            <td style="text-align: left; padding-left: 5px">
+                                @Html.DisplayFor(model => model.Description)
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="height: 20px"></td>
+            </tr>
+            <tr>
+                <td>
+                    <table align="center" style="width:90%; background-color:whitesmoke; height: 70px">
+                        <tr>
+                            <td style="width: 15%; text-align: left;">
+                                <label>Candidate Name:</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">
+                                @Html.TextAreaFor(s => s.DiscussionNotes, new { @class = "form-control pb-cmnt-textarea", disabled = "disabled", @style = "background-color:white;width: 100%;height: 100px !important;" })
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table align="center" style="width:90%; background-color:whitesmoke; height: 70px">
+                        <tr>
+                            <td style="width: 15%; text-align: left;">
+                                <label>Action Items:</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">
+                                @Html.TextAreaFor(s => s.ActionItems, new { @class = "form-control pb-cmnt-textarea", disabled = "disabled", @style = "background-color:white;width: 100%;height: 100px !important;" })
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table align="center" style="width:90%; background-color:whitesmoke; height: 70px">
+                        <tr>
+                            <td style="width: 15%; text-align: left;">
+                                <label>Next Meetup Date:</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">
+                                @Html.TextBoxFor(s => s.NextMeetUpDate, new { @class = "form-control", disabled = "disabled", @style = "background-color:white;width:32%" })
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table align="center" style="width:90%; background-color:whitesmoke; height: 70px">
+                        <tr>
+                            <td style="width: 15%; text-align: left;">
+                                <label>Additional Comments:</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;">
+                                @Html.TextAreaFor(s => s.AdditionalComments, new { @class = "form-control pb-cmnt-textarea", disabled = "disabled", @style = "background-color:white;width: 100%;height: 100px !important;" })
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table align="center" style="width:80%; background-color:whitesmoke;" cellpadding="0" cellspacing="0" border="0" id="btnHideId">
+        <tr>
+            <td style="height: 20px"></td>
+        </tr>
+        <tr>
+            <td style="text-align: center">
+                <a class="linkStyle btn-primary" href="@Url.Action("HRDiscussionSubmitted")">Back To List</a>
+                    <a id="PrintBtn" class="linkStyle btn-primary glyphicon glyphicon-print" style="padding:10px; font-size: 15px;" href="#"> Print</a>
+            </td>
+        </tr>
+        <tr>
+            <td style="height: 20px"></td>
+        </tr>
+    </table>
+
+}
+<script>
+
+    $(document).ready(function () {
+
+        $("#PrintBtn").click(function () {
+            $(".printDiscussion").css("width", "100%");
+            $("#btnHideId").hide();
+            window.print();
+            $(".printDiscussion").css("width", "80%");
+             $("#btnHideId").show();
+        });
+
+    });
+
+</script>

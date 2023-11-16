@@ -1,0 +1,287 @@
+﻿<style>
+    .ColumnName {
+        font-weight: bold;
+    }
+
+    .Calender, .textbox {
+        margin-right: 5px;
+    }
+
+    .modal-header h4 {
+        font-weight: bold;
+    }
+
+    .ExportButton {
+        padding-left: 30px;
+        margin-top: 5px;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+
+
+        var resulParameter = $("#divParaContainer .row input").length;
+        var optionColumnData='<option>Select Value</option>';
+
+        // To bind the viewlist for dropdown.
+        $("#divParaContainer select").each(function () {
+            var subOptionColumnData = optionColumnData;
+            var $this = $(this);
+            $(this).empty();
+            var viewName = $(this).attr("id");
+            var columnName = $(this).attr("data-ColumnName");
+
+
+               subColumnList = $.parseJSON($.ajax({
+                        url: "@Url.Action("GetViewsList")" + "?Value=" + columnName+"&ViewName="+viewName,
+                        dataType: "json",
+                        async: false
+                    }).responseText); // This will wait until you get a response from the ajax request.
+
+
+                    $.each(subColumnList, function (key, value) {
+                        subOptionColumnData += '<option>' + value[columnName] + '</option>';
+                    });
+            $this.append(subOptionColumnData);
+
+        });
+        //console.log($("#divParaContainer select").length);
+
+
+        //if resulParameter is zero then show as popup would you like to see the entire date otherwise not required.
+        if (resulParameter == 0) {
+
+            $("#btnsubmit").hide();
+            $('#ParameterFilter').modal({
+                backdrop: 'static',
+                keyboard: true
+            })
+                .on('click', '#Yes', function (e) {
+                    LoadReport(null);
+                });
+
+        }
+
+        $(".Calender").datepicker({
+        })
+
+        $('#btnsubmit').click(function () {
+
+            LoadReport(null);
+        });
+
+
+
+        $("#ExportExcel").click(function () {
+
+            window.location.href = '@Url.Action("ExportToExcel", "SQLViews")';
+        });
+
+
+
+    });
+   // Calender
+    function LoadReport(pageValue) {
+        
+        
+        var JsonObj = [];
+        var item = {};
+
+        $('#divForm input[type="text"]').each(function (i, element) {
+            if (element.value.trim() != "") {
+                var item = {};
+                item['ControlName'] = element.name;
+                item['ControlDataType'] = $(element).data("datatype");
+                item['ControlType'] = element.type;
+                item['ControlValue'] = element.value;
+                JsonObj.push(item);
+            }  
+        });
+        k
+
+         $('#divForm input[type="Calender"]').each(function (i, element) {
+            if (element.value.trim() != "") {
+                var item = {};
+                item['ControlName'] = element.name;
+                item['ControlDataType'] = $(element).data("datatype");
+                item['ControlType'] = element.type;
+                item['ControlValue'] = element.value;
+                JsonObj.push(item);
+            }  
+        });
+
+      
+        $('#divForm select').each(function () {
+            
+             if ($(this).val().trim() != "Select Value") {
+                var item = {};
+                item['ControlName'] = $(this).attr("name");
+                item['ControlDataType'] = $(this).attr("data-DataType");
+                item['ControlType'] = $(this).attr("type");
+                item['ControlValue'] =$(this).val();
+                JsonObj.push(item);
+             }
+           
+        });
+       
+        
+        $.ajax({
+            type: 'POST',
+            url: "GetViewSearch_Partial",
+            contentType: "application/json;charset=utf-8",
+            dataType: 'html',
+            data: JSON.stringify({ SqlView: SelectedView.data("token"), ViewConstraints: JsonObj, page: pageValue }),
+            success: function (response, status, xhr) {
+                $('#RptModel .modal-header h4').text('Report from view ' + SelectedView.text());
+                $('#RptModel .modal-body').html(response);
+                $('#RptModel').modal();
+            },
+            error: function (xhr, status, error) {
+                alert(status, error);
+            }
+        });
+
+        return false;
+    }
+
+</script>
+<div id="divForm" style="padding-left: 2%;">
+    @if (Model != null)
+    {
+        int ControlCnt = 1;
+        int ctr = 0;
+        foreach (var item in Model)
+        {
+            if (item.Req == "T")
+            {
+                ControlCnt++;
+                if (ctr == 0)
+                {
+                    @:<div class="row">
+                    }
+                    if (item.ControlType == "Calender")
+                    {
+                        @:<div class="col-sm-4" style="display: grid;">
+                            @:<lable class="ColumnName">From @item.COLUMN_NAME: </lable>
+                            @:<input class="Calender form-control" name="@item.COLUMN_NAME" title="FromDate" type="Calender" data-DataType="@item.DATA_TYPE" placeholder="Enter Date" />
+                        @:</div>
+                        ctr++;
+                        if (ctr == 3)
+                        {
+                        @:</div>
+                        @:<br>
+                        ctr = 0;
+                    }
+                    if (ctr == 0)
+                    {
+                        @:<div class="row">
+                        }
+                        @:<div class="col-sm-4" style="display: grid;">
+                            @:<lable class="ColumnName">To @item.COLUMN_NAME: </lable>
+                            @:<input class="Calender form-control" name="@item.COLUMN_NAME" title="ToDate" type="Calender" data-DataType="@item.DATA_TYPE" placeholder="Enter Date" />
+                        @:</div>
+                        ctr++;
+                        if (ctr == 3)
+                        {
+                        @:</div>
+                        @:<br>
+                        ctr = 0;
+                    }
+                }
+                else if (item.ControlType == "Text Box")
+                {
+                    @:<div class="col-sm-4" style="display: grid;">
+                        @:<lable class="ColumnName">@item.COLUMN_NAME: </lable>
+                        @:<input class="form-control" name="@item.COLUMN_NAME" type="text" value="" data-DataType="@item.DATA_TYPE" placeholder="Enter Value" />
+                    @:</div>
+                    ctr++;
+                    if (ctr == 3)
+                    {
+                    @:</div>
+                    @:<br>
+                    ctr = 0;
+                }
+            }
+            else
+            {
+                @:<div class="col-sm-4" style="display: grid;">
+                    @:<lable class="ColumnName">@item.COLUMN_NAME: </lable>
+                    @:<select class="form-control" name="@item.COLUMN_NAME" type="Select" id="@item.Lk_ViewName"  data-DataType="@item.DATA_TYPE" data-ColumnName="@item.LK_ColumnName"><option>Select Value</option></select>
+                @:</div>
+                ctr++;
+                if (ctr == 3)
+                {
+                    @:</div>
+                    @:<br>
+                    ctr = 0;
+                }
+
+            }
+        }
+    }
+    //Close the row when control is less than 3 per row.
+    if (ControlCnt % 3 != 0)
+    {
+        @:</div>
+    }
+}
+
+    </div>
+    <br />
+
+    <div class="row" style="text-align:center">
+        <button id="btnsubmit" type="button" class="btn btn-success">Search</button>
+    </div>
+
+
+
+    <!-- The Modal -->
+    <div class="modal fade" id="RptModel">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="ExportButton">
+                    <input type="submit" class="btn btn-info" id="ExportExcel" value="Export To Excel" />
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="modal fade" id="ParameterFilter">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <span>The parameters has not been set to search selected view data. Do you wish to view entire data?</span>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary" id="Yes">Yes</button>
+                    <button type="button" data-dismiss="modal" class="btn">No</button>
+                </div>
+
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,110 @@
+﻿@model DBLibrary.RIC_Employee
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+<style>
+    body {
+        background-color: #fff;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+        padding: 25px;
+        padding-top: 140px;
+        /*position: fixed;*/
+        width: 100%;
+    }
+
+    .form-login {
+        background-color: #EDEDED;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 15px;
+        border-color: #d2d2d2;
+        border-width: 5px;
+        box-shadow: 0 1px 0 #cfcfcf;
+    }
+
+    h4 {
+        border: 0 solid #fff;
+        border-bottom-width: 1px;
+        padding-bottom: 10px;
+        text-align: center;
+    }
+
+    .form-control {
+        border-radius: 10px;
+    }
+
+    .wrapper {
+        text-align: center;
+    }
+</style>
+@*@Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)*@
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <div>
+            @Html.Label("lbl_Error","",new { @style= "display:none;color:red"})
+        </div>
+        <div class="row container-fluid">
+            <div style="padding-top: 10% !important; left: 39%" class="col-md-3">
+                <div class="form-login">
+                    <h4>Login</h4>
+                    @Html.TextBoxFor(model => model.RE_Emp_Cd, new { @class = "form-control input-sm chat-input", placeholder = "Username", required = "required" })
+                    <br />
+                    @Html.PasswordFor(model => model.RE_Password, new { @class = "form-control input-sm chat-input", placeholder = "Password", required = "required" })
+                    <br />
+                    <div class="wrapper">
+                        <div style="color: red">@ViewBag.errorMessage  </div>
+                        <span class="group-btn">
+                            <input type="submit" class="btn btn-primary btn-md" value="Login" />
+                            &nbsp;&nbsp;&nbsp;
+                                 <button type="reset" class="btn btn-danger" id="btnSubmit" value="Reset">Reset</button>
+                            <br />
+                            <br />
+                            @Html.ActionLink("Forgot Password", "ForgotPassword")
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+}
+
+@Html.ValidationSummary(true, null, new { @style = "color:red;" })
+
+@*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@
+<script>
+    $(document).ready(function () {
+
+        if (window.location.href.indexOf("Login") == -1) {
+            $(".modal-dialog").text("").css({ "background-color": "white", "padding": "5px" }).append("<h2>Session expired please login again.<h2/>").css("text-align", "center");
+            setTimeout(function () { location.href = "@Url.Action("Login", "Account")" }, 3000);
+
+        }
+        var errortext = '@ViewBag.Logout'
+        if (errortext != null) {
+            $('#lbl_Error').text(errortext);
+            $('#lbl_Error').show();
+        }
+    });
+
+    $(function () {
+        $("#btnSubmit").click(function () {
+            $('#RE_Emp_Cd').val('');
+            $('#RE_Password').val('');
+        });
+    });
+</script>

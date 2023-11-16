@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "CallStatistics";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<link href="~/Content/CSS/TeamDashboard.css?V1.1" rel="stylesheet" />
+<link href="~/Content/CSS/TeamDashboardGraph.css" rel="stylesheet" />
+<link href="~/Content/CSS/Dashboard/bootstrap-treefy.css" rel="stylesheet" />
+<script src="~/Content/JS/Dashboard/bootstrap-treefy.js"></script>
+<style>
+
+    .alignCSS {
+        text-align: center;
+    }
+
+    .Incentive {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 700;
+        font-size: x-large;
+    }
+</style>
+
+<div id="exTab1" class="container">
+
+    <div class="panel panel-default">
+
+        <div style="text-align: center;" class="panel-heading headingStyle affix-top" data-spy="affix" data-offset-top="5">
+            <label class="Incentive">
+                Call Statistics
+            </label>
+        </div>
+        <div class="row" style="margin-top: 3%;  text-align: center ">
+
+            <div class="form-row col-md-12" style="height: 113px;">
+                <div style="text-align:center;padding:7px">
+                    <span id="uploadfile" style="font-size:medium"><b>Please Upload ShoreTel Or 8X8 Report</b></span>
+                </div>
+                <div class="form-group col-md-6">
+
+                    <input type="file" id="importFile" name="importFile" style="margin-top:5px ;margin-left:65%">
+
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="button" class="btn btn-primary" value="Upload" id="btnUpload" style="margin-right:80%" />
+                </div>
+                <div style="text-align: center;font-size:medium">
+                    <span id="success" style="color: green;"></span><br />
+                    <span id="callSatiStics" style="color: green;"></span><br />
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+<script>
+    $(document).ready(function () {
+       $("#success").text("");
+        $("#callSatiStics").text("");
+
+    //    $('#importFile').bind('change', function () {
+
+    //        //this.files[0].size gets the size of your file.
+    //       // alert(this.files[0].size);
+    //             // alert(this.files[0].size);Checking file size less than 10mb
+    //      var filesize = (parseInt(this.file[0].size) / 1024) / 1024;
+    //      alert(filesize);
+    //      if (filesize > 3) {
+    //          alert("Please upload a file less than 25MB");
+    //          return false;
+    //      }
+
+    //    });
+    });
+      $(document).on("click", "#btnUpload", function () {
+
+        var formdata = false;
+        if (window.FormData) {
+            formdata = new FormData();
+        }
+        file = document.getElementById('importFile').files;
+    if (file.length > 0) {
+        file = file[0];
+       
+        if (formdata) {
+            formdata.append("importFile", file);
+        }
+        //alert(file[0].size);
+    }
+    else {
+        alert("Please select a file.");
+        return false;
+          }
+          //alert(this.files[0].size);
+          var ext = $('#importFile').val().split('.').pop().toLowerCase();
+    var extArray = ["xlsx"];
+    if ($.inArray(ext, extArray)) {
+        alert("Please upload xlsx files only.");
+        return false;
+    }
+
+          //alert(this.files[0].size);Checking file size less than 10mb
+          //var filesize = (parseInt(this.file[0].size) / 1024) / 1024;
+          //alert(filesize);
+          //if (filesize > 25) {
+          //    alert("Please upload a file less than 25MB");
+          //    return false;
+          //}
+         
+        $.ajax({
+            type: "POST",
+            url:'@Url.Action("CallProccesser")',
+            data: formdata,
+            cache: false,
+            contentType: false,
+            processData: false,          
+            success: function (data) {
+               /* alert(JSON.stringify(data.names));*/
+                if (data.Status === 0) {
+                    alert(data.Message);
+                }
+                else if (data.Status === 1) {
+                    $("#success").text("");
+                    $("#callSatiStics").text("");
+                    $("#success").text(data.Message);
+                  
+                }
+                else if (data.Status === 2) {
+                    $("#success").text("");
+                    $("#callSatiStics").text("");
+                    $("#success").text(data.Message);
+                    $("#callSatiStics").text("Total Records Uploaded =" + data.TotalRecords);
+                    export2txt(data.names);
+                }
+                else
+                {
+                   alert("Failed to Import");
+                }
+            }
+        });
+      });
+
+    function export2txt(datas) {
+
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(datas, null, 2)], {
+            type: "text/plain"
+        }));
+        a.setAttribute("download", "ShoretelNotUploaded.txt");
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+</script>
+
+
+
+

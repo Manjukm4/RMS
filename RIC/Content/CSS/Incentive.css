@@ -1,0 +1,52 @@
+﻿ #MainBody
+    {
+        font-family: 'Trebuchet MS', Verdana, Arial;
+    }
+
+
+    .table, .table th, .table td
+    {
+        border: 1px solid black !important;
+        border-collapse: collapse;
+        padding: 4px !important;
+    }
+
+        /*.table th
+    {
+        padding-left: 2px !important;           padding-right: 2px !important;          text-align: center !important;
+        vertical-align: middle !important;
+    }*/
+        .table td
+        {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            text-align: center !important;
+            vertical-align: middle !important;
+        }
+
+        .table tr
+        {
+            /*background-color: aliceblue;*/
+        }
+
+        .table th
+        {
+            white-space: nowrap;
+            /*background-color: #d4d4d4;*/
+        }
+
+        .table thead tr:first-child th
+        {
+            background-color: #656565;
+             /*background-color: #40a6db;*/
+            color: white;
+            font-size: large;
+            text-align:center;
+        }
+
+
+
+.MainTableHeadBg
+{
+    font-weight: bold;    background-color: #EED;
+}

@@ -1,0 +1,49 @@
+﻿
+
+<style>
+    .divTable2 {
+        height: 400px;
+        width: 50%;
+    }
+
+    .alignCSS {
+        text-align: center;
+    }
+</style>
+<div class="divTable2">
+    <table id="UserList2" class="table table-striped  table-hover table-bordered ">
+        <thead style="background-color: #337ab7; color: white;">
+            <tr>
+                <th class="textCapitalize alignCSS">
+                    Year
+                </th>
+                <th class="textCapitalize alignCSS">
+                    Quarter
+                </th>
+                <th class="textCapitalize alignCSS">
+                    Upload Date
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                foreach (var item in Model.Rows)
+                {
+                    <tr>
+                        <td class="textCapitalize alignCSS">
+                            @item[0]
+                        </td>
+                        <td class="textCapitalize alignCSS">
+                            @item[1]
+                        </td>
+                        <td class="textCapitalize alignCSS" style="width:40%">
+                            @item[2]
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+</div>

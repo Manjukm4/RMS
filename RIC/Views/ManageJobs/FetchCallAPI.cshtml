@@ -1,0 +1,293 @@
+﻿@model RIC.Models.SharedReq.SharedReqVM
+
+<style>
+    .MainTable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .MainTable td, .customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            vertical-align: middle !important;
+        }
+
+        .MainTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .MainTable tr:hover {
+            background-color: #ddd;
+        }
+
+        .MainTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4e7bda;
+            color: white;
+        }
+</style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<div class="tab-content clearfix">
+
+    <div class="panel panel-default">
+        <div class="panel-body text-center">
+            @if (Model != null)
+            {
+                if (Model.Message == null)
+                {
+                    using (Html.BeginForm("SavetoRMS", "ManageJobs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div style="overflow: scroll; overflow-y: hidden;">
+                            <table id="Fetchedcustomers" class="table table-striped table-bordered table-list MainTable">
+                                <thead style="white-space: nowrap;">
+                                    <tr>
+                                        @*<th>Instructions</th>*@
+                                        <th>JD Ref</th>
+                                        <th>Client ID</th>
+                                        <th>Job Title</th>
+                                        <th>Issued Dt</th>
+                                        <th>Company</th>
+                                        <th>Work Loc.</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>Priority/Division</th>
+                                        <th>Category</th>
+                                        <th>Bill Rate Max ($)</th>
+                                        <th>Pay Rate Max ($)</th>
+                                        <th>Primary Assignment</th>
+                                        <th>Max Sub Allowed</th>
+                                        <th>Int submissions</th>
+                                        <th>Ext Submissions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int i = 0; i < Model.ListSharedReq.Count; i++)
+                                    {
+                                        <tr>
+                                            @*<td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].Instructions)
+                                                <input class="Modelbtn btn btn-info" type="button" data-for="ListSharedReq[@i].Instructions" value="ADD" style="font-weight:bold;" />
+                                            </td>*@
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].JobId)
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].JobDivaRef)
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].JobDivaStatus)
+                                                <a href="https://www1.jobdiva.com/employers/myjobs/vieweditjobform.jsp?jobid=@Model.ListSharedReq[i].JobId" target="_blank"><b>@Model.ListSharedReq[i].JobDivaRef</b></a>
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].ClientID)
+                                                @Model.ListSharedReq[i].ClientID
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].JobTitle)
+                                                @Model.ListSharedReq[i].JobTitle
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].JobIssueDate)
+                                                @Model.ListSharedReq[i].JobIssueDate
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].Company)
+                                                @Model.ListSharedReq[i].Company
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].WorkLocation)
+                                                @Model.ListSharedReq[i].WorkLocation
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].City)
+                                                @Model.ListSharedReq[i].City
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].State)
+                                                @Model.ListSharedReq[i].State
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].Priority)
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].Division)
+
+                                                @if (Model.ListSharedReq[i].Priority == "")
+                                                {
+                                                    @:-
+                                                }
+                                                else
+                                                {
+                                                    @Model.ListSharedReq[i].Priority
+                                                }
+                                                /
+                                                @if (Model.ListSharedReq[i].Division == "")
+                                                {
+                                                    @:-
+                                                }
+                                                else
+                                                {
+                                                    @Model.ListSharedReq[i].Division
+                                                }
+
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].Category)
+                                                @Model.ListSharedReq[i].Category
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].BillRate)
+                                                @Model.ListSharedReq[i].BillRate
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].PayRate)
+                                                @Model.ListSharedReq[i].PayRate
+                                            </td>
+                                            <td>
+                                                @if (Model.ListSharedReq[i].PrimaryAssigment != null)
+                                                {
+                                                    for (int n = 0; n < Model.ListSharedReq[i].PrimaryAssigment.Length - 1; n++)
+                                                    {
+                                                        @Html.HiddenFor(m => Model.ListSharedReq[i].PrimaryAssigment[n])
+                                                    }
+                                                    string.Join(", ", Model.ListSharedReq[i].PrimaryAssigment.Select(e => e.Split('|')[1].Trim() + " " + e.Split('|')[0].Trim()).ToArray().Take(3)).Trim();
+                                                }
+
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].MaxSubAllowed)
+                                                @Model.ListSharedReq[i].MaxSubAllowed
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].InternalSub)
+                                                @Model.ListSharedReq[i].InternalSub
+                                            </td>
+                                            <td>
+                                                @Html.HiddenFor(m => m.ListSharedReq[i].ExternalSub)
+                                                @Model.ListSharedReq[i].ExternalSub
+                                            </td>
+                                        </tr>
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_id)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_contact_id)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_company_id)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_company)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_reference)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_optional_reference)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_job_title)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_address1)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_address2)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_city)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_state)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_country)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_zipcode)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_first_name)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_last_name)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_department)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_job_status)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_job_type)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_issue_date)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_start_date)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_end_date)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_minimum_rate)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_maximum_rate)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_minimum_bill_rate)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].SearchJobApi_maximum_bill_rate)
+
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_ID)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_DATEISSUED)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_DATEUPDATED)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_DATEUSERFIELDUPDATED)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_JOBSTATUS)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CUSTOMERID)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_COMPANYID)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_ADDRESS1)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_ADDRESS2)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CITY)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_STATE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_ZIPCODE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_PRIORITY)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_DIVISION)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_REFNO)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_JOBDIVANO)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_STARTDATE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_ENDDATE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_POSITIONS)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_FILLS)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_MAXALLOWEDSUBMITTALS)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_BILLRATEMIN)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_BILLRATEMAX)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_BILLRATEPER)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_AYRATEMIN)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_PAYRATEMAX)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_AYRATEPER)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_POSITIONTYPE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_SKILLS)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_JOBTITLE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_JOBDESCRIPTION)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_REMARKS)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_SUBMITTALINSTRUCTION)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_POSTTOPORTAL)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_POSTING_TITLE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_POSTING_DATE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_POSTINGDESCRIPTION)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CRITERIA_DEGREE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_JOBCATALOGID)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGCOMPANYID)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGTITLE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGREFNO)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGNAME)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGACTIVE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGEFFECTIVEDATE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGEXPIRATIONDATE)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGCATEGORY)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGBILLRATELOW)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGBILLRATEHIGH)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGBILLRATEPER)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGPAYRATELOW)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGPAYRATEHIGH)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGPAYRATEPER)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_POSITIONREFNO)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_PREVENTLOWERPAY)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_PREVENTHIGHERBILL)
+                                        @Html.HiddenFor(m => m.ListSharedReq[i].GetBIDataApi_JobDetails_CATALOGNOTES)
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div style="margin-top: 1%">
+                            <input type="submit" id="SaveToRMS" class="btn btn-success" value="Save to RMS" style="font-weight:bold;" />
+                        </div>
+                    }
+                }
+
+                else
+                {
+                    <h3>@Model.Message </h3>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+    <script>
+        $(document).ready(function () {
+
+            $("#SaveToRMS").click(function () {
+
+                var getJobIssueDate =new Date($("#ListSharedReq_0__JobIssueDate").val());
+                var todaydate = new Date(); 
+  
+                // To calculate the time difference of two dates
+                var Difference_In_Time = todaydate.getTime() - getJobIssueDate.getTime(); 
+  
+                // To calculate the no. of days between two dates
+                var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24); 
+
+                if (Difference_In_Days > 7) {
+                    alert("Jobs older then 7 days cannot be saved.");
+                    return false;
+                }
+                return true;
+            });
+
+        });
+    </script>

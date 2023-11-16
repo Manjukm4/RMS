@@ -1,0 +1,388 @@
+﻿@model RIC.Models.AssignSharedReq.AssignSharedReqVM
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+    .MainTable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .MainTable td, .customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            vertical-align: middle !important;
+        }
+
+        .MainTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .MainTable tr:hover {
+            background-color: #ddd;
+        }
+
+        .MainTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4e7bda;
+            color: white;
+        }
+</style>
+
+<div>
+    <div class="panel panel-default" style="margin-bottom: 0px;">
+        @*        <div class="panel-heading">
+            <br />
+            @using (Html.BeginForm("Index", "AssignSharedReq", FormMethod.Post, ""))
+            {  
+                <div style="display: inline-block; width: 100%;">
+                    <div style="float: left; margin-right: 1%; width: 100%; display: inline-flex;">
+                        <div style="margin-right: 1%">
+                            <h5 style="display: inline-block;"><b>JobDivaRef:</b></h5>
+                            @Html.TextBoxFor(m => m.SharedReqSearch.JobDivaRef, new { @style = "display: inline-block; font-weight: 500; padding: 0px 2px 0px 5px; font-size: medium;" })
+                        </div>
+                        <div style="margin-right: 1%">
+                            <h5 style="display: inline-block;"><b>Job Title:</b></h5>
+                            @Html.TextBoxFor(m => m.SharedReqSearch.JobTitle, new { @style = "display: inline-block; font-weight: 500; padding: 0px 2px 0px 5px; font-size: medium" })
+                        </div>
+                        <div style="margin-right: 1%">
+                            <h5 style="display: inline-block;"><b>Company Name:</b></h5>
+                            @Html.TextBoxFor(m => m.SharedReqSearch.CompanyName, new { @style = "display: inline-block; font-weight: 500; padding: 0px 2px 0px 5px; font-size: medium" })
+                        </div>
+                    </div>
+
+                    <div style="float: left; clear: left; width: 100%; display: inline-flex; margin-top: 1%;">
+                        <div style="float: left; margin-right: 1%; display: inline-flex;">
+                            <h5><b>JobIssue Date:</b></h5>
+                            @Html.TextBoxFor(m => m.SharedReqSearch.JobIssuedDate, new { @class = "form-control datepicker", @Placeholder = "mm/dd/yyyy", @style = "display: inline-block; font-weight: 500; padding: 0px 2px 0px 5px; font-size: medium", @autocomplete = "off" })
+                        </div>
+                        <div style="display: inline-block; margin-left: 3%">
+                            <input id="btnSubmit" type="submit" class="btn btn-primary" value="Fetch Job from RMS" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>*@
+        <div class="panel-heading text-center">
+            <h3>Assign Shared Requirements</h3>
+        </div>
+        <div class="panel-body text-center" style="max-height: 640px">
+            @if (Model != null)
+            {
+                if (Model.Message == null)
+                {
+
+  
+                <table id="Fetchedcustomers" class="table table-striped table-bordered table-list MainTable">
+                    <thead style="white-space: nowrap;">
+                        <tr>
+                            <th>Action</th>
+                            <th>Assign To</th>
+                            <th>Instructions</th>
+                            <th>Last Assigned</th>
+                            <th>RMS Status</th>
+                            @*<th>View Sub</th>*@
+                            <th>JD Ref</th>
+                            <th>Job Title</th>
+                            <th>Issued Dt</th>
+                            <th>RMS Ent Dt</th>
+                            <th>Company</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>Work Loc.</th>
+                            <th>Priority/ Division</th>
+                            <th>Category</th>
+                            <th>Sub Allowed</th>
+                            <th>Int sub</th>
+                            <th>Ext Sub</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.ListSharedReq.Count; i++)
+                        {                                     
+                            <tr>
+                                <td>
+                                    @Html.HiddenFor(m => m.ListSharedReq[i].HDRID, new { @class = "HDRID" })
+                                    <div style="margin-top: 1%">
+                                        <input type="button" class="btn btn-success btnAssign" value="Submit" disabled="disabled" onclick="Submit(this)" style="font-weight:bold;" />
+                                    </div>
+                                </td>
+                                @if (Model.ListSharedReq[i].HasRights)
+                                {
+                                    <td>
+                                        <div style="width: 150px; align-items: center">
+                                            @Html.DropDownList("AssignTo", new SelectList(Model.TeamLeads, "value", "text"), "None", new { @class = "form-control selectlist AssignTo", style = "width: 100%" })
+                                        </div>
+                                    </td>
+                                }
+                                else
+                                { 
+                                    <td>
+                                        <div style="width: 150px; align-items: center">
+                                            @Html.DropDownList("AssignTo", new SelectList(Model.TeamLeads, "value", "text"), "None", new { @class = "form-control selectlist AssignTo", style = "width: 100%", disabled = "disabled" })
+                                        </div>
+                                    </td>
+                                }
+                                <td>
+                                    @Html.HiddenFor(m => m.ListSharedReq[i].JobTitle, new { @class = "JobTitle" })
+
+                                    @foreach (var note in @Model.ListSharedReq[i].Notes)
+                                    { 
+                                        @Html.Hidden("Note", note, new { @class = "Notes" })
+                                    }
+
+                                    @Html.Hidden("AssignInstructions", null, new { @class = "AssignInstructions" })
+                                    <input class="Modelbtn btn btn-info" type="button" value="ADD"  style="font-weight:bold"/>
+                                </td>
+                                <td>
+                                    @Html.Hidden("PreviouslyAssignedTo", string.Join(",", Model.ListSharedReq[i].PreviouslyAssignedTo))
+                                    @if (Model.ListSharedReq[i].PreviouslyAssignedTo.Length >= 1)
+                                    {
+                                        DateTime oDate = DateTime.Parse(Model.ListSharedReq[i].PreviouslyAssignedTo[0].Split('-')[1].Trim());
+                                        @: @string.Join(", ", Model.ListSharedReq[i].PreviouslyAssignedTo.Where(e => e.Split('-')[1].Trim().AsDateTime().ToString("MM/dd/yyyy") == oDate.ToString("MM/dd/yyyy")).Select(e => e.Split('-')[0].Trim())).ToString()
+                                        @oDate.ToString("MM/dd/yyyy")  
+                                    }
+                                </td>
+                                @if (Model.ListSharedReq[i].HasRights)
+                                {
+                                    <td>
+                                        <div style="width: 100px; align-items: center">
+                                            @Html.DropDownListFor(m => m.ListSharedReq[i].RMSJobStatus, new SelectList(Model.ListSharedReq[i].SelectRMSJobStatus, "value", "text", ""), new { @class = "form-control selectlist RMSJobStatus", style = "width: 100%" })
+                                        </div>
+                                    </td>
+                                }
+                                else
+                                { 
+                                    <td>
+                                        <div style="width: 100px; align-items: center">
+                                            @Html.DropDownListFor(m => m.ListSharedReq[i].RMSJobStatus, new SelectList(Model.ListSharedReq[i].SelectRMSJobStatus, "value", "text", ""), new { @class = "form-control selectlist RMSJobStatus", style = "width: 100%", disabled = "disabled" })
+                                        </div>
+                                    </td>
+                                }
+                                @*                   <td>
+                                    ....
+                                </td>*@
+                                <td>
+                                    @Html.HiddenFor(m => m.ListSharedReq[i].HDRID)
+                                    <a href="https://www1.jobdiva.com/employers/myjobs/vieweditjobform.jsp?jobid=@Model.ListSharedReq[i].JobID" target="_blank"><b>@Model.ListSharedReq[i].JobDivaRef</b></a>
+                                </td>
+                                <td>
+                                    @Model.ListSharedReq[i].JobTitle</td>
+                                <td>
+                                    @Model.ListSharedReq[i].JobIssueDate.ToString("MM/dd/yyyy")
+                                </td>
+                                <td>
+                                    @Model.ListSharedReq[i].CreatedDate
+                                </td>
+                                <td>
+                                    @Model.ListSharedReq[i].Company
+                                </td>
+                                <td>
+                                    @Model.ListSharedReq[i].State
+                                </td>
+                                <td>
+                                    @Model.ListSharedReq[i].City
+                                </td>
+                                <td>
+                                    @Model.ListSharedReq[i].WorkLocation
+                                </td>
+                                <td>
+                                    @if (Model.ListSharedReq[i].Priority == "")
+                                    {
+                                        @:-
+                            }
+                                    else
+                                    {
+                                        @Model.ListSharedReq[i].Priority
+                                    }
+                                    /
+                            @if (Model.ListSharedReq[i].Division == "")
+                            { 
+                                @:-
+                            }
+                            else
+                            { 
+                                @Model.ListSharedReq[i].Division
+                            }
+                                </td>
+                                <td>
+                                    @Model.ListSharedReq[i].Category
+                                </td>
+                                <td>
+                                    @Model.ListSharedReq[i].MaxSubAllowed
+                                </td>
+                                <td>
+                                    @Model.ListSharedReq[i].InternalSub
+                                </td>
+                                <td>
+                                    @Model.ListSharedReq[i].ExternalSub
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <br />
+    
+                <br />
+               
+                }
+                else
+                { 
+                <h3>@Model.Message </h3>
+                }
+            }
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ModelInstruction" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+    <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title" id="exampleModalLongTitle">Add Comments</h2>
+            </div>
+            <div class="modal-body">
+                <div id="JobTitle" style="font-size: medium; font-weight: bold; background-color:#5bc0de; margin-bottom:8px;">
+                </div>
+                <div id="JobNotes" style="margin-top: 2px; border: 2px solid #dad4d4; border-radius: 5px; background-color: #d9ebff">
+                </div>
+                <br />
+                <b>Add Notes: </b>
+                <textarea class="textarea" style="width: 100%; height: 100px;" placeholder="Add Comments..." maxlength="900"></textarea>
+                <b>Previous RMS Assignments and Instructions:</b>
+                <div id="PreviousAssignments" style="display: none; margin-top: 1px; border: 2px solid #dad4d4; border-radius: 5px; background-color: #624a7138">
+                </div>
+            </div>
+            <div class="text-center  justify-content-center" style="padding: 1%;">
+                <button id="btnAdd" type="button" class="btn btn-success btnAdd" style="margin-right: 2%">Save</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $(function () { // will trigger when the document is ready
+            $('.datepicker').datepicker(); //Initialise any date pickers
+        });
+
+        var color;
+        $(".MainTable tr").click(function () {
+            $(".MainTable tr").each(function () { $(this).css("background-color", "#f9f9f9"); });
+
+            $(this).css("background-color", "#bdbbbb");
+        });
+
+        var thisBtn;
+        $('.Modelbtn').click(function () {
+            thisBtn = $(this);
+            $("#ModelInstruction").data({ backdrop: 'static', keyboard: false });
+            $("#ModelInstruction").modal("show");
+
+            $('.textarea').val("");
+            $("#ModelInstruction .modal-body p").text("");
+
+            $('#JobTitle').text("");
+            $("#JobNotes").text("");
+
+            $("#JobTitle").append('<p style="margin:0px">JobTitle: ' + $(this).closest('tr').find('.JobTitle').val() + '</p>');
+
+            //$("#JobNotes").append('<p style="margin:0px">Created by: ' + $(this).closest('tr').find('.JobCreatedBy').val() + '</p>');
+            //$("#JobNotes").append('<p style="margin:0px">Created Date: ' + $(this).closest('tr').find('.JobCreatedDate').val() + '</p>');
+
+            $(this).closest('tr').find('.Notes').each(function () {
+
+                $("#JobNotes").append('<p style="margin:0px">' + $(this).val() + '</p>');
+            });
+
+            $('.textarea').val($(this).closest('tr').find('.AssignInstructions').val());
+
+            $('#PreviousAssignments').text("");
+            var PreviouslyAssignedTo = $(this).closest('tr').find("input[name='PreviouslyAssignedTo']").val().split(",");
+            if (PreviouslyAssignedTo.length > 0) {
+                $('#PreviousAssignments').css("display", "block");
+
+                PreviouslyAssignedTo.forEach(myFunction);
+            }
+        });
+
+
+        function myFunction(value) {
+            $("#ModelInstruction #PreviousAssignments").append('<p>' + value + '</p>');
+        };
+
+        $(".btnAdd").click(function () {
+            debugger;
+            if ($('.textarea').val().trim().length > 0) {
+                thisBtn.closest('tr').find('.AssignInstructions').val($('.textarea').val().trim());
+                thisBtn.closest('tr').find('.btnAssign').attr('disabled', false);
+                thisBtn.val("View/Edit");
+            } else {
+                thisBtn.closest('tr').find('.AssignInstructions').val($('.textarea').val().trim())
+                thisBtn.closest('tr').find('.btnAssign').attr('disabled', true);
+                thisBtn.val("Add Note");
+            }
+            $("#ModelInstruction").modal("hide");
+        });
+
+        //$(".selectlist option").first().attr("selected", "selected").attr("disabled", "disabled");
+
+        //$(".RMSJobStatus").each(function () {
+        //    $(this).find("option:selected").attr("disabled", "disabled");
+        //});
+
+        $(".selectlist").on('change', function () {
+            //alert($(this).closest("tr")[0].rowIndex);
+
+            if ($(this).find(":selected").val() != 0) {
+                $(this).closest('tr').find('.btnAssign').attr('disabled', false);
+            } else {
+                $(this).closest('tr').find('.btnAssign').attr('disabled', true);
+            }
+        });
+
+        var order = [[8, "desc"]];
+        var t = $('#Fetchedcustomers').DataTable({
+            "order": order,
+            "scrollY": "500px",
+            "scrollX": true,
+            "scrollCollapse": true,
+            columnDefs: [{ orderable: false, targets: [0, 1, 2, 3, 5] }
+            ]
+        });
+
+    });
+
+    //validation
+    function Submit(e) {
+
+        //ajax
+        //var formData = new FormData();
+        //formData.append("RS_HDRID", $(this).closest('tr').find('.HDRID').val());
+        //formData.append("Instructions", $(this).closest('tr').find('.Instructions').val());
+        //formData.append("AssignTo", $(this).closest('tr').find('.AssignTo option:selected').val());
+        //formData.append("RMSJobStatus", $(this).closest('tr').find('.RMSJobStatus option:selected').val());
+        //var request = new XMLHttpRequest();
+        //request.open('POST', '../AssignSharedReq/Assign', false);
+        //request.send(formData);
+
+        var form = $("<form action='Assign' method='post' style='display:none' ></form>");
+        $('<input name="RS_HDRID" value="' + parseInt($(e).closest('tr').find('.HDRID').val()) + '"/>').appendTo(form);
+        $('<input name="Instructions" value="' + $(e).closest('tr').find('.AssignInstructions').val() + '"/>').appendTo(form);
+        $('<input name="AssignTo" value="' + $(e).closest('tr').find('.AssignTo option:selected').val() + '"/>').appendTo(form);
+        $('<input name="RMSJobStatus" value="' + $(e).closest('tr').find('.RMSJobStatus option:selected').val() + '"/>').appendTo(form);
+
+        form.appendTo('body').submit();
+    };
+
+</script>
+

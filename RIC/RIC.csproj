@@ -1,0 +1,692 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{888F2DCA-70D2-47D2-92B7-4B729168C8E9}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RIC</RootNamespace>
+    <AssemblyName>RIC</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Elmah, Version=1.2.13605.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\elmah.corelibrary.1.2\lib\Elmah.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Elmah.Mvc, Version=2.1.2.1389, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elmah.Mvc.2.1.2\lib\net40\Elmah.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.1.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.1.1\lib\net40\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Outlook, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Outlook.14.0.0\lib\net40\Microsoft.Office.Interop.Outlook.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider, Version=4.6.22.0, Culture=neutral, PublicKeyToken=1923abe4657913cc, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC4.Core.4.6.22\lib\net45\MvcSiteMapProvider.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MvcSiteMapProvider.WebActivator, Version=4.6.22.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvcSiteMapProvider.MVC4.4.6.22\lib\net45\MvcSiteMapProvider.WebActivator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20715.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.1\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AccesslogController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AssignSharedReqController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
+    <Compile Include="Controllers\ClientMonthyDashboardController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DashboardWeekelyDataController.cs" />
+    <Compile Include="Controllers\HelpDocumentController.cs" />
+    <Compile Include="Controllers\ImportFilesController.cs" />
+    <Compile Include="Controllers\IncentivesController.cs" />
+    <Compile Include="Controllers\JobIssuedController.cs" />
+    <Compile Include="Controllers\ManageJobsController.cs" />
+    <Compile Include="Controllers\MonthlyTargetController.cs" />
+    <Compile Include="Controllers\OperationalController.cs" />
+    <Compile Include="Controllers\ReviewController.cs" />
+    <Compile Include="Controllers\SharedReqController.cs" />
+    <Compile Include="Controllers\SharedReqSubmittalsController.cs" />
+    <Compile Include="Controllers\ViewsController.cs" />
+    <Compile Include="CustomHelper\CustomHelper.cs" />
+    <Compile Include="CustomHelper\GetSQLQueryReturnType.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Account\AddClientList.cs" />
+    <Compile Include="Models\Account\AddTargetsVM.cs" />
+    <Compile Include="Models\Account\EditReportingHistoryVM.cs" />
+    <Compile Include="Models\Account\ReassignManagerVM.cs" />
+    <Compile Include="Models\Account\ReportingHistoryVM.cs" />
+    <Compile Include="Models\Account\TargetSubIntHire.cs" />
+    <Compile Include="Models\ChangePasswordViewModel.cs" />
+    <Compile Include="Models\ClientDashboard.cs" />
+    <Compile Include="Models\ClientMonthDashboardDate.cs" />
+    <Compile Include="Models\Client\ClientDashboardMonthly.cs" />
+    <Compile Include="Models\Client\ClientDashboardQuaterly.cs" />
+    <Compile Include="Models\Client\ClientListView.cs" />
+    <Compile Include="Models\Client\ClientMapping.cs" />
+    <Compile Include="Models\Client\ClientReportView.cs" />
+    <Compile Include="Models\Client\ClientSettingModel.cs" />
+    <Compile Include="Models\AssignSharedReq\SharedReq.cs" />
+    <Compile Include="Models\AssignSharedReq\SharedReqSearch.cs" />
+    <Compile Include="Models\AssignSharedReq\SharedReqVM.cs" />
+    <Compile Include="Models\Client\PositionDashboardMonthly.cs" />
+    <Compile Include="Models\Client\PositionDashboardQuaterly.cs" />
+    <Compile Include="Models\DashboardWeekelyData.cs" />
+    <Compile Include="Models\Dashboard\AccessLogDetails.cs" />
+    <Compile Include="Models\Dashboard\AddPanelsPopup.cs" />
+    <Compile Include="Models\Dashboard\Consolidated.cs" />
+    <Compile Include="Models\Dashboard\DirectorDashboardModel.cs" />
+    <Compile Include="Models\Dashboard\ProgressReportPartialVM.cs" />
+    <Compile Include="Models\Dashboard\SubmissionPartialTable.cs" />
+    <Compile Include="Models\Dashboard\TreeViewPartial.cs" />
+    <Compile Include="Models\Dashboard\UserDashboard.cs" />
+    <Compile Include="Models\EmployeeModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\DashBoardViewModel.cs" />
+    <Compile Include="Models\GaugeViewModel.cs" />
+    <Compile Include="Models\IncentiveViewModel.cs" />
+    <Compile Include="Models\JobIssued\JobIssuedVM.cs" />
+    <Compile Include="Models\JobRepoartWeek.cs" />
+    <Compile Include="Models\JobReportPartial.cs" />
+    <Compile Include="Models\Job_RepoartData.cs" />
+    <Compile Include="Models\ManageJobsVM\CheckOutReportView.cs" />
+    <Compile Include="Models\ManageJobsVM\Jobs.cs" />
+    <Compile Include="Models\ManageJobsVM\ManageJobsVM.cs" />
+    <Compile Include="Models\MonthlyTarget\MonthlyStaffingDirectorVM.cs" />
+    <Compile Include="Models\MonthlyTarget\MonthlyTargetsVM.cs" />
+    <Compile Include="Models\MonthlyTarget\MonthlyTargetEmpSupervisorLevel2VM.cs" />
+    <Compile Include="Models\Operational\OperationalGraph.cs" />
+    <Compile Include="Models\Operational\OperationalViewPartial.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\Operational\OperationalReportView.cs" />
+    <Compile Include="Models\Review\AddAnnualFeedbackWM.cs" />
+    <Compile Include="Models\Review\AddHRDicussionModel.cs" />
+    <Compile Include="Models\Review\AddInterimReviewerFeedbackVM.cs" />
+    <Compile Include="Models\Review\AnnualFeedbackDashboardPost.cs" />
+    <Compile Include="Models\Review\AnnualFeedbackDashboardVM.cs" />
+    <Compile Include="Models\Review\AnnualFeedbackDetailsVM.cs" />
+    <Compile Include="Models\Review\AnnualFeedbackRequestHrPostVM.cs" />
+    <Compile Include="Models\Review\AnnualFeedbackRequestHrVM.cs" />
+    <Compile Include="Models\Review\AnnualFeedbackWM.cs" />
+    <Compile Include="Models\Review\EditHRDiscussionDraftModel.cs" />
+    <Compile Include="Models\Review\EditInterimDraftModel.cs" />
+    <Compile Include="Models\Review\EditInterimReviewVM.cs" />
+    <Compile Include="Models\Review\EditReviewModel.cs" />
+    <Compile Include="Models\Review\HRDiscussionSendInvite.cs" />
+    <Compile Include="Models\Review\HRDiscussionSubmittedModel.cs" />
+    <Compile Include="Models\Review\HrInterimReviewModel.cs" />
+    <Compile Include="Models\Review\InterimReviewDirectorFeedbackVM.cs" />
+    <Compile Include="Models\Review\InterimReviewRequestVM.cs" />
+    <Compile Include="Models\Review\InterimReviewDetailsModel.cs" />
+    <Compile Include="Models\Review\AddInterimReviewModel.cs" />
+    <Compile Include="Models\Review\PrintHRDiscussion.cs" />
+    <Compile Include="Models\Review\SubmittedAnnualFeedbackVM.cs" />
+    <Compile Include="Models\Review\InterimReviewSubmittedModel.cs" />
+    <Compile Include="Models\RoleModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Models\SharedReqSubmittals\SharedReqSubmittals.cs" />
+    <Compile Include="Models\SharedReqSubmittals\SharedReqSubmittalsVM.cs" />
+    <Compile Include="Models\SharedReq\Company.cs" />
+    <Compile Include="Models\SharedReq\SharedReq.cs" />
+    <Compile Include="Models\SharedReq\SharedReqSearch.cs" />
+    <Compile Include="Models\SharedReq\SharedReqVM.cs" />
+    <Compile Include="Models\TeamDashboardDate.cs" />
+    <Compile Include="Models\TeamDashboardListModel.cs" />
+    <Compile Include="Models\TeamDashboardListModel_Main.cs" />
+    <Compile Include="Models\TeamDashboardViewModel.cs" />
+    <Compile Include="Models\TreeViewModel.cs" />
+    <Compile Include="Models\UserRoleModel.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MyRoleProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Utility\CryptEng.cs" />
+    <Compile Include="Utility\DashBoardIndexAction.cs" />
+    <Compile Include="Utility\Email.cs" />
+    <Compile Include="Utility\IncentiveIndexAction.cs" />
+    <Compile Include="Models\Client\ClientDashboardModel.cs" />
+    <Compile Include="Utility\ReviewUtitity.cs" />
+    <Compile Include="Utility\WeeklyDataReport.cs" />
+    <Compile Include="Web References\com.jobdiva.ws_BIData\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\com.jobdiva.ws\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\CSS\Account\AddTargets.css" />
+    <Content Include="Content\CSS\ClientDashboard.css" />
+    <Content Include="Content\CSS\Client\ClientDashboard.css" />
+    <Content Include="Content\CSS\Client\ClientSetting.css" />
+    <Content Include="Content\CSS\Client\css_bootstrap-multiselect.css" />
+    <Content Include="Content\CSS\Client\css_bootstrap.min.css" />
+    <Content Include="Content\CSS\Dashboard.css" />
+    <Content Include="Content\CSS\Dashboard1.css" />
+    <Content Include="Content\CSS\Dashboard\bootstrap-treefy.css" />
+    <Content Include="Content\CSS\Dashboard\ProgressDashboard.css" />
+    <Content Include="Content\CSS\OperationalResult.css" />
+    <Content Include="Content\JS\Client\Absolute.js" />
+    <Content Include="Content\JS\Client\js_bootstrap-multiselect.js" />
+    <Content Include="Content\JS\Client\js_bootstrap.min.js" />
+    <Content Include="Content\JS\Dashboard\bootstrap-treefy.js" />
+    <Content Include="Content\CSS\Dashboard\DirectorDashboard.css" />
+    <Content Include="Content\CSS\Incentive.css" />
+    <Content Include="Content\CSS\JobIssued\JobIssued.css" />
+    <Content Include="Content\CSS\Layout.css" />
+    <Content Include="Content\CSS\PagedList.css" />
+    <Content Include="Content\CSS\Review\AddAnnualFeedback.css" />
+    <Content Include="Content\CSS\Review\AddPersonalFeedback.css" />
+    <Content Include="Content\CSS\SideMenu.css" />
+    <Content Include="Content\CSS\TeamDashboard.css" />
+    <Content Include="Content\CSS\TeamDashboardGraph.css" />
+    <Content Include="Content\JS\Blob.min.js" />
+    <Content Include="Content\JS\Client\ClientDashboard.js" />
+    <Content Include="Content\JS\Client\ClientSettingJs.js" />
+    <Content Include="Content\JS\Client\ClientTablePartial.js" />
+    <Content Include="Content\JS\Dashboard\DirectorDashboard.js" />
+    <Content Include="Content\JS\Dashboard\DirectorTablePartial.js" />
+    <Content Include="Content\JS\Dashboard\TreeViewPartial.js" />
+    <Content Include="Content\JS\FileSaver.min.js" />
+    <Content Include="Content\JS\LayoutJs.js" />
+    <Content Include="Content\JS\loader.js" />
+    <Content Include="Content\JS\tablesort.min.js" />
+    <Content Include="Content\JS\xls.core.min.js" />
+    <Content Include="Content\TreeView\css\reset.css" />
+    <Content Include="Content\TreeView\css\style.css" />
+    <Content Include="Content\TreeView\img\cd-icons.svg" />
+    <Content Include="Content\TreeView\js\jquery-2.1.4.js" />
+    <Content Include="Content\TreeView\js\main.js" />
+    <Content Include="Content\TreeView\js\modernizr.js" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Image\dp1.png" />
+    <Content Include="Image\dropdownArrow.png" />
+    <Content Include="Image\Loader.gif" />
+    <Content Include="Image\loading.gif" />
+    <Content Include="Image\SBS_Trans_Logo_small.png" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.ascx" />
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.ascx" />
+    <Content Include="Image\SunriseLogo1.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\App_Data\" />
+    <Folder Include="Models\RMS_Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_LayoutPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\CreateRole.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapTitleHelperModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapPathHelperModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModelList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapNodeModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\SiteMapHelperModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\MetaRobotsHelperModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\MenuHelperModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\DisplayTemplates\CanonicalHelperModel.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Mvc.sitemap">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Content\TreeView\partials\_layout.scss" />
+    <Content Include="Content\TreeView\partials\_mixins.scss" />
+    <Content Include="Content\TreeView\partials\_variables.scss" />
+    <Content Include="Content\TreeView\scss\style.scss" />
+    <Content Include="Content\RMS - Admin Manual.pdf" />
+    <Content Include="Content\CSS\fonts\glyphicons-halflings-regular.woff" />
+    <None Include="MvcSiteMapSchema.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <Content Include="Views\Account\ViewUsers.cshtml" />
+    <Content Include="Views\Account\UserProfile.cshtml" />
+    <Content Include="Views\Account\CreateUser.cshtml" />
+    <Content Include="Views\Account\UpdateUser.cshtml" />
+    <Content Include="Views\Account\UserDetails.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Dashboard\Popup.cshtml" />
+    <Content Include="Views\Account\CreateMenu.cshtml" />
+    <Content Include="Views\Account\ViewMenu.cshtml" />
+    <Content Include="Views\Dashboard\UploadSubmissions.cshtml" />
+    <Content Include="Views\Dashboard\AddSubmissionRule.cshtml" />
+    <Content Include="Views\Dashboard\ViewSubmission.cshtml" />
+    <Content Include="Views\Dashboard\ViewSubmissionRule.cshtml" />
+    <Content Include="Views\Dashboard\UploadHolidayList.cshtml" />
+    <Content Include="Views\Dashboard\ViewHolidays.cshtml" />
+    <Content Include="Views\Dashboard\UploadUsers.cshtml" />
+    <Content Include="Views\Dashboard\UploadSubmissionsDaily.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\BootstrapMenuHelperModel.cshtml" />
+    <Content Include="Views\Dashboard\UploadCallStatistics.cshtml" />
+    <None Include="Properties\PublishProfiles\Ashish.pubxml" />
+    <Content Include="Views\Account\Reassign.cshtml" />
+    <Content Include="Views\Account\ReportingHistory.cshtml" />
+    <Content Include="Views\Dashboard\TreeViewPartial.cshtml" />
+    <Content Include="Views\Account\EditReportingHistory.cshtml" />
+    <Content Include="Views\Dashboard\ViewDetailsPopup.cshtml" />
+    <Content Include="Views\Incentives\Index.cshtml" />
+    <Content Include="Views\Incentives\ViewIncentivePopup1.cshtml" />
+    <Content Include="Views\Dashboard\JobReportPartial.cshtml" />
+    <Content Include="Views\Dashboard\GaugeGraphPartial.cshtml" />
+    <Content Include="Views\Dashboard\TeamDashboardGraph.cshtml" />
+    <Content Include="Views\Dashboard\TeamDashboardold.cshtml" />
+    <Content Include="Views\Dashboard\TeamDashboard.cshtml" />
+    <Content Include="Views\Dashboard\jobReportTeamPartial.cshtml" />
+    <Content Include="Views\Incentives\ViewIncentivePopup.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Client\ClientSetting.cshtml" />
+    <Content Include="Views\Client\ClientDashboard.cshtml" />
+    <Content Include="Views\Client\ClientTablePartial.cshtml" />
+    <Content Include="Views\Dashboard\DirectorDashboard.cshtml" />
+    <Content Include="Views\Dashboard\DirectorTablePartial.cshtml" />
+    <Content Include="Views\Dashboard\SubmissionPartialTable.cshtml" />
+    <Content Include="Views\Operational\OperationalResult.cshtml" />
+    <Content Include="Views\Operational\OperationalDashBoard.cshtml" />
+    <Content Include="Views\Operational\ViewDetailsPopup.cshtml" />
+    <Content Include="Views\Operational\OperationalReport.cshtml" />
+    <Content Include="Views\JobIssued\Index.cshtml" />
+    <Content Include="Views\SharedReq\Index.cshtml" />
+    <Content Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web References\com.jobdiva.ws\DataSet.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Web References\com.jobdiva.ws\JobDivaAPI.wsdl" />
+    <Content Include="Web References\com.jobdiva.ws\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web References\com.jobdiva.ws_BIData\BIData.wsdl" />
+    <Content Include="Web References\com.jobdiva.ws_BIData\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
+    <Content Include="Web References\com.jobdiva.ws_BIData\DataSet1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <Content Include="Views\AssignSharedReq\Index.cshtml" />
+    <Content Include="Views\SharedReqSubmittals\Index.cshtml" />
+    <Content Include="Views\Review\AddAnnualFeedback.cshtml" />
+    <Content Include="Views\Review\AddPersonalFeedback.cshtml" />
+    <Content Include="Views\Review\AddInterimReviewerFeedback.cshtml" />
+    <Content Include="Views\Review\AddReviewerFeedback.cshtml" />
+    <Content Include="Views\Review\AnnualFeedback.cshtml" />
+    <Content Include="Views\Review\AnnualFeedbackDashboard.cshtml" />
+    <Content Include="Views\Review\AnnualFeedbackDetails.cshtml" />
+    <Content Include="Views\Review\AnnualFeedbackRequestHr.cshtml" />
+    <Content Include="Views\Review\AnuulaFeedbackPrint.cshtml" />
+    <Content Include="Views\Review\Details.cshtml" />
+    <Content Include="Views\Review\InterimDrafts.cshtml" />
+    <Content Include="Views\Review\EditInterimDraft.cshtml" />
+    <Content Include="Views\Review\EditReview.cshtml" />
+    <Content Include="Views\Review\AddInterimHrFeedback.cshtml" />
+    <Content Include="Views\Review\Index.cshtml" />
+    <Content Include="Views\Review\InterimReviewRequest.cshtml" />
+    <Content Include="Views\Review\AddInterimReview.cshtml" />
+    <Content Include="Views\Review\SubmittedAnnualFeedback.cshtml" />
+    <Content Include="Views\Review\InterimReviewSubmitted.cshtml" />
+    <Content Include="Views\Review\AddInterimDirectorFeedback.cshtml" />
+    <Content Include="Views\Review\EditInterimReview.cshtml" />
+    <Content Include="Views\HelpDocument\HelpDocument.cshtml" />
+    <Content Include="Views\Dashboard\ViewSubmissionEdit.cshtml" />
+    <Content Include="Views\Account\AddClientList.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\ClientReport.cshtml" />
+    <Content Include="Views\Incentives\IncentivePartial.cshtml" />
+    <Content Include="Views\Dashboard\ProgressReportPartial.cshtml" />
+    <Content Include="Views\Account\GetTargetList.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\ClientMonthyDashboardDisplayView.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\ClientDetailsByQuaterly.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\ClientMonthlyPartial.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\ClientDetailsByQuaterlyPartial.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\DetailsViewPopup.cshtml" />
+    <Content Include="Views\Account\AddTargets.cshtml" />
+    <Content Include="Views\Dashboard\ProgressDashboard.cshtml" />
+    <Content Include="Views\Dashboard\UserDashboard.cshtml" />
+    <Content Include="Views\Dashboard\AddPanelsPopup.cshtml" />
+    <Content Include="Views\Dashboard\SubmissionsInsightPartial.cshtml" />
+    <Content Include="Views\Dashboard\InterviewsInsightPartial.cshtml" />
+    <Content Include="Views\Dashboard\StartsInsightPartial.cshtml" />
+    <Content Include="Views\Dashboard\TeamPerformancePartial.cshtml" />
+    <Content Include="Views\Dashboard\OrganizationPerformanceIndicatorsPartial.cshtml" />
+    <Content Include="Views\SQLViews\GetViews.cshtml" />
+    <Content Include="Views\SQLViews\GetSearchScr.cshtml" />
+    <Content Include="Views\SQLViews\SearchParameters_Partial.cshtml" />
+    <Content Include="Views\SQLViews\GetViewSearch_Partial.cshtml" />
+    <Content Include="Views\Incentives\QuarterlyIncentive.cshtml" />
+    <Content Include="Views\Review\HRDiscussionSubmitted.cshtml" />
+    <Content Include="Views\Review\HRDiscussionDrafts.cshtml" />
+    <Content Include="Views\Review\AddHRDiscussion.cshtml" />
+    <Content Include="Views\Review\EditHRDiscussionDraft.cshtml" />
+    <Content Include="Views\Review\EditHRDiscussionSubmit.cshtml" />
+    <Content Include="Views\Review\PrintHRDiscussion.cshtml" />
+    <Content Include="Views\Review\HRDiscussionSendInvite.cshtml" />
+    <Content Include="Views\ManageJobs\Index.cshtml" />
+    <Content Include="Views\ManageJobs\FetchCallAPI.cshtml" />
+    <Content Include="Views\ManageJobs\ManageJobsDashboard.cshtml" />
+    <Content Include="Views\ManageJobs\ManageJobReportPartial.cshtml" />
+    <Content Include="Views\ManageJobs\ViewDetailsPopup.cshtml" />
+    <Content Include="Views\ManageJobs\CheckOutReport.cshtml" />
+    <Content Include="Views\ManageJobs\NoActionReport.cshtml" />
+    <Content Include="Views\Dashboard\AccesslogDashboard.cshtml" />
+    <Content Include="Views\Dashboard\AccesslogjobReportTeamPartial.cshtml" />
+    <Content Include="Views\Dashboard\AccesslogJobReportPartial.cshtml" />
+    <Content Include="Views\Dashboard\AccesslogDashboardIndex.cshtml" />
+    <Content Include="Views\Accesslog\Accesslog.cshtml" />
+    <Content Include="Views\Dashboard\AccessLogViewDetailsPopup.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\Shaurya.pubxml" />
+    <Content Include="Views\DashboardWeekelyData\DashboardData.cshtml" />
+    <Content Include="Views\MonthlyTarget\Index.cshtml" />
+    <Content Include="Views\MonthlyTarget\AddTargetsSupervisor.cshtml" />
+    <Content Include="Views\MonthlyTarget\AddSupervisorLevel2Targets.cshtml" />
+    <Content Include="Views\MonthlyTarget\AddTargetsDirectorLevel.cshtml" />
+    <Content Include="Views\DashboardWeekelyData\DashboardDataPartial.cshtml" />
+    <Content Include="Views\DashboardWeekelyData\BreaksDetails.cshtml" />
+    <Content Include="Views\Dashboard\AuditData.cshtml" />
+    <Content Include="Views\Client\ClientListView.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\ClientDetailsByQuaterlyNew.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\ClientDetailsByQuaterlyPartialNew.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\_Portfolio_Company_details.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\_Portfolio_Month_Deatails_Partial.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\DetailsViewPopupReqsPartila.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\ClientPositionDetails.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\_ClientPositionDetailsPartial.cshtml" />
+    <Content Include="Views\Dashboard\DetailsViewPopupReqsPartila.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\DetailsViewPopupPosition.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\_PositionDashboardMonthly.cshtml" />
+    <Content Include="Views\Account\ManageClientList.cshtml" />
+    <Content Include="Views\MonthlyTarget\_RecruiterPatial.cshtml" />
+    <Content Include="Views\MonthlyTarget\_EmployeeReportingStaffingDirector.cshtml" />
+    <Content Include="Views\MonthlyTarget\_tableHeader.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\DetailsViewPopupTotalRecruiter.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\ClientSubmissionDetails.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\ClientSubmissionDeatilsPartial.cshtml" />
+    <Content Include="Views\ClientMonthyDashboard\SubmissionViewPopup.cshtml" />
+    <Content Include="Views\Incentives\GetQuarterlyListPartial.cshtml" />
+    <Content Include="Views\Incentives\ImportFilePartial.cshtml" />
+    <Content Include="Views\ImportFiles\Index.cshtml" />
+    <Content Include="Views\ImportFiles\ImportFilePartial.cshtml" />
+    <Content Include="Views\Incentives\Incentives.cshtml" />
+    <Content Include="Views\ImportFiles\CallStatistics.cshtml" />
+    <Content Include="Views\Dashboard\_OutVoiceMessage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DBLibrary\DBLibrary.csproj">
+      <Project>{6b7c1bc6-2899-4857-8f6c-904968ee7626}</Project>
+      <Name>DBLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://ws.jobdiva.com/axis2-1.6.1/services/JobDivaAPI%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\com.jobdiva.ws\</RelPath>
+      <UpdateFromURL>http://ws.jobdiva.com/axis2-1.6.1/services/JobDivaAPI%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>RIC_com_jobdiva_ws_JobDivaAPI</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="https://ws.jobdiva.com/axis2/services/BIData%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\com.jobdiva.ws_BIData\</RelPath>
+      <UpdateFromURL>https://ws.jobdiva.com/axis2/services/BIData%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>RIC_com_jobdiva_ws1_BIData</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>64640</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/RIC</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,409 @@
+﻿@*@model RIC.Models.SearchEmployeeData*@
+@using System.Globalization;
+@{
+
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+
+}
+<input type='hidden' value='0' id='Hidweek' />
+<link href="~/Content/CSS/Dashboard/bootstrap-treefy.css" rel="stylesheet" />
+<script src="~/Content/JS/Dashboard/bootstrap-treefy.js"></script>
+<style>
+    @@import url('//cdn.datatables.net/1.10.2/css/jquery.dataTables.css');
+
+    td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+    }
+
+    [data-toggle="toggle"] {
+        display: none;
+    }
+</style>
+<html>
+<head>
+
+
+
+    <meta name="viewport" content="width=device-width" />
+    <title>DashboardData</title>
+    <style>
+
+        table, td, th {
+            border: 1px solid black;
+        }
+
+        .container {
+            padding: 25px;
+            padding-top: 140px;
+            width: 100%;
+        }
+
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            /*table-layout: fixed;*/
+            background-color: #EDEDED;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+            border-radius: 15px;
+            border-color: #d2d2d2;
+            border-width: 5px;
+            box-shadow: 0 1px 0 #cfcfcf;
+        }
+
+        h4 {
+            border: 0 solid #fff;
+            border-bottom-width: 1px;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .wrapper {
+            text-align: center;
+        }
+    </style>
+
+
+
+</head>
+<body>
+    @*<label>@Html.ActionLink("Back", "TeamDashboard", "Dashboard", null, new { @class = "btn btn-primary", @id = "backId", @style = "margin-left: 90%;margin-top:0%" })</label>*@
+    
+    <h4><b>Performance Report</b></h4>
+
+    <div class="table-responsive">
+        <table align="center" border="0">
+            <tr>
+                <td>
+                    <table align="center" style="width: 100%; border: 0 !important" border="0">
+                        <tr style="text-align: center">
+                            <td align="right" style="border:0 !important" width="40%">
+                                @if (ViewBag.ShowPreviousBtn == "N")
+                                {
+                                    <button id='' class="btn btn-primary" disabled="disabled">
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button id='previousMontBtn' class="btn btn-primary">
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </button>
+                                }
+                            </td>
+                            <td class="labelcenter" style="text-align: center !important; border: 0 !important" width="20%" colspan="40">
+
+                                @*&nbsp;*@
+                                @*<div> <b>From:@stdate   To:@enddate</b></div>*@
+                                <div> <label id="sdate" style="font:200"></label> </div>
+                                @*&nbsp;*@
+
+                            </td>
+                            <td align="left" style="border:0 !important" width="40%">
+                                <button id="nextMonthBtn" class="btn btn-primary">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+
+    <div id="dashboard">
+
+        <br />
+
+
+
+
+        @if (ViewData["Emp"] != null)
+        {
+            var report = ViewData["Emp"] as List<DashboardWeekelyData>;
+            <table align="center">
+
+                <tr>
+
+                    <th>
+                        Employee Name :
+
+                        @*<a href="~/Views/DashboardWeekelyData/DashboardData.cshtml">
+                            <i class="fas fa-info-circle" title="Performance Report"></i></a>*@
+
+                    </th>
+
+                    <td align="left">@report[0].RE_Employee_Name</td>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+
+                    <th> Reporting To :</th>
+
+                    <td align="left">@report[0].MgrName </td>
+
+                    <td align="center" style="width:15%"><b>Monday</b></td>
+                    <td align="center" style="width:15%"><b>Tuesday</b></td>
+                    <td align="center" style="width:15%"><b>Wednesday</b></td>
+                    <td align="center" style="width:15%"><b>Thursday</b></td>
+                    <td align="center" style="width:15%"><b>Friday</b></td>
+
+                </tr>
+
+                <tr>
+                    <th> Login Time :</th>
+                    <td></td>
+                    @foreach (var item in report.Select(x => x.Login_Time).ToList())
+                    {
+                        <td align="center">@item</td>
+                    }
+                </tr>
+                <tr>
+                    <th>Logout Time :</th>
+                    <td></td>
+                    @foreach (var item in report.Select(x => x.Last_Activity_Timing).ToList())
+                    {
+                        <td align="center">@item</td>
+
+                    }
+                </tr>
+                <tr>
+                    <th>Req's Worked On :</th>
+                    <td></td>
+                    @foreach (var item in report.Select(x => x.RC_Req_Worked_On).ToList())
+                    {
+                        <td align="center">@item</td>
+
+                    }
+
+                </tr>
+                <tr>
+                    <th>Calls :</th>
+                    <td></td>
+                    @foreach (var item in report.Select(x => x.RC_Dailed).ToList())
+                    {
+                        <td align="center">@item</td>
+
+                    }
+
+                </tr>
+                <tr>
+                    <th>Submission :</th>
+                    <td></td>
+                    @foreach (var item in report.Select(x => x.Submissions).ToList())
+                    {
+                        <td align="center">@item</td>
+
+                    }
+
+                </tr>
+                <tr>
+                    <th style="text-align:justify">Notes :</th>
+                    <td></td>
+                    @foreach (var item in report.Select(x => x.RC_Description).ToList())
+                    {
+                        if (item == "NA")
+                        {
+                            <td style="text-align:center">@item</td>
+                        }
+                        else
+                        {
+                            <td>@item</td>
+
+                        }
+                    }
+                </tr>
+                <tr>
+
+                    <th colspan="2" align="center">Unusual breaks (more than 20 mins between activity):</th>
+                    @foreach (var item in report.Select(x => x.Break_In_Minutes).ToList())
+                    {
+                        @*<td align="center">@item</td>*@
+                        var empCD = @ViewBag.EmpCd;
+                        var StartDays = ViewBag.weekstdate;
+                        int i = 0;
+                        <td align="center">
+
+                            @if (item != 0)
+                            {
+
+                                <a href="@Url.Action("BreaksDetails", "DashboardWeekelyData", new { empCD =empCD,getDate=StartDays,addDays=i})" title="View Break Details Report">
+                                    @item
+                                </a>
+
+                            }
+                            else
+                            {
+                                @item
+                            } min(s)
+                        </td>
+                        i++;
+                    }
+                </tr>
+                <tr>
+                    <th colspan="2" valign="top" style="height:150px">Other Observations :</th>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+
+                </tr>
+
+            </table>
+        }
+
+    </div>
+    <div id="dashboardpartial">
+
+    </div>
+
+    <div id="breaks">
+
+    </div>
+    <script>
+        function format(value) {
+            return value;
+        }
+        $(document).ready(function () {
+
+
+
+            var table = $('#example').DataTable({});
+
+            // Add event listener for opening and closing details
+            $('#example').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    // Open this row
+                    row.child(format(tr.data('child-value'))).show();
+                    tr.addClass('shown');
+                }
+            });
+
+            //var week = $("#Hidweek").val();
+        });
+
+
+    </script>
+    <script>
+        $(function () {
+            $("#table").treeFy({
+                treeColumn: 0
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+
+            setButton();
+            var empCd = '@ViewBag.EmpCd';
+           var stdate= '@ViewBag.weekstdate';
+            var enddate='@ViewBag.weekenddate';
+            var setdate =  stdate + " - " + enddate;
+            $("#sdate").text(setdate);
+          //  alert(setdate);
+            $("#previousMontBtn").click(function () {
+              //  $("#nextMonthBtn").prop('disabled', false);
+                // $("#previousMontBtn").prop('disabled', true);
+                var week = $("#Hidweek").val();
+                var monthInt = parseInt(week) - 1;
+               // alert(week);
+               // alert(monthInt);
+                $("#Hidweek").val(monthInt);
+
+                var jobRepartPartialUrl = '@Url.Action("DashboardData1")';
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: jobRepartPartialUrl,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "week": monthInt, "empId": empCd },//"month": monthInt,
+                    datatype: "json",
+                    success: function (data) {
+                        $('#dashboardpartial').html(data);
+                        $('#dashboard').hide();
+                    },
+                    error: function () {
+                    }
+                });
+                setButton();
+                // return false;
+            });//, 1000);
+            $("#nextMonthBtn").click(function () {
+
+                //  $("#nextMonthBtn").prop('disabled', true);
+              //  $("#previousMontBtn").prop('disabled', false);
+                var week = $("#Hidweek").val();
+                var monthInt = parseInt(week) + 1;
+                //alert(monthInt);
+                $("#Hidweek").val(monthInt);
+
+                var jobRepartPartialUrl = '@Url.Action("DashboardData1")';
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "GET",
+                    url: jobRepartPartialUrl,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "week": monthInt, "empId": empCd },//"month": monthInt,
+                    datatype: "json",
+                    success: function (data) {
+
+                        $('#dashboardpartial').html(data);
+                        $('#dashboard').hide();
+                    },
+                    error: function () {
+                    }
+                });
+                setButton();
+                //return false;
+            });//, 1000);
+
+
+        });
+
+            function setButton() {
+                var week = $("#Hidweek").val();
+                //alert(week)
+                if (week == 0) {
+                    $("#nextMonthBtn").prop('disabled', true);
+                    $("#previousMontBtn").prop('disabled', false);
+                }
+                else if (week == -3) {
+                    $("#nextMonthBtn").prop('disabled', false);
+                    $("#previousMontBtn").prop('disabled', true);
+
+                }
+
+                else {
+                    $("#nextMonthBtn").prop('disabled', false);
+                    $("#previousMontBtn").prop('disabled', false);
+                }
+            }
+    </script>
+
+</body>
+</html>

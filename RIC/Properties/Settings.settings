@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="RIC.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="RIC_com_jobdiva_ws_JobDivaAPI" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ws.jobdiva.com/axis2-1.6.1/services/JobDivaAPI/</Value>
+    </Setting>
+    <Setting Name="RIC_com_jobdiva_ws1_BIData" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://ws.jobdiva.com/axis2/services/BIData/</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

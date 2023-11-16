@@ -1,0 +1,359 @@
+﻿@model IEnumerable<DBLibrary.RIC_Client>
+@{
+    ViewBag.Title = "ManageClientList";
+    //  Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+@*Added by Dinesh*@
+
+<style>
+    .tablecontainer {
+        height: 600%;
+        width: 1000px;
+    }
+
+    .del {
+    }
+
+    .Upt {
+    }
+
+    #JD_Table {
+        background-color: #337ab7;
+        border-color: #337ab7;
+    }
+
+        #JD_Table th {
+            color: white;
+            border-color: white;
+        }
+
+        #JD_Table td {
+            color: black;
+            border-color: #337ab7;
+            padding-left: 18px;
+        }
+
+        #JD_Table TH {
+            white-space: nowrap;
+        }
+
+
+
+    .textCapitalize {
+        text-transform: capitalize;
+    }
+
+    #divModel li a {
+        color: #337ab7;
+    }
+
+
+
+    #divModel .active a {
+        background-color: #fff !important;
+    }
+
+
+    #tdCompany {
+        background-color: #337ab7;
+        border-color: #337ab7;
+    }
+
+        #tdCompany th {
+            color: white;
+            border-color: white;
+        }
+
+        #tdCompany td {
+            color: black;
+            border-color: #337ab7;
+            padding-left: 18px;
+        }
+
+    #tblUser {
+        background-color: #337ab7;
+        border-color: #337ab7;
+    }
+
+        #tblUser th {
+            color: white;
+            border-color: white;
+        }
+
+        #tblUser td {
+            color: black;
+            border-color: #337ab7;
+            padding-left: 18px;
+        }
+
+
+    thead tr {
+        background-color: #337ab7 !important;
+    }
+
+    .panel panel-primary {
+        width: 50%;
+    }
+</style>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+
+<div class="modal-content tablecontainer" id="maindiv">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 style="text-align: center;" class="modal-title">Manage Client</h3>
+    </div>
+    <br />
+    <div class="panel panel-primary" style="margin-top: -30px;margin-left:10px;margin-right:10px;">
+        <form method="post" action="~/Account/ManageClientList" id="form">
+            <div style="text-align:center">
+                <br />
+                <label style="font-size:14px;">Add Client:</label>
+                <input type="text" id="txtName" style="border-style:ridge" />
+            </div>
+            <br />
+            <div style="text-align:center">
+                <input type="button" id="btnInsert" class="btn-circle btn-primary" title="Save" value="Save" style="background-color: #337ab7; margin-left:50px" />
+                <input type="button" id="btnCancel" class="btn-circle btn-primary" title="" value="Cancel" style="background-color: #337ab7; margin-left:10px" />
+                @*<input type="button" id="btnRefresh" class="btn-circle btn-primary" value="Refresh" style="background-color: #337ab7; margin-left:10px" />*@
+            </div>
+        </form>
+        <br />
+    </div>
+    <div id="gd1" style="margin-top:60px; margin-right:15px; margin-left:15px; margin-bottom:15px;">
+        <table id="tabUserList" class="table table-striped  table-hover table-bordered">
+            <thead style="background-color: #337ab7; color: white;">
+                <tr>
+
+                    <th style="text-align: center">
+                        Client Name
+                    </th>
+
+                    <th class="center" style="text-align:center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="text-align:center">
+                            @item.RC_ClientName
+                        </td>
+                        <td style="text-align:center">
+                            @*<a href="#" data-ID="@item.RC_Id" data-toggle="tooltip" data-placement="bottom" title="Delete" class="del">
+
+                                <span class="fas fa-trash-alt" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
+                            </a>*@  @*&nbsp; &nbsp;*@
+                            <a href="#" data-Name="@item.RC_ClientName" data-ID="@item.RC_Id" data-toggle="tooltip" data-placement="bottom" title="Update" class="Upt">
+
+                                <span class="fas fa-edit" data-toggle="tooltip" data-placement="bottom" title="Update"></span>
+                            </a>
+                            @*<i class="fas fa-edit"></i>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+    <div id="UpdateClient" style="text-align:center">
+        <br />
+        <label style="font-size:14px;">Update Client:</label>
+        <input type="text" id="txtUpdate" style="border-style:ridge" />
+        <br />
+        <br />
+
+        <div style="text-align:center;margin-bottom:10px;">
+            <input type="button" id="btnUpdate" class="btn-circle btn-primary" value="Update" style="background-color: #337ab7" />
+            <input type="button" id="btnUpdateCancel" class="btn-circle btn-primary" value="Cancel" style="background-color: #337ab7" />
+        </div>
+    </div>
+
+
+
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //$('#maindiv').click(function () {
+        //    $("#txtName").focus();
+        //});
+        //$('#maindiv').trigger('click');
+       
+        $('#UpdateClient').hide();
+
+        var TeamDetailPostBackURL = '@Url.Action("ManageClientListPost")';
+        var TeamDetailPostBackURL1 = '@Url.Action("ManageClientDeleteRecord")';
+        var TeamDetailPostBackUpdate = '@Url.Action("ManageClientUpdateRecord")';
+        var TeamDetailPostBackDisplay = '@Url.Action("ManageClientList")';
+
+        $("#btnInsert").click(function () {
+            //debugger;
+
+
+            var $buttonClicked = $(this);
+            var Clientname = $.trim($('#txtName').val());
+               // var Clientname =$('#txtName').val();
+           // alert(clientname);
+            if (Clientname == "") {
+                alert("Please enter Client Name!");
+                $('#txtName').focus();
+                return false;
+            }
+            var options = { "backdrop": "static", keyboard: true };
+            //debugger;
+            $.ajax({
+                type: "get",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "Clientname": Clientname },
+
+                datatype: "json",
+                success: function (data) {
+                    //alert(data);
+
+
+                    $('#MyModalContent').html(data);
+                   validation();
+
+
+                   // alert('succesfull inserted!');
+//                  Refresh static Data in Jquery DataTable;
+//•	Normal view –if you want to refresh the data you have to code- location.reload();
+//•	Partial View-when you using popup , in the popup table if you want to refresh the data you have to code $(‘#model-body’).html(data) .
+
+
+                },
+                error: function () {
+                    //alert("Dynamic content load failed.");
+                }
+            });
+
+        });
+
+        var clientname;
+        var RC_Id;
+
+        $('.del').click(function () {
+
+
+           // debugger;
+            var $buttonClicked = $(this);
+            var RC_ID = $buttonClicked.attr('data-ID');
+
+            if (confirm("are you sure to delete this record")) {
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "get",
+                    url: TeamDetailPostBackURL1,
+                    contentType: "application/json; charset=utf-8",
+                    data: { "RC_ID": RC_ID },
+
+                    datatype: "json",
+                    success: function (data) {
+                        //alert(data);
+                             $('#MyModalContent').html(data);
+                        alert('Delete Successfull');
+
+                    },
+                    error: function () {
+                        // alert("Dynamic content load failed.");
+                    }
+                });
+            }
+
+
+        });
+
+
+        $('.Upt').click(function () {
+
+
+          //  debugger;
+            var $buttonClicked = $(this);
+            var RC_ClientName = $buttonClicked.attr('data-Name');
+            RC_Id = $buttonClicked.attr('data-ID');
+
+                $('#UpdateClient').show();
+                $('#txtUpdate').val(RC_ClientName);
+            clientname = $('#txtUpdate').val();
+            $('#txtUpdate').removeAttr('disabled');
+               $('#btnUpdate').removeAttr('disabled');
+
+
+
+
+        });
+
+        $('#btnUpdate').on('click', function () {
+           // debugger;
+            clientname = $('#txtUpdate').val().trim();
+            if (clientname == "") {
+                alert("Please enter Client Name!");
+                $('#txtUpdate').focus();
+                return false;
+            }
+            //alert(clientname);
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "get",
+                url: TeamDetailPostBackUpdate,
+                contentType: "application/json; charset=utf-8",
+                data: { "clientname": clientname, "RC_Id": RC_Id },
+                datatype: "json",
+                success: function (data) {
+                    //alert(data);
+                    $('#MyModalContent').html(data);
+                    alert('Client Updated Successfully!');
+                    $('#txtUpdate').attr("disabled", "disabled");
+                    $('#btnUpdate').attr("disabled", "disabled");
+                },
+                error: function () {
+                    // alert("Dynamic content load failed.");
+                }
+            });
+        });
+        $('#btnUpdateCancel').click(function () {
+            $('#txtUpdate').val('');
+            $("#txtUpdate").focus();
+        });
+
+            $('#btnCancel').click(function () {
+                $('#txtName').val('');
+                $("#txtName").focus();
+            });
+
+
+           });
+     function validation() {
+            //debugger;
+
+            if ('@ViewBag.message' == '') {
+            } else {
+                alert('@ViewBag.message');
+            }
+
+
+
+        }
+    var mTable = $('#tabUserList').DataTable({
+        "ordering": true
+    });
+    
+    /*document.getElementById("txtName").focus();*/
+ 
+
+
+
+</script>

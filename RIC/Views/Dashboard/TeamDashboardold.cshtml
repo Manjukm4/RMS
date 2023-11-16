@@ -1,0 +1,165 @@
+﻿@model  List<RIC.Models.TreeViewModel>
+@{
+    ViewBag.Title = "TeamDashboard1";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link href="~/Content/CSS/Dashboard1.css" rel="stylesheet" />
+@*<h2>Team Dashboard1</h2>*@
+<div>
+    @*<div class="panel-group">
+        @foreach (var item in Model)
+        {
+            foreach (var emp in item.Employees)
+            {                  
+          
+            <input type='hidden' value='0' id='HidMonth_@emp.RE_Emp_Cd' />     
+            <input type='hidden' value='@emp.RE_Emp_Cd' id='HdnEmpCD_@emp.RE_Emp_Cd' />    
+            <div class="panel panel-warning ">
+                <div class="panel-heading padingoPX">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" onclick="bindJdPatial('@emp.RE_Emp_Cd')" href="#@emp.RE_Emp_Cd" > 
+                             <span class="pull-right clickable">
+                            <i class="more-less glyphicon glyphicon-plus"></i> 
+                                 </span>
+                              @emp.RE_Jobdiva_User_Name
+                        </a>
+                    </h4>
+                </div>
+                <div id="@emp.RE_Emp_Cd" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div id="JobReportPartial_@emp.RE_Emp_Cd">
+		                </div>                     
+                    </div>
+                </div>
+            </div>            							
+            }
+        }
+    </div>*@
+
+
+
+
+
+
+
+
+
+    <div class="panel-group">
+        @foreach (var item in Model)
+        {
+            foreach (var emp in item.Employees)
+            {          
+            <input type='hidden' value='0' id='HidMonth_@emp.RE_Emp_Cd' />     
+            <input type='hidden' value='@emp.RE_Emp_Cd' id='HdnEmpCD_@emp.RE_Emp_Cd' />
+            
+            
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" onclick="bindJdPatial('@emp.RE_Emp_Cd')" href="#@emp.RE_Emp_Cd">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="step s1"><i class="fas fa-user"></i></div>
+                                </div>
+                                <div class="col-md-11 step-text">
+                                    <span class="pull-right clickable">
+                                        <i class="more-less glyphicon glyphicon-plus"></i>
+                                    </span>
+                         <div class="form-group col-md-2 panelLblTextLeft">           
+                             @emp.RE_Jobdiva_User_Name
+                            </div>
+                                   
+                                    @*<div class="form-group col-md-1 progressBarLbl "> Submissions</div>
+                                    <div class="form-group col-md-2 ">
+                                        <div style="width: 80%;" class="progress">
+                                            <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                                40%
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1 progressBarLbl "> Interviews</div>
+                                    <div class="form-group col-md-2 ">
+                                        <div style="width: 80%;" class="progress">
+                                            <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                                40%
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-1 progressBarLbl ">Hires</div>
+                                    <div class="form-group col-md-2 ">
+                                        <div style="width: 80%;" class="progress">
+                                            <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                                                40%
+                                            </div>
+                                        </div>
+                                    </div>*@
+                                </div>
+                        </a>
+                    </h4>
+                </div>
+                @*   <div class="panel-heading padingoPX">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" onclick="bindJdPatial('@emp.RE_Emp_Cd')" href="#@emp.RE_Emp_Cd" > 
+                             <span class="pull-right clickable">
+                            <i class="more-less glyphicon glyphicon-plus"></i> 
+                                 </span>
+                              @emp.RE_Jobdiva_User_Name
+                        </a>
+                    </h4>
+                </div>*@
+                <div id="@emp.RE_Emp_Cd" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div id="JobReportPartial_@emp.RE_Emp_Cd">
+                        </div>
+                    </div>
+                </div>
+            </div>            							
+            }
+        }
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg ">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+    });
+
+    function toggleIcon(e) {
+        $(e.target)
+            .prev('.panel-heading')
+            .find(".more-less")
+            .toggleClass('glyphicon-plus glyphicon-minus');
+    }
+    $('.panel-group').on('hidden.bs.collapse', toggleIcon);
+    $('.panel-group').on('shown.bs.collapse', toggleIcon);
+
+    function bindJdPatial(empCD) {
+        //debugger;
+        // var tempID = clickID;
+        var month = $("#HidMonth_" + empCD).val();
+        //debugger;
+        var jobRepartPartialUrl = '@Url.Action("JobReportPartial")';
+        var options = { "backdrop": "static", keyboard: true };
+        //var empCD = $("#HdnEmpCD_"+clickID).val();
+        $.ajax({
+            type: "GET",
+            url: jobRepartPartialUrl,
+            contentType: "application/json; charset=utf-8",
+            data: { "month": month, "empCd": empCD, "idText": empCD },
+            datatype: "json",
+            success: function (data) {
+                $('#JobReportPartial_' + empCD).html(data);
+            },
+            error: function () {
+              //  alert("Dynamic content load failed.");
+            }
+        });
+    }
+
+</script>

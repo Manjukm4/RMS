@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="Home" controller="Home" action="Index">
+
+    <mvcSiteMapNode title="DashBoards" controller="Operational" action="OperationalReport" roles="Manager,Director,Accounting Manager,Team Lead, Employee,Director-Staffing">
+      <mvcSiteMapNode title="Dashboard" controller="Dashboard" action="Index" roles="Employee,Manager,Team Lead,Director,Director-Staffing,Accounting Manager"/>
+      <!--<mvcSiteMapNode title="Progress Dashboard" controller="Dashboard" action="ProgressDashboard" roles="Manager,Team Lead,Director,Director-Staffing"/>-->
+      
+      <mvcSiteMapNode title="Team Dashboard" controller="Dashboard" action="TeamDashboard" roles="Director,Manager,Team Lead,Director-Staffing,Accounting Manager"/>
+      <mvcSiteMapNode title=" Client Monthly Details" controller="ClientMonthyDashboard" action="ClientMonthyDashboardDisplayView" roles="Accounting Manager,Director,Director-Staffing"/>
+      <mvcSiteMapNode title="Client Dashboard - Quarterly" controller="ClientMonthyDashboard" action="ClientDetailsByQuaterly" roles="Accounting Manager,Director,Director-Staffing"/>
+      <!--<mvcSiteMapNode title="Job Issue Dashboard" controller="JobIssued" action="Index" roles="Director"/>-->
+		<mvcSiteMapNode title="Portfolio Dashboard" controller="ClientMonthyDashboard" action="ClientDetailsByQuaterlyNew" roles="Director,Accounting Manager,Director-Staffing"/>
+		<mvcSiteMapNode title="Position Dashboard" controller="ClientMonthyDashboard" action="ClientPositionDetails" roles="Director,Accounting Manager,Director-Staffing"/>
+		
+      <!--<mvcSiteMapNode title="Director Dashboard" controller="Dashboard" action="DirectorDashboard" roles="Director,Accounting Manager"/>-->
+
+      <mvcSiteMapNode title="Client Dashboard - Monthly" controller="Client" action="ClientDashboard" roles="Employee,Manager,Team Lead,Director,Director-Staffing"/>
+
+
+		<mvcSiteMapNode title="Submission Details" controller="ClientMonthyDashboard" action="ClientSubmissionDetails" roles="Accounting Manager,Director,Director-Staffing"/>
+
+      <mvcSiteMapNode title="Operational Dashboard" controller="Operational" action="OperationalDashBoard" roles="Employee,Manager,Team Lead,Director,Director-Staffing"/>
+      <!--<mvcSiteMapNode title="Targets" controller="Account" action="GetTargetList" roles="Employee,Manager,Team Lead,Director,Director-Staffing,"/>-->
+      <!--<mvcSiteMapNode title="Accesslog Dashboard" controller="Dashboard" action="AccesslogDashboard" roles="Director,Manager,Team Lead,Director-Staffing"/>-->
+	
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Manage Jobs" controller="ManageJobs" action="Index" roles="Employee,Manager,Team Lead,Accounting Manager">
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Import Data"  controller="Home" action="Index" roles="Employee,Team Lead,Manager,Director,RMS-Support">
+      <mvcSiteMapNode title="Recurring Incentives" controller="Incentives" action="Index" roles="Employee"/>
+      <mvcSiteMapNode title="Quarterly Incentives" controller="Incentives" action="QuarterlyIncentive" roles="Employee,Team Lead,Manager,Director"/>
+	<mvcSiteMapNode  title="J1 Details" controller="ImportFiles" action="Index" roles="RMS-Support"></mvcSiteMapNode>
+   <mvcSiteMapNode  title="CallStatistics" controller="ImportFiles" action="CallStatistics" roles="RMS-Support"></mvcSiteMapNode>
+    </mvcSiteMapNode>
+
+    
+    <mvcSiteMapNode title="Share Requirement" controller="Home" action="Index" roles="Manager,Team Lead,Director,Director-Staffing">
+      <mvcSiteMapNode title="Get Shared Req" controller="SharedReq" action="Index" roles="Manager,Team Lead,Director,Director-Staffing"/>
+      <mvcSiteMapNode title="Assign Shared Req" controller="AssignSharedReq" action="Index" roles="Manager,Team Lead,Director,Director-Staffing"/>
+      <mvcSiteMapNode title="Submit Shared Req" controller="SharedReqSubmittals" action="Index" roles="Manager,Team Lead,Director,Director-Staffing"/>
+    </mvcSiteMapNode>
+    
+    <mvcSiteMapNode title="Home" controller="Account" action="ViewUsers" roles="Admin"/>
+    <mvcSiteMapNode title="Holiday" controller="Dashboard" action="ViewHolidays" roles="Admin">
+      <mvcSiteMapNode title="View Holiday" controller="Dashboard" action="ViewHolidays" roles="Admin"/>
+      <!--<mvcSiteMapNode title="Upload Holidays" controller="Dashboard" action="UploadHolidayList" roles="Admin"/>-->
+    </mvcSiteMapNode>
+
+
+    <mvcSiteMapNode title="Submission" controller="Dashboard" action="ViewSubmission" roles="Admin" >
+      <mvcSiteMapNode  title="Create Submission Rule" controller="Dashboard" action="AddSubmissionRule" roles="Admin"/>
+      <mvcSiteMapNode  title="View Submission Rule" controller="Dashboard" action="ViewSubmissionRule" roles="Admin"/>
+      
+    </mvcSiteMapNode>
+    
+    <mvcSiteMapNode key="Review" title="Review / Feedback" controller="Review" action="AnnualFeedbackDashboard" roles="Team Lead,Director,HR Manager,DEV Lead,Manager,Director-Staffing"/>
+
+    <mvcSiteMapNode title="Reports" controller="Operational" action="OperationalReport" roles="Director,Accounting Manager,Director-Staffing,Manager,Team Lead,Employee,RMS-Support">
+      <mvcSiteMapNode title="Operational Report" controller="Operational" action="OperationalReport" roles="Director,Director-Staffing"/>
+      <mvcSiteMapNode title="Client Report" controller="ClientMonthyDashboard" action="ClientReport" roles="Director,Accounting Manager,Director-Staffing"/>
+      <mvcSiteMapNode title="Check-Out/Check-In Report" controller="ManageJobs" action="CheckOutReport" roles="Director,Director-Staffing"/>
+      <mvcSiteMapNode title="No Action" controller="ManageJobs" action="NoActionReport" roles="Director,Director-Staffing"/>
+<mvcSiteMapNode title="Audit Report" controller="Dashboard" action="AuditData" roles="Director,Manager,Team Lead,Director-Staffing,Accounting Manager,Employee,RMS-Support"/>
+    </mvcSiteMapNode>
+
+
+    <mvcSiteMapNode title="Data Views" controller="SQLViews" action="GetViews" roles="Director,Director-Staffing">
+      <mvcSiteMapNode title="Configure Views" controller="SQLViews" action="GetViews" roles="Director,Director-Staffing"/>
+      <mvcSiteMapNode title="Search Results" controller="SQLViews" action="GetViews" Value="GetSearchScr" roles="Director,Director-Staffing"/>
+    </mvcSiteMapNode>
+
+    <mvcSiteMapNode title="Users" controller="Account" action="ViewUsers"  >
+      <mvcSiteMapNode title="Create Users" controller="Account" action="CreateUser" roles="Admin"/>
+      <mvcSiteMapNode title="View Users" controller="Account" action="ViewUsers"  roles="Admin,Manager,Team Lead,Director,HR Manager,Accounting Manager,Director-Staffing"/>
+      
+    </mvcSiteMapNode>
+	  <!--<mvcSiteMapNode key="Incentive" title="Incentives"  controller="Home" action="Index" roles="Director">
+		  <mvcSiteMapNode title="Quarterly Incentives" controller="Incentives" action="QuarterlyIncentive" roles="Director"/>
+	  </mvcSiteMapNode>-->
+    <mvcSiteMapNode title="Help Document" controller="HelpDocument" action="HelpDocument" roles="*">
+    </mvcSiteMapNode>
+	  <mvcSiteMapNode title="Targets" controller="MonthlyTarget" action="MonthlyTarget" roles="Manager,Team Lead,Director-Staffing,Employee" >
+		  <!--<mvcSiteMapNode title="Targets" controller="Account" action="ViewUsers" roles="Admin,Manager,Team Lead,Director,Director-Staffing,Employee" >-->
+		  <!--<mvcSiteMapNode title="Add Targets" controller="Account" action="AddTargets" roles="Admin,Director,Director-Staffing" />
+       <mvcSiteMapNode title="View Targets" controller="Account" action="AddTargets" roles="Manager,Team Lead" />-->
+		  <mvcSiteMapNode title="Manage Targets" controller="MonthlyTarget" action="SupervisorIndex" roles="Team Lead" />
+		  <mvcSiteMapNode title="Manage Targets" controller="MonthlyTarget" action="SupervisorLevel2Index" roles="Manager"/>
+		  <mvcSiteMapNode title="Manage Targets" controller="MonthlyTarget" action="Index" roles="Employee" />
+		  <mvcSiteMapNode title="Manage Targets" controller="MonthlyTarget" action="StaffingDirector" roles="Director-Staffing"/>
+	  </mvcSiteMapNode>
+    <mvcSiteMapNode title="User" controller="Profile" action="Account" roles="*"  >
+      <mvcSiteMapNode title="Profile" controller="Account" action="UserProfile"/>
+      <mvcSiteMapNode title="Change Password" controller="Account" action="ChangePassword"/>
+      <mvcSiteMapNode title="Logout" controller="Account" action="Logout" roles="*" />
+    </mvcSiteMapNode>
+  </mvcSiteMapNode>
+</mvcSiteMap>

@@ -1,0 +1,177 @@
+﻿#MainBody
+    {
+        font-family: 'Trebuchet MS', Verdana, Arial;
+    }
+body {
+    line-height: 1;
+}
+
+    .table, .table th, .table td
+    {
+        border: 1px solid black !important;
+        border-collapse: collapse;
+        /*padding: 4px !important;*/
+        padding: 4px 0px 4px 0px !important;
+    }
+
+        /*.table th
+    {
+        padding-left: 2px !important;           padding-right: 2px !important;          text-align: center !important;
+        vertical-align: middle !important;
+    }*/
+        .table td
+        {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+           
+            vertical-align: middle !important;
+        }
+
+        .table tr
+        {
+            /*background-color: aliceblue;*/
+        }
+
+        .table th
+        {
+            white-space: nowrap;
+            background-color: #EED;
+            /*background-color: #d4d4d4;*/
+        }
+        
+        /*.table thead tr:first-child th
+        {
+            background-color: #656565;
+             
+            color: white;
+            font-size: 16px;
+        }*/
+
+.LabelHeadStyle1
+{
+    background-color: #656565;      color: white;       font-size: 15px;
+    letter-spacing: 1px;            font-weight: bold;
+}
+
+
+
+.header
+{
+    text-align: center;
+}
+
+.headerWidth
+{
+    width:12%;
+}
+
+.container {
+    width: 100%;
+}
+   
+/*.table tr td {
+    padding: 8px 0px 8px 0px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+    font-size: 11px;
+}*/
+.tablerowWidth
+{
+    width:7%;
+   vertical-align: middle;
+}
+.tableRowWidth2
+{
+    width:13%;
+}
+
+.modal-lg 
+{   
+    width: 96%;  padding-top: 3%; 
+}
+
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:focus, .nav-pills > li.active > a:hover
+{
+    color: #fff;
+    background-color: #3bc3e0;
+}
+
+.LabelStyle2
+{
+    text-align: left;           letter-spacing: 1px;            font-size: 13px;
+    font-weight: bold;          background-color: #EED !important;       padding: 4px 0px 4px 2px !important;
+}
+
+
+/*.TotalLabelStyle
+{
+    text-align: left;           letter-spacing: 1px;            font-size: 13px;
+    font-weight: bold;          background-color: #f9e4b8 !important;       padding: 4px 0px 4px 2px !important;
+}*/
+.TotalLabelStyle2
+{
+    text-align: center;           letter-spacing: 1px;            font-size: 13px;
+    font-weight: bold;          background-color: #dadada !important;       padding: 4px 0px 4px 2px !important;
+}
+
+
+
+#exTab1 .tab-content
+{
+    color: #080808;
+    /* background-color: #f5f5f5; */
+    padding: 6px 0px;
+}
+
+.panelStyle{
+    padding-top: 5px;
+}
+
+.TargetText
+{
+    background-color: #ffd67f !IMPORTANT;
+}
+.affix
+{
+    top: 11.47%;
+    width: 94%;;
+    z-index: 100;
+}
+
+.affix + .container-fluid
+{
+    padding-top: 20%;
+}
+
+.headingStyle
+{
+    padding: 1px 10px;
+}
+
+.TextAlignCenter {
+    text-align: center;
+}
+
+
+.linkStyle
+    {
+        color: black;
+    }
+   .CompanyTbl  tbody > tr:nth-child(2n+1) > td 
+    {
+         background-color: #e0e5e8;
+    }
+   .CompanyTbl  tbody > tr:nth-child(2n+2) > td
+    {
+        background-color: #eff0f1;
+    }
+   .CompanyTbl th
+{
+    width: 25%;
+}
+.LblHeader
+{
+    font-size: x-large;    padding-right: 20px;    padding-left: 20px;    vertical-align: -webkit-baseline-middle;
+}

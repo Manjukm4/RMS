@@ -1,0 +1,343 @@
+﻿@model   PagedList.IPagedList<DBLibrary.RIC_Employee>
+@using PagedList.Mvc;
+@using System.Web.Mvc;
+
+@{
+    ViewBag.Title = "ViewUsers";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+            
+<style>
+    button {
+        width: 90px;
+    }
+
+    .divTable {
+        height: 395px;
+    }
+
+    #DivBtn {
+        width: 50%;
+        margin: auto;
+        width: max-content;
+    }
+</style>
+<legend>View Users</legend>
+<div>
+    <br />
+    @using (Html.BeginForm())
+    {   
+        <table style="width: 90%" class="table container-fluid">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.FirstOrDefault().RE_Emp_Cd)</td>
+                <td>@Html.TextBox("Emp_Code", null, new { @class = "form-control input-sm chat-input" })</td>
+                <td>@Html.DisplayNameFor(model => model.FirstOrDefault().RE_Employee_Name)</td>
+                <td>@Html.TextBox("First_Name", null, new { @class = "form-control input-sm chat-input" })</td>
+                <td>
+                    @Html.DropDownList("RoleID", ViewBag.RoleList as List<SelectListItem>, "Select Role", new { @id = "ddlRole", @class = "form-control input-sm chat-input" })
+                </td>
+                <td>
+                    @Html.DropDownList("ReportingID", ViewBag.MgrList as List<SelectListItem>, "Select Reporting To", new { @id = "ddlReportingTo", @class = "form-control input-sm chat-input textCapitalize" })
+                </td>
+                <td>
+
+                    @Html.DropDownList("filterDdl", ViewBag.SelectList as List<SelectListItem>, new { @class = "form-control input-sm chat-input" })
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6">
+                    <div id="DivBtn" class="col-md-12" style="float:inherit">
+                        <span  style="padding: 8px 8px 8px 8px;">
+                            <button name="SearchBtn" value="SearchBtn" type="submit" class="btn btn-info">
+                                <span class="glyphicon glyphicon-search"></span>Search</button>
+                        </span>
+                        <span  style="padding: 8px 8px 8px 8px;">
+                            <button id="btnReset" type="reset" class="btn btn-danger" value="Reset">Reset</button>
+                        </span>
+                        
+                        @if (ViewBag.showExportBtn == "Yes")
+                        {
+                            <span>
+                                <input type="submit"  class="btn btn-info" formaction="ExportToExcel" formmethod="post" value="Export" />
+                            </span>
+                        }
+                         
+                    </div>
+                </td>
+                @*<td></td>
+                <td></td>
+                <td>                    
+                        <button type="submit" class="btn btn-info">
+                        <span class="glyphicon glyphicon-search"></span> Search</button>
+                </td>
+                <td>                    
+                        <button id="btnReset" type="reset" class="btn btn-danger" value="Reset">Reset</button>                    
+                </td>
+                <td>
+                    @if (User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"]))
+                    {
+                    <input type="submit" class="btn btn-info" formaction="ExportToExcel"  formmethod="post"  value="Export" />
+                    } 
+                </td>
+                <td></td>*@
+
+            </tr>
+            <tr>
+            </tr>
+        </table>   
+    }
+</div>
+<div class="divTable">
+    <table id="UserList" class="table table-striped  table-hover table-bordered">
+        <thead style="background-color: #337ab7; color: white;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RE_Emp_Cd)
+                </th>
+                @* <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RE_First_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RE_Last_Name)
+        </th>*@
+                <th class="textCapitalize">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RE_Jobdiva_User_Name)
+                </th>
+                @* <th>
+            @Html.DisplayNameFor(model=>model.FirstOrDefault().RE_Employee_Name)
+        </th>*@
+
+
+                <th class="textCapitalize">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ReportingTo)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RE_Start_Date)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RE_End_Date)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RoleList)
+                </th>
+
+                <th>
+                   
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().RE_User_Status)
+                 </th>
+
+
+                @*        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RE_Email)
+        </th>*@
+                @* <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RE_Contact_Num)
+        </th>*@
+
+
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.RE_Emp_Cd)
+                    </td>
+
+                    <td class="textCapitalize">
+                        @Html.DisplayFor(modelItem => item.RE_Jobdiva_User_Name)
+                    </td>
+
+
+
+                    <td class="textCapitalize">
+
+                        @Html.DisplayFor(modelItem => item.ReportingTo)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RE_Start_Date)
+
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RE_End_Date)
+                    </td>
+
+                    @* 
+            <td>
+                @Html.DisplayFor(modelItem => item.RE_Last_Name)
+            </td>*@
+                    @* <td>
+                @Html.DisplayFor(modelItem => item.RIC_EmployeeRef.RE_Employee_Name)
+            </td>*@
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RIC_User_Role.First().RIC_Role.RR_Role_Name)
+                    </td>
+                    <td>
+                        @if(item.RE_Resign_Date == null)
+                        {
+                            <span>Active</span>
+                        }
+                        else
+                        {
+                            <span>Inactive</span>
+                        }
+
+
+                    </td>
+
+                    @*  <td>
+                @Html.DisplayFor(modelItem => item.RE_Email)
+            </td>*@
+
+                    @*<td>
+                @Html.DisplayFor(modelItem => item.RE_Contact_Num)
+            </td>*@
+                    <td>
+                      
+                        @*@Html.ActionLink("Details", "UserDetails", new { id = item.RE_EmpId })*@
+
+
+                        @if (User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["AdminRole"]))
+                        {
+                   
+                            @Html.ActionLink("Re Assign", "Reassign",  new {id = item.RE_EmpId,EmpId=ViewBag.Empcode,FirstName=ViewBag.First,FilterName=ViewBag.Filter,Role=ViewBag.RoleIdFilter,page =ViewBag.Page},null)
+                            <span>|  </span>
+                    
+                            @Html.ActionLink("Edit", "UpdateUser", "Account", new {id = item.RE_EmpId,EmpId=ViewBag.Empcode,FirstName=ViewBag.First,FilterName=ViewBag.Filter,Role=ViewBag.RoleIdFilter,page =ViewBag.Page},null)
+                            <span>|  </span>
+                            @Html.ActionLink("Reporting History", "ReportingHistory",  new {id = item.RE_EmpId,EmpId=ViewBag.Empcode,FirstName=ViewBag.First,FilterName=ViewBag.Filter,Role=ViewBag.RoleIdFilter,page =ViewBag.Page},null)
+
+                            if (@Html.DisplayFor(modelItem => item.RIC_User_Role.First().RIC_Role.RR_Role_Name).ToString() == "Accounting Manager" || 
+                                @Html.DisplayFor(modelItem => item.RIC_User_Role.First().RIC_Role.RR_Role_Name).ToString() == "Director-Staffing" ||
+                                @Html.DisplayFor(modelItem => item.RIC_User_Role.First().RIC_Role.RR_Role_Name).ToString() == "Director" )
+                            {
+                                   <span>|  </span>
+                             @Html.ActionLink("Add Client List", "AddClientList", new { id = item.RE_EmpId,EmpId=ViewBag.Empcode,FirstName=ViewBag.First,FilterName=ViewBag.Filter,Role=ViewBag.RoleIdFilter,page =ViewBag.Page})
+                            }
+                    
+@* 
+                    if (!item.RE_User_Status)
+                    {
+                        @Html.ActionLink("Disable", "ChangeStatus", new { id=item.RE_EmpId })
+                    }
+                    else 
+                    { 
+                        @Html.ActionLink("Enable", "ChangeStatus", new { id=item.RE_EmpId })
+                    }*@
+                        }
+                        else
+                        { 
+                    
+                            @Html.ActionLink("Details", "Index", "Dashboard", new { empCd = item.RE_Emp_Cd,EmpId=ViewBag.Empcode,FirstName=ViewBag.First,FilterName=ViewBag.Filter,Role=ViewBag.RoleIdFilter,page =ViewBag.Page,ReportingID=ViewBag.ReportingTo }, null)
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div id='Paging position-fixed' style="margin-top:2%; text-align: center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount  
+
+    @Html.PagedListPager(Model, page => Url.Action("ViewUsers", new { page , RoleID = ViewBag.RoleIdFilter, Emp_Code = ViewBag.Empcode, First_Name = ViewBag.First, filterDdl = ViewBag.Filter,ReportingID=ViewBag.ReportingTo}))
+</div>
+
+
+
+<script>
+   
+    @* if ('@User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])' == 'True') {
+        $.fn.tableExport.xlsx = {
+            defaultClass: "xlsx",
+            buttonContent: "Export to xlsx",
+            mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            fileExtension: ".xlsx"
+        };
+
+        $('#UserList').tableExport({
+            headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+            footers: false,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+            formats: ["xlsx"],    // (String[]), filetypes for the export
+            fileName: "id",                    // (id, String), filename for the downloaded file
+            bootstrap: true,                   // (Boolean), style buttons using bootstrap
+            position: "bottom",                 // (top, bottom), position of the caption element relative to table
+            ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file(s)
+            ignoreCols: null,                  // (Number, Number[]), column indices to exclude from the exported file(s)
+            ignoreCSS: ".tableexport-ignore",  // (selector, selector[]), selector(s) to exclude from the exported file(s)
+            emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
+            trimWhitespace: true              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
+
+        });
+
+    }*@
+
+</script>
+
+
+
+
+
+@*</table>
+       @{
+           WebGrid grid = new WebGrid(Model, rowsPerPage: 5, canPage: true, canSort: true);
+       
+        <table align="center" class="TableBorderStyle1" style="width: 98%" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td style="width: 100%" class="LoginHead" colspan="4">
+                    Search Results
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="height: 10px"></td>
+            </tr>
+            <tr>
+                <td align="center" colspan="4">
+                    <table style="width: 98%" cellpadding="0" cellspacing="0" border="0">
+                       
+                        <tr style="height: 25px">
+                            <td colspan="2" align="center">                                
+                                <div id="grid1" style="width: 100%">
+                                 @{
+                                    var gridColumns = new List<WebGridColumn>();
+
+                                    gridColumns.Add(grid.Column("RE_Emp_Cd","Employee ID", style: "GridLeftAlign"));
+                                    gridColumns.Add(grid.Column("RE_First_Name", "Employee ID", style: "GridLeftAlign"));
+                                    gridColumns.Add(grid.Column("RE_Last_Name", "Employee ID", style: "GridLeftAlign"));
+                                    gridColumns.Add(  , "Employee ID", style: "GridLeftAlign"));
+                                    gridColumns.Add(grid.Column("RE_Email", "Employee ID", style: "GridLeftAlign"));
+                                    gridColumns.Add(grid.Column("RE_Contact_Num", "Employee ID", style: "GridLeftAlign"));
+
+                                   
+                                                                       
+
+                                  }
+                                    @grid.GetHtml(tableStyle: "webGrid",
+                                    headerStyle: "header",
+                                    alternatingRowStyle: "alt",
+                                    selectedRowStyle: "select",
+                                    footerStyle: "gridFooter",
+                                    columns: grid.Columns(gridColumns.ToArray())
+                                    )
+
+                                </div> 
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="height: 10px"></td>
+            </tr>
+        </table>
+        <br />
+    }*@
+

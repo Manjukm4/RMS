@@ -1,0 +1,86 @@
+﻿body {
+}
+.rowCenter
+{
+    display: flex; justify-content: center;
+}
+.SearchContainer
+{
+    width:80%; padding-top:10px    
+}
+.resultContainer
+{
+    padding-top:10px 
+}
+.resultcontainerbuttons
+{
+    padding-top:20px;  
+}
+.tablediv
+{
+     border:1px solid;  height: 500px;  overflow:auto 
+}
+#UserList
+{
+        font-size: smaller;
+}
+.theadStyle
+{
+    background-color: #337ab7;    color: white;    white-space: nowrap;
+}
+.TableLinkStyle
+{
+    font-size:14px
+}
+.modal-lg 
+{   
+    width: 82%;  padding-top: 3%; 
+}
+
+#ModelBody
+{
+        max-height: 400px;        max-width: 100%;        overflow: auto;
+}  
+#ModelBody li a {color: #337ab7;}
+  
+#ModelBody .active a 
+{
+    background-color: #fff !important;
+}
+ 
+.tablePopup th
+{
+    text-align:center;        cursor: pointer;   
+}
+  
+#TargetHistoryTbl 
+{
+    background-color: #337ab7;        border-color: #337ab7;       font-size: smaller;
+}
+#TargetHistoryTbl th 
+{ 
+      color: white;            border-color: white;
+}
+#TargetHistoryTbl td
+{
+     color: black;            border-color: #337ab7;            padding-left: 18px;
+}
+
+#TargetHistoryTbl TH
+{
+    white-space: nowrap;
+}
+.infoLinkStyle
+{
+    font-size: 19px;
+}
+
+.alertStyle
+{
+      font-size: small;    padding: 5px;
+}
+ 
+    .textCapitalize
+    {
+        text-transform: capitalize;
+    }

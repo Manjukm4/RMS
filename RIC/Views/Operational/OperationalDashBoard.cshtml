@@ -1,0 +1,213 @@
+﻿@{
+    ViewBag.Title = "OperationalDashBoard";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@*<h2>Operational DashBoard</h2>*@
+
+
+<link href="~/Content/CSS/Dashboard.css" rel="stylesheet" />
+
+<link href="~/Content/CSS/SideMenu.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="~/Content/TreeView/css/reset.css">
+<!-- CSS reset -->
+<link rel="stylesheet" href="~/Content/TreeView/css/style.css">
+<!-- Resource style -->
+<script src="~/Content/TreeView/js/modernizr.js"></script>
+
+<div id="Main">
+
+
+@*    <div style="" class="form-group col-md-12">
+        <canvas id="SubmissionChart" width="750" height="165"></canvas>
+    </div>
+
+
+    <div style="" class="form-group col-md-12">
+        <canvas id="CallChart" width="750" height="165"></canvas>
+    </div>*@
+
+    <div id="OperationalResultPartial" class="form-group col-md-12">
+        <br />
+    </div>
+
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg ">
+        <div id='myModalContent'></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        //submission chart.
+        var RequestedDate = new Date();
+      var date   = RequestedDate.getMonth() + 1 + '/' + RequestedDate.getDate() + '/' + RequestedDate.getFullYear();
+
+        //GetSubmissionsForWeek(RequestedDate);
+
+        ////Call chart.
+        //GetCallsForWeek(RequestedDate);
+
+        // table 
+       
+        var jobRepartPartialUrl = '@Url.Action("OperationalResult")';
+        var options = { "backdrop": "static", keyboard: true };
+
+        $.ajax({
+            type: "POST",
+            url: jobRepartPartialUrl,
+            contentType: "application/json",
+            data: JSON.stringify({ RequestedDate: date }),
+            datatype: "json",
+            success: function (result) {
+
+                $('#OperationalResultPartial').html(result);
+            },
+            error: function () {
+                //alert("Dynamic content load failed.");
+            }
+        });
+    });
+
+
+@*  function GetSubmissionsForWeek(RequestedDate) {
+
+        var dataList = [];
+        debugger;
+        var jobRepartPartialUrl = '@Url.Action("GetGraphforWeek")';
+        $.ajax({
+            type: "POST",
+            url: jobRepartPartialUrl,
+            contentType: "application/json",
+            data: JSON.stringify({ RequestedDate: RequestedDate }),
+            datatype: "json",
+            success: function (result) {
+
+                $.each(result, function (i, field) {
+
+                    dataList.push(field)
+                    //$("div").append(field + " ");
+                });
+                var dataset = {
+                    labels: ['6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM', '5PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM', '11 PM', '12 AM'],
+                    datasets: [{
+                        data: dataList[0], //[0, 0, 0, 0, 0, 4, 14, 21, 10, 8, 17, 29, 17, 15, 11, 10, 0, 1,2],
+                        label: "Monday",
+                        borderColor: "#3e95cd",
+                        fill: false
+                    }, {
+                        data: dataList[1],
+                        label: "Tuesday",
+                        borderColor: "#8e5ea2",
+                        fill: false
+                    }, {
+                        data: dataList[2],
+                        label: "Wednesday",
+                        borderColor: "#3cba9f",
+                        fill: false
+                    }, {
+                        data: dataList[3],
+                        label: "Thursday",
+                        borderColor: "#e8c3b9",
+                        fill: false
+                    }, {
+                        data: dataList[4],
+                        label: "Friday",
+                        borderColor: "#c45850",
+                        fill: false
+                    }
+                    ]
+                }
+                new Chart(document.getElementById("SubmissionChart")
+                    , {
+                        type: 'line',
+                        data: dataset,
+                        options: {
+                            elements: {
+                                line: {
+                                    // tension: 0, // disables bezier curves
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Submission Chart'
+                            }
+                        }
+                    });
+            }
+        });
+
+    };*@
+
+
+    @*function GetCallsForWeek(RequestedDate) {
+
+        var callList = [];
+        debugger;
+        var jobRepartPartialUrl = '@Url.Action("GetOutCallForWeek")';
+        $.ajax({
+            type: "POST",
+            url: jobRepartPartialUrl,
+            contentType: "application/json",
+            data: JSON.stringify({ RequestedDate: RequestedDate }),
+            datatype: "json",
+            success: function (result) {
+                $.each(result, function (i, field) {
+
+                    callList.push(field)
+                    //$("div").append(field + " ");
+                });
+                var callDataset = {
+                    labels: ['6 AM', '7 AM', '8 AM', '9 AM', '10 AM', '11 AM', '12 PM', '1 PM', '2 PM', '3 PM', '4 PM', '5PM', '6 PM', '7 PM', '8 PM', '9 PM', '10 PM', '11 PM', '12 AM'],
+                    datasets: [{
+                        data: callList[0], //[0, 0, 0, 0, 0, 4, 14, 21, 10, 8, 17, 29, 17, 15, 11, 10, 0, 1,2],
+                        label: "Monday",
+                        borderColor: "#3e95cd",
+                        fill: false
+                    }, {
+                        data: callList[1],
+                        label: "Tuesday",
+                        borderColor: "#8e5ea2",
+                        fill: false
+                    }, {
+                        data: callList[2],
+                        label: "Wednesday",
+                        borderColor: "#3cba9f",
+                        fill: false
+                    }, {
+                        data: callList[3],
+                        label: "Thursday",
+                        borderColor: "#e8c3b9",
+                        fill: false
+                    }, {
+                        data: callList[4],
+                        label: "Friday",
+                        borderColor: "#c45850",
+                        fill: false
+                    }
+                    ]
+                }
+                new Chart(document.getElementById("CallChart")
+                    , {
+                        type: 'line',
+                        data: callDataset,
+                        options: {
+                            elements: {
+                                line: {
+                                    //    tension: 0, // disables bezier curves
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: 'Call Connected (Out) Chart'
+                            }
+                        }
+                    });
+            }
+        });
+    };*@
+
+</script>

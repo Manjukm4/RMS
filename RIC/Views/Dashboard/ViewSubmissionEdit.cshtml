@@ -1,0 +1,118 @@
+﻿@model DBLibrary.RIC_SubmissionRule
+@{
+    ViewBag.Title = "ViewSubmissionEdit";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+     @Html.HiddenFor(model => model.RS_Id)
+    <fieldset>
+        <legend>Edit Submission Rule</legend>
+        <table style="width: 50%; height: 100%" class="table container-fluid" >
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RS_Level)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RS_Level,new { @class = "form-control input-sm chat-input input-group date", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RS_Level)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RS_Experience)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RS_Experience,new { @class = "form-control input-sm chat-input input-group date", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RS_Experience)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RS_Requirement)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RS_Requirement,new { @class = "form-control input-sm chat-input input-group date", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RS_Requirement)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RS_MonthlySubmissions)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RS_MonthlySubmissions,new { @class = "form-control input-sm chat-input input-group date", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RS_MonthlySubmissions)
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RS_Monthly_Interviews)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RS_Monthly_Interviews,new { @class = "form-control input-sm chat-input input-group date", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RS_Monthly_Interviews)
+                </td>
+            </tr>
+
+               <tr>
+                <td>
+                    @Html.LabelFor(model => model.RS_Monthyl_Hire)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RS_Monthyl_Hire,new { @class = "form-control input-sm chat-input input-group date", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RS_Monthyl_Hire)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RS_MinimumSubs)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RS_MinimumSubs,new { @class = "form-control input-sm chat-input input-group date", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RS_MinimumSubs)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RS_Minimum_Interviews)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RS_Minimum_Interviews,new { @class = "form-control input-sm chat-input input-group date", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RS_Minimum_Interviews)
+                </td>
+            </tr>
+
+               <tr>
+                <td>
+                    @Html.LabelFor(model => model.RS_Minimum_Hire)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RS_Minimum_Hire,new { @class = "form-control input-sm chat-input input-group date", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RS_Minimum_Hire)
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                   @* <input type="Update" value="Create" />*@
+                        @Html.ActionLink("Back", "ViewSubmissionRule", new {Page= ViewBag.Pagination}, new { @class = "btn btn-info" })
+                           <input type="submit" class="btn btn-primary" value="Save" />
+
+                      <button type="reset" class="btn btn-danger" value="Reset">Reset</button>
+                </td>
+            </tr>
+        </table>
+    </fieldset>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "ViewSubmissionRule")
+
+  
+</div>*@

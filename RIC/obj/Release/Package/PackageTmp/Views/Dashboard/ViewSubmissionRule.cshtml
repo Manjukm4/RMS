@@ -1,0 +1,98 @@
+﻿@*@model IEnumerable<DBLibrary.RIC_SubmissionRule>*@
+@model   PagedList.IPagedList<DBLibrary.RIC_SubmissionRule>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "ViewSubmissionRule";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<legend>Submission Rule</legend>
+
+
+<br />
+<table class="table table-striped table-hover table-bordered" >
+    <thead style="background-color: #337ab7; color: white;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Level)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Experience)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Requirement)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_MonthlySubmissions)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Monthly_Interviews)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Monthyl_Hire)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_MinimumSubs)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Minimum_Interviews)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Minimum_Hire)
+        </th>
+        <th>
+            Action
+        </th>
+       
+    </tr>
+  </thead>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RS_Level)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RS_Experience)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RS_Requirement)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RS_MonthlySubmissions)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RS_Monthly_Interviews)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RS_Monthyl_Hire)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RS_MinimumSubs)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RS_Minimum_Interviews)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RS_Minimum_Hire)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "ViewSubmissionEdit", new { id = item.RS_Id,Page=ViewBag.Pagination }) 
+            @*<button type="button" id = item.RS_Id data-toggle="modal" data-target="#myModal" >Edit</button>*@
+           @* @Html.ActionLink("Details", "Details", new { id=item.RS_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RS_Id })*@
+        </td>
+    </tr>
+}
+   
+</table>
+
+@* <div class="container-fluid" style="overflow: hidden ;text-align:center;">
+    @Html.ActionLink("Create New", "AddSubmissionRule", null, new { @class = "mylinkBtn " })
+</div>*@
+<div id='Paging position-fixed' style="margin-top:2%; text-align: center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount  
+
+    @Html.PagedListPager(Model, page => Url.Action("ViewSubmissionRule", new { page}))
+</div>
+

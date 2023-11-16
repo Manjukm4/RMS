@@ -1,0 +1,153 @@
+﻿
+@using System.Globalization;
+
+@{
+    ViewBag.Title = "";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<link href="~/Content/CSS/TeamDashboard.css?V1.1" rel="stylesheet" />
+<link href="~/Content/CSS/TeamDashboardGraph.css" rel="stylesheet" />
+<link href="~/Content/CSS/Dashboard/bootstrap-treefy.css" rel="stylesheet" />
+<script src="~/Content/JS/Dashboard/bootstrap-treefy.js"></script>
+
+<style>
+    @@import url('//cdn.datatables.net/1.10.2/css/jquery.dataTables.css');
+ td.details-control {
+    background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
+[data-toggle="toggle"] {
+	display: none;
+}
+
+</style>
+
+<div id="exTab1" class="container">
+    <div class="panel panel-default ">
+        <div style="text-align: center;" class="panel-heading headingStyle" data-spy="affix" data-offset-top="5">
+            <button id='previousYearBtn' class="btn btn-primary"><i class="fas fa-angle-double-left"></i></button>
+            <label class="LblHeader">      
+                Incentive For          
+                <label id="yearTextLable"></label>
+            </label>
+            <button id='nextYearBtn' class="btn btn-primary"><i class="fas fa-angle-double-right"></i> </button>
+
+        </div>
+        <div id="YearReportPartial" class="panelStyle"></div>
+    </div>
+
+</div>
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        //we have only data in 2018 and 2019,but first we have to show first time as 2019 data.
+        var Year = 2019;
+        //enable or disable buttons
+        changeButtonState(Year);
+                
+        var jobRepartPartialUrl = '@Url.Action("IncentivePartial")';
+     
+        $.ajax({
+            type: "GET",
+            url: jobRepartPartialUrl,
+            contentType: "application/json; charset=utf-8",
+            data: { "Year": Year },
+            datatype: "json",
+            success: function (data) {
+                $('#YearReportPartial').html(data);
+                $('#yearTextLable').text(Year);
+                
+            },
+            error: function () {
+                //alert("Dynamic content load failed.");
+            }
+        });
+
+
+        $("#previousYearBtn").click(function () {
+
+            //debugger;
+            var Year = parseInt($('#yearTextLable').text()) - 1;
+            //enable or disable buttons
+            changeButtonState(Year);
+            $.ajax({
+                type: "GET",
+                url: jobRepartPartialUrl,
+                contentType: "application/json; charset=utf-8",
+                data: { "Year": Year },
+                datatype: "json",
+                success: function (data) {
+                    $('#YearReportPartial').html(data);
+
+                    $('#yearTextLable').text(Year);
+
+                },
+                error: function () {
+                    // alert("Dynamic content load failed.");
+                }
+            });
+
+            return false;
+        });
+
+
+        $("#nextYearBtn").click(function () {
+            var Year = parseInt($('#yearTextLable').text()) + 1;
+            //enable or disable buttons
+            changeButtonState(Year);
+
+            $.ajax({
+                type: "GET",
+                url: jobRepartPartialUrl,
+                contentType: "application/json; charset=utf-8",
+                data: { "Year": Year },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#YearReportPartial').html(data);
+                    $('#yearTextLable').text(Year);
+
+                },
+                error: function () {
+                   // alert("Dynamic content load failed.");
+                }
+            });
+
+           // changeButtonState()
+            return false;
+        })//, 1000);
+
+    });
+
+    function changeButtonState(getYear) {
+        if (getYear == 2019) {
+            $("#nextYearBtn").prop('disabled', true);
+            $("#previousYearBtn").prop('disabled', false);
+        }
+        else if (getYear == 2018) {
+            $("#nextYearBtn").prop('disabled', false);
+            $("#previousYearBtn").prop('disabled', true);
+        }
+        else {
+            $("#nextYearBtn").prop('disabled', false);
+            $("#previousYearBtn").prop('disabled', false);
+        }   
+    }
+
+</script>
+
+
+
+
+
+
+
+

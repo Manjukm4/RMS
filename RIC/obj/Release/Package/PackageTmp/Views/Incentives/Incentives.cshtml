@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Incentives";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<link href="~/Content/CSS/TeamDashboard.css?V1.1" rel="stylesheet" />
+<link href="~/Content/CSS/TeamDashboardGraph.css" rel="stylesheet" />
+<link href="~/Content/CSS/Dashboard/bootstrap-treefy.css" rel="stylesheet" />
+<script src="~/Content/JS/Dashboard/bootstrap-treefy.js"></script>
+<style>
+
+    .alignCSS {
+        text-align: center;
+    }
+
+    .UpLoadData {
+        margin: auto;
+        width: 70%;
+        margin-left: 30%;
+    }
+
+    .Incentive {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 700;
+        font-size: x-large;
+    }
+</style>
+
+<div id="exTab1" class="container">
+
+    <div class="panel panel-default">
+
+        <div style="text-align: center;" class="panel-heading headingStyle affix-top" data-spy="affix" data-offset-top="5">
+            <label class="Incentive">
+                Quarterly Incentives
+            </label>
+        </div>
+        <div class="row" style="margin-top: 3%;">
+            <div class="form-row col-md-12" style="margin-left: 3%;height: 113px ;">
+                <div class="form-group col-md-6">
+
+                    <input type="file" id="importFile" name="importFile" style="margin-left: 55%; margin-top: 5%; ">
+
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="button" class="btn btn-primary" value="Upload" id="btnUpload" style="margin-right: 80%; margin-top: 4%; " />
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="UpLoadData"></div>
+
+</div>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $.get('@Url.Action("GetUploadData")', function (data) {
+            $(".UpLoadData").html(data);
+        });
+    });
+
+
+    $(document).on("click", "#btnUpload", function () {
+
+        var formdata = false;
+        if (window.FormData) {
+            formdata = new FormData();
+        }
+        file = document.getElementById('importFile').files;
+    if (file.length > 0) {
+        file = file[0];
+        if (formdata) {
+            formdata.append("importFile", file);
+        }
+    }
+    else {
+        alert("Please select a file.");
+        return false;
+    }
+    var ext = $('#importFile').val().split('.').pop().toLowerCase();
+    var extArray = ["xlsx", "xls"];
+    if ($.inArray(ext, extArray)) {
+        alert("Please upload xls and xlsx files only.");
+        return false;
+    }
+        $.ajax({
+            type: "POST",
+            url:'@Url.Action("ImportFile")',
+            data: formdata,
+            cache: false,
+            contentType: false,
+            processData: false,          
+            success: function (data) {
+                if (data.Status === 0) {
+                    alert(data.Message);
+                }
+                else if (data.Status === 1) {
+                    alert(data.Message);
+                    TempData();
+                }
+                else if(data.Status === 2)
+                {
+                     alert(data.Message);
+                }
+                else
+                {
+
+                   alert("Failed to Import");
+                }
+            }
+        });
+});
+    function TempData() {
+        $.get('@Url.Action("GetUploadData")', function (data) {
+            $(".UpLoadData").html(data);
+        })
+
+    }
+</script>

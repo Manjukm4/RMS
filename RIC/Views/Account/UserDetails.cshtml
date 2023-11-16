@@ -1,0 +1,73 @@
+﻿@model DBLibrary.RIC_Employee
+
+@{
+    ViewBag.Title = "UserDetails";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+
+<fieldset>
+
+    <legend>User Details</legend>
+    <br />
+    <table style="width: 50%; height: 100%" class="table container-fluid">
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.RE_Emp_Cd)
+            </td>
+
+            <td>
+                @Html.DisplayFor(model => model.RE_Emp_Cd)
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.RE_Employee_Name)</td>
+            <td>@Html.DisplayFor(model => model.RE_Employee_Name)</td>
+        </tr>
+       @* <tr>
+            <td>@Html.DisplayNameFor(model => model.RE_Last_Name)</td>
+            <td>@Html.DisplayFor(model => model.RE_Last_Name)</td>
+        </tr>*@
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.RE_AKA_Name)</td>
+            <td>@Html.DisplayFor(model => model.RE_AKA_Name)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.ManagerList)</td>
+            <td>@Html.DisplayFor(model => model.RIC_EmployeeRef.RE_Employee_Name)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.RE_Email)</td>
+            <td>@Html.DisplayFor(model => model.RE_Email)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.RE_Joining_Date)</td>
+            <td>
+                @if (Model.RE_Joining_Date != null)
+                { 
+                    @Model.RE_Joining_Date.Value.ToString("MM-dd-yyyy")
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.RE_Resign_Date)</td>
+            <td>
+                @if (Model.RE_Resign_Date != null)
+                { 
+                    @Model.RE_Resign_Date.Value.ToString("MM-dd-yyyy")
+                }
+            </td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.RE_Contact_Num)</td>
+            <td>@Html.DisplayFor(model => model.RE_Contact_Num)</td>
+        </tr>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.RoleList)</td>
+            <td>@Html.DisplayFor(model => model.RIC_User_Role.FirstOrDefault().RIC_Role.RR_Role_Name)</td>
+        </tr>
+
+    </table>
+</fieldset>
+

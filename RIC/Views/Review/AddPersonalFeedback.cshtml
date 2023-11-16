@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "AddPersonalFeedback";
+    Layout = "~/Views/Review/Index.cshtml";
+}
+<link href="~/Content/CSS/Review/AddPersonalFeedback.css" rel="stylesheet" />
+
+<h2 class="HeaderStyle">Add Personal Feedback</h2>
+
+@*<div class="panel panel-info">
+    <div class="panel-heading">Add Review</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-3">
+                <label for="sel1">Select Candidate Type :</label>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control" id="CandidateTypeSelect">
+                    <option>--Select--</option>
+                    <option>Recruter</option>
+                    <option>Non Recruter</option>
+                </select>
+            </div>
+
+
+        </div>
+    </div>
+</div>*@
+<div class="panel panel-info">
+    <div class="panel-heading">Add Review</div>
+    <div class="panel-body">
+
+
+<div class="stepwizard">
+    <div class="stepwizard-row setup-panel">
+        <div class="stepwizard-step">
+            <a href="#step-1" type="button" class="btn btn-primary btn-circle">1</a>
+            <p>Step 1</p>
+        </div>
+        <div class="stepwizard-step">
+            <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+            <p>Step 2</p>
+        </div>
+        <div class="stepwizard-step">
+            <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled">3</a>
+            <p>Step 3</p>
+        </div>
+    </div>
+</div>
+
+
+<form role="form">
+    <div class="row setup-content" id="step-1">
+        <div class="col-xs-12">
+            <div class="col-md-12">               
+                    <div style="" class="col-md-3">
+                        <label for="sel1">Select Candidate Type :</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select required="required" class="form-control" id="CandidateTypeSelect">
+                            <option>--Select--</option>
+                            <option>Recruter</option>
+                            <option>Non Recruter</option>
+                        </select>
+                    </div>               
+            </div>
+            <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-2">
+        <div class="col-xs-12">
+            <div class="col-md-12">
+                <h3> Step 2</h3>
+
+
+                  <div style="" class="col-md-12">
+                    <div style="" class="col-md-3">
+                        <label for="sel1">Select Candidate:</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select required="required" class="form-control">
+                            <option>--Select--</option>
+                            <option>Recruter</option>
+                            <option>Non Recruter</option>
+                        </select>
+                    </div>       
+                  </div>
+                <div  class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="col-md-6">
+                         <label class="control-label">From Date: </label>
+                        </div>
+                        <div class="col-md-6">
+                         <input  type="date" required="required" class="form-control" />
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                         <div class="col-md-6">
+                             <label class="control-label">From Date: </label>
+                         </div>
+                         <div class="col-md-6">
+                              <input  type="date" required="required" class="form-control" />
+                         </div>
+                     </div>
+                </div>
+
+
+
+
+               @* <div class="form-group">
+                    <label class="control-label">Company Name</label>
+                    <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Name" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Company Address</label>
+                    <input maxlength="200" type="text" required="required" class="form-control" placeholder="Enter Company Address"  />
+                </div>*@
+                <button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
+            </div>
+        </div>
+    </div>
+    <div class="row setup-content" id="step-3">
+        <div class="col-xs-12">
+            <div class="col-md-12">
+                <h3> Step 3</h3>
+                <button class="btn btn-success btn-lg pull-right" type="submit">Finish!</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+
+        var navListItems = $('div.setup-panel div a'),
+                allWells = $('.setup-content'),
+                allNextBtn = $('.nextBtn');
+
+        allWells.hide();
+
+        navListItems.click(function (e) {
+            e.preventDefault();
+            var $target = $($(this).attr('href')),
+                    $item = $(this);
+
+            if (!$item.hasClass('disabled')) {
+                navListItems.removeClass('btn-primary').addClass('btn-default');
+                $item.addClass('btn-primary');
+                allWells.hide();
+                $target.show();
+                $target.find('input:eq(0)').focus();
+            }
+        });
+
+        allNextBtn.click(function () {
+            var curStep = $(this).closest(".setup-content"),
+                curStepBtn = curStep.attr("id"),
+                nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+                curInputs = curStep.find("input[type='text'],input[type='url']"),
+                isValid = true;
+
+            $(".form-group").removeClass("has-error");
+            for (var i = 0; i < curInputs.length; i++) {
+                if (!curInputs[i].validity.valid) {
+                    isValid = false;
+                    $(curInputs[i]).closest(".form-group").addClass("has-error");
+                }
+            }
+
+            if (isValid)
+                nextStepWizard.removeAttr('disabled').trigger('click');
+        });
+
+        $('div.setup-panel div a.btn-primary').trigger('click');
+    });
+</script>
+
+
+
+

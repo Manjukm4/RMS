@@ -1,0 +1,325 @@
+﻿@*@model List<RIC.Models.TreeViewModel>*@
+@model RIC.Models.TeamDashboardViewModel
+@using System.Globalization;
+@using DBLibrary
+@{
+	ViewBag.Title = "TeamDashboard";
+	Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js"></script>
+<link href="~/Content/CSS/TeamDashboardGraph.css" rel="stylesheet" />
+
+<div id="MainBody">
+	<div class="form-row">
+		<div class="panel panel-default">
+			<div style="text-align: center;" class="panel-heading headingStyle"  data-spy="affix" data-offset-top="5" >
+				<label style="font-size: x-large;">
+					Team Metrics For @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SystemClock.US_Date.Month)
+				</label>
+			</div>
+
+
+			@*<h2>TeamDashboard</h2>*@
+			<canvas id="teamMetrics" width="400" height="100"></canvas>
+			<canvas id="callDuration" width="400" height="100"></canvas>
+			<canvas id="callStatistics" width="400" height="100"></canvas>
+		</div>
+	</div>
+</div>
+
+<script>
+	var teamMatrixCtx = document.getElementById("teamMetrics").getContext('2d');
+	var callStatisticsCtx = document.getElementById("callStatistics").getContext('2d');
+	var callDurationCtx = document.getElementById("callDuration").getContext('2d');
+
+	var users = []; //["User1", "User2", "User3", "User4", "User5", "User6", "User7"];
+	var submissions = [];//[12, 19, 3, 5, 2, 3, 10];
+	var interviews = [];//[6, 8, 1, 5, 2, 3, 10];
+	var hires = [];// [6, 8, 1, 5, 2, 3, 10];
+
+	var outCalls = [];
+	var outVoiceMsg = [];
+
+	var outDuration = [];
+	var inDuration = [];
+
+	var outDurationVal = [];
+	var inDurationVal = [];
+
+
+	var temp = '@Model';
+
+	 @foreach (var empName in Model.employeeName)
+  {
+		@:users.push("@empName");
+	}
+
+	  @foreach (var submission in Model.Submissions)
+   {
+		@:submissions.push("@submission");
+						}
+	 @foreach (var interview in Model.Interviews)
+  {
+		@:interviews.push("@interview");
+						}
+	 @foreach (var hires in Model.Hires)
+  {
+		@:hires.push("@hires");
+						}
+	
+
+	@foreach (var outCalls in Model.OutCalls)
+ {
+		@:outCalls.push("@outCalls")    
+						}
+	@foreach (var outMsg in Model.OutVoiceMessage)
+ {
+		@:outVoiceMsg.push("@outMsg")    
+						}
+
+
+	@foreach (var outDuration in Model.OutCallDuration)
+ {
+	 double outDur = outDuration.TotalMinutes / 60;
+	  
+	   @:outDuration.push('@outDur') 
+							// @:outDuration.push(new Date('@SystemClock.US_Date.Year',1,1, '@outDuration.TotalHours', '@outDuration.TotalMinutes', '@outDuration.Seconds')) 
+
+ }
+	@foreach (var inDuration in Model.InCallDuration)
+ {
+
+	 double inDur = inDuration.TotalMinutes / 60;
+
+	 // @:inDuration.push('2016-12-25') 
+		 @:inDuration.push('@inDur') 
+						//@:inDuration.push(new Date('@SystemClock.US_Date.Year', 1, 1,'@inDuration.TotalHours', '@inDuration.TotalMinutes', '@inDuration.Seconds')) 
+ }
+
+	 @foreach (var outDuration in Model.OutCallDuration)
+  {
+
+	  // @:outDuration.push('2016-12-25')
+	   @:outDurationVal.push('@outDuration') 
+								// @:outDuration.push(new Date('@SystemClock.US_Date.Year',1,1, '@outDuration.TotalHours', '@outDuration.TotalMinutes', '@outDuration.Seconds')) 
+
+  }
+	@foreach (var inDuration in Model.InCallDuration)
+ {
+	 // @:inDuration.push('2016-12-25') 
+		 @:inDurationVal.push('@inDuration') 
+		//@:inDuration.push(new Date('@SystemClock.US_Date.Year', 1, 1,'@inDuration.TotalHours', '@inDuration.TotalMinutes', '@inDuration.Seconds')) 
+ }
+	var teamMetrics = new Chart(teamMatrixCtx, {
+		type: 'bar',
+		data: {
+			labels: users,
+			datasets: [{
+				label: '#Submissions',
+				data: submissions
+				,
+				backgroundColor: 'rgba(150, 150, 254, 0.7)'
+				,
+				borderColor: 'rgba(124,124,255,1)'
+				,
+				borderWidth: 1
+			},
+			{
+				label: '#Interviews',
+				data: interviews
+				,
+				backgroundColor: 'rgba(112, 226, 255, 0.7)'
+				,
+				borderColor: 'rgba(56, 215, 255, 1)',
+				borderWidth: 1
+			},
+			{
+				label: '#Hires',
+				data: hires
+				,
+				backgroundColor: 'rgba(252, 192, 121, 0.7)'
+				,
+				borderColor: 'rgba(252, 174, 82, 1)'
+				,
+				borderWidth: 1
+			}
+			]
+		},
+		options: {
+			legend: {
+				labels: {
+					// This more specific font property overrides the global property
+					fontColor: 'black'
+				}
+			},
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true,
+						fontColor: "Black",
+					}
+				}],
+				xAxes: [{
+					ticks: {
+						fontColor: "Black",
+					}
+				}]
+			},
+			title: {
+				display: true,
+				fontSize: 13,
+				text: 'Submissions / Interviews / Hires ',
+				fontColor: 'black'
+			}
+		}
+	});
+	var callStatistics = new Chart(callStatisticsCtx, {
+		type: 'bar',
+		data: {
+			labels: users,
+			datasets: [{
+				label: '#Out Calls',
+				data: outCalls
+				,
+				backgroundColor: 'rgba(150, 150, 254, 0.7)'
+
+				,
+				borderColor: 'rgba(124,124,255,1)'
+
+				,
+				borderWidth: 1
+			},
+			{
+				label: '#Out Voice Messages',
+				data: outVoiceMsg
+				,
+				backgroundColor: 'rgba(252, 192, 121, 0.7)'
+				,
+				borderColor: 'rgba(252, 174, 82, 1)',
+				borderWidth: 1
+			}
+
+			]
+		},
+		options: {
+			legend: {
+				labels: {
+					// This more specific font property overrides the global property
+					fontColor: 'black'
+				}
+			},
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true,
+						fontColor: "Black",
+					}
+				}],
+				xAxes: [{
+					ticks: {
+						fontColor: "Black",
+					}
+				}]
+			},
+			title: {
+				display: true,
+				fontSize: 13,
+				text: 'Call Statistics (Numbers)',
+				fontColor: 'black',
+			}
+		}
+	});
+	var callDuration = new Chart(callDurationCtx, {
+		type: 'bar',
+		data: {
+			labels: users,
+			datasets: [{
+				label: '#Out Call Duration',
+				data: outDuration
+				,
+				backgroundColor: 'rgba(112, 226, 255, 0.7)'
+				,
+				borderColor: 'rgba(56, 215, 255, 1)'
+				,
+				borderWidth: 1
+			},
+			{
+				label: '#In Call Duration',
+				data: inDuration
+				,
+				backgroundColor: 'rgba(150, 150, 254, 0.7)'
+				,
+				borderColor: 'rgba(124,124,255,1)',
+				borderWidth: 1
+			}
+			]
+		},
+		options: {
+			legend: {
+				labels: {
+					// This more specific font property overrides the global property
+					fontColor: 'black'
+				}
+			},
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero: true
+					},
+					time: {
+						unit: 'time',
+						fontColor: "Black",
+					}
+				}],
+				xAxes: [{
+					ticks: {
+						fontColor: "Black",
+					}
+				}]
+			},
+			title: {
+				display: true,
+				fontSize: 13,
+				text: 'Call Statistics (Hrs)',
+
+				fontColor: 'black',
+
+			},
+			tooltips: {
+				callbacks: {
+					//title: function (tooltipItem, data) {
+					//    return  data['labels'][tooltipItem[0]['index']];
+					//},
+					label: function (tooltipItem, data) {
+
+						var value = '';
+						if (tooltipItem['datasetIndex'] == '0') {
+							value = '#Out Call Duration'
+						}
+						else {
+							value = '#In Call Duration'
+						}
+						return value;
+					},
+					afterLabel: function (tooltipItem, data) {
+						// var dataset = data['datasets'][0];
+						//  var percent = Math.round((dataset['data'][tooltipItem['index']] / dataset["_meta"][0]['total']) * 100)
+						//debugger;
+						var duration = '';
+						var index = 0;
+						if (tooltipItem['datasetIndex'] == '0') {
+							//add out duration tooltip tooltip.
+							value = outDurationVal[tooltipItem['index']]
+						}
+						else {
+							// add in call duration in tooltip
+							value = inDurationVal[tooltipItem['index']]
+						}
+						value = value + ' Hrs';
+						return value;//data['datasets'][0]['data'][tooltipItem['index']];
+					}
+				}
+			}
+		}
+	});
+</script>

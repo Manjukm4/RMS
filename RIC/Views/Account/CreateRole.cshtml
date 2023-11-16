@@ -1,0 +1,52 @@
+﻿@model DBLibrary.RIC_Role
+@{
+    ViewBag.Title = "CreateUserRole";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<h2></h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Create Role </legend>
+        <table style="width:50%;" class="table container-fluid">
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RR_Role_Name)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RR_Role_Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RR_Role_Name)
+                </td>
+            </tr>
+     @*       <tr>
+                <td>
+                    @Html.LabelFor(model => model.RR_OrgID)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RR_OrgID, new { @class = "form-control input-sm chat-input" })
+                    @Html.ValidationMessageFor(model => model.RR_OrgID)
+                </td>
+            </tr>*@
+         
+            <tr>
+                <td>
+                   
+
+                </td>
+                <td>
+                    <div class="col-md-12 text-leftt">
+                        <input type="submit" class="btn btn-primary" value="Create" />
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+
+    </fieldset>
+}
+
+
+

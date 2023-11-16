@@ -1,0 +1,1366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6B7C1BC6-2899-4857-8F6C-904968EE7626}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DBLibrary</RootNamespace>
+    <AssemblyName>DBLibrary</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccessLogList.cs" />
+    <Compile Include="AccessLogResult.cs" />
+    <Compile Include="ClientDashboardJobDiva.cs" />
+    <Compile Include="ClientDashboardMonthlyDB.cs" />
+    <Compile Include="ClientDashboardQuaterlyDB.cs" />
+    <Compile Include="ClientMatrixDashboard.cs" />
+    <Compile Include="ClientRequiredDetails.cs" />
+    <Compile Include="ExceptionLogging.cs" />
+    <Compile Include="GetDashboardMatricsResult.cs" />
+    <Compile Include="GetIncentiveResult.cs" />
+    <Compile Include="GetTargetItem.cs" />
+    <Compile Include="Get_All_IncentivesResult.cs" />
+    <Compile Include="Migrations\202004170806420_Name fix.cs" />
+    <Compile Include="Migrations\202004170806420_Name fix.Designer.cs">
+      <DependentUpon>202004170806420_Name fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004170814537_bug fix.cs" />
+    <Compile Include="Migrations\202004170814537_bug fix.Designer.cs">
+      <DependentUpon>202004170814537_bug fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004171149247_Job Checked.cs" />
+    <Compile Include="Migrations\202004171149247_Job Checked.Designer.cs">
+      <DependentUpon>202004171149247_Job Checked.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004171155212_bug fix JobChecked.cs" />
+    <Compile Include="Migrations\202004171155212_bug fix JobChecked.Designer.cs">
+      <DependentUpon>202004171155212_bug fix JobChecked.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004171204184_Assigned By.cs" />
+    <Compile Include="Migrations\202004171204184_Assigned By.Designer.cs">
+      <DependentUpon>202004171204184_Assigned By.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004200720424_BugFix for JobChecked Tbl.cs" />
+    <Compile Include="Migrations\202004200720424_BugFix for JobChecked Tbl.Designer.cs">
+      <DependentUpon>202004200720424_BugFix for JobChecked Tbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004201423102_bugfix1.cs" />
+    <Compile Include="Migrations\202004201423102_bugfix1.Designer.cs">
+      <DependentUpon>202004201423102_bugfix1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004210414054_nullable int.cs" />
+    <Compile Include="Migrations\202004210414054_nullable int.Designer.cs">
+      <DependentUpon>202004210414054_nullable int.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004221046199_RMS_JobCheckedNotesToDB.cs" />
+    <Compile Include="Migrations\202004221046199_RMS_JobCheckedNotesToDB.Designer.cs">
+      <DependentUpon>202004221046199_RMS_JobCheckedNotesToDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201271639450_Mgr_Cd.cs" />
+    <Compile Include="Migrations\202201271639450_Mgr_Cd.Designer.cs">
+      <DependentUpon>202201271639450_Mgr_Cd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202010914088_Margin.cs" />
+    <Compile Include="Migrations\202202010914088_Margin.Designer.cs">
+      <DependentUpon>202202010914088_Margin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202202131610170_addrolecolumn.cs" />
+    <Compile Include="Migrations\202202131610170_addrolecolumn.Designer.cs">
+      <DependentUpon>202202131610170_addrolecolumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PositionDashboardDB.cs" />
+    <Compile Include="PositionDashboardMonthlyDB.cs" />
+    <Compile Include="Repository\ClientRepository.cs" />
+    <Compile Include="RIC_Accesslog.cs" />
+    <Compile Include="RIC_CallStatisticError.cs" />
+    <Compile Include="RIC_MonthlyTarget.cs" />
+    <Compile Include="RMS_JobCheckedNotes.cs" />
+    <Compile Include="RMS_JobChecked_Info.cs" />
+    <Compile Include="Migrations\201802260834519_test4.cs" />
+    <Compile Include="Migrations\201802260834519_test4.Designer.cs">
+      <DependentUpon>201802260834519_test4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802260853214_foreignkey.cs" />
+    <Compile Include="Migrations\201802260853214_foreignkey.Designer.cs">
+      <DependentUpon>201802260853214_foreignkey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803011108379_password_Length.cs" />
+    <Compile Include="Migrations\201803011108379_password_Length.Designer.cs">
+      <DependentUpon>201803011108379_password_Length.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803061246323_new_property_06-3-2018.cs" />
+    <Compile Include="Migrations\201803061246323_new_property_06-3-2018.Designer.cs">
+      <DependentUpon>201803061246323_new_property_06-3-2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803061314458_update_date.cs" />
+    <Compile Include="Migrations\201803061314458_update_date.Designer.cs">
+      <DependentUpon>201803061314458_update_date.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803071420576_menu_module_tbl.cs" />
+    <Compile Include="Migrations\201803071420576_menu_module_tbl.Designer.cs">
+      <DependentUpon>201803071420576_menu_module_tbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803080853493_new-properties_08-03-2018.cs" />
+    <Compile Include="Migrations\201803080853493_new-properties_08-03-2018.Designer.cs">
+      <DependentUpon>201803080853493_new-properties_08-03-2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803081055062_Prop_AKA_Name_Emp_Tbl.cs" />
+    <Compile Include="Migrations\201803081055062_Prop_AKA_Name_Emp_Tbl.Designer.cs">
+      <DependentUpon>201803081055062_Prop_AKA_Name_Emp_Tbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803081058468_propName_Cahenge.cs" />
+    <Compile Include="Migrations\201803081058468_propName_Cahenge.Designer.cs">
+      <DependentUpon>201803081058468_propName_Cahenge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803081424110_prop_Userstatus_emp_tbl.cs" />
+    <Compile Include="Migrations\201803081424110_prop_Userstatus_emp_tbl.Designer.cs">
+      <DependentUpon>201803081424110_prop_Userstatus_emp_tbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803090957447_Submission_Tbl_09_03_2018.cs" />
+    <Compile Include="Migrations\201803090957447_Submission_Tbl_09_03_2018.Designer.cs">
+      <DependentUpon>201803090957447_Submission_Tbl_09_03_2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803091412386_Tbl_SubmissionRule.cs" />
+    <Compile Include="Migrations\201803091412386_Tbl_SubmissionRule.Designer.cs">
+      <DependentUpon>201803091412386_Tbl_SubmissionRule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803120928271_updated_foraign_key.cs" />
+    <Compile Include="Migrations\201803120928271_updated_foraign_key.Designer.cs">
+      <DependentUpon>201803120928271_updated_foraign_key.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803120934149_undo-changes.cs" />
+    <Compile Include="Migrations\201803120934149_undo-changes.Designer.cs">
+      <DependentUpon>201803120934149_undo-changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803120950102_new-property_sub_rule.cs" />
+    <Compile Include="Migrations\201803120950102_new-property_sub_rule.Designer.cs">
+      <DependentUpon>201803120950102_new-property_sub_rule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803121002133_sub_rule_prop.cs" />
+    <Compile Include="Migrations\201803121002133_sub_rule_prop.Designer.cs">
+      <DependentUpon>201803121002133_sub_rule_prop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803131033048_temp_tbl.cs" />
+    <Compile Include="Migrations\201803131033048_temp_tbl.Designer.cs">
+      <DependentUpon>201803131033048_temp_tbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803131112171_temp_tbl1.cs" />
+    <Compile Include="Migrations\201803131112171_temp_tbl1.Designer.cs">
+      <DependentUpon>201803131112171_temp_tbl1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803140542573_RIC_Holidays_tbl.cs" />
+    <Compile Include="Migrations\201803140542573_RIC_Holidays_tbl.Designer.cs">
+      <DependentUpon>201803140542573_RIC_Holidays_tbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803190704518_remove_sub.cs" />
+    <Compile Include="Migrations\201803190704518_remove_sub.Designer.cs">
+      <DependentUpon>201803190704518_remove_sub.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803190706013_tbl_RIC_SubmissionDaily.cs" />
+    <Compile Include="Migrations\201803190706013_tbl_RIC_SubmissionDaily.Designer.cs">
+      <DependentUpon>201803190706013_tbl_RIC_SubmissionDaily.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803191058544_emp_tblRuleID.cs" />
+    <Compile Include="Migrations\201803191058544_emp_tblRuleID.Designer.cs">
+      <DependentUpon>201803191058544_emp_tblRuleID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803191101054_FK_EmpTble_Sub_Rule.cs" />
+    <Compile Include="Migrations\201803191101054_FK_EmpTble_Sub_Rule.Designer.cs">
+      <DependentUpon>201803191101054_FK_EmpTble_Sub_Rule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803201250319_employee_tbl_jobdivaproperty.cs" />
+    <Compile Include="Migrations\201803201250319_employee_tbl_jobdivaproperty.Designer.cs">
+      <DependentUpon>201803201250319_employee_tbl_jobdivaproperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803221311418_tblCallStatistics_22-03-2018.cs" />
+    <Compile Include="Migrations\201803221311418_tblCallStatistics_22-03-2018.Designer.cs">
+      <DependentUpon>201803221311418_tblCallStatistics_22-03-2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803230936245_updatePropEmployee_23-03-2018.cs" />
+    <Compile Include="Migrations\201803230936245_updatePropEmployee_23-03-2018.Designer.cs">
+      <DependentUpon>201803230936245_updatePropEmployee_23-03-2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803290631460_tblRIC_ReportingHistory.cs" />
+    <Compile Include="Migrations\201803290631460_tblRIC_ReportingHistory.Designer.cs">
+      <DependentUpon>201803290631460_tblRIC_ReportingHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803290649594_tblRIC_ReportingHistorynullableDate.cs" />
+    <Compile Include="Migrations\201803290649594_tblRIC_ReportingHistorynullableDate.Designer.cs">
+      <DependentUpon>201803290649594_tblRIC_ReportingHistorynullableDate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803291035169_table_RIC_ReportingHistoryNewProperty.cs" />
+    <Compile Include="Migrations\201803291035169_table_RIC_ReportingHistoryNewProperty.Designer.cs">
+      <DependentUpon>201803291035169_table_RIC_ReportingHistoryNewProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804100946508_employee-shortel_Name.cs" />
+    <Compile Include="Migrations\201804100946508_employee-shortel_Name.Designer.cs">
+      <DependentUpon>201804100946508_employee-shortel_Name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804101051127_callStatisticsCompositKey.cs" />
+    <Compile Include="Migrations\201804101051127_callStatisticsCompositKey.Designer.cs">
+      <DependentUpon>201804101051127_callStatisticsCompositKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804101112002_update_uniqueKye_callStatistics.cs" />
+    <Compile Include="Migrations\201804101112002_update_uniqueKye_callStatistics.Designer.cs">
+      <DependentUpon>201804101112002_update_uniqueKye_callStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804101123017_update_uniqueKye_submissions.cs" />
+    <Compile Include="Migrations\201804101123017_update_uniqueKye_submissions.Designer.cs">
+      <DependentUpon>201804101123017_update_uniqueKye_submissions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804180812018_RJ_Job_Report.cs" />
+    <Compile Include="Migrations\201804180812018_RJ_Job_Report.Designer.cs">
+      <DependentUpon>201804180812018_RJ_Job_Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804180841450_RIC_Job_Report_Prop.cs" />
+    <Compile Include="Migrations\201804180841450_RIC_Job_Report_Prop.Designer.cs">
+      <DependentUpon>201804180841450_RIC_Job_Report_Prop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804191202452_RIC_JobReport_UpdateCandidateProp.cs" />
+    <Compile Include="Migrations\201804191202452_RIC_JobReport_UpdateCandidateProp.Designer.cs">
+      <DependentUpon>201804191202452_RIC_JobReport_UpdateCandidateProp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804191451314_delete-table.cs" />
+    <Compile Include="Migrations\201804191451314_delete-table.Designer.cs">
+      <DependentUpon>201804191451314_delete-table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804191505528_RIC_Job_Repoart_New.cs" />
+    <Compile Include="Migrations\201804191505528_RIC_Job_Repoart_New.Designer.cs">
+      <DependentUpon>201804191505528_RIC_Job_Repoart_New.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804200745198_jobRepoartCandidate.cs" />
+    <Compile Include="Migrations\201804200745198_jobRepoartCandidate.Designer.cs">
+      <DependentUpon>201804200745198_jobRepoartCandidate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804200821508_Ric_Job_Repart_UpdatedProp.cs" />
+    <Compile Include="Migrations\201804200821508_Ric_Job_Repart_UpdatedProp.Designer.cs">
+      <DependentUpon>201804200821508_Ric_Job_Repart_UpdatedProp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804200852044_remove_CompositKeyJob_Repoart.cs" />
+    <Compile Include="Migrations\201804200852044_remove_CompositKeyJob_Repoart.Designer.cs">
+      <DependentUpon>201804200852044_remove_CompositKeyJob_Repoart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804301510337_RIC_IncentiveTable.cs" />
+    <Compile Include="Migrations\201804301510337_RIC_IncentiveTable.Designer.cs">
+      <DependentUpon>201804301510337_RIC_IncentiveTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805020547444_ric_incentive.cs" />
+    <Compile Include="Migrations\201805020547444_ric_incentive.Designer.cs">
+      <DependentUpon>201805020547444_ric_incentive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805250923500_updateCompositIndex_RIC_CallStatistics.cs" />
+    <Compile Include="Migrations\201805250923500_updateCompositIndex_RIC_CallStatistics.Designer.cs">
+      <DependentUpon>201805250923500_updateCompositIndex_RIC_CallStatistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806050948385_tbl_RIC_ClientSetting.cs" />
+    <Compile Include="Migrations\201806050948385_tbl_RIC_ClientSetting.Designer.cs">
+      <DependentUpon>201806050948385_tbl_RIC_ClientSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806290837376_RIC_job_Repoart_Elapsedprop.cs" />
+    <Compile Include="Migrations\201806290837376_RIC_job_Repoart_Elapsedprop.Designer.cs">
+      <DependentUpon>201806290837376_RIC_job_Repoart_Elapsedprop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806290844275_RIC_job_Repoart_Elapsedprop_update.cs" />
+    <Compile Include="Migrations\201806290844275_RIC_job_Repoart_Elapsedprop_update.Designer.cs">
+      <DependentUpon>201806290844275_RIC_job_Repoart_Elapsedprop_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807021139100_RIC_JobRepoart_02_07_2018.cs" />
+    <Compile Include="Migrations\201807021139100_RIC_JobRepoart_02_07_2018.Designer.cs">
+      <DependentUpon>201807021139100_RIC_JobRepoart_02_07_2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807301436592_ReviewTable_30_07_2018.cs" />
+    <Compile Include="Migrations\201807301436592_ReviewTable_30_07_2018.Designer.cs">
+      <DependentUpon>201807301436592_ReviewTable_30_07_2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807310628337_review_tabel-31-07-2018.cs" />
+    <Compile Include="Migrations\201807310628337_review_tabel-31-07-2018.Designer.cs">
+      <DependentUpon>201807310628337_review_tabel-31-07-2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809170846402_ric_review_17_09_2018.cs" />
+    <Compile Include="Migrations\201809170846402_ric_review_17_09_2018.Designer.cs">
+      <DependentUpon>201809170846402_ric_review_17_09_2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809170858409_ric_review_1__17_09_2018.cs" />
+    <Compile Include="Migrations\201809170858409_ric_review_1__17_09_2018.Designer.cs">
+      <DependentUpon>201809170858409_ric_review_1__17_09_2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809171114360_notification_Tbl.cs" />
+    <Compile Include="Migrations\201809171114360_notification_Tbl.Designer.cs">
+      <DependentUpon>201809171114360_notification_Tbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809171337370_review_update_dirID_Hr_id.cs" />
+    <Compile Include="Migrations\201809171337370_review_update_dirID_Hr_id.Designer.cs">
+      <DependentUpon>201809171337370_review_update_dirID_Hr_id.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809270656138_Employeereviewer_List.cs" />
+    <Compile Include="Migrations\201809270656138_Employeereviewer_List.Designer.cs">
+      <DependentUpon>201809270656138_Employeereviewer_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809270908313_removeProperties_ric_employee.cs" />
+    <Compile Include="Migrations\201809270908313_removeProperties_ric_employee.Designer.cs">
+      <DependentUpon>201809270908313_removeProperties_ric_employee.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810031003432_AnnualFeedbackFields.cs" />
+    <Compile Include="Migrations\201810031003432_AnnualFeedbackFields.Designer.cs">
+      <DependentUpon>201810031003432_AnnualFeedbackFields.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810031129445_AnnualFeedbackTbl.cs" />
+    <Compile Include="Migrations\201810031129445_AnnualFeedbackTbl.Designer.cs">
+      <DependentUpon>201810031129445_AnnualFeedbackTbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810050706188_AnnualFeedback_05_10_2018.cs" />
+    <Compile Include="Migrations\201810050706188_AnnualFeedback_05_10_2018.Designer.cs">
+      <DependentUpon>201810050706188_AnnualFeedback_05_10_2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810051035177_AnnualFeedback1_05_10_2018.cs" />
+    <Compile Include="Migrations\201810051035177_AnnualFeedback1_05_10_2018.Designer.cs">
+      <DependentUpon>201810051035177_AnnualFeedback1_05_10_2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810051315409_AnnualFeedback2_05_10_2018.cs" />
+    <Compile Include="Migrations\201810051315409_AnnualFeedback2_05_10_2018.Designer.cs">
+      <DependentUpon>201810051315409_AnnualFeedback2_05_10_2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810051442202_AnnualFeedback3_05_10_2018.cs" />
+    <Compile Include="Migrations\201810051442202_AnnualFeedback3_05_10_2018.Designer.cs">
+      <DependentUpon>201810051442202_AnnualFeedback3_05_10_2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810081047152_FIELDiD_RIC_AnnualFeedbackDtl.cs" />
+    <Compile Include="Migrations\201810081047152_FIELDiD_RIC_AnnualFeedbackDtl.Designer.cs">
+      <DependentUpon>201810081047152_FIELDiD_RIC_AnnualFeedbackDtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810081356294_Remove_AnnualFeedbackTbls.cs" />
+    <Compile Include="Migrations\201810081356294_Remove_AnnualFeedbackTbls.Designer.cs">
+      <DependentUpon>201810081356294_Remove_AnnualFeedbackTbls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810081359061_RefreshAnnualFeedbackTbls.cs" />
+    <Compile Include="Migrations\201810081359061_RefreshAnnualFeedbackTbls.Designer.cs">
+      <DependentUpon>201810081359061_RefreshAnnualFeedbackTbls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810081418393_RefreshAnnualFeedbackTbl1.cs" />
+    <Compile Include="Migrations\201810081418393_RefreshAnnualFeedbackTbl1.Designer.cs">
+      <DependentUpon>201810081418393_RefreshAnnualFeedbackTbl1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810081424540_AnnualFeedbackfieldWeightage.cs" />
+    <Compile Include="Migrations\201810081424540_AnnualFeedbackfieldWeightage.Designer.cs">
+      <DependentUpon>201810081424540_AnnualFeedbackfieldWeightage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810100950312_AnnualReviewTbl_propWarnings.cs" />
+    <Compile Include="Migrations\201810100950312_AnnualReviewTbl_propWarnings.Designer.cs">
+      <DependentUpon>201810100950312_AnnualReviewTbl_propWarnings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810300720244_add_Prop_Notification_Type_30_10_2018.cs" />
+    <Compile Include="Migrations\201810300720244_add_Prop_Notification_Type_30_10_2018.Designer.cs">
+      <DependentUpon>201810300720244_add_Prop_Notification_Type_30_10_2018.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810300723578_UpdateProp_ht_Id_to_RA_hrID.cs" />
+    <Compile Include="Migrations\201810300723578_UpdateProp_ht_Id_to_RA_hrID.Designer.cs">
+      <DependentUpon>201810300723578_UpdateProp_ht_Id_to_RA_hrID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810301113131_Shared Update.cs" />
+    <Compile Include="Migrations\201810301113131_Shared Update.Designer.cs">
+      <DependentUpon>201810301113131_Shared Update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810301118173_shared.cs" />
+    <Compile Include="Migrations\201810301118173_shared.Designer.cs">
+      <DependentUpon>201810301118173_shared.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810310827409_AnnualFeedBack roles.cs" />
+    <Compile Include="Migrations\201810310827409_AnnualFeedBack roles.Designer.cs">
+      <DependentUpon>201810310827409_AnnualFeedBack roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201810310851206_Employee FormID.cs" />
+    <Compile Include="Migrations\201810310851206_Employee FormID.Designer.cs">
+      <DependentUpon>201810310851206_Employee FormID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811051122415_Assign Req.cs" />
+    <Compile Include="Migrations\201811051122415_Assign Req.Designer.cs">
+      <DependentUpon>201811051122415_Assign Req.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811051139072_Assing shared req.cs" />
+    <Compile Include="Migrations\201811051139072_Assing shared req.Designer.cs">
+      <DependentUpon>201811051139072_Assing shared req.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811051144365_Assign sharedreq update.cs" />
+    <Compile Include="Migrations\201811051144365_Assign sharedreq update.Designer.cs">
+      <DependentUpon>201811051144365_Assign sharedreq update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811061046240_bug fix Assign SharedReq.cs" />
+    <Compile Include="Migrations\201811061046240_bug fix Assign SharedReq.Designer.cs">
+      <DependentUpon>201811061046240_bug fix Assign SharedReq.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071442332_RMSJobStatus.cs" />
+    <Compile Include="Migrations\201811071442332_RMSJobStatus.Designer.cs">
+      <DependentUpon>201811071442332_RMSJobStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811071445151_RMSJobStatus1.cs" />
+    <Compile Include="Migrations\201811071445151_RMSJobStatus1.Designer.cs">
+      <DependentUpon>201811071445151_RMSJobStatus1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811090638026_SharedReq File uPLOAD.cs" />
+    <Compile Include="Migrations\201811090638026_SharedReq File uPLOAD.Designer.cs">
+      <DependentUpon>201811090638026_SharedReq File uPLOAD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811090857537_Bugfix Shared Table.cs" />
+    <Compile Include="Migrations\201811090857537_Bugfix Shared Table.Designer.cs">
+      <DependentUpon>201811090857537_Bugfix Shared Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811120737568_update Assignto column.cs" />
+    <Compile Include="Migrations\201811120737568_update Assignto column.Designer.cs">
+      <DependentUpon>201811120737568_update Assignto column.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811121422150_JobID update.cs" />
+    <Compile Include="Migrations\201811121422150_JobID update.Designer.cs">
+      <DependentUpon>201811121422150_JobID update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811130825465_personalfeedbacktbl.cs" />
+    <Compile Include="Migrations\201811130825465_personalfeedbacktbl.Designer.cs">
+      <DependentUpon>201811130825465_personalfeedbacktbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131007463_JobStatus.cs" />
+    <Compile Include="Migrations\201811131007463_JobStatus.Designer.cs">
+      <DependentUpon>201811131007463_JobStatus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131112464_JobStatus1.cs" />
+    <Compile Include="Migrations\201811131112464_JobStatus1.Designer.cs">
+      <DependentUpon>201811131112464_JobStatus1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131130577_HDR.cs" />
+    <Compile Include="Migrations\201811131130577_HDR.Designer.cs">
+      <DependentUpon>201811131130577_HDR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131214368_File data to dtl.cs" />
+    <Compile Include="Migrations\201811131214368_File data to dtl.Designer.cs">
+      <DependentUpon>201811131214368_File data to dtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811131239213_City.cs" />
+    <Compile Include="Migrations\201811131239213_City.Designer.cs">
+      <DependentUpon>201811131239213_City.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811141413014_ShredDtl.cs" />
+    <Compile Include="Migrations\201811141413014_ShredDtl.Designer.cs">
+      <DependentUpon>201811141413014_ShredDtl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811150447483_Api All save.cs" />
+    <Compile Include="Migrations\201811150447483_Api All save.Designer.cs">
+      <DependentUpon>201811150447483_Api All save.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811151000306_Annualfeedbackdetails2.cs" />
+    <Compile Include="Migrations\201811151000306_Annualfeedbackdetails2.Designer.cs">
+      <DependentUpon>201811151000306_Annualfeedbackdetails2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811160954018_annual_feedback3.cs" />
+    <Compile Include="Migrations\201811160954018_annual_feedback3.Designer.cs">
+      <DependentUpon>201811160954018_annual_feedback3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811190856275_SUBMITTALS TABLE.cs" />
+    <Compile Include="Migrations\201811190856275_SUBMITTALS TABLE.Designer.cs">
+      <DependentUpon>201811190856275_SUBMITTALS TABLE.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811200655048_AnnualFeedback_avgRating.cs" />
+    <Compile Include="Migrations\201811200655048_AnnualFeedback_avgRating.Designer.cs">
+      <DependentUpon>201811200655048_AnnualFeedback_avgRating.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811201010481_Filetype length.cs" />
+    <Compile Include="Migrations\201811201010481_Filetype length.Designer.cs">
+      <DependentUpon>201811201010481_Filetype length.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811220419112_ClientID.cs" />
+    <Compile Include="Migrations\201811220419112_ClientID.Designer.cs">
+      <DependentUpon>201811220419112_ClientID.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811220622353_Column Name.cs" />
+    <Compile Include="Migrations\201811220622353_Column Name.Designer.cs">
+      <DependentUpon>201811220622353_Column Name.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811230648088_InterimReview.cs" />
+    <Compile Include="Migrations\201811230648088_InterimReview.Designer.cs">
+      <DependentUpon>201811230648088_InterimReview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811230726286_InterimReview1.cs" />
+    <Compile Include="Migrations\201811230726286_InterimReview1.Designer.cs">
+      <DependentUpon>201811230726286_InterimReview1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811230838560_InterimReview2.cs" />
+    <Compile Include="Migrations\201811230838560_InterimReview2.Designer.cs">
+      <DependentUpon>201811230838560_InterimReview2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201811230841396_InterimReview3.cs" />
+    <Compile Include="Migrations\201811230841396_InterimReview3.Designer.cs">
+      <DependentUpon>201811230841396_InterimReview3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812040656347_Comments sharedsubmittals.cs" />
+    <Compile Include="Migrations\201812040656347_Comments sharedsubmittals.Designer.cs">
+      <DependentUpon>201812040656347_Comments sharedsubmittals.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812040732032_Null able dattime.cs" />
+    <Compile Include="Migrations\201812040732032_Null able dattime.Designer.cs">
+      <DependentUpon>201812040732032_Null able dattime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812041240151_NotesTable.cs" />
+    <Compile Include="Migrations\201812041240151_NotesTable.Designer.cs">
+      <DependentUpon>201812041240151_NotesTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812041431519_Note.cs" />
+    <Compile Include="Migrations\201812041431519_Note.Designer.cs">
+      <DependentUpon>201812041431519_Note.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812071158399_EmployeeTableUpdate.cs" />
+    <Compile Include="Migrations\201812071158399_EmployeeTableUpdate.Designer.cs">
+      <DependentUpon>201812071158399_EmployeeTableUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812200953399_Designation.cs" />
+    <Compile Include="Migrations\201812200953399_Designation.Designer.cs">
+      <DependentUpon>201812200953399_Designation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812201014303_designationreset.cs" />
+    <Compile Include="Migrations\201812201014303_designationreset.Designer.cs">
+      <DependentUpon>201812201014303_designationreset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812201025165_designation2.cs" />
+    <Compile Include="Migrations\201812201025165_designation2.Designer.cs">
+      <DependentUpon>201812201025165_designation2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812201028502_designation3.cs" />
+    <Compile Include="Migrations\201812201028502_designation3.Designer.cs">
+      <DependentUpon>201812201028502_designation3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812201036147_designation4.cs" />
+    <Compile Include="Migrations\201812201036147_designation4.Designer.cs">
+      <DependentUpon>201812201036147_designation4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812201111461_designation5.cs" />
+    <Compile Include="Migrations\201812201111461_designation5.Designer.cs">
+      <DependentUpon>201812201111461_designation5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812201119143_designation6.cs" />
+    <Compile Include="Migrations\201812201119143_designation6.Designer.cs">
+      <DependentUpon>201812201119143_designation6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812201122423_designation7.cs" />
+    <Compile Include="Migrations\201812201122423_designation7.Designer.cs">
+      <DependentUpon>201812201122423_designation7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812201129241_designation8.cs" />
+    <Compile Include="Migrations\201812201129241_designation8.Designer.cs">
+      <DependentUpon>201812201129241_designation8.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812201134493_designation9.cs" />
+    <Compile Include="Migrations\201812201134493_designation9.Designer.cs">
+      <DependentUpon>201812201134493_designation9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812201143010_designation10.cs" />
+    <Compile Include="Migrations\201812201143010_designation10.Designer.cs">
+      <DependentUpon>201812201143010_designation10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812210716348_FeedbackAudit_Trail.cs" />
+    <Compile Include="Migrations\201812210716348_FeedbackAudit_Trail.Designer.cs">
+      <DependentUpon>201812210716348_FeedbackAudit_Trail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812210735012_FeedbackAudit_Trail1.cs" />
+    <Compile Include="Migrations\201812210735012_FeedbackAudit_Trail1.Designer.cs">
+      <DependentUpon>201812210735012_FeedbackAudit_Trail1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902141401537_Department_Table.cs" />
+    <Compile Include="Migrations\201902141401537_Department_Table.Designer.cs">
+      <DependentUpon>201902141401537_Department_Table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902150714348_Department_Table_fix.cs" />
+    <Compile Include="Migrations\201902150714348_Department_Table_fix.Designer.cs">
+      <DependentUpon>201902150714348_Department_Table_fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903061249239_Client.cs" />
+    <Compile Include="Migrations\201903061249239_Client.Designer.cs">
+      <DependentUpon>201903061249239_Client.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903061357274_ClientMappingTable.cs" />
+    <Compile Include="Migrations\201903061357274_ClientMappingTable.Designer.cs">
+      <DependentUpon>201903061357274_ClientMappingTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903080938105_UpdateClient.cs" />
+    <Compile Include="Migrations\201903080938105_UpdateClient.Designer.cs">
+      <DependentUpon>201903080938105_UpdateClient.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904020925589_IncentivesYear.cs" />
+    <Compile Include="Migrations\201904020925589_IncentivesYear.Designer.cs">
+      <DependentUpon>201904020925589_IncentivesYear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904020928222_IncentivesYearNullable.cs" />
+    <Compile Include="Migrations\201904020928222_IncentivesYearNullable.Designer.cs">
+      <DependentUpon>201904020928222_IncentivesYearNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904040900194_IncentiveYear.cs" />
+    <Compile Include="Migrations\201904040900194_IncentiveYear.Designer.cs">
+      <DependentUpon>201904040900194_IncentiveYear.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905091111554_TargetTable090519.cs" />
+    <Compile Include="Migrations\201905091111554_TargetTable090519.Designer.cs">
+      <DependentUpon>201905091111554_TargetTable090519.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905091212015_TargetTable_fixUpdateddate090519.cs" />
+    <Compile Include="Migrations\201905091212015_TargetTable_fixUpdateddate090519.Designer.cs">
+      <DependentUpon>201905091212015_TargetTable_fixUpdateddate090519.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905101415174_EmployeeTable_Exp_column_100519.cs" />
+    <Compile Include="Migrations\201905101415174_EmployeeTable_Exp_column_100519.Designer.cs">
+      <DependentUpon>201905101415174_EmployeeTable_Exp_column_100519.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905220711487_targetReportinghistoryForignKey.cs" />
+    <Compile Include="Migrations\201905220711487_targetReportinghistoryForignKey.Designer.cs">
+      <DependentUpon>201905220711487_targetReportinghistoryForignKey.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201905220719123_targetHistoryTbl.cs" />
+    <Compile Include="Migrations\201905220719123_targetHistoryTbl.Designer.cs">
+      <DependentUpon>201905220719123_targetHistoryTbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906071108318_UserDashboardTbl.cs" />
+    <Compile Include="Migrations\201906071108318_UserDashboardTbl.Designer.cs">
+      <DependentUpon>201906071108318_UserDashboardTbl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906071421285_userdashboardPanel_SortOrder.cs" />
+    <Compile Include="Migrations\201906071421285_userdashboardPanel_SortOrder.Designer.cs">
+      <DependentUpon>201906071421285_userdashboardPanel_SortOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906111056390_RIC_UserDashboardPanel_RowWidth.cs" />
+    <Compile Include="Migrations\201906111056390_RIC_UserDashboardPanel_RowWidth.Designer.cs">
+      <DependentUpon>201906111056390_RIC_UserDashboardPanel_RowWidth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906130827485_RIC_UserDashboardPanel_ColumnWidth.cs" />
+    <Compile Include="Migrations\201906130827485_RIC_UserDashboardPanel_ColumnWidth.Designer.cs">
+      <DependentUpon>201906130827485_RIC_UserDashboardPanel_ColumnWidth.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909161425501_ric_client.cs" />
+    <Compile Include="Migrations\201909161425501_ric_client.Designer.cs">
+      <DependentUpon>201909161425501_ric_client.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909260923537_SQL View Dev.cs" />
+    <Compile Include="Migrations\201909260923537_SQL View Dev.Designer.cs">
+      <DependentUpon>201909260923537_SQL View Dev.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909260935067_SQLVIEW.cs" />
+    <Compile Include="Migrations\201909260935067_SQLVIEW.Designer.cs">
+      <DependentUpon>201909260935067_SQLVIEW.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201909260940424_SQLVIEW2.cs" />
+    <Compile Include="Migrations\201909260940424_SQLVIEW2.Designer.cs">
+      <DependentUpon>201909260940424_SQLVIEW2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201911290552533_RMS_ViewsConfig1.cs" />
+    <Compile Include="Migrations\201911290552533_RMS_ViewsConfig1.Designer.cs">
+      <DependentUpon>201911290552533_RMS_ViewsConfig1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912030936224_RMS_ViewsConfig.cs" />
+    <Compile Include="Migrations\201912030936224_RMS_ViewsConfig.Designer.cs">
+      <DependentUpon>201912030936224_RMS_ViewsConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201912031136521_RMS_ViewsConfig2.cs" />
+    <Compile Include="Migrations\201912031136521_RMS_ViewsConfig2.Designer.cs">
+      <DependentUpon>201912031136521_RMS_ViewsConfig2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001071131350_RIC_QuarterlyIncentive.cs" />
+    <Compile Include="Migrations\202001071131350_RIC_QuarterlyIncentive.Designer.cs">
+      <DependentUpon>202001071131350_RIC_QuarterlyIncentive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001310851191_updatepersonalfeedbacktables.cs" />
+    <Compile Include="Migrations\202001310851191_updatepersonalfeedbacktables.Designer.cs">
+      <DependentUpon>202001310851191_updatepersonalfeedbacktables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001311024339_updateRicIncentive.cs" />
+    <Compile Include="Migrations\202001311024339_updateRicIncentive.Designer.cs">
+      <DependentUpon>202001311024339_updateRicIncentive.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202001311415514_AddHrdicussionTableToDB.cs" />
+    <Compile Include="Migrations\202001311415514_AddHrdicussionTableToDB.Designer.cs">
+      <DependentUpon>202001311415514_AddHrdicussionTableToDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002030838530_updateHrdiscussiontables.cs" />
+    <Compile Include="Migrations\202002030838530_updateHrdiscussiontables.Designer.cs">
+      <DependentUpon>202002030838530_updateHrdiscussiontables.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002101327180_updatehrdiscussiontablestodb1.cs" />
+    <Compile Include="Migrations\202002101327180_updatehrdiscussiontablestodb1.Designer.cs">
+      <DependentUpon>202002101327180_updatehrdiscussiontablestodb1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002101357276_updatehrdiscussiontablestodb.cs" />
+    <Compile Include="Migrations\202002101357276_updatehrdiscussiontablestodb.Designer.cs">
+      <DependentUpon>202002101357276_updatehrdiscussiontablestodb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002191327442_addcolumnsintoRIC_ClientMapping.cs" />
+    <Compile Include="Migrations\202002191327442_addcolumnsintoRIC_ClientMapping.Designer.cs">
+      <DependentUpon>202002191327442_addcolumnsintoRIC_ClientMapping.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004161357119_BillrateVSPayRate.cs" />
+    <Compile Include="Migrations\202004161357119_BillrateVSPayRate.Designer.cs">
+      <DependentUpon>202004161357119_BillrateVSPayRate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004170801447_JobChecked_In\Out Info.cs" />
+    <Compile Include="Migrations\202004170802300_JobChecked_InOut_Info.cs" />
+    <Compile Include="Migrations\202004170802300_JobChecked_InOut_Info.Designer.cs">
+      <DependentUpon>202004170802300_JobChecked_InOut_Info.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="OperationalDashboard_SpResult.cs" />
+    <Compile Include="OperationalResults.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\CallStatisticsRepository.cs" />
+    <Compile Include="Repository\GenericRepositiory.cs" />
+    <Compile Include="Repository\IncentiveRepository.cs" />
+    <Compile Include="Repository\Job_ReportRepository.cs" />
+    <Compile Include="Repository\MenuRepository.cs" />
+    <Compile Include="Repository\RoleRepositery.cs" />
+    <Compile Include="Repository\EmployeeRepository.cs" />
+    <Compile Include="Repository\SharedReqRepository.cs" />
+    <Compile Include="Repository\SubmissionDailyRepository.cs" />
+    <Compile Include="RIC_AnnualFeedbackFields.cs" />
+    <Compile Include="RIC_AnnualFeedback.cs" />
+    <Compile Include="RIC_AnnualFeedbackForm.cs" />
+    <Compile Include="RIC_AnnualFeedbackDtl.cs" />
+    <Compile Include="RIC_Call_Statistics.cs" />
+    <Compile Include="RIC_Client.cs" />
+    <Compile Include="RIC_ClientMapping.cs" />
+    <Compile Include="RIC_ClientSetting.cs" />
+    <Compile Include="RIC_DBEntities.cs" />
+    <Compile Include="RIC_Employee.cs" />
+    <Compile Include="RIC_Hire_Category.cs" />
+    <Compile Include="RIC_Holidays.cs" />
+    <Compile Include="RIC_HRDiscussion_Dtl.cs" />
+    <Compile Include="RIC_HRDiscussion_Hdr.cs" />
+    <Compile Include="RIC_Incentive .cs" />
+    <Compile Include="RIC_Job_Report.cs" />
+    <Compile Include="RIC_Menu_Module.cs" />
+    <Compile Include="RIC_Notification.cs" />
+    <Compile Include="RIC_Panel.cs" />
+    <Compile Include="RIC_PersonalFeedback.cs" />
+    <Compile Include="RIC_PersonalFeedbackDtl.cs" />
+    <Compile Include="RIC_QuarterlyIncentive.cs" />
+    <Compile Include="RIC_ReportingHistory.cs" />
+    <Compile Include="RIC_Review.cs" />
+    <Compile Include="RIC_Reviewer.cs" />
+    <Compile Include="RIC_AnnualFeedbackReviewers.cs" />
+    <Compile Include="RIC_Role.cs" />
+    <Compile Include="RIC_Submission.cs" />
+    <Compile Include="RIC_SubmissionDaily.cs" />
+    <Compile Include="RIC_SubmissionRule.cs" />
+    <Compile Include="RIC_Targets.cs" />
+    <Compile Include="RIC_TargetsHistory.cs" />
+    <Compile Include="RIC_UserDashboardPanel.cs" />
+    <Compile Include="RIC_User_Role.cs" />
+    <Compile Include="RIC_SubmissionsTemp.cs" />
+    <Compile Include="RMS_AssignSharedReq.cs" />
+    <Compile Include="RMS_Department.cs" />
+    <Compile Include="RMS_Designation.cs" />
+    <Compile Include="RMS_JDIssuedDt.cs" />
+    <Compile Include="RMS_JobsDB.cs" />
+    <Compile Include="RMS_SharedReqSubmittals.cs" />
+    <Compile Include="RMS_SharedReq_Dtl.cs" />
+    <Compile Include="RMS_SharedReq_HDR.cs" />
+    <Compile Include="RMS_SubmissionAnalysis.cs" />
+    <Compile Include="RMS_SharedReqNotes.cs" />
+    <Compile Include="RMS_ViewsConfig.cs" />
+    <Compile Include="Sp_Break_details.cs" />
+    <Compile Include="SP_EmployeeYearlyTarget.cs" />
+    <Compile Include="Sp_GetTeamPerformanceResult.cs" />
+    <Compile Include="SP_Last_Week_Dates.cs" />
+    <Compile Include="SP_MonthlyEmployeeResults.cs" />
+    <Compile Include="Sp_PositionDetails.cs" />
+    <Compile Include="TeamMatrixResult.cs" />
+    <Compile Include="Utility\SystemClock.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RMS_ViewConstraints.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201802260834519_test4.resx">
+      <DependentUpon>201802260834519_test4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802260853214_foreignkey.resx">
+      <DependentUpon>201802260853214_foreignkey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803011108379_password_Length.resx">
+      <DependentUpon>201803011108379_password_Length.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803061246323_new_property_06-3-2018.resx">
+      <DependentUpon>201803061246323_new_property_06-3-2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803061314458_update_date.resx">
+      <DependentUpon>201803061314458_update_date.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803071420576_menu_module_tbl.resx">
+      <DependentUpon>201803071420576_menu_module_tbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803080853493_new-properties_08-03-2018.resx">
+      <DependentUpon>201803080853493_new-properties_08-03-2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803081055062_Prop_AKA_Name_Emp_Tbl.resx">
+      <DependentUpon>201803081055062_Prop_AKA_Name_Emp_Tbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803081058468_propName_Cahenge.resx">
+      <DependentUpon>201803081058468_propName_Cahenge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803081424110_prop_Userstatus_emp_tbl.resx">
+      <DependentUpon>201803081424110_prop_Userstatus_emp_tbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803090957447_Submission_Tbl_09_03_2018.resx">
+      <DependentUpon>201803090957447_Submission_Tbl_09_03_2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803091412386_Tbl_SubmissionRule.resx">
+      <DependentUpon>201803091412386_Tbl_SubmissionRule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803120928271_updated_foraign_key.resx">
+      <DependentUpon>201803120928271_updated_foraign_key.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803120934149_undo-changes.resx">
+      <DependentUpon>201803120934149_undo-changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803120950102_new-property_sub_rule.resx">
+      <DependentUpon>201803120950102_new-property_sub_rule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803121002133_sub_rule_prop.resx">
+      <DependentUpon>201803121002133_sub_rule_prop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803131033048_temp_tbl.resx">
+      <DependentUpon>201803131033048_temp_tbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803131112171_temp_tbl1.resx">
+      <DependentUpon>201803131112171_temp_tbl1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803140542573_RIC_Holidays_tbl.resx">
+      <DependentUpon>201803140542573_RIC_Holidays_tbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803190704518_remove_sub.resx">
+      <DependentUpon>201803190704518_remove_sub.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803190706013_tbl_RIC_SubmissionDaily.resx">
+      <DependentUpon>201803190706013_tbl_RIC_SubmissionDaily.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803191058544_emp_tblRuleID.resx">
+      <DependentUpon>201803191058544_emp_tblRuleID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803191101054_FK_EmpTble_Sub_Rule.resx">
+      <DependentUpon>201803191101054_FK_EmpTble_Sub_Rule.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803201250319_employee_tbl_jobdivaproperty.resx">
+      <DependentUpon>201803201250319_employee_tbl_jobdivaproperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803221311418_tblCallStatistics_22-03-2018.resx">
+      <DependentUpon>201803221311418_tblCallStatistics_22-03-2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803230936245_updatePropEmployee_23-03-2018.resx">
+      <DependentUpon>201803230936245_updatePropEmployee_23-03-2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803290631460_tblRIC_ReportingHistory.resx">
+      <DependentUpon>201803290631460_tblRIC_ReportingHistory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803290649594_tblRIC_ReportingHistorynullableDate.resx">
+      <DependentUpon>201803290649594_tblRIC_ReportingHistorynullableDate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803291035169_table_RIC_ReportingHistoryNewProperty.resx">
+      <DependentUpon>201803291035169_table_RIC_ReportingHistoryNewProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804100946508_employee-shortel_Name.resx">
+      <DependentUpon>201804100946508_employee-shortel_Name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804101051127_callStatisticsCompositKey.resx">
+      <DependentUpon>201804101051127_callStatisticsCompositKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804101112002_update_uniqueKye_callStatistics.resx">
+      <DependentUpon>201804101112002_update_uniqueKye_callStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804101123017_update_uniqueKye_submissions.resx">
+      <DependentUpon>201804101123017_update_uniqueKye_submissions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804180812018_RJ_Job_Report.resx">
+      <DependentUpon>201804180812018_RJ_Job_Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804180841450_RIC_Job_Report_Prop.resx">
+      <DependentUpon>201804180841450_RIC_Job_Report_Prop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804191202452_RIC_JobReport_UpdateCandidateProp.resx">
+      <DependentUpon>201804191202452_RIC_JobReport_UpdateCandidateProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804191451314_delete-table.resx">
+      <DependentUpon>201804191451314_delete-table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804191505528_RIC_Job_Repoart_New.resx">
+      <DependentUpon>201804191505528_RIC_Job_Repoart_New.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804200745198_jobRepoartCandidate.resx">
+      <DependentUpon>201804200745198_jobRepoartCandidate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804200821508_Ric_Job_Repart_UpdatedProp.resx">
+      <DependentUpon>201804200821508_Ric_Job_Repart_UpdatedProp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804200852044_remove_CompositKeyJob_Repoart.resx">
+      <DependentUpon>201804200852044_remove_CompositKeyJob_Repoart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804301510337_RIC_IncentiveTable.resx">
+      <DependentUpon>201804301510337_RIC_IncentiveTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805020547444_ric_incentive.resx">
+      <DependentUpon>201805020547444_ric_incentive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805250923500_updateCompositIndex_RIC_CallStatistics.resx">
+      <DependentUpon>201805250923500_updateCompositIndex_RIC_CallStatistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806050948385_tbl_RIC_ClientSetting.resx">
+      <DependentUpon>201806050948385_tbl_RIC_ClientSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806290837376_RIC_job_Repoart_Elapsedprop.resx">
+      <DependentUpon>201806290837376_RIC_job_Repoart_Elapsedprop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806290844275_RIC_job_Repoart_Elapsedprop_update.resx">
+      <DependentUpon>201806290844275_RIC_job_Repoart_Elapsedprop_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807021139100_RIC_JobRepoart_02_07_2018.resx">
+      <DependentUpon>201807021139100_RIC_JobRepoart_02_07_2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807301436592_ReviewTable_30_07_2018.resx">
+      <DependentUpon>201807301436592_ReviewTable_30_07_2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807310628337_review_tabel-31-07-2018.resx">
+      <DependentUpon>201807310628337_review_tabel-31-07-2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809170846402_ric_review_17_09_2018.resx">
+      <DependentUpon>201809170846402_ric_review_17_09_2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809170858409_ric_review_1__17_09_2018.resx">
+      <DependentUpon>201809170858409_ric_review_1__17_09_2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809171114360_notification_Tbl.resx">
+      <DependentUpon>201809171114360_notification_Tbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809171337370_review_update_dirID_Hr_id.resx">
+      <DependentUpon>201809171337370_review_update_dirID_Hr_id.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809270656138_Employeereviewer_List.resx">
+      <DependentUpon>201809270656138_Employeereviewer_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809270908313_removeProperties_ric_employee.resx">
+      <DependentUpon>201809270908313_removeProperties_ric_employee.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810031003432_AnnualFeedbackFields.resx">
+      <DependentUpon>201810031003432_AnnualFeedbackFields.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810031129445_AnnualFeedbackTbl.resx">
+      <DependentUpon>201810031129445_AnnualFeedbackTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810050706188_AnnualFeedback_05_10_2018.resx">
+      <DependentUpon>201810050706188_AnnualFeedback_05_10_2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810051035177_AnnualFeedback1_05_10_2018.resx">
+      <DependentUpon>201810051035177_AnnualFeedback1_05_10_2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810051315409_AnnualFeedback2_05_10_2018.resx">
+      <DependentUpon>201810051315409_AnnualFeedback2_05_10_2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810051442202_AnnualFeedback3_05_10_2018.resx">
+      <DependentUpon>201810051442202_AnnualFeedback3_05_10_2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810081047152_FIELDiD_RIC_AnnualFeedbackDtl.resx">
+      <DependentUpon>201810081047152_FIELDiD_RIC_AnnualFeedbackDtl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810081356294_Remove_AnnualFeedbackTbls.resx">
+      <DependentUpon>201810081356294_Remove_AnnualFeedbackTbls.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810081359061_RefreshAnnualFeedbackTbls.resx">
+      <DependentUpon>201810081359061_RefreshAnnualFeedbackTbls.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810081418393_RefreshAnnualFeedbackTbl1.resx">
+      <DependentUpon>201810081418393_RefreshAnnualFeedbackTbl1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810081424540_AnnualFeedbackfieldWeightage.resx">
+      <DependentUpon>201810081424540_AnnualFeedbackfieldWeightage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810100950312_AnnualReviewTbl_propWarnings.resx">
+      <DependentUpon>201810100950312_AnnualReviewTbl_propWarnings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810300720244_add_Prop_Notification_Type_30_10_2018.resx">
+      <DependentUpon>201810300720244_add_Prop_Notification_Type_30_10_2018.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810300723578_UpdateProp_ht_Id_to_RA_hrID.resx">
+      <DependentUpon>201810300723578_UpdateProp_ht_Id_to_RA_hrID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810301113131_Shared Update.resx">
+      <DependentUpon>201810301113131_Shared Update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810301118173_shared.resx">
+      <DependentUpon>201810301118173_shared.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810310827409_AnnualFeedBack roles.resx">
+      <DependentUpon>201810310827409_AnnualFeedBack roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201810310851206_Employee FormID.resx">
+      <DependentUpon>201810310851206_Employee FormID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811051122415_Assign Req.resx">
+      <DependentUpon>201811051122415_Assign Req.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811051139072_Assing shared req.resx">
+      <DependentUpon>201811051139072_Assing shared req.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811051144365_Assign sharedreq update.resx">
+      <DependentUpon>201811051144365_Assign sharedreq update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811061046240_bug fix Assign SharedReq.resx">
+      <DependentUpon>201811061046240_bug fix Assign SharedReq.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071442332_RMSJobStatus.resx">
+      <DependentUpon>201811071442332_RMSJobStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811071445151_RMSJobStatus1.resx">
+      <DependentUpon>201811071445151_RMSJobStatus1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811090638026_SharedReq File uPLOAD.resx">
+      <DependentUpon>201811090638026_SharedReq File uPLOAD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811090857537_Bugfix Shared Table.resx">
+      <DependentUpon>201811090857537_Bugfix Shared Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811120737568_update Assignto column.resx">
+      <DependentUpon>201811120737568_update Assignto column.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811121422150_JobID update.resx">
+      <DependentUpon>201811121422150_JobID update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811130825465_personalfeedbacktbl.resx">
+      <DependentUpon>201811130825465_personalfeedbacktbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131007463_JobStatus.resx">
+      <DependentUpon>201811131007463_JobStatus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131112464_JobStatus1.resx">
+      <DependentUpon>201811131112464_JobStatus1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131130577_HDR.resx">
+      <DependentUpon>201811131130577_HDR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131214368_File data to dtl.resx">
+      <DependentUpon>201811131214368_File data to dtl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811131239213_City.resx">
+      <DependentUpon>201811131239213_City.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811141413014_ShredDtl.resx">
+      <DependentUpon>201811141413014_ShredDtl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811150447483_Api All save.resx">
+      <DependentUpon>201811150447483_Api All save.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811151000306_Annualfeedbackdetails2.resx">
+      <DependentUpon>201811151000306_Annualfeedbackdetails2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811160954018_annual_feedback3.resx">
+      <DependentUpon>201811160954018_annual_feedback3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811190856275_SUBMITTALS TABLE.resx">
+      <DependentUpon>201811190856275_SUBMITTALS TABLE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811200655048_AnnualFeedback_avgRating.resx">
+      <DependentUpon>201811200655048_AnnualFeedback_avgRating.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811201010481_Filetype length.resx">
+      <DependentUpon>201811201010481_Filetype length.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811220419112_ClientID.resx">
+      <DependentUpon>201811220419112_ClientID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811220622353_Column Name.resx">
+      <DependentUpon>201811220622353_Column Name.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811230648088_InterimReview.resx">
+      <DependentUpon>201811230648088_InterimReview.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811230726286_InterimReview1.resx">
+      <DependentUpon>201811230726286_InterimReview1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811230838560_InterimReview2.resx">
+      <DependentUpon>201811230838560_InterimReview2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201811230841396_InterimReview3.resx">
+      <DependentUpon>201811230841396_InterimReview3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812040656347_Comments sharedsubmittals.resx">
+      <DependentUpon>201812040656347_Comments sharedsubmittals.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812040732032_Null able dattime.resx">
+      <DependentUpon>201812040732032_Null able dattime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812041240151_NotesTable.resx">
+      <DependentUpon>201812041240151_NotesTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812041431519_Note.resx">
+      <DependentUpon>201812041431519_Note.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812071158399_EmployeeTableUpdate.resx">
+      <DependentUpon>201812071158399_EmployeeTableUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812200953399_Designation.resx">
+      <DependentUpon>201812200953399_Designation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812201014303_designationreset.resx">
+      <DependentUpon>201812201014303_designationreset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812201025165_designation2.resx">
+      <DependentUpon>201812201025165_designation2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812201028502_designation3.resx">
+      <DependentUpon>201812201028502_designation3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812201036147_designation4.resx">
+      <DependentUpon>201812201036147_designation4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812201111461_designation5.resx">
+      <DependentUpon>201812201111461_designation5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812201119143_designation6.resx">
+      <DependentUpon>201812201119143_designation6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812201122423_designation7.resx">
+      <DependentUpon>201812201122423_designation7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812201129241_designation8.resx">
+      <DependentUpon>201812201129241_designation8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812201134493_designation9.resx">
+      <DependentUpon>201812201134493_designation9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812201143010_designation10.resx">
+      <DependentUpon>201812201143010_designation10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812210716348_FeedbackAudit_Trail.resx">
+      <DependentUpon>201812210716348_FeedbackAudit_Trail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812210735012_FeedbackAudit_Trail1.resx">
+      <DependentUpon>201812210735012_FeedbackAudit_Trail1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902141401537_Department_Table.resx">
+      <DependentUpon>201902141401537_Department_Table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902150714348_Department_Table_fix.resx">
+      <DependentUpon>201902150714348_Department_Table_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903061249239_Client.resx">
+      <DependentUpon>201903061249239_Client.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903061357274_ClientMappingTable.resx">
+      <DependentUpon>201903061357274_ClientMappingTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903080938105_UpdateClient.resx">
+      <DependentUpon>201903080938105_UpdateClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904020925589_IncentivesYear.resx">
+      <DependentUpon>201904020925589_IncentivesYear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904020928222_IncentivesYearNullable.resx">
+      <DependentUpon>201904020928222_IncentivesYearNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904040900194_IncentiveYear.resx">
+      <DependentUpon>201904040900194_IncentiveYear.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905091111554_TargetTable090519.resx">
+      <DependentUpon>201905091111554_TargetTable090519.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905091212015_TargetTable_fixUpdateddate090519.resx">
+      <DependentUpon>201905091212015_TargetTable_fixUpdateddate090519.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905101415174_EmployeeTable_Exp_column_100519.resx">
+      <DependentUpon>201905101415174_EmployeeTable_Exp_column_100519.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905220711487_targetReportinghistoryForignKey.resx">
+      <DependentUpon>201905220711487_targetReportinghistoryForignKey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905220719123_targetHistoryTbl.resx">
+      <DependentUpon>201905220719123_targetHistoryTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906071108318_UserDashboardTbl.resx">
+      <DependentUpon>201906071108318_UserDashboardTbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906071421285_userdashboardPanel_SortOrder.resx">
+      <DependentUpon>201906071421285_userdashboardPanel_SortOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906111056390_RIC_UserDashboardPanel_RowWidth.resx">
+      <DependentUpon>201906111056390_RIC_UserDashboardPanel_RowWidth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906130827485_RIC_UserDashboardPanel_ColumnWidth.resx">
+      <DependentUpon>201906130827485_RIC_UserDashboardPanel_ColumnWidth.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909161425501_ric_client.resx">
+      <DependentUpon>201909161425501_ric_client.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909260923537_SQL View Dev.resx">
+      <DependentUpon>201909260923537_SQL View Dev.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909260935067_SQLVIEW.resx">
+      <DependentUpon>201909260935067_SQLVIEW.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909260940424_SQLVIEW2.resx">
+      <DependentUpon>201909260940424_SQLVIEW2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911290552533_RMS_ViewsConfig1.resx">
+      <DependentUpon>201911290552533_RMS_ViewsConfig1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912030936224_RMS_ViewsConfig.resx">
+      <DependentUpon>201912030936224_RMS_ViewsConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912031136521_RMS_ViewsConfig2.resx">
+      <DependentUpon>201912031136521_RMS_ViewsConfig2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001071131350_RIC_QuarterlyIncentive.resx">
+      <DependentUpon>202001071131350_RIC_QuarterlyIncentive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001310851191_updatepersonalfeedbacktables.resx">
+      <DependentUpon>202001310851191_updatepersonalfeedbacktables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001311024339_updateRicIncentive.resx">
+      <DependentUpon>202001311024339_updateRicIncentive.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001311415514_AddHrdicussionTableToDB.resx">
+      <DependentUpon>202001311415514_AddHrdicussionTableToDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002030838530_updateHrdiscussiontables.resx">
+      <DependentUpon>202002030838530_updateHrdiscussiontables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002101327180_updatehrdiscussiontablestodb1.resx">
+      <DependentUpon>202002101327180_updatehrdiscussiontablestodb1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002101357276_updatehrdiscussiontablestodb.resx">
+      <DependentUpon>202002101357276_updatehrdiscussiontablestodb.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002191327442_addcolumnsintoRIC_ClientMapping.resx">
+      <DependentUpon>202002191327442_addcolumnsintoRIC_ClientMapping.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004161357119_BillrateVSPayRate.resx">
+      <DependentUpon>202004161357119_BillrateVSPayRate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004170802300_JobChecked_InOut_Info.resx">
+      <DependentUpon>202004170802300_JobChecked_InOut_Info.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004170806420_Name fix.resx">
+      <DependentUpon>202004170806420_Name fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004170814537_bug fix.resx">
+      <DependentUpon>202004170814537_bug fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004171149247_Job Checked.resx">
+      <DependentUpon>202004171149247_Job Checked.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004171155212_bug fix JobChecked.resx">
+      <DependentUpon>202004171155212_bug fix JobChecked.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004171204184_Assigned By.resx">
+      <DependentUpon>202004171204184_Assigned By.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004200720424_BugFix for JobChecked Tbl.resx">
+      <DependentUpon>202004200720424_BugFix for JobChecked Tbl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004201423102_bugfix1.resx">
+      <DependentUpon>202004201423102_bugfix1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004210414054_nullable int.resx">
+      <DependentUpon>202004210414054_nullable int.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004221046199_RMS_JobCheckedNotesToDB.resx">
+      <DependentUpon>202004221046199_RMS_JobCheckedNotesToDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201271639450_Mgr_Cd.resx">
+      <DependentUpon>202201271639450_Mgr_Cd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202010914088_Margin.resx">
+      <DependentUpon>202202010914088_Margin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202202131610170_addrolecolumn.resx">
+      <DependentUpon>202202131610170_addrolecolumn.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

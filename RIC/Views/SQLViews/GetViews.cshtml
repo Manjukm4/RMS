@@ -1,0 +1,490 @@
+﻿@{
+    ViewBag.Title = "GetViews";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+
+    body {
+        font-size: 14px;
+    }
+
+    .list-group-item {
+        margin-bottom: 2%;
+    }
+
+    .list-group-item-dark {
+        background-color: #fff;
+    }
+
+    .bg-primary {
+        color: white;
+        font-size: 26px;
+        background-color: #656565;
+    }
+
+    .list-group-item {
+        margin-bottom: 1%;
+    }
+
+    .Subcontainer {
+        margin: 0px;
+        width: 100%;
+        border: 2px solid #898a8c;
+        height: 646px;
+        overflow-x: auto;
+        border-radius: 10px;
+    }
+
+    .divCol {
+        display: grid;
+    }
+
+    .table td {
+        padding: 0.30rem;
+    }
+
+    .table th {
+        padding: 0.50rem;
+    }
+
+    /* Toggel control*/
+    .custom-checkbox {
+        min-height: 1rem;
+        padding-left: 0;
+        margin-right: 0;
+        cursor: pointer;
+    }
+
+    .custom-control {
+        display: contents;
+    }
+
+    .custom-checkbox .custom-control-indicator {
+        content: "";
+        display: inline-block;
+        position: relative;
+        width: 40px;
+        height: 10px;
+        background-color: #818181;
+        border-radius: 15px;
+        margin-right: 10px;
+        -webkit-transition: background .3s ease;
+        transition: background .3s ease;
+        vertical-align: middle;
+        margin: 0 16px;
+        box-shadow: none;
+    }
+
+        .custom-checkbox .custom-control-indicator:after {
+            content: "";
+            position: absolute;
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background-color: #f1f1f1;
+            border-radius: 21px;
+            box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);
+            left: -2px;
+            top: -4px;
+            -webkit-transition: left .3s ease, background .3s ease, box-shadow .1s ease;
+            transition: left .3s ease, background .3s ease, box-shadow .1s ease;
+        }
+
+    .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator {
+        background-color: #818181;
+        background-image: none;
+        box-shadow: none !important;
+    }
+
+        .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator:after {
+            background-color: #84c7c1;
+            left: 25px;
+        }
+
+    .custom-checkbox .custom-control-input:focus ~ .custom-control-indicator {
+        box-shadow: none !important;
+    }
+
+    .linkClass {
+        background-color: #e4e4e4 !important;
+        color: #1f8ae8 !important;
+        font-weight: bold !important;
+    }
+
+    .list-click {
+        cursor: pointer;
+        background-color: #eeeedd;
+        font-weight: 600;
+    }
+
+    .card {
+        margin-top: 1px;
+    }
+
+    .card .card-body {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    .ColumnName {
+        font-weight: bold;
+    }
+    /**/
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var SelectedView;        
+        $('.list-click').click(function () {
+
+            $('#divParaContainer').empty();
+            SelectedView = "";
+            var temp = $(this);
+            $('.list-click').removeClass("linkClass");
+            $(this).addClass("linkClass");
+
+             var optionData='<select style="width: 100%;" class="form-control listName" disabled><option>Select View</option>';
+            
+             var subViewList = $.parseJSON($.ajax({
+                        url: "@Url.Action("GetViewsList")",
+                        dataType: "json",
+                        async: false
+                    }).responseText); // This will wait until you get a response from the ajax request.
+
+
+                    $.each(subViewList, function (key, value) {
+                        optionData += '<option>' + value.TABLE_NAME + '</option>';
+                    });
+            optionData = optionData + '</select>';
+
+            $("#viewList").val(optionData);
+         
+
+
+
+
+            $.ajax({
+                type: 'GET',
+                url: "@Url.Action("GETViewDetails")" + "?SQlView=" + $(this).data("token"),
+                dataType: 'json',
+                success: function (data, status, xhr) {
+                    BuildParametrs(data);
+                    $('#btnSave').css("display", "block");
+                    SelectedView = temp;
+                },
+                error: function (xhr, status, error) {
+                    $('#btnSave').css("display", "none");
+                }
+            });
+        });
+
+        function BuildParametrs(data) {
+            $('#DisplayNameId,#DescriptionId').val('');
+           
+
+            var viewList = $("#viewList").val();
+
+            var head = '<div class=" divCol" style="width: 80rem;"><table class="table table-bordered"><thead style="background-color: #888b8e;color:#fff;font-size: 15px;"><tr><th>Column Name</th><th>Column Type</th><th>Filter Required</th><th>Control Type</th><th>List Name</th><th>Column Name</th></tr></thead><tbody>';
+            var body = '';
+
+            var dataType;        
+            var columnName='<select style="width: 100%;" class="form-control columnType" disabled><option>Select Cloumn</option></select>';
+            var controlType = '<select style="width: 100%;" class="form-control controlType"><option>Text Box</option><option>Calender</option><option>List</option></select></td>';
+            $.each(data, function (key, value) {
+                var subViewList = viewList;
+                var subColumnName = columnName;
+                var subColumnList;
+                var optionColumnData='<select style="width: 100%;" class="form-control columnName" disabled><option>Select Column</option>';            
+                subViewList = subViewList.replace('<option>' + value.Lk_ViewName + '</option>', '<option selected=true>' + value.Lk_ViewName + '</option>');
+                if (value.ControlType == "List") {
+                    subViewList = subViewList.replace('<select style="width: 100%;" class="form-control listName" disabled>', '<select style="width: 100%;" class="form-control listName">');
+                    subColumnName = subColumnName.replace('<select style="width: 100%;" class="form-control columnType" disabled>', '<select style="width: 100%;" class="form-control columnType">');
+
+
+                    subColumnList = $.parseJSON($.ajax({
+                        url: "@Url.Action("GetViewsList")" + "?Value=" + value.Lk_ViewName,
+                        dataType: "json",
+                        async: false
+                    }).responseText); // This will wait until you get a response from the ajax request.
+
+                    //To bind the ColumnNames to select dropdown.
+                    $.each(subColumnList, function (key, value) {
+                        optionColumnData += '<option>' + value.COLUMN_NAME + '</option>';
+                    });
+
+
+                    optionColumnData = optionColumnData + '</select>';
+                    optionColumnData = optionColumnData.replace('<select style="width: 100%;" class="form-control columnName" disabled>', '<select style="width: 100%;" class="form-control columnName">');
+                    optionColumnData = optionColumnData.replace('<option>' + value.LK_ColumnName + '</option>', '<option selected=true>' + value.LK_ColumnName + '</option>');
+   
+                }
+                else {
+                    optionColumnData = optionColumnData + '</select>';
+                }
+               
+                if (value.RV_DisplayName != null)
+                    $('#DisplayNameId').val(value.RV_DisplayName);
+                if (value.RV_Description != null)
+                    $('#DescriptionId').val(value.RV_Description); 
+
+                console.log(value.ControlType);
+                dataType = (value.DATA_TYPE === "datetime") ? "Calender" : "TextBox";
+
+                body = body + '<tr><td> <label style="text-transform: capitalize;">' + value.COLUMN_NAME + '</label></td>' +
+                    '<td><Label style="text-transform: capitalize;">' + value.DATA_TYPE + '</Label></td> <td style="text-align: center;"><label class="custom-control custom-checkbox">' +
+                    '<input type="checkbox"' + (value.Req == "T" ? "Checked " : "") + 'class="custom-control-input EditCheckBoxSelect hide"/> <span class="custom-control-indicator"></span>' +
+                    '</label></td><td>'
+                    + (value.Req == "T" && value.ControlType == "Calender" ? controlType.replace("<option>Calender</option>", "<option selected=true>Calender</option>")
+                        : (value.Req == "T" && value.ControlType == "List") ? controlType.replace("<option>List</option>", "<option selected=true>List</option>") : controlType)
+                    + '<td>' + subViewList + '</td>'
+                    +'<td>'+optionColumnData+'</td></tr>';
+            });
+            var footer = '</tbody></table></div>';
+            var Table = head + body + footer;
+            $('#divParaContainer').append(Table);
+            checkEnabledorNot();
+        }
+
+        $('#btnSave').click(function () {
+            var JsonObj = [];
+            var boolValue = false;
+            if ($('#DisplayNameId').val().trim() == "") {
+                alert("Enter Display Name");
+                $('#DisplayNameId').focus();
+                return false;
+
+            }
+
+            $('.divCol table tbody tr input[type="checkbox"]:checked').closest('tr').each(function (index, row) {
+
+                var item = {};
+                item['RV_ViewName'] = SelectedView.text();
+                $(row).find('Label').each(function (i, element) {
+
+                   if (i == 0) {
+                       item["RV_ColumnName"] = element.innerText;
+                   }
+                       else if ( i == 1) {
+                       item["RV_ColumnType"] = element.innerText;
+                   }
+                });
+
+                var controlType = $(row).find('select:eq(0)').find(":selected").text().trim();
+                var listName = $(row).find('select:eq(1)').find(":selected").text().trim();
+                var columnName = $(row).find('select:eq(2)').find(":selected").text().trim();
+
+                item["RV_DisplayName"] = $('#DisplayNameId').val().trim();
+                item["RV_Description"] = $('#DescriptionId').val().trim(); 
+                
+                item["RV_ControlType"] = controlType;
+                if (controlType == "List") {
+                    //if the controlType as list then check it the listname and columnname values are mandatory
+                    if (listName != "Select View" && columnName != "Select Column") {
+                        item["Lk_ViewName"] = listName;
+                        item["LK_ColumnName"] = columnName;
+
+                    }
+                    else {
+                        boolValue = true;
+                    }
+                }
+                JsonObj.push(item);
+            });
+
+
+
+            if (JsonObj.length > 0) {
+                // call save view parameters api
+
+                if (boolValue == true) {
+                    alert("Please Select All ListName's/Column Name's");
+                    return false;
+                }
+                else {
+                    $.ajax({
+                        type: 'POST',
+                        url: "@Url.Action("SaveViewDetails")",
+                        contentType: "application/json;charset=utf-8",
+                        dataType: 'json',
+                        data: JSON.stringify(JsonObj),
+                        success: function (response, status, xhr) {
+                            if (response.Success) {
+                                alert("Parameters Saved Successfully");
+                                //window.location.href = "/" + response.Controller + "/" + response.Action;
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            alert('server error');
+                        }
+                    });
+                }
+            } else {
+                 $.ajax({
+                     type: 'GET',
+                     url: "@Url.Action("ClearParameters")" + "?DeleteView=" + SelectedView.text(),
+                     dataType: 'json',
+                     success: function (response, status, xhr) {
+                         alert("Parameters Saved Successfully");
+                         //window.location.href = "/" + response.Controller + "/" + response.Action;
+                     },
+                     error: function (xhr, status, error) {
+                         alert('server error');
+                     }
+                 });
+            }
+        });
+
+        //if the parameter is selected as true,then enable or disable the controltype.
+        $(document).on("click", ".EditCheckBoxSelect", function () {
+
+            //if the parameter is selected
+            if ($(this).is(':checked')) {
+
+                var getColumnType = $(this).closest("tr").find("td:eq(1)").text().trim();
+                var getControlType = $(this).closest("tr").find("td select:eq(0) option:selected").val().trim();
+
+
+                //suppose if the datatype contains the date/datetime they can't select apart from datetime format in control type and disable the controltype.
+                if (getColumnType.includes("date")) {
+                    $(this).closest("tr").find("select option:eq(1)").prop("selected", "selected");
+                    $(this).closest("tr").find("select").prop("disabled", "disabled");
+                }
+                //apart from datatpe as date/datetime then enable the controltype.
+                else {
+                    $(this).closest("tr").find("select").prop("disabled", "");
+                }
+
+                //suppose if the datatype contains the date/datetime they can't select apart from datetime format in control type and disable the controltype,viewlist and column list.
+                if (getControlType != "List") {
+                    $(this).closest("tr").find("select:gt(0)").prop("disabled", "disabled");
+                }
+            }
+            //if the parameter is not checked then disable the controltype.
+            else {
+               $(this).closest("tr").find("select").prop("disabled", "disabled");
+            }
+        });
+
+
+        //enabled or disblaed the viewlist and columnlist.
+        $(document).on("change", ".controlType", function () {
+            //if they value is List Type then enable the viewlist
+            if ($(this).val() == "List") {
+                $(this).closest("tr").find("select:eq(1)").prop("disabled", "");
+
+            }
+            //if they value is not List Type then disable the viewlist and columnlist
+            else {
+                $(this).closest("tr").find("select:eq(1)").prop("disabled", "disabled").val("Select View");
+                $(this).closest("tr").find("select:eq(2)").prop("disabled", "disabled").val("Select Column");
+
+            }
+        });
+
+        //To bind the columnlist on selection of viewlist.
+        $(document).on("change", ".listName", function () {
+            var columnNameSelect = $(this).closest("tr").find("select:eq(2)");
+            var subColumnList;
+            var optionColumnData = '<option>Select Column</option>';
+
+            //if the viewlist value is not selected anything then just disable the columnlist value
+            if ($(this).val() == "Select View") {
+                columnNameSelect.prop("disabled", "disabled");
+
+            }
+            //if the viewlist value is selected then just enable the columnlist value and bind the according the viewlist.
+            else {
+               
+                    columnNameSelect.prop("disabled", "");
+                    columnNameSelect.empty();
+
+                    subColumnList = $.parseJSON($.ajax({
+                        url: "@Url.Action("GetViewsList")" + "?Value=" + $(this).val(),
+                        dataType: "json",
+                        async: false
+                    }).responseText); // This will wait until you get a response from the ajax request.
+
+
+                    $.each(subColumnList, function (key, value) {
+                        optionColumnData += '<option>' + value.COLUMN_NAME + '</option>';
+                    });
+                    columnNameSelect.append(optionColumnData);
+               
+            }
+        });
+
+
+
+
+
+        //To check the value is parameter selected or not,if the value is checked then enabled the controltype or disabled.
+        function checkEnabledorNot() {
+
+            $("table tbody tr").each(function () {
+                if ($(this).find(".EditCheckBoxSelect").is(":checked")) {
+
+                    var getColumnType = $(this).find("td:eq(1)").text().trim();
+
+                    if (getColumnType.includes("date")) {
+                        $(this).find("select:eq(0)").prop("disabled", "disabled");
+                    }
+                    else {
+                        $(this).find("select:eq(0)").prop("disabled", "");
+                    }
+
+                }
+                else {
+                    $(this).find("select:eq(0)").prop("disabled", "disabled");
+                }
+            });
+        }
+    });
+</script>
+
+<input id="viewList" name="viewList" type="hidden" value="" />
+<input id="columnList" name="columnList" type="hidden" value="" />
+
+
+<div class="card h2">
+    <div class="card-body bg-primary text-white text-center">
+        Configure View Parameters
+    </div>
+</div>
+
+<div class="container Subcontainer">
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-sm-4">
+            <div class="list-group">
+                @foreach (var Item in Model)
+                {
+                    <a data-token="@Item.TABLE_NAME" class="list-click list-group-item list-group-item-action list-group-item-dark">@Item.TABLE_NAME</a>
+                }
+            </div>
+        </div>
+        <div class="col-sm-8" id="divParaContainer">
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 18px;">
+        <div class="col-sm-4">
+           <lable class="ColumnName">Display Name: </lable>
+            <input class="form-control" value="" id="DisplayNameId" placeholder="Enter Display Name" />
+        </div>
+        <div class="col-sm-4">
+            <lable class="ColumnName">Description: </lable>
+            <textarea class="form-control" placeholder="Enter Description" rows="3" cols="50" id="DescriptionId">
+
+            </textarea>
+
+        </div>
+    </div>
+</div>
+
+<div class="text-center" style="margin-left: 47%;padding-top: 10px;">
+    <input id="btnSave" type="button" class="btn btn-success" value="Save" style="display:none;width: 110px;" />
+</div>
+
+
+
+
+

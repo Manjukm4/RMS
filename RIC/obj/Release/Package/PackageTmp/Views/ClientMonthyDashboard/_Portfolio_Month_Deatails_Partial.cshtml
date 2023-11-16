@@ -1,0 +1,119 @@
+﻿@model Tuple<RIC.Models.Client.ClientDashboardMonthly, int>
+
+@{
+    var data = Model.Item1;
+}
+<tr class="QuarterHead">
+    <td class="datecss">
+        <a style="cursor:pointer;padding-left: 10px;" class="fas fa-user-plus quarterClick" data-count="@Model.Item2"></a>
+        <span style="padding-left:0px">@data.MonthName</span>
+    </td>
+    <td class="TextAlignCenter Quarter1">
+
+        @*@Html.DisplayFor(model => data.RequirementsCount)*@
+
+        @if (data.RequirementsCount > 0)
+        {
+            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs" data-company=""
+               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate">
+                @Html.DisplayFor(model => data.RequirementsCount)
+            </a>
+
+        }
+        else
+        {
+            @Html.DisplayFor(model => data.RequirementsCount)
+        }
+
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @Html.DisplayFor(model => data.Respond)
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @Html.DisplayFor(model => data.Percentage)%
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @if (data.TotalRecruiterCount > 0)
+        {
+            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="TotalRecriter" data-company=""
+               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate">
+                @Html.DisplayFor(model => data.TotalRecruiterCount)
+            </a>
+
+        }
+        else
+        {
+            @Html.DisplayFor(model => data.TotalRecruiterCount)
+        }
+       
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @if (data.ActiveRecruiterCount > 0)
+        {
+            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="ActiveRecriter" data-company=""
+               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate">
+                @Html.DisplayFor(model => data.ActiveRecruiterCount)
+            </a>
+
+        }
+        else
+        {
+            @Html.DisplayFor(model => data.ActiveRecruiterCount)
+        }
+      
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @if (data.SubmissonCount > 0)
+        {
+            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-company=""
+               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate">
+                @Html.DisplayFor(model => data.SubmissonCount)
+            </a>
+
+        }
+        else
+        {
+            @Html.DisplayFor(model => data.SubmissonCount)
+        }
+
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @*@Html.DisplayFor(model => data.InterviewCount)*@
+        @if (data.InterviewCount > 0)
+        {
+
+            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview" data-company=""
+               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate">
+                @Html.DisplayFor(model => data.InterviewCount)
+            </a>
+        }
+        else
+        {
+            @Html.DisplayFor(model => data.InterviewCount)
+        }
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @if (data.HireCount > 0)
+        {
+
+            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire" data-company=""
+               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate">
+                @Html.DisplayFor(model => data.HireCount)
+            </a>
+        }
+        else
+        {
+            @Html.DisplayFor(model => data.HireCount)
+        }
+        @*@Html.DisplayFor(model => data.HireCount)*@
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @Html.DisplayFor(model => data.SubByInterview)%
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @Html.DisplayFor(model => data.SubByHire)%
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @Html.DisplayFor(model => data.InterviewByHire)%
+    </td>
+</tr>

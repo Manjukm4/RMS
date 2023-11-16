@@ -1,0 +1,438 @@
+﻿@model DBLibrary.RIC_Employee
+
+@{
+    ViewBag.Title = "CreateUser";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, null, new { @style = "color:red" })<br />
+
+    <fieldset>
+        <legend>Create User</legend>
+
+        @if (ViewBag.Message != null)
+        {
+            <h3 style="color: green">@ViewBag.Message </h3>
+        }
+        <table style="width: 50%; height: 100%" class="table container-fluid">
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_Emp_Cd)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RE_Emp_Cd, new { @class = "form-control input-sm chat-input", required = "required", PlaceHolder = "Eg: SBS0001", @maxlength = "9",  style="text-transform:uppercase" })
+                    @Html.ValidationMessageFor(model => model.RE_Emp_Cd, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_Jobdiva_User_Name)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RE_Jobdiva_User_Name, new { @class = "form-control input-sm chat-input", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RE_Jobdiva_User_Name, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_Shortel_Name)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RE_Shortel_Name, new { @class = "form-control input-sm chat-input" })
+                    @Html.ValidationMessageFor(model => model.RE_Shortel_Name, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_Employee_Name)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RE_Employee_Name, new { @class = "form-control input-sm chat-input", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RE_Employee_Name, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_AKA_Name)
+                </td>
+                <td>
+
+                    @Html.TextBoxFor(model => model.RE_AKA_Name, new { @class = "form-control input-sm chat-input", required = "required" })
+                    @Html.ValidationMessageFor(model => model.RE_AKA_Name, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_Email)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.RE_Email, new { @class = "form-control input-sm chat-input", required = "required", type = "email" })
+                    @Html.ValidationMessageFor(model => model.RE_Email, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_Contact_Num)
+                </td>
+                <td>
+
+                    @Html.TextBoxFor(model => model.RE_Contact_Num, new { @class = "form-control input-sm chat-input", pattern = "^\\d{10}$", title = "Invalid Phone Number" })
+                    @Html.ValidationMessageFor(model => model.RE_Contact_Num, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_Password)
+                </td>
+                <td>
+
+                    @Html.PasswordFor(model => model.RE_Password, new { @class = "form-control input-sm chat-input", required = "required", pattern = ".{8,20}", title = "8 to 20 characters" })
+                    @Html.ValidationMessageFor(model => model.RE_Password, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.ConfirmPassword)
+                </td>
+                <td>
+                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control input-sm chat-input", required = "required", pattern = ".{8,20}", title = "8 to 20 characters" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_Joining_Date)
+                </td>
+                <td>
+
+                    @Html.TextBoxFor(model => model.RE_Joining_Date, null, new { @class = "form-control input-sm chat-input input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                    @Html.ValidationMessageFor(model => model.RE_Joining_Date, null, new { @style = "color:red;" })
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.DesignationList)
+                </td>
+                <td>
+                    @Html.DropDownListFor(m => m.RE_DesignationID, Model.DesignationList, "Select Designation", new { @id = "ddlDesignation", @class = "form-control input-sm chat-input", required = "required" })
+                    @Html.ValidationMessageFor(m => m.RE_DesignationID, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.DepartmentList)
+                </td>
+                <td>
+                    @Html.DropDownListFor(m => m.RE_DepartmentID, Model.DepartmentList, "Select Department", new { @id = "ddlDesignation", @class = "form-control input-sm chat-input", required = "required" })
+                    @Html.ValidationMessageFor(m => m.RE_DepartmentID, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RoleList)
+                </td>
+                <td>
+                    @Html.DropDownListFor(m => m.RoleID, Model.RoleList, "Select Role", new { @id = "ddlRole", @class = "form-control input-sm chat-input", required = "required" })
+                    @Html.ValidationMessageFor(m => m.RoleID, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+           
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_Exp)
+                </td>
+
+                <td>
+                    @Html.DropDownListFor(m => m.RE_Sub_Rule_ID, Model.SubmissionRule, "Experience", new { @id = "ddlSubmissionRule", @class = "form-control input-sm chat-input", required = "required" })
+                    @Html.ValidationMessageFor(m => m.RE_Sub_Rule_ID, null, new { @style = "color:red;" })
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.RE_Experience)
+                </td>
+                <td>
+                      @Html.TextBoxFor(model => model.RE_Experience, new { @class = "form-control input-sm chat-input", required = "required" })
+                </td>
+            </tr>
+
+            <tr>
+            @*    <td>
+                    <label>Add Reviewers</label>
+                </td>
+                <td>
+                    <div class="form-group multiple-form-group" data-max="5">
+                        <div class="form-group input-group">
+
+                            @Html.DropDownList("RE_Reviewer_List", Enumerable.Empty<SelectListItem>(), "Select Reporting Manager", new { required = "required", @class = "form-control  selectInput", @style = "  z-index: 0" })
+
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default btn-add">
+                                    +					
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>*@
+
+            <tr>
+                <td>
+                    <div class="col-md-12 text-right">
+                        <input type="submit" id="btnsubmit" class="btn btn-primary" value="Save" />
+                    </div>
+
+                </td>
+                <td>
+                    <div class="col-md-12 text-left">
+                        <button type="reset" class="btn btn-danger" value="Reset">Reset</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </fieldset>
+}
+
+<script>
+
+
+
+    $(document).ready(function () {
+
+        $(function () {
+
+            var addFormGroup = function (event) {
+                event.preventDefault();
+
+                var $formGroup = $(this).closest('.form-group');
+                var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+                var $formGroupClone = $formGroup.clone();
+
+
+                //$formGroup.find('.selectInput').prop("disabled", true);
+
+                $(this)
+                    .toggleClass('btn-default btn-add btn-danger btn-remove ')
+                    .html('–');
+
+                $formGroupClone.find('input').val('');
+                $formGroupClone.insertAfter($formGroup);
+
+                var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
+                    $lastFormGroupLast.find('.btn-add').attr('disabled', true);
+                }
+            };
+
+            var removeFormGroup = function (event) {
+                event.preventDefault();
+
+                var $formGroup = $(this).closest('.form-group');
+                var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+
+                var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
+                    $lastFormGroupLast.find('.btn-add').attr('disabled', false);
+                }
+
+                $formGroup.remove();
+            };
+
+
+
+            var countFormGroup = function ($form) {
+                return $form.find('.form-group').length;
+            };
+
+            $(document).on('click', '.btn-add', addFormGroup);
+            $(document).on('click', '.btn-remove', removeFormGroup);
+
+        });
+        addReviewerList()
+
+        function addReviewerList() {
+
+
+            $.getJSON('@Url.Action("GetReviewerList", "Account")', function (data) {
+
+
+                $('<option>',
+                      {
+                          value: null,
+                          text: "Select Reporting Manager",
+
+                      }).val(data.Value).appendTo(".selectInput");
+
+                // $("#RE_Mgr_ID").append($("<option Value=null></option>").html("Select Reporting Manager"));
+                $.each(data, function (i, data) {
+                    // bind the dropdown list using json result                    
+                    @* if (data.Value == '@Model.RE_Mgr_ID') {
+
+                        $('<option>',
+                       {
+
+                           value: data.Value,
+                           text: data.Text,
+                           selected: true//sete selected 
+                       }).val(data.Value).appendTo("#RE_Mgr_ID");
+                    }
+                    else {*@
+
+                    $('<option>',
+                   {
+                       value: data.Value,
+                       text: data.Text,
+                       selected: false
+                   }).val(data.Value).appendTo(".selectInput");
+
+                    //}
+                });
+
+
+
+                //$("#RE_Mgr_ID value=" + .ToString()+"").attr("selected", "true");
+                return false;
+            });
+
+        }
+
+
+
+        bindMgrDropdown();
+
+        function bindMgrDropdown() {
+            //some code
+            $.getJSON("/Account/BindMgrList?roleID=" + $("#ddlRole option:selected").val(), function (data) {
+
+
+                $('<option>',
+                      {
+                          value: null,
+                          text: "Select Reporting Manager",
+
+                      }).val(data.Value).appendTo("#RE_Mgr_ID");
+
+                // $("#RE_Mgr_ID").append($("<option Value=null></option>").html("Select Reporting Manager"));
+                $.each(data, function (i, data) {
+                    // bind the dropdown list using json result                    
+                    if (data.Value == '@Model.RE_Mgr_ID') {
+
+                        $('<option>',
+                       {
+
+                           value: data.Value,
+                           text: data.Text,
+                           selected: true//sete selected 
+                       }).val(data.Value).appendTo("#RE_Mgr_ID");
+                    }
+                    else {
+
+                        $('<option>',
+                       {
+                           value: data.Value,
+                           text: data.Text,
+                           selected: false
+                       }).val(data.Value).appendTo("#RE_Mgr_ID");
+
+                    }
+                });
+            });
+
+
+            //$("#RE_Mgr_ID value=" + .ToString()+"").attr("selected", "true");
+                return false;
+            }
+
+
+
+
+
+        $('#RE_Joining_Date').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
+        });
+        $('#RE_Start_Date').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+
+                //var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate() + 1);
+                $("#RE_End_Date").datepicker("option", "minDate", dt);
+            }
+
+
+        });
+        $('#RE_End_Date').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+
+                var dt = new Date(selected);
+
+                dt.setDate(dt.getDate() - 1);
+                $("#RE_Start_Date").datepicker("option", "maxDate", dt);
+            }
+
+
+        });
+
+
+
+
+        //$("#ddlRole").change(function () {
+        //    //if ($("#ddlRole option:selected").text() == 'Manager') {               
+        //    //clear data.
+        //    $("#RE_Mgr_ID").empty();
+        //    debugger;
+        //    //$("#RE_Mgr_ID").append($("<option></option>").html("Select Reporting Manager"));
+        //    //call the json result method  
+        //    $.getJSON("/Account/BindMgrList?roleID=" + $("#ddlRole option:selected").val(), function (data) {
+        //        $('<option>',
+        //             {
+        //                 value: null,
+        //                 text: "Select Reporting Manager",
+
+        //             }).val(data.Value).appendTo("#RE_Mgr_ID");
+
+        //        $.each(data, function (i, data) {
+        //            // bind the dropdown list using json result                 
+        //            $('<option>',
+        //               {
+        //                   value: data.Value,
+        //                   text: data.Text
+        //               }).val(data.Value).appendTo("#RE_Mgr_ID");
+        //        });
+        //    });
+        //    return false;
+        //});
+    });
+</script>

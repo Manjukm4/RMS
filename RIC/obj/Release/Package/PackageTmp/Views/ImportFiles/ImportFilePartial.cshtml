@@ -1,0 +1,63 @@
+﻿
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />
+
+<style>
+
+    .divTable1 {
+        height: 400px;
+    }
+
+    .alignCSS {
+        text-align: center;
+    }
+</style>
+<div class="divTable1">
+    <table id="UserList1" class="table table-striped  table-hover table-bordered">
+        <thead style="background-color: #337ab7; color: white;">
+            <tr>
+
+                <th class="textCapitalize alignCSS" style="width:50%">
+                    Uploaded By
+                </th>
+
+                <th class="textCapitalize alignCSS" style="width:50%">
+                    Uploaded Date
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            @if (Model != null)
+
+            {
+
+                foreach (var item in Model.Rows)
+
+                {
+
+                    <tr>
+                        <td class="alignCSS">
+                            @item[0]
+                        </td>
+                        <td class="alignCSS">
+                            @item[1]
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+
+</div>
+<script>
+    $('#UserList1').DataTable({
+        columnDefs: [{ type: 'date', 'targets': [1] }],
+        order: [[1, 'desc']]
+    });
+</script>

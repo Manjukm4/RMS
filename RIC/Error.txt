@@ -1,0 +1,2096 @@
+-----------Exception Details on  9/14/2023 3:33:33 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 3:33:33 PM
+
+Error Line No : line 523
+
+Error Message: DivideByZeroException
+
+Exception Type: System.DivideByZeroException
+
+Error Location : Attempted to divide by zero.
+
+ Error Page Url: 
+
+User Host IP: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/14/2023 3:46:08 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 3:46:08 PM
+
+Error Line No : line 523
+
+Error Message: DivideByZeroException
+
+Exception Type: System.DivideByZeroException
+
+Error Location : Attempted to divide by zero.
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/14/2023 3:48:05 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 3:48:05 PM
+
+Error Line No : line 523
+
+Error Message: DivideByZeroException
+
+Exception Type: System.DivideByZeroException
+
+Error Location : Attempted to divide by zero.
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/14/2023 3:54:24 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 3:54:24 PM
+
+Error Line No : line 523
+
+Error Message: DivideByZeroException
+
+Exception Type: System.DivideByZeroException
+
+Error Location : Attempted to divide by zero.
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/14/2023 3:57:19 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 3:57:19 PM
+
+Error Line No : line 523
+
+Error Message: DivideByZeroException
+
+Exception Type: System.DivideByZeroException
+
+Error Location : Attempted to divide by zero.
+
+ Controller: ClientMonthyDashboardController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/14/2023 7:32:42 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 7:32:42 PM
+
+Error Line No : line 21
+
+Error Message: ArgumentOutOfRangeException
+
+Exception Type: System.ArgumentOutOfRangeException
+
+Error Location : Index and length must refer to a location within the string.
+Parameter name: length
+
+ Controller: IncentivesController.<ImportFile>d__6.MoveNext() in C:\SunriseProjects\Sunrise-RMS\RMS\RIC\Controllers\IncentivesController.cs:line 297
+--- End of stack trace from previous location where exception was thrown ---
+   at Sy
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/14/2023 7:32:52 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 7:32:52 PM
+
+Error Line No : line 21
+
+Error Message: ArgumentOutOfRangeException
+
+Exception Type: System.ArgumentOutOfRangeException
+
+Error Location : Index and length must refer to a location within the string.
+Parameter name: length
+
+ Controller: IncentivesController.<ImportFile>d__6.MoveNext() in C:\SunriseProjects\Sunrise-RMS\RMS\RIC\Controllers\IncentivesController.cs:line 297
+--- End of stack trace from previous location where exception was thrown ---
+   at Sy
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/14/2023 7:38:17 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 7:38:17 PM
+
+Error Line No : line 21
+
+Error Message: ArgumentOutOfRangeException
+
+Exception Type: System.ArgumentOutOfRangeException
+
+Error Location : Index and length must refer to a location within the string.
+Parameter name: length
+
+ Controller: IncentivesController.cs:line 297
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.Tas
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/14/2023 7:42:53 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 7:42:53 PM
+
+Error Line No : line 21
+
+Error Message: ArgumentOutOfRangeException
+
+Exception Type: System.ArgumentOutOfRangeException
+
+Error Location : Index and length must refer to a location within the string.
+Parameter name: length
+
+ Controller: IncentivesController.cs:line 297
+--- End of stack trace from previous location where exception was thrown ---
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+   at System.Runtime.CompilerServices.Tas
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/14/2023 7:50:41 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 7:50:41 PM
+
+Error Line No : line 291
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : The conversion of a datetime2 data type to a datetime data type resulted in an out-of-range value.
+The statement has been terminated.
+
+ Controller: ntroller
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/14/2023 7:54:47 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/14/2023 7:54:47 PM
+
+Error Line No : line 291
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : The conversion of a datetime2 data type to a datetime data type resulted in an out-of-range value.
+The statement has been terminated.
+
+ Controller: IncentivesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/21/2023 3:17:35 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/21/2023 3:17:35 PM
+
+Error Line No : line 523
+
+Error Message: DivideByZeroException
+
+Exception Type: System.DivideByZeroException
+
+Error Location : Attempted to divide by zero.
+
+ Controller: Controllers\ClientMonthyDashboardController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/28/2023 1:10:31 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/28/2023 1:10:31 PM
+
+Error Line No : line 169
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: Controllers\AccountController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/28/2023 1:30:55 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/28/2023 1:30:55 PM
+
+Error Line No : line 169
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: Controllers\AccountController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/28/2023 3:31:06 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/28/2023 3:31:06 PM
+
+Error Line No : line 103
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/28/2023 3:31:06 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/28/2023 3:31:06 PM
+
+Error Line No : line 111
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/28/2023 4:15:27 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/28/2023 4:15:27 PM
+
+Error Line No : line 103
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  9/28/2023 4:15:27 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 9/28/2023 4:15:27 PM
+
+Error Line No : line 111
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/3/2023 3:11:11 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/3/2023 3:11:11 PM
+
+Error Line No : line 186
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: Controllers\AccountController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/3/2023 3:20:56 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/3/2023 3:20:56 PM
+
+Error Line No : line 179
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: Controllers\AccountController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/3/2023 5:55:38 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/3/2023 5:55:38 PM
+
+Error Line No : line 169
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: Controllers\AccountController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/3/2023 7:06:56 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/3/2023 7:06:56 PM
+
+Error Line No : line 351
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Controller: Controllers\AccountController.cs:line 190
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/6/2023 5:10:50 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/6/2023 5:10:50 PM
+
+Error Line No : line 238
+
+Error Message: COMException
+
+Exception Type: System.Runtime.InteropServices.COMException
+
+Error Location : A disk error occurred during a write operation. (Exception from HRESULT: 0x8003001D (STG_E_WRITEFAULT))
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/6/2023 5:13:23 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/6/2023 5:13:23 PM
+
+Error Line No : line 238
+
+Error Message: COMException
+
+Exception Type: System.Runtime.InteropServices.COMException
+
+Error Location : A disk error occurred during a write operation. (Exception from HRESULT: 0x8003001D (STG_E_WRITEFAULT))
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/6/2023 5:18:32 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/6/2023 5:18:32 PM
+
+Error Line No : line 238
+
+Error Message: COMException
+
+Exception Type: System.Runtime.InteropServices.COMException
+
+Error Location : A disk error occurred during a write operation. (Exception from HRESULT: 0x8003001D (STG_E_WRITEFAULT))
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/6/2023 5:26:19 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/6/2023 5:26:19 PM
+
+Error Line No : line 240
+
+Error Message: Exception
+
+Exception Type: System.Exception
+
+Error Location : The stream must be read/write
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/6/2023 5:34:36 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/6/2023 5:34:36 PM
+
+Error Line No : line 242
+
+Error Message: COMException
+
+Exception Type: System.Runtime.InteropServices.COMException
+
+Error Location : A disk error occurred during a write operation. (Exception from HRESULT: 0x8003001D (STG_E_WRITEFAULT))
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/6/2023 6:38:25 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/6/2023 6:38:25 PM
+
+Error Line No : line 236
+
+Error Message: COMException
+
+Exception Type: System.Runtime.InteropServices.COMException
+
+Error Location : A disk error occurred during a write operation. (Exception from HRESULT: 0x8003001D (STG_E_WRITEFAULT))
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/6/2023 6:42:00 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/6/2023 6:42:00 PM
+
+Error Line No : line 238
+
+Error Message: Exception
+
+Exception Type: System.Exception
+
+Error Location : The stream must be read/write
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/6/2023 7:44:46 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/6/2023 7:44:46 PM
+
+Error Line No : line 240
+
+Error Message: XmlException
+
+Exception Type: System.Xml.XmlException
+
+Error Location : '', hexadecimal value 0x11, is an invalid character. Line 1, position 287.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/6/2023 8:02:38 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/6/2023 8:02:38 PM
+
+Error Line No : line 240
+
+Error Message: XmlException
+
+Exception Type: System.Xml.XmlException
+
+Error Location : '', hexadecimal value 0x11, is an invalid character. Line 1, position 287.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/9/2023 6:33:02 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/9/2023 6:33:02 PM
+
+Error Line No : line 286
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Caller Name' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/9/2023 7:41:13 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/9/2023 7:41:13 PM
+
+Error Line No : line 266
+
+Error Message: FormatException
+
+Exception Type: System.FormatException
+
+Error Location : Input string was not in a correct format.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/9/2023 7:53:58 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/9/2023 7:53:58 PM
+
+Error Line No : line 266
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/9/2023 7:54:15 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/9/2023 7:54:15 PM
+
+Error Line No : line 266
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/9/2023 7:59:13 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/9/2023 7:59:13 PM
+
+Error Line No : line 265
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/10/2023 12:52:43 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/10/2023 12:52:43 PM
+
+Error Line No : line 395
+
+Error Message: OverflowException
+
+Exception Type: System.OverflowException
+
+Error Location : The TimeSpan could not be parsed because at least one of the numeric components is out of range or contains too many digits.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/10/2023 1:04:06 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/10/2023 1:04:06 PM
+
+Error Line No : line 399
+
+Error Message: FormatException
+
+Exception Type: System.FormatException
+
+Error Location : String was not recognized as a valid TimeSpan.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 4:46:46 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 4:46:46 PM
+
+Error Line No : line 443
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 4:54:21 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 4:54:21 PM
+
+Error Line No : line 464
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : An error occurred while updating the entries. See the inner exception for details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 5:00:35 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 5:00:35 PM
+
+Error Line No : line 464
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : An error occurred while updating the entries. See the inner exception for details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 5:02:58 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 5:02:58 PM
+
+Error Line No : line 43
+
+Error Message: ModelValidationException
+
+Exception Type: System.Data.Entity.ModelConfiguration.ModelValidationException
+
+Error Location : One or more validation errors were detected during model generation:
+
+DBLibrary.RIC_CallStatisticError: : EntityType 'RIC_CallStatisticError' has no key defined. Define the key for this EntityType.
+RIC_CallStatisticErrors: EntityType: EntitySet 'RIC_CallStatisticErrors' is based on type 'RIC_CallStatisticError' that has no keys defined.
+
+
+ Controller: Controllers\AccountController.cs:line 85
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass42.<BeginInvokeSynchronousActionMethod>b__41()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass37.<>c__DisplayClass39.<BeginInvokeActionMethodWithFilters>b__33()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass4f.<InvokeActionMethodFilterAsynchronously>b__49()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass25.<>c__DisplayClass2a.<BeginInvokeAction>b__20()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__Displ
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 5:08:53 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 5:08:53 PM
+
+Error Line No : line 464
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 5:11:30 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 5:11:30 PM
+
+Error Line No : line 464
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 5:14:50 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 5:14:50 PM
+
+Error Line No : line 43
+
+Error Message: ModelValidationException
+
+Exception Type: System.Data.Entity.ModelConfiguration.ModelValidationException
+
+Error Location : One or more validation errors were detected during model generation:
+
+DBLibrary.RIC_CallStatisticError: : EntityType 'RIC_CallStatisticError' has no key defined. Define the key for this EntityType.
+RIC_CallStatisticErrors: EntityType: EntitySet 'RIC_CallStatisticErrors' is based on type 'RIC_CallStatisticError' that has no keys defined.
+
+
+ Controller: Controllers\AccountController.cs:line 85
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass42.<BeginInvokeSynchronousActionMethod>b__41()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass37.<>c__DisplayClass39.<BeginInvokeActionMethodWithFilters>b__33()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass4f.<InvokeActionMethodFilterAsynchronously>b__49()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass25.<>c__DisplayClass2a.<BeginInvokeAction>b__20()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__Displ
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 6:02:28 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 6:02:28 PM
+
+Error Line No : line 43
+
+Error Message: ModelValidationException
+
+Exception Type: System.Data.Entity.ModelConfiguration.ModelValidationException
+
+Error Location : One or more validation errors were detected during model generation:
+
+DBLibrary.RIC_CallStatisticError: : EntityType 'RIC_CallStatisticError' has no key defined. Define the key for this EntityType.
+RIC_CallStatisticErrors: EntityType: EntitySet 'RIC_CallStatisticErrors' is based on type 'RIC_CallStatisticError' that has no keys defined.
+
+
+ Controller: Controllers\AccountController.cs:line 85
+   at lambda_method(Closure , ControllerBase , Object[] )
+   at System.Web.Mvc.ReflectedActionDescriptor.Execute(ControllerContext controllerContext, IDictionary`2 parameters)
+   at System.Web.Mvc.ControllerActionInvoker.InvokeActionMethod(ControllerContext controllerContext, ActionDescriptor actionDescriptor, IDictionary`2 parameters)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass42.<BeginInvokeSynchronousActionMethod>b__41()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethod(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass37.<>c__DisplayClass39.<BeginInvokeActionMethodWithFilters>b__33()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass4f.<InvokeActionMethodFilterAsynchronously>b__49()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.EndInvokeActionMethodWithFilters(IAsyncResult asyncResult)
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__DisplayClass25.<>c__DisplayClass2a.<BeginInvokeAction>b__20()
+   at System.Web.Mvc.Async.AsyncControllerActionInvoker.<>c__Displ
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 6:09:14 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 6:09:14 PM
+
+Error Line No : line 464
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 6:14:47 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 6:14:47 PM
+
+Error Line No : line 483
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 6:23:29 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 6:23:29 PM
+
+Error Line No : line 483
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 6:33:48 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 6:33:48 PM
+
+Error Line No : line 484
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 6:34:51 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 6:34:51 PM
+
+Error Line No : line 484
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 6:40:56 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 6:40:56 PM
+
+Error Line No : line 484
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 6:42:11 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 6:42:11 PM
+
+Error Line No : line 484
+
+Error Message: DbEntityValidationException
+
+Exception Type: System.Data.Entity.Validation.DbEntityValidationException
+
+Error Location : Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 6:45:13 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 6:45:13 PM
+
+Error Line No : line 470
+
+Error Message: InvalidOperationException
+
+Exception Type: System.InvalidOperationException
+
+Error Location : The changes to the database were committed successfully, but an error occurred while updating the object context. The ObjectContext might be in an inconsistent state. Inner exception message: Saving or accepting changes failed because more than one entity of type 'DBLibrary.RIC_CallStatisticError' have the same primary key value. Ensure that explicitly set primary key values are unique. Ensure that database-generated primary keys are configured correctly in the database and in the Entity Framework model. Use the Entity Designer for Database First/Model First configuration. Use the 'HasDatabaseGeneratedOption" fluent API or 'DatabaseGeneratedAttribute' for Code First configuration.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 7:01:58 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 7:01:58 PM
+
+Error Line No : line 448
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 7:40:01 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 7:40:01 PM
+
+Error Line No : line 469
+
+Error Message: EntityException
+
+Exception Type: System.Data.Entity.Core.EntityException
+
+Error Location : The underlying provider failed on Open.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/11/2023 7:58:26 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/11/2023 7:58:26 PM
+
+Error Line No : line 447
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/12/2023 1:15:49 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/12/2023 1:15:49 PM
+
+Error Line No : line 470
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : An error occurred while updating the entries. See the inner exception for details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/12/2023 1:17:54 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/12/2023 1:17:54 PM
+
+Error Line No : line 469
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : An error occurred while updating the entries. See the inner exception for details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/12/2023 1:21:21 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/12/2023 1:21:21 PM
+
+Error Line No : line 469
+
+Error Message: DbUpdateException
+
+Exception Type: System.Data.Entity.Infrastructure.DbUpdateException
+
+Error Location : An error occurred while updating the entries. See the inner exception for details.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 8:12:09 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 8:12:09 PM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 8:12:09 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 8:12:09 PM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 8:29:51 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 8:29:51 PM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 8:29:52 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 8:29:52 PM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 8:35:04 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 8:35:04 PM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 8:35:04 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 8:35:04 PM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 8:47:39 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 8:47:39 PM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 8:47:39 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 8:47:39 PM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 8:55:46 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 8:55:46 PM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 8:55:57 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 8:55:57 PM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 9:18:06 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 9:18:06 PM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 9:18:06 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 9:18:06 PM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 9:22:20 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 9:22:20 PM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/13/2023 9:22:20 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/13/2023 9:22:20 PM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/15/2023 11:38:17 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/15/2023 11:38:17 AM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/15/2023 11:38:17 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/15/2023 11:38:17 AM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/15/2023 11:43:02 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/15/2023 11:43:02 AM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/15/2023 11:43:02 AM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/15/2023 11:43:02 AM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/16/2023 2:47:14 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/16/2023 2:47:14 PM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/16/2023 2:47:14 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/16/2023 2:47:14 PM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/17/2023 12:57:43 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/17/2023 12:57:43 PM
+
+Error Line No : 
+
+Error Message: HttpException
+
+Exception Type: System.Web.HttpException
+
+Error Location : Maximum request length exceeded.
+
+ Controller: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/17/2023 12:57:53 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/17/2023 12:57:53 PM
+
+Error Line No : 
+
+Error Message: HttpException
+
+Exception Type: System.Web.HttpException
+
+Error Location : Maximum request length exceeded.
+
+ Controller: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/17/2023 1:01:56 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/17/2023 1:01:56 PM
+
+Error Line No : 
+
+Error Message: HttpException
+
+Exception Type: System.Web.HttpException
+
+Error Location : Maximum request length exceeded.
+
+ Controller: 
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/17/2023 3:35:46 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/17/2023 3:35:46 PM
+
+Error Line No : line 108
+
+Error Message: SqlException
+
+Exception Type: System.Data.SqlClient.SqlException
+
+Error Location : Conversion failed when converting date and/or time from character string.
+The statement has been terminated.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/17/2023 3:35:48 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/17/2023 3:35:48 PM
+
+Error Line No : line 116
+
+Error Message: ArgumentException
+
+Exception Type: System.ArgumentException
+
+Error Location : Column 'Issued_Date' does not belong to table .
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/18/2023 1:06:26 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/18/2023 1:06:26 PM
+
+Error Line No : line 186
+
+Error Message: Exception
+
+Exception Type: System.Exception
+
+Error Location : Invalid Text Qualifier in line : 10/17/2023 07:12 PM	Buyer/Purchasing I	Kelly-Cummins		23-07201	CMI2JP00010619	**A-Today-Hi-Pri	OPEN	SupplyChain	1	0	2	"Walker, Monet"		28	h	28.19	30	h		875 Lawrence Drive		Depere	WI	"54115-5070	"	10/30/2023	04/15/2024		(PURCHASING OR BUYING OR PROCUREMENT OR SUPPLY CHAIN OR SUPPLY OR INVENTORY OR PURCHASE ORDER ) AND(PARTS OR STOCK OR COMPONENTS OR MATERIAL OR BID OR PROPOSAL OR ORDERS OR ORDERING ) WITHIN 40 MILES OF 54115	"Chaturvedi, Gopal"	"Dhandapani, Ramya"	"Koduru, Venku(S)/Prasad, Nalini(R)/Unassigned, PR(R)/Vishwanath, Geetha(R)/Janardhan, Madhu Sudhan(R)/Sharma, Urvashi(R)"															"Chat with: Cummins (CMI2), All Suppliers
+"																							"Walker, Mone't"			Business Professional		
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/18/2023 1:06:37 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/18/2023 1:06:37 PM
+
+Error Line No : line 186
+
+Error Message: Exception
+
+Exception Type: System.Exception
+
+Error Location : Invalid Text Qualifier in line : 10/17/2023 07:12 PM	Buyer/Purchasing I	Kelly-Cummins		23-07201	CMI2JP00010619	**A-Today-Hi-Pri	OPEN	SupplyChain	1	0	2	"Walker, Monet"		28	h	28.19	30	h		875 Lawrence Drive		Depere	WI	"54115-5070	"	10/30/2023	04/15/2024		(PURCHASING OR BUYING OR PROCUREMENT OR SUPPLY CHAIN OR SUPPLY OR INVENTORY OR PURCHASE ORDER ) AND(PARTS OR STOCK OR COMPONENTS OR MATERIAL OR BID OR PROPOSAL OR ORDERS OR ORDERING ) WITHIN 40 MILES OF 54115	"Chaturvedi, Gopal"	"Dhandapani, Ramya"	"Koduru, Venku(S)/Prasad, Nalini(R)/Unassigned, PR(R)/Vishwanath, Geetha(R)/Janardhan, Madhu Sudhan(R)/Sharma, Urvashi(R)"															"Chat with: Cummins (CMI2), All Suppliers
+"																							"Walker, Mone't"			Business Professional		
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/18/2023 1:15:36 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/18/2023 1:15:36 PM
+
+Error Line No : line 186
+
+Error Message: Exception
+
+Exception Type: System.Exception
+
+Error Location : Invalid Text Qualifier in line : 10/17/2023 07:12 PM	Buyer/Purchasing I	Kelly-Cummins		23-07201	CMI2JP00010619	**A-Today-Hi-Pri	OPEN	SupplyChain	1	0	2	"Walker, Monet"		28	h	28.19	30	h		875 Lawrence Drive		Depere	WI	"54115-5070	"	10/30/2023	04/15/2024		(PURCHASING OR BUYING OR PROCUREMENT OR SUPPLY CHAIN OR SUPPLY OR INVENTORY OR PURCHASE ORDER ) AND(PARTS OR STOCK OR COMPONENTS OR MATERIAL OR BID OR PROPOSAL OR ORDERS OR ORDERING ) WITHIN 40 MILES OF 54115	"Chaturvedi, Gopal"	"Dhandapani, Ramya"	"Koduru, Venku(S)/Prasad, Nalini(R)/Unassigned, PR(R)/Vishwanath, Geetha(R)/Janardhan, Madhu Sudhan(R)/Sharma, Urvashi(R)"															"Chat with: Cummins (CMI2), All Suppliers
+"																							"Walker, Mone't"			Business Professional		
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/18/2023 1:18:39 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/18/2023 1:18:39 PM
+
+Error Line No : line 208
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: ImportFilesController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/31/2023 4:06:34 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/31/2023 4:06:34 PM
+
+Error Line No : line 116
+
+Error Message: NullReferenceException
+
+Exception Type: System.NullReferenceException
+
+Error Location : Object reference not set to an instance of an object.
+
+ Controller: Controllers\ClientMonthyDashboardController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/31/2023 4:29:06 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/31/2023 4:29:06 PM
+
+Error Line No : line 107
+
+Error Message: IndexOutOfRangeException
+
+Exception Type: System.IndexOutOfRangeException
+
+Error Location : Index was outside the bounds of the array.
+
+ Controller: Controllers\ClientMonthyDashboardController
+
+
+--------------------------------*End*------------------------------------------
+
+
+
+-----------Exception Details on  10/31/2023 4:29:27 PM-----------------
+-------------------------------------------------------------------------------------
+
+
+
+Log Written Date: 10/31/2023 4:29:27 PM
+
+Error Line No : line 107
+
+Error Message: IndexOutOfRangeException
+
+Exception Type: System.IndexOutOfRangeException
+
+Error Location : Index was outside the bounds of the array.
+
+ Controller: Controllers\ClientMonthyDashboardController
+
+
+--------------------------------*End*------------------------------------------
+
+
+

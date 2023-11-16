@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" type="text/css" rel="stylesheet" />
+<link href="~/Content/CSS/TeamDashboard.css?V1.1" rel="stylesheet" />
+<link href="~/Content/CSS/TeamDashboardGraph.css" rel="stylesheet" />
+<link href="~/Content/CSS/Dashboard/bootstrap-treefy.css" rel="stylesheet" />
+<script src="~/Content/JS/Dashboard/bootstrap-treefy.js"></script>
+
+<style>
+
+    .alignCSS {
+        text-align: center;
+    }
+
+    .J1Details {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 700;
+        font-size: x-large;
+    }
+</style>
+<div id="exTab1" class="container">
+    <div class="panel panel-default">
+
+        <div style="text-align: center;" class="panel-heading headingStyle affix-top" data-spy="affix" data-offset-top="5">
+            <label class="J1Details">
+                Upload J1 Data
+            </label>
+        </div>
+        <div class="row" style="margin-top: 3%;">
+
+            <div class="form-row col-md-12" style="margin-left: 3%;height:113px;margin-bottom:5px">
+
+                <div class="form-group col-md-6">
+                    <input type="file" id="importFile" name="importFile" style="margin-left: 55%; margin-top: 5%; ">
+                </div>
+                <div class="form-group col-md-6">
+                    <input type="button" class="btn btn-primary" value="Upload" id="btnUpload" style="margin-right: 80%; margin-top: 4%; " />
+                </div>
+                <div style="text-align:center;">
+                    <span id="success" style="color:green;"></span><br />
+                    <span id="up1" style="color: green;"></span><br />
+                    <span id="up2" style="color: green;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br />
+
+<div id="divPartial"></div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#success").text("");
+        $("#up1").text("");
+        $("#up2").text("");
+        $.get('@Url.Action("getAuditDetails")', function (data) {
+            $("#divPartial").html(data);
+        });
+    });
+
+    $(document).on("click", "#btnUpload", function () {
+        var formdata = false;
+        if (window.FormData) {
+            formdata = new FormData();
+        }
+        file = document.getElementById('importFile').files;
+        if (file.length > 0) {
+
+            file = file[0];
+            if (formdata) {
+                formdata.append("importFile", file);
+
+            }
+
+        }
+        else {
+            alert("Please select a file.");
+            return false;
+        }
+        var ext = $('#importFile').val().split('.').pop().toLowerCase();
+        var extArray = ["csv"];
+        if ($.inArray(ext, extArray)) {
+            alert("Please upload csv files only.");
+            return false;
+        }
+        $.ajax({
+
+            type: "POST",
+            url: '@Url.Action("ImportFile")',
+            data: formdata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if (data.Status === 1) {
+
+                    $("#success").text(data.Message);
+                    $("#up1").text("Total Records Uploaded =" + data.TotalRecords);
+                    $("#up2").text("Total Records Inserted =" + data.NewRecords);
+
+                    TempData();
+                } else {
+                    alert("Failed to Import");
+                }
+            }
+        });
+
+    });
+
+    function TempData() {
+
+        $.get(' @Url.Action("getAuditDetails")', function (data, status) {
+            $('#divPartial').html(data);
+
+        });
+    }
+
+
+</script>
+
+
+
+
+
+

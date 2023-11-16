@@ -1,0 +1,1066 @@
+﻿@model IEnumerable<RIC.Models.OperationalViewPartial>
+@using System.Globalization;
+@{
+    //ViewBag.Title = "OperationalDashboard";
+    // Layout = "~/Views/Shared/_LayoutPage.cshtml";//commented by ashish 25-06-2018 to remove layout page from partial
+}
+
+<style>
+    a:focus {
+        text-decoration: none;
+        outline: none;
+    }
+
+    .tab .nav-tabs {
+        border: none;
+        margin: 0;
+    }
+
+        .tab .nav-tabs li a {
+            padding: 10px;
+            margin-right: 20px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #293241;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 0;
+            background: transparent;
+            z-index: 2;
+            position: relative;
+            transition: all 0.3s ease 0s;
+        }
+
+            .tab .nav-tabs li a:hover,
+            .tab .nav-tabs li.active a {
+                border: none;
+            }
+
+    .headercolor {
+        background-color: #f9f7f7;
+    }
+
+    .tab .nav-tabs li:hover a:after,
+    .tab .nav-tabs li.active a:after {
+        width: 100%;
+        opacity: 1;
+    }
+
+    .tab .tab-content {
+        padding: 15px 20px;
+        margin-top: 20px;
+        font-size: 17px;
+        color: #fff;
+        letter-spacing: 1px;
+        line-height: 30px;
+        background: #727cb6;
+        position: relative;
+    }
+
+    .nav-tabs li.active a {
+        color: none;
+        background-color: black;
+    }
+
+    .demo {
+    }
+
+    .column {
+        width: 2.85%;
+    }
+
+    a {
+        color: #337ab7;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .column {
+        float: left;
+        padding: 5px;
+        border: 1px solid #909290;
+        height: 28px;
+        text-align: center;
+    }
+
+    .row:after {
+        content: "";
+        clear: both;
+    }
+
+    .Col1Width {
+        width: 20%;
+        text-align: left;
+    }
+
+    .Tableheader {
+        background-color: beige;
+    }
+
+    .TableTargetStyle {
+        background-color: #ffd67f;
+    }
+
+    .tableRowStyle {
+        background-color: #f7f7f7;
+    }
+
+    .tableRowStyle1 {
+        background-color: #e0e5e8;
+    }
+
+    .tableTotalStyle {
+        background-color: #fffee7;
+    }
+
+    .column2 {
+        width: 11.4%;
+    }
+
+    .showhide2,
+    .showhide3 {
+        display: none;
+    }
+
+    .MainHeader {
+        width: 31.4%;
+    }
+
+    .column4 {
+        width: 15.26%;
+    }
+
+    .LastHeader {
+        width: 22.73%;
+    }
+
+    .column6-9,
+    .column10-12 {
+        background-color: #bad8ea;
+    }
+
+    .liwidth {
+        width: 100%;
+    }
+
+    #PreviousHourBtn {
+        margin-left: -413%;
+    }
+
+    #NextHourBtn {
+        margin-left: 205%;
+    }
+
+    #col3 li a {
+        font-size: 15px;
+        margin: 0px;
+        color: white !important;
+        background: transparent !important;
+    }
+
+    .field-tip {
+        display: none;
+        position: absolute;
+        width: 108px;
+        background-color: #656565;
+        color: whitesmoke;
+        text-align: center;
+        border-radius: 9px;
+        padding-left: 5px;
+        position: absolute;
+        z-index: 4;
+        text-align: center;
+        max-height: 150px;
+        height: 19px;
+        font-size: 13px;
+    }
+
+    .anchorDetail:hover .field-tip {
+        display: block;
+    }
+
+    .tip-content {
+        white-space: pre;
+    }
+
+    .tableRowStyle {
+        background-color: #e0e5e8;
+    }
+    .LblHeaderoperational 
+   {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-size:x-large;
+    }
+    .panel-heading {
+    padding: 3px 10px;
+}
+    label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+    .fixedcolumn 
+    {
+        background-color:#c3c0c0;
+    }
+</style>
+
+ <div class="container" style="width:100%">
+        
+           
+                <div class="panel panel-default ">
+                    <div class="panel-heading headingStyle affix-top" data-spy="affix" data-offset-top="5"><label class="LblHeaderoperational">
+               Operational Dashboard
+               
+            </label></div>
+                    <div class="panelStyle">
+
+
+
+<input type='hidden' value='@Request.QueryString["empCd"]' id='HdnEmpCD_' />
+<input type="hidden" id="RequestedDate" name="RequestedDate"/>
+    
+
+<div style="margin: 3%">
+</div>
+    <div class="col-md-12" style="margin-bottom:1%">
+          <div class="col-md-6">
+<input type="text" class="form-control" placeholder="Search"  id="filter" style="width: 38%;">
+            </div>
+        <div class="col-md-6">
+     <input type="button"  class="btn btn-info" id="ExportExcel" value="Export To Excel"  style="margin-left: 82%;"/>
+    
+
+    </div>
+      
+        </div>
+<div style="width: 100%; overflow: auto;" class="textCapitalize">
+    <div class="jumbotron row Tableheader" style="padding: 0.5%; margin: 0%; background-color: #656565; border-radius: 0%">
+        <div class="demo">
+            <div class="">
+                <div style="margin: auto;" class="">
+                    <div class="">
+                        <div class="tab" role="tabpanel">
+                            <!-- Nav tabs -->
+                            <div class="" style="margin-left: -1%;">
+                                <div class="col-md-4" style="text-align: -webkit-left;">
+                                    <div class="col-md-1" style="padding: 1%; padding-left: 1%">
+                                        <label style="color: white">Date</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                       
+                                        <div class='input-group date'>
+                                            <input type='text' id="datepicker" class="form-control input-sm chat-input input-group date" style="width: 150px" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div style="width: 50%; margin: auto">
+                                        <div class="col-md-3">
+                                            <button id='PreviousHourBtn' class="btn btn-primary">
+                                                <i class="fas fa-angle-double-left"></i>
+                                            </button>
+                                        </div>
+                                        <div id="col3" class="col-md-6">
+                                            <ul class="nav nav-tabs" role="tablist">
+                                                <li role="presentation" id="FirstTime" class="active liwidth">
+                                                    <a href="#" aria-controls="home" role="tab" data-toggle="tab">10 AM - 1 PM</a>
+                                                </li>
+                                                <li role="presentation" id="SecondTime" class="liwidth">
+                                                    <a href="#" class="anchorcss" aria-controls="profile" role="tab" data-toggle="tab">2 PM - 5 PM</a>
+                                                </li>
+                                                <li role="presentation" id="ThirdTime" class="liwidth">
+                                                    <a href="#" class="anchorcss" aria-controls="messages" role="tab" data-toggle="tab">6 PM - 9 PM</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <button id="NextHourBtn" class="btn btn-primary">
+                                                <i class="fas fa-angle-double-right"></i>
+                                            </button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Tab panes -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="padding: 15px; font-size: smaller; padding-top: 0%;" class="">
+
+        <div class="row Tableheader">
+            <div class="column Col1Width">
+                <label class="labeltextstyle1 "></label>
+            </div>
+            <div class="column column2" style="background-color: #ffd67f">
+                <label>Total </label>
+            </div>
+            @for (int i = 6, j = 0; i <= 24; i++, j++)
+            {
+                if (i < 9)
+                {
+                    if (j == 0)
+                    {                        
+                <div class="column column2 column6-9">
+                    <label>6 AM - 9 AM </label>
+                </div>
+                    }
+                }
+                else if (i > 9 && i < 22)
+                {
+                    if (i < 12)
+                    {
+                <div class="column column2 showhide1 headercolor">
+                    <label>@i AM </label>
+                </div>
+                    }
+                    else if (i == 12)
+                    {
+                <div class="column column2 showhide1 headercolor">
+                    <label>12 PM </label>
+                </div>
+                    }
+                    else
+                    {
+                        int k = i - 12;
+
+                        if (k == 1)
+                        {                      
+                <div class="column column2 showhide1 headercolor">
+                    <label>@k PM </label>
+                </div>
+                        }
+                        else if (k > 1 && k < 6)
+                        {
+                <div class="column column2 showhide2 headercolor">
+                    <label>@k PM </label>
+                </div>
+                        }
+                        else
+                        {
+                <div class="column column2 showhide3 headercolor">
+                    <label>@k PM </label>
+                </div>    
+                        }
+                    }
+                }
+                else
+                {
+                    if (j == 16)
+                    {
+                        
+                <div class="column column2 column10-12
+                    ">
+                    <label>10 PM - 12 AM </label>
+                </div>
+                    }
+                }
+            }
+
+        </div>
+
+        <div class="row Tableheader">
+            <div class="column Col1Width">
+                <label class="labeltextstyle1 "></label>
+            </div>
+            @for (int i = 0; i < 7; i++)
+            { 
+                <div class="column anchorDetail">
+                    S
+                    <span class="field-tip">
+                        <span class="tip-content">Submission</span>
+                    </span>
+                </div>
+                <div class="column anchorDetail">
+                    C
+                    <span class="field-tip">
+                        <span class="tip-content">Call Connected</span>
+                    </span>
+                </div>
+                <div class="column anchorDetail">
+                    VM
+                   <span class="field-tip">
+                       <span class="tip-content">Voice Message</span>
+                   </span>
+                </div>
+                <div class="column anchorDetail">
+                    P
+                     <span class="field-tip">
+                         <span class="tip-content">Prod Recruiter</span>
+                     </span>
+                </div>   
+            }
+        </div>
+        @if (Model != null)
+        {
+            if (Model.Count() == 1)
+            {
+            @Tree(Model, "HiresTable", 0, "itemid")
+            }
+            else
+            { 
+            @Tree(Model.Where(s => s.EmpLevel == 0), "HiresTable", 0, "itemid")
+            }
+        }
+        @helper Tree(IEnumerable<RIC.Models.OperationalViewPartial> foos, string ulClass, int padding, string id = null)
+{
+                    
+    string paddingStyle = "padding-left:" + padding + "px"; 
+            <div class="collapse" id="@id">
+                @foreach (var foo in foos)
+                {
+                    var items = Model.Where(s => s.MgrCD == foo.EmpCD).ToList();
+                    //var empID = foo.EmpCD.Substring(foo.EmpCD.Length - 1) == "T" ? 1 : 0;
+                    if (items.Count() > 0)
+                    {       
+                    <div class="row">
+                        <div  style="@paddingStyle" class="column Col1Width Tableheader">
+                            <a style="cursor:pointer;" class="fas fa-user-plus spanClick" data-toggle="collapse" data-target="#@foo.EmpCD"></a>
+                            <label>@foo.EmployeeName</label>
+                        </div>
+
+                        @* <div class="column">
+                                @foo.Total
+                        </div>*@
+
+                        <div class="column column tableRowStyle">
+                            @foo.Total_Sub
+                        </div>
+
+
+                        <div class="column column tableRowStyle">
+                            @foo.Total_Call
+                        </div>
+                        <div class="column column tableRowStyle">
+                            @foo.Total_Vm
+                        </div>
+
+                        <div class="column column tableRowStyle">
+                            @foo.Total_Prod
+                        </div>
+                        <div class="column column tableRowStyle fixedcolumn">
+                            @foo.Hr_Sub_6_9_AM
+                        </div>
+
+                        <div class="column column tableRowStyle fixedcolumn">
+                            @foo.Hr_C_6_9_AM
+                        </div>
+
+                        <div class="column column tableRowStyle fixedcolumn">
+                            @foo.Hr_Vm_6_9_AM
+                        </div>
+                        <div class="column column tableRowStyle fixedcolumn">
+                            @foo.Hr_P_6_9_AM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_Sub_10_AM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_C_10_AM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_Vm_10_AM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_P_10_AM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_Sub_11_AM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_C_11_AM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_Vm_11_AM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_P_11_AM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_Sub_12_PM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_C_12_PM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_Vm_12_PM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_P_12_PM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_Sub_1_PM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_C_1_PM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_Vm_1_PM
+                        </div>
+                        <div class="column showhide1 column tableRowStyle">
+                            @foo.Hr_P_1_PM
+                        </div>
+
+                        <div class="column showhide2  column tableRowStyle">
+                            @foo.Hr_Sub_2_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_C_2_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_Vm_2_PM
+                        </div>
+                        <div class="column showhide2  column tableRowStyle">
+                            @foo.Hr_P_2_PM
+                        </div>
+
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_Sub_3_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_C_3_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_Vm_3_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_P_3_PM
+                        </div>
+
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_Sub_4_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_C_4_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_Vm_4_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_P_4_PM
+                        </div>
+
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_Sub_5_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_C_5_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_Vm_5_PM
+                        </div>
+                        <div class="column showhide2 column tableRowStyle">
+                            @foo.Hr_P_5_PM
+                        </div>
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_Sub_6_PM
+                        </div>
+                        <div class="column showhide3 column tableRowStyle">
+                            @foo.Hr_C_6_PM
+                        </div>
+                        <div class="column showhide3 column tableRowStyle">
+                            @foo.Hr_Vm_6_PM
+                        </div>
+                        <div class="column showhide3 column tableRowStyle">
+                            @foo.Hr_P_6_PM
+                        </div>
+
+
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_Sub_7_PM
+                        </div>
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_C_7_PM
+                        </div>
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_Vm_7_PM
+                        </div>
+                        <div class="column showhide3 column tableRowStyle">
+                            @foo.Hr_P_7_PM
+                        </div>
+
+
+                        <div class="column showhide3 column tableRowStyle">
+                            @foo.Hr_Sub_8_PM
+                        </div>
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_C_8_PM
+                        </div>
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_Vm_8_PM
+                        </div>
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_P_8_PM
+                        </div>
+
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_Sub_9_PM
+                        </div>
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_C_9_PM
+                        </div>
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_Vm_9_PM
+                        </div>
+                        <div class="column showhide3  column tableRowStyle">
+                            @foo.Hr_P_9_PM
+                        </div>
+
+
+                        <div class="column  column tableRowStyle fixedcolumn">
+                            @foo.Hr_Sub_10_PM_12_AM
+                        </div>
+                        <div class="column  column tableRowStyle fixedcolumn">
+                            @foo.Hr_C_10_PM_12_AM
+                        </div>
+                        <div class="column  column tableRowStyle fixedcolumn">
+                            @foo.Hr_Vm_10_PM_12_AM
+                        </div>
+                        <div class="column  column tableRowStyle fixedcolumn">
+                            @foo.Hr_P_10_PM_12_AM
+                        </div>
+                    </div>
+                    @Tree(items, "HiresTable", padding + 15, foo.EmpCD)
+                        
+                    }
+                    else
+                    {
+                    <div class="row">
+                        <div style="@paddingStyle" class="column Col1Width Tableheader">
+                            <label>@foo.EmployeeName</label>
+                        </div>
+                        @*<div class="column">
+                                @foo.Total
+                        </div>*@
+
+                        <div class="column">
+                            @foo.Total_Sub
+                        </div>
+
+
+                        <div class="column">
+                            @foo.Total_Call
+                        </div>
+                        <div class="column">
+                            @foo.Total_Vm
+                        </div>
+
+                        <div class="column">
+                            @foo.Total_Prod
+                        </div>
+                        <div class="column fixedcolumn">
+                            @foo.Hr_Sub_6_9_AM
+                        </div>
+
+                        <div class="column fixedcolumn">
+                            @foo.Hr_C_6_9_AM
+                        </div>
+
+                        <div class="column fixedcolumn">
+                            @foo.Hr_Vm_6_9_AM
+                        </div>
+                        <div class="column fixedcolumn">
+                            @foo.Hr_P_6_9_AM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_Sub_10_AM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_C_10_AM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_Vm_10_AM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_P_10_AM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_Sub_11_AM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_C_11_AM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_Vm_11_AM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_P_11_AM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_Sub_12_PM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_C_12_PM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_Vm_12_PM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_P_12_PM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_Sub_1_PM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_C_1_PM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_Vm_1_PM
+                        </div>
+                        <div class="column showhide1">
+                            @foo.Hr_P_1_PM
+                        </div>
+
+                        <div class="column showhide2">
+                            @foo.Hr_Sub_2_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_C_2_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_Vm_2_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_P_2_PM
+                        </div>
+
+                        <div class="column showhide2">
+                            @foo.Hr_Sub_3_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_C_3_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_Vm_3_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_P_3_PM
+                        </div>
+
+                        <div class="column showhide2">
+                            @foo.Hr_Sub_4_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_C_4_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_Vm_4_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_P_4_PM
+                        </div>
+
+                        <div class="column showhide2">
+                            @foo.Hr_Sub_5_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_C_5_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_Vm_5_PM
+                        </div>
+                        <div class="column showhide2">
+                            @foo.Hr_P_5_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_Sub_6_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_C_6_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_Vm_6_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_P_6_PM
+                        </div>
+
+
+                        <div class="column showhide3">
+                            @foo.Hr_Sub_7_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_C_7_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_Vm_7_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_P_7_PM
+                        </div>
+
+
+                        <div class="column showhide3">
+                            @foo.Hr_Sub_8_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_C_8_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_Vm_8_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_P_8_PM
+                        </div>
+
+                        <div class="column showhide3">
+                            @foo.Hr_Sub_9_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_C_9_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_Vm_9_PM
+                        </div>
+                        <div class="column showhide3">
+                            @foo.Hr_P_9_PM
+                        </div>
+
+
+                        <div class="column fixedcolumn">
+                            @foo.Hr_Sub_10_PM_12_AM
+                        </div>
+                        <div class="column fixedcolumn">
+                            @foo.Hr_C_10_PM_12_AM
+                        </div>
+                        <div class="column fixedcolumn">
+                            @foo.Hr_Vm_10_PM_12_AM
+                        </div>
+                        <div class="column fixedcolumn">
+                            @foo.Hr_P_10_PM_12_AM
+                        </div>
+
+
+                    </div>
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>
+
+</div></div></div>
+
+
+<script>
+    $('#itemid').toggle();
+    $('.spanClick').click(function () {
+
+        var cs = $(this).attr("class");
+        if (cs.indexOf('fas fa-user-plus') != -1) {
+            $(this).removeClass('fas fa-user-plus').addClass('fas fa-user-minus');
+        }
+        else {
+            $(this).removeClass('fas fa-user-minus').addClass('fas fa-user-plus');
+        }
+
+        //GetSubmissionsForWeek($("#datepicker").val().split('- ')[1]);
+
+        ////Call chart.
+        //GetCallsForWeek($("#datepicker").val().split('- ')[1]);
+    });
+</script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        $("#datepicker").datepicker({
+            dateFormat: 'mm/dd/yy',
+            maxDate: 0,
+            onSelect: function (dateText, inst) {
+                var jobRepartPartialUrl = '@Url.Action("OperationalResult")';
+                var options = { "backdrop": "static", keyboard: true };
+                $.ajax({
+                    type: "POST",
+                    url: jobRepartPartialUrl,
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify({ "RequestedDate": dateText }),
+                    datatype: "json",
+                    success: function (Result) {
+
+                        $('#OperationalResultPartial').html(Result);
+
+                        getDate(dateText);                    
+                        //submission chart.
+                       // GetSubmissionsForWeek(dateText);
+
+                        //Call chart.
+                      //  GetCallsForWeek(dateText);
+                    },
+                    error: function () {
+                        //  alert("Dynamic content load failed.");
+                    }
+                });
+            },
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
+        });
+    });
+
+    $(function () {
+        var dateText = $("#datepicker").datepicker().datepicker("setDate", new Date().getDay()).val();
+        getDate(dateText);
+    });
+    function getDate(dateText) {
+
+        var weekday = new Array(7);
+        weekday[0] = "Sunday";
+        weekday[1] = "Monday";
+        weekday[2] = "Tuesday";
+        weekday[3] = "Wednesday";
+        weekday[4] = "Thursday";
+        weekday[5] = "Friday";
+        weekday[6] = "Saturday";
+
+        $('#OperationalResultPartial #datepicker').val(weekday[(new Date(dateText)).getDay()] + "  - " + dateText);
+    }
+
+
+
+    // done by ganesh below code.
+
+    $(document).ready(function () {
+
+
+        $("#ExportExcel").click(function(){
+            var $datePickerValue = $('#datepicker').val();
+            var RequestedDate = $datePickerValue.split("-")[1].trim();
+    
+
+            window.location.href = '@Url.Action("ExportToExcel", "Operational")?RequestedDate=' + RequestedDate; 
+
+        });
+
+
+
+            $(".glyphicon-calendar").click(function () {
+                $("#datepicker").focus();               
+            });
+
+            //To show the first level hirerachy
+            hideFirstLevel();
+
+            //To hide the previous button when first time open.
+            $("#PreviousHourBtn").prop("disabled", "disabled");            
+            $(".nav-tabs li:gt(0)").css("display", "none");
+
+            
+            $('#PreviousHourBtn').click(function () {
+                $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+                if ($('.nav-tabs > .active').index() > 0) {
+                    $("#NextHourBtn").prop("disabled", "");
+                }
+                if ($('.nav-tabs > .active').index() == 0) {
+                    $("#PreviousHourBtn").prop("disabled", "disabled");
+                }
+                changeLi($('.nav-tabs > .active').index());
+            });
+
+          
+            $('#NextHourBtn').click(function () {
+                $('.nav-tabs > .active').next('li').find('a').trigger('click');
+                if ($('.nav-tabs > .active').index() > 0) {
+                    $("#PreviousHourBtn").prop("disabled", "");
+                }
+                if ($('.nav-tabs > .active').index() == 2) {
+                    $("#NextHourBtn").prop("disabled", "disabled");
+                }                
+                changeLi($('.nav-tabs > .active').index());
+            });
+
+            // Search by Names 
+            $("#filter").on("keyup", function () {               
+                var value = $(this).val().toLowerCase();
+                var array1 = new Array();
+                if (value.length > 0) {
+                    $("#itemid .collapse").addClass("in");
+                }
+                else {
+                    $("#itemid .collapse").removeClass("in");
+                    hideFirstLevel();
+                    $("#itemid").find(".collapse:gt(0)").removeClass("in");
+                    $("#itemid").find(".spanClick:gt(0)").removeClass('fas fa-user-minus').addClass('fas fa-user-plus');
+                }
+                $("#itemid .row").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                    if ($(this).text().toLowerCase().indexOf(value) > -1) {
+
+                        array1.push($(this).parent().attr("id"));
+
+                    }
+                });
+             
+                if (value.length > 0) {
+                    if (array1.length > 0) {
+                        for (var i = 0; i < array1.length; i++) {
+                            getParentId(array1[i]);
+                        }
+                    }
+                    else if (array1.length == 0) {
+                        getParentId(array1[0]);
+                    }
+                }
+            });
+        })
+
+   
+
+
+      //To show the first hirerachy level.
+        function hideFirstLevel() {
+            $("#itemid").find(".collapse:eq(0)").addClass("in");
+            $("#itemid").find(".spanClick:eq(0)").removeClass('fas fa-user-plus').addClass('fas fa-user-minus');
+        }
+
+
+        function changeLi(getIndex) {
+            switch (getIndex) {
+                case 0:
+                    $(".nav-tabs li:gt(0)").css("display", "none");
+                    $(".nav-tabs li:eq(0)").css("display", "block");
+                    $(".showhide2, .showhide3").css("display", "none");
+                    $(".showhide1").css("display", "block");
+                    break;
+                case 1:
+                    $(".nav-tabs li:eq(0)").css("display", "none");
+                    $(".nav-tabs li:eq(2)").css("display", "none");
+                    $(".nav-tabs li:eq(1)").css("display", "block");
+                    $(".showhide1, .showhide3").css("display", "none");
+                    $(".showhide2").css("display", "block");
+                    break;
+                case 2:
+                    $(".nav-tabs li:lt(2)").css("display", "none");
+                    $(".nav-tabs li:eq(2)").css("display", "block");
+                    $(".showhide1, .showhide2").css("display", "none");
+                    $(".showhide3").css("display", "block");
+                    break;
+            }
+        }
+
+        //After searching the names it will show the full hirerachy of each user.
+        function getParentId(parentId) {
+            var $generateId = '#' + parentId;
+            $($generateId).prev().show();
+            $($generateId).find(".spanClick:eq(0)").removeClass('fas fa-user-plus').addClass('fas fa-user-minus');
+            if ($($generateId).parent().attr("id") != "" || $($generateId).parent().attr("id") != undefined)
+                getParentId($($generateId).parent().attr("id"));
+        }
+
+
+
+
+</script>

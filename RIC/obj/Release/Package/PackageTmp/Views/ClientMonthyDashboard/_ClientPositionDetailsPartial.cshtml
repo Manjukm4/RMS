@@ -1,0 +1,661 @@
+﻿@model Tuple<List<RIC.Models.Client.PositionDashboardQuaterly>, List<RIC.Models.Client.PositionDashboardMonthly>, double[]>
+
+@*<h2 style="text-align: center;">Position Dashboard</h2>*@
+<style>
+    .bold {
+        font-weight: bold;
+    }
+
+    .TextAlignCenter {
+        text-align: center;
+    }
+
+    .table, .table th, .table td {
+        border: 1px solid black !important;
+        padding: 6px !important;
+    }
+
+        .table td {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            vertical-align: middle !important;
+        }
+
+    .datecss {
+        background-color: beige;
+        font-size: 13px;
+        border: 1px solid #909290;
+        font-weight: 700;
+        width: 3%;
+    }
+
+    .custab {
+        border: 1px solid #ccc;
+        padding: 5px;
+        /*margin: 5% 0;*/
+        box-shadow: 3px 3px 2px #ccc;
+        transition: 0.5s;
+    }
+
+        .custab:hover {
+            box-shadow: 3px 3px 0px transparent;
+            transition: 0.5s;
+        }
+
+    tr:nth-child(odd) {
+        background-color: #eee;
+    }
+
+    .Quarter, .QuarterHead {
+        display: none;
+    }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
+
+<div id="divtop">
+    <table class="table table-bordered table-striped custab" style="border: 1px solid #909290; width:300px;" id="tblpartial">
+        <thead>
+            <tr>
+                <th class="datecss" >
+                    @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Categories)
+                </th>
+                <th class="TextAlignCenter datecss">
+                    @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().TotalPositions)
+                </th>
+                <th class="TextAlignCenter datecss">
+                    Submissions
+                </th>
+                <th class="TextAlignCenter datecss">
+                    @*@Html.DisplayNameFor(model => model.Item1.FirstOrDefault().TotalPositions)*@
+                    Interviews
+                </th>
+                <th class="TextAlignCenter datecss">
+                    @*@Html.DisplayNameFor(model => model.Item1.FirstOrDefault().TotalPositions)*@
+                    Hires
+                </th>
+                <th class="TextAlignCenter datecss">
+                    @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().SubByInterview)
+                </th>
+                <th class="TextAlignCenter datecss">
+                    @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().SubByHire)
+                </th>
+                <th class="TextAlignCenter datecss">
+                    @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().InterviewByHire)
+                </th>
+            </tr>
+        </thead>
+        <tbody id="fbody">
+            @foreach (var item in Model.Item1)
+            {
+                @**@
+
+                <tr>
+                    <td class="datecss">
+                        <a style="cursor: pointer; padding-left: 0px;" class="fas fa-user-plus spanClick"></a>
+                        @item.Categories
+                    </td>
+
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.TotalPositions > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Position"
+                               data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q4EndDate">
+                                @item.TotalPositions
+                            </a>
+                        }
+                        else
+                        {
+                            @item.TotalPositions
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.TotalSubmission > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Submission"
+                               data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q4EndDate">
+                                @item.TotalSubmission
+                            </a>
+                        }
+                        else
+                        {
+                            @item.TotalSubmission
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.TotalInterview > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Interview"
+                               data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q4EndDate">
+                                @item.TotalInterview
+                            </a>
+                        }
+                        else
+                        {
+                            @item.TotalInterview
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.TotalHire > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Hire"
+                               data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q4EndDate">
+                                @item.TotalHire
+                            </a>
+                        }
+                        else
+                        {
+                            @item.TotalHire
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+
+                        @item.TotalSubByInterview%
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @item.TotalSubByHire%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @item.TotalInterviewByHire%
+                    </td>
+
+                </tr>
+
+                <tr class="QuarterHead">
+                    <td class="datecss">
+                        <a style="cursor:pointer;padding-left: 10px;" class="fas fa-user-plus quarterClick"></a>
+                        Quarter 1
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q1Positions > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Position"
+                               data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q1EndDate">
+                                @Html.DisplayFor(model => item.Q1Positions)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q1Positions)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q1Submission > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Submission"
+                               data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q1EndDate">
+                                @Html.DisplayFor(model => item.Q1Submission)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q1Submission)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q1Interview > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Interview"
+                               data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q1EndDate">
+                                @Html.DisplayFor(model => item.Q1Interview)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q1Interview)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q1Hire > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Hire"
+                               data-FromDate="@item.Q1StartDate" data-ToDate="@item.Q1EndDate">
+                                @Html.DisplayFor(model => item.Q1Hire)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q1Hire)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q1SubByInterview)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q1SubByHire)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q1InterviewByHire)%
+                    </td>
+                </tr>
+
+                var item1 = Model.Item2.Where(s => s.Categories == item.Categories && (s.Monthnum == 1 || s.Monthnum == 2 || s.Monthnum == 3)).ToList();
+                var tupel1 = new Tuple<List<RIC.Models.Client.PositionDashboardMonthly>, string>(item1, item.Categories);
+                @Html.Partial("_PositionDashboardMonthly", tupel1)
+
+                <tr class="QuarterHead">
+                    <td class="datecss">
+                        <a style="cursor:pointer;padding-left: 10px;" class="fas fa-user-plus quarterClick"></a>
+                        Quarter 2
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q2Positions > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Position"
+                               data-FromDate="@item.Q2StartDate" data-ToDate="@item.Q2EndDate">
+                                @Html.DisplayFor(model => item.Q2Positions)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q2Positions)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q2Submission > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Submission"
+                               data-FromDate="@item.Q2StartDate" data-ToDate="@item.Q2EndDate">
+                                @Html.DisplayFor(model => item.Q2Submission)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q2Submission)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q2Interview > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Interview"
+                               data-FromDate="@item.Q2StartDate" data-ToDate="@item.Q2EndDate">
+                                @Html.DisplayFor(model => item.Q2Interview)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q2Interview)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q2Hire > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Hire"
+                               data-FromDate="@item.Q2StartDate" data-ToDate="@item.Q2EndDate">
+                                @Html.DisplayFor(model => item.Q2Hire)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q2Hire)
+                        }
+
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q2SubByInterview)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q2SubByHire)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q2InterviewByHire)%
+                    </td>
+                </tr>
+
+                var item2 = Model.Item2.Where(s => s.Categories == item.Categories && (s.Monthnum == 4 || s.Monthnum == 5 || s.Monthnum == 6)).ToList();
+                var tupel2 = new Tuple<List<RIC.Models.Client.PositionDashboardMonthly>, string>(item2, item.Categories);
+                @Html.Partial("_PositionDashboardMonthly", tupel2)
+
+
+                <tr class="QuarterHead">
+                    <td class="datecss">
+                        <a style="cursor:pointer;padding-left: 10px;" class="fas fa-user-plus quarterClick"></a>
+                        Quarter 3
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q3Positions > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Position"
+                               data-FromDate="@item.Q3StartDate" data-ToDate="@item.Q3EndDate">
+                                @Html.DisplayFor(model => item.Q3Positions)
+                            </a>
+                        }
+                        else
+                        { @Html.DisplayFor(model => item.Q3Positions)}
+
+
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q3Submission > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Submission"
+                               data-FromDate="@item.Q3StartDate" data-ToDate="@item.Q3EndDate">
+                                @Html.DisplayFor(model => item.Q3Submission)
+                            </a>
+                        }
+                        else
+                        { @Html.DisplayFor(model => item.Q3Submission)}
+
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q3Interview > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Interview"
+                               data-FromDate="@item.Q3StartDate" data-ToDate="@item.Q3EndDate">
+                                @Html.DisplayFor(model => item.Q3Interview)
+                            </a>
+                        }
+                        else
+                        { @Html.DisplayFor(model => item.Q3Interview)}
+
+
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q3Hire > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Hire"
+                               data-FromDate="@item.Q3StartDate" data-ToDate="@item.Q3EndDate">
+                                @Html.DisplayFor(model => item.Q3Hire)
+                            </a>
+                        }
+                        else
+                        { @Html.DisplayFor(model => item.Q3Hire)}
+
+
+
+                    </td>
+
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q3SubByInterview)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q3SubByHire)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q3InterviewByHire)%
+                    </td>
+                </tr>
+
+                var item3 = Model.Item2.Where(s => s.Categories == item.Categories && (s.Monthnum == 7 || s.Monthnum == 8 || s.Monthnum == 9)).ToList();
+                var tupel3 = new Tuple<List<RIC.Models.Client.PositionDashboardMonthly>, string>(item3, item.Categories);
+                @Html.Partial("_PositionDashboardMonthly", tupel3)
+
+                <tr class="QuarterHead">
+                    <td class="datecss">
+                        <a style="cursor:pointer;padding-left: 10px;" class="fas fa-user-plus quarterClick"></a>
+                        Quarter 4
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q4Positions > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Position"
+                               data-FromDate="@item.Q4StartDate" data-ToDate="@item.Q4EndDate">
+                                @Html.DisplayFor(model => item.Q4Positions)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q4Positions)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q4Submission > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Submission"
+                               data-FromDate="@item.Q4StartDate" data-ToDate="@item.Q4EndDate">
+                                @Html.DisplayFor(model => item.Q4Submission)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q4Submission)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q4Interview > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Interview"
+                               data-FromDate="@item.Q4StartDate" data-ToDate="@item.Q4EndDate">
+                                @Html.DisplayFor(model => item.Q4Interview)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q4Interview)
+                        }
+
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @if (item.Q4Hire > 0)
+                        {
+                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@item.Categories" data-tp="Hire"
+                               data-FromDate="@item.Q4StartDate" data-ToDate="@item.Q4EndDate">
+                                @Html.DisplayFor(model => item.Q4Hire)
+                            </a>
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(model => item.Q4Hire)
+                        }
+
+                    </td>
+
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q4SubByInterview)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q4SubByHire)%
+                    </td>
+                    <td class="TextAlignCenter Quarter1">
+                        @Html.DisplayFor(model => item.Q4InterviewByHire)%
+                    </td>
+                </tr>
+
+                var item4 = Model.Item2.Where(s => s.Categories == item.Categories && (s.Monthnum == 10 || s.Monthnum == 12 || s.Monthnum == 11)).ToList();
+
+                var tupel4 = new Tuple<List<RIC.Models.Client.PositionDashboardMonthly>, string>(item4, item.Categories);
+                @Html.Partial("_PositionDashboardMonthly", tupel4)
+            }
+
+
+            <tr>
+                <td class="datecss">
+                    @Html.Label("Total", "Total")
+
+                </td>
+
+                <td class="TextAlignCenter Quarter1">
+                    @if (@Model.Item3[0] > 0)
+                    {
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Total" data-tp="Position"
+                           data-FromDate="@Model.Item1.FirstOrDefault().Q1StartDate" data-ToDate="@Model.Item1.FirstOrDefault().Q4EndDate">
+                            @Model.Item3[0]
+                        </a>
+                    }
+                    else
+                    {
+                        @Model.Item3[0]
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @if (@Model.Item3[1] > 0)
+                    {
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="TotalSub" data-tp="Submission"
+                           data-FromDate="@Model.Item1.FirstOrDefault().Q1StartDate" data-ToDate="@Model.Item1.FirstOrDefault().Q4EndDate">
+                            @Model.Item3[1]
+                        </a>
+                    }
+                    else
+                    {
+                        @Model.Item3[1]
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @if (@Model.Item3[2] > 0)
+                    {
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="TotalInt" data-tp="Interview"
+                           data-FromDate="@Model.Item1.FirstOrDefault().Q1StartDate" data-ToDate="@Model.Item1.FirstOrDefault().Q4EndDate">
+                            @Model.Item3[2]
+                        </a>
+                    }
+                    else
+                    {
+                        @Model.Item3[2]
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @if (@Model.Item3[3] > 0)
+                    {
+                        <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="TotalHire" data-tp="Hire"
+                           data-FromDate="@Model.Item1.FirstOrDefault().Q1StartDate" data-ToDate="@Model.Item1.FirstOrDefault().Q4EndDate">
+                            @Model.Item3[3]
+                        </a>
+                    }
+                    else
+                    {
+                        @Model.Item3[3]
+                    }
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @Model.Item3[4]%
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @Model.Item3[5]%
+                </td>
+                <td class="TextAlignCenter Quarter1">
+                    @Model.Item3[6]%
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg ">
+        <div id='myModalContent'></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $(".spanClick").click(function () {
+            //debugger;
+            var $rowIndex = $(this).closest('td').parent()[0].sectionRowIndex;
+            var $row = $(".QuarterHead");
+            if ($(this).attr("class").includes("plus")) {
+                $(this).attr("class", "fas fa-user-minus spanClick");
+
+                if ($rowIndex == 0) {
+                    $row.slice($rowIndex, $rowIndex + 4).show();
+                } else {
+                    var $getRowPosition = ($rowIndex / 17) * 4;
+
+                    $row.slice($getRowPosition, $getRowPosition + 4).show();
+                }
+                HideQuarter($rowIndex);
+            }
+            else {
+                $(this).attr("class", "fas fa-user-plus spanClick");
+
+                if ($rowIndex == 0) {
+                    $row.slice($rowIndex, $rowIndex + 4).hide();
+                    $(".Quarter").slice($rowIndex, $rowIndex + 12).hide();
+                } else {
+                    var $getMonthRowPosition = ($rowIndex / 17) * 12;
+                    var $getQuarterRowPosition = ($rowIndex / 17) * 4;
+
+                    $row.slice($getQuarterRowPosition, $getQuarterRowPosition + 4).hide();
+                    $(".Quarter").slice($getMonthRowPosition, $getMonthRowPosition + 12).hide();
+                }
+            }
+            $rowIndex = 0;
+        });
+
+
+        $(".quarterClick").click(function () {
+            var $rowIndex = $(this).closest('td').parent()[0].sectionRowIndex;
+            var $row = $(".Quarter");
+            if ($(this).attr("class").includes("plus")) {
+                $(this).attr("class", "fas fa-user-minus spanClick");
+                $("#tblpartial tbody tr").slice($rowIndex + 1, $rowIndex + 4).show();
+            }
+            else {
+                $(this).attr("class", "fas fa-user-plus spanClick");
+                $("#tblpartial tbody tr").slice($rowIndex + 1, $rowIndex + 4).hide();
+
+            }
+        });
+
+        var TeamDetailPostBackURL = '../ClientMonthyDashboard/DetailsViewPopupPosition';
+        $(".anchorDetail").click(function () {
+
+            //debugger;
+            // var empCD = $("#HdnEmpCD").val();
+            var $buttonClicked = $(this);
+            var fromDate = $buttonClicked.attr('data-FromDate');
+            var toDate = $buttonClicked.attr('data-ToDate');
+            var jr = $buttonClicked.attr('data-Jr');//data-tp
+            var Type = $buttonClicked.attr('data-tp');
+           // var company = $buttonClicked.attr('data-company');
+            var $getClient = $("#ddlClient").val();
+            var Account = $("#ddlAM").val();
+            var options = { "backdrop": "static", keyboard: true };
+            var client = '';
+            if ($getClient != null) {
+                jQuery.each($getClient, function (i, val) {
+                    client += val + ',';
+                });
+                client = client.substring(0, client.length - 1);
+                //alert(client);
+            }
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "company": client, "Type": Type,"Account" :Account },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                    //$("#myModal").dialog();
+                },
+                error: function () {
+                    //alert("Dynamic content load failed.");
+                }
+            });
+        });
+        //$("#0").hide();
+    });
+    function HideQuarter(rowIndex) {
+        var $tableRow = $("#tblpartial tbody");
+        $tableRow.find("tr:eq('" + (rowIndex + 1) + "')").find("td:eq(0) a").attr("class", "fas fa-user-plus quarterClick");;
+        $tableRow.find("tr:eq('" + (rowIndex + 5) + "')").find("td:eq(0) a").attr("class", "fas fa-user-plus quarterClick");
+        $tableRow.find("tr:eq('" + (rowIndex + 9) + "')").find("td:eq(0) a").attr("class", "fas fa-user-plus quarterClick");
+        $tableRow.find("tr:eq('" + (rowIndex + 13) + "')").find("td:eq(0) a").attr("class", "fas fa-user-plus quarterClick");
+
+
+    }
+
+</script>

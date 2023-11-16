@@ -1,0 +1,258 @@
+﻿@model IEnumerable<DBLibrary.RIC_Job_Report>
+<!-- Modal content-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">  
+
+<style>
+    #JD_Table
+    {
+        text-align: center !important;
+    }
+
+    #JD_Table, th, td
+    {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+        #JD_Table TH
+        {
+            white-space: nowrap;
+        }
+
+        #JD_Table TR TH
+        {
+            width: 5% !important;
+            font-size: 13px;
+            text-align: center !important;
+            background-color: #656565;
+            color: white;
+        }
+
+        #JD_Table td
+        {
+            font-size: 14px;
+            padding: 3px;
+        }
+
+
+
+    .textCapitalize
+    {
+        text-transform: capitalize;
+    }
+</style>
+
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4  style="text-align:center;" class="modal-title">@ViewBag.Header</h4>
+    </div>
+    <div id="divModel" class="modal-body">
+        <table id="JD_Table"  class="table-striped">
+            <thead class="thead-dark">         
+            <tr>            
+                @if ((User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["ManagerRole"])
+                   || User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["TLRole"])
+                   || User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])
+                   ) && ViewBag.showSubmittedBy == "Yes")
+                { 
+                    <th>
+                        @Html.DisplayNameFor(model => model.RJ_Submitted_By)
+                    </th>
+                }
+                <th>
+                    @Html.DisplayNameFor(model => model.RJ_Company)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RJ_JobDiva_Ref)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RJ_Title)
+                </th>                
+                <th>
+                    @Html.DisplayNameFor(model => model.RJ_Job_Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RJ_Candidate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RJ_DateIssued)
+                </th>
+                <th>
+                     @Html.DisplayNameFor(model => model.RJ_Submit_Date)
+                </th>
+                <th>
+                     @Html.DisplayNameFor(model => model.RJ_Submit_Elapsed)
+                    <br /> (Days:Hours:Mins)
+                </th>                       
+                <th>
+                     @Html.DisplayNameFor(model => model.RJ_Interview_Date)
+                </th>  
+                <th>
+                     @Html.DisplayNameFor(model => model.RJ_Interview_Elapsed)
+                    <br /> (Days:Hours:Mins)
+                </th> 
+                <th>
+                     @Html.DisplayNameFor(model => model.RJ_Hire_Date)
+                </th>  
+                <th>
+                     @Html.DisplayNameFor(model => model.RJ_Hire_Elapsed)
+                    <br /> (Days:Hours:Mins)
+                </th>  
+            </tr>
+                </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                 
+                   @if ((User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["ManagerRole"])
+                   || User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["TLRole"])
+                   || User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])) && ViewBag.showSubmittedBy == "Yes")
+                      { 
+                        <td class="textCapitalize" }>
+                            @Html.DisplayFor(modelItem => item.RJ_Submitted_By)
+                        </td>
+                      }         
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RJ_Company)
+                    </td>
+
+                    <td>
+                         @Html.DisplayFor(modelItem => item.RJ_JobDiva_Ref)
+                    </td>
+
+                     <td>
+                        @Html.DisplayFor(modelItem => item.RJ_Title)
+                    </td>
+                   
+                    
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RJ_Job_Status)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RJ_Candidate)
+                    </td>    
+                    <td>
+                       @* @item.RJ_DateIssued.Date.ToString("MM/dd/yyyy")*@
+                        @Html.DisplayFor(modelItem =>item.RJ_DateIssued)
+                    </td>                       
+                    <td>
+                        @Html.DisplayFor(modelItem =>item.RJ_Submit_Date)
+                       @* @item.RJ_Submit_Date.ToString("MM-dd-yyyy") *@
+                    </td>
+                    <td>
+                         @item.RJ_Submit_Elapsed                     
+                    </td>
+
+                     <td>
+                         @Html.DisplayFor(modelItem =>item.RJ_Interview_Date)
+                        @* @if (@item.RJ_Interview_Date.HasValue)
+                         { 
+                             @item.RJ_Interview_Date.Value.ToString("MM-dd-yyyy") 
+                         }*@
+                    </td>
+                    <td>
+                        @item.RJ_Interview_Elapsed                       
+                    </td>
+
+                   <td>
+                          @Html.DisplayFor(modelItem =>item.RJ_Hire_Date)
+                         @* @if (@item.RJ_Hire_Date.HasValue)
+                          { 
+                            @item.RJ_Hire_Date.Value.ToString("MM-dd-yyyy") 
+                          }*@
+                    </td>
+                    <td>                       
+                         @item.RJ_Hire_Elapsed
+                    </td>
+
+                   @* <td>
+                        @Html.DisplayFor(modelItem => item.RJ_Candidate)
+                    </td>
+                    
+                  
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RJ_Pay_Rate)
+                    </td>*@
+                    @* <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RJ_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RJ_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RJ_ID })
+        </td>*@
+                </tr>                
+            }
+             @* @if (Model.Count() <= 0) { 
+                    <tr> <td colspan="7" class="alert alert-danger" >No Information Found<br />  </td></tr>
+                }  *@
+         </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+    </div>
+</div>
+
+<script>
+ 
+    $(document).ready(function () {
+
+        if ('@User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])' == 'True') {
+            $.fn.tableExport.xlsx = {
+                defaultClass: "xlsx",
+                buttonContent: "Export to xlsx",
+                mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileExtension: ".xlsx"
+            };
+
+            $('#JD_Table').tableExport({
+                headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+                footers: false,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+                formats: ["xlsx"],    // (String[]), filetypes for the export
+                fileName: "id",                    // (id, String), filename for the downloaded file
+                bootstrap: true,                   // (Boolean), style buttons using bootstrap
+                position: "bottom",                 // (top, bottom), position of the caption element relative to table
+                ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file(s)
+                ignoreCols: null,                  // (Number, Number[]), column indices to exclude from the exported file(s)
+                ignoreCSS: ".tableexport-ignore",  // (selector, selector[]), selector(s) to exclude from the exported file(s)
+                emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
+                trimWhitespace: true              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
+
+            });
+
+        }
+
+        var t = $('#JD_Table').DataTable({});
+
+
+       
+
+
+        //t.on('order.dt search.dt', function () {
+        //    t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+        //        cell.innerHTML = i + 1;
+        //    });
+        //  }).draw();
+        //$('#JD_Table').dataTable({
+        //   // "scrollY" : 800,
+        //    //"scrollX" : true,
+        //    "paging" : true,
+        //    "ordering" : true,
+        //    //"order": [[ 3, "desc" ]],
+        //    "info" : true,
+        //    "columns": [
+        //        {"orderDataType": "dom-text-numeric"},
+        //        {"orderDataType": "dom-text-numeric"},
+        //        {"orderDataType": "dom-text-numeric"},
+        //        {"orderDataType": "dom-text-numeric"},
+        //        {"orderDataType": "dom-text-numeric"},
+        //        {"orderDataType": "dom-text-numeric"},
+        //        {"orderDataType": "dom-text-numeric"}
+        //    ]
+        //});
+    });
+
+
+
+</script>

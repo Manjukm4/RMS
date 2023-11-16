@@ -1,0 +1,111 @@
+﻿@model List<RIC.Models.Client.ClientDashboardMonthly>
+@{var companylst = @Model;}
+@foreach (var cmp in companylst)
+{
+    <tr class="Quarter">
+        <td class="datecss">
+            <span style="padding-left:0px">@cmp.RJ_Company</span>
+        </td>
+        <td class="TextAlignCenter Quarter1">
+
+            @*@Html.DisplayFor(model => cmp.RequirementsCount)*@
+            @if (cmp.RequirementsCount > 0)
+            {
+                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                   data-FromDate="@cmp.StartDate" data-ToDate="@cmp.EndDate" data-company="@cmp.RJ_Company">
+                    @Html.DisplayFor(model => cmp.RequirementsCount)
+                </a>
+            }
+            else
+            {
+                @Html.DisplayFor(model => cmp.RequirementsCount)
+            }
+        </td>
+        <td class="TextAlignCenter Quarter1">
+            @Html.DisplayFor(model => cmp.Respond)
+        </td>
+        <td class="TextAlignCenter Quarter1">
+            @Html.DisplayFor(model => cmp.Percentage)%
+        </td>
+        <td class="TextAlignCenter Quarter1">
+            @*@if (cmp.TotalRecruiterCount > 0)
+            {
+                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="TotalRecriter"
+                   data-FromDate="@cmp.StartDate" data-ToDate="@cmp.EndDate" data-company="@cmp.RJ_Company">
+                    @Html.DisplayFor(model => cmp.TotalRecruiterCount)
+                </a>
+            }
+            else
+            {
+                @Html.DisplayFor(model => cmp.TotalRecruiterCount)
+            }*@
+            @Html.DisplayFor(model => cmp.TotalRecruiterCount)
+        </td>
+        <td class="TextAlignCenter Quarter1">
+            @if (cmp.CompanyActiveRecruiterCount > 0)
+            {
+                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="ActiveRecriter"
+                   data-FromDate="@cmp.StartDate" data-ToDate="@cmp.EndDate" data-company="@cmp.RJ_Company">
+                    @Html.DisplayFor(model => cmp.CompanyActiveRecruiterCount)
+                </a>
+            }
+            else
+            {
+                @Html.DisplayFor(model => cmp.CompanyActiveRecruiterCount)
+            }
+            @*@Html.DisplayFor(model => cmp.CompanyActiveRecruiterCount)*@
+        </td>
+        <td class="TextAlignCenter Quarter1">
+            @if (cmp.SubmissonCount > 0)
+            {
+                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                   data-FromDate="@cmp.StartDate" data-ToDate="@cmp.EndDate" data-company="@cmp.RJ_Company">
+                    @Html.DisplayFor(model => cmp.SubmissonCount)
+                </a>
+            }
+            else
+            {
+                @Html.DisplayFor(model => cmp.SubmissonCount)
+            }
+
+        </td>
+        <td class="TextAlignCenter Quarter1">
+            @if (cmp.InterviewCount > 0)
+            {
+
+                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                   data-FromDate="@cmp.StartDate" data-ToDate="@cmp.EndDate" data-company="@cmp.RJ_Company">
+                    @Html.DisplayFor(model => cmp.InterviewCount)
+                </a>
+            }
+            else
+            {
+                @Html.DisplayFor(model => cmp.InterviewCount)
+            }
+        </td>
+        <td class="TextAlignCenter Quarter1">
+            @if (cmp.HireCount > 0)
+            {
+
+                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                   data-FromDate="@cmp.StartDate" data-ToDate="@cmp.EndDate" data-company="@cmp.RJ_Company">
+                    @Html.DisplayFor(model => cmp.HireCount)
+                </a>
+            }
+            else
+            {
+                @Html.DisplayFor(model => cmp.HireCount)
+            }
+
+        </td>
+        <td class="TextAlignCenter Quarter1">
+            @Html.DisplayFor(model => cmp.SubByInterview)%
+        </td>
+        <td class="TextAlignCenter Quarter1">
+            @Html.DisplayFor(model => cmp.SubByHire)%
+        </td>
+        <td class="TextAlignCenter Quarter1">
+            @Html.DisplayFor(model => cmp.InterviewByHire)%
+        </td>
+    </tr>
+}

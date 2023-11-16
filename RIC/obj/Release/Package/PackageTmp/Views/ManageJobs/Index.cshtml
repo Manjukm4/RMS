@@ -1,0 +1,487 @@
+﻿@model RIC.Models.ManageJobsVM.ManageJobsVM
+@{
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+    .MainTable {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .MainTable td, .customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            vertical-align: middle !important;
+        }
+
+        .MainTable tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .MainTable tr:hover {
+            background-color: #ddd;
+        }
+
+        .MainTable th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4e7bda;
+            color: white;
+        }
+
+    .dataTables_filter {
+        display: none;
+    }
+</style>
+
+
+
+<div>
+    <div class="panel panel-default" style="margin-bottom: 0px;">
+        <div class="panel-heading">
+            <h3 class="text-center">Job's Check-Out/Check-In</h3>
+
+            <br />
+            @using (Html.BeginForm("Search", "ManageJobs", FormMethod.Post, ""))
+            {
+                <div style="display: inline-block; width: 100%;">
+                    <div style="display: inline-block;">
+                        <h5 style="display: inline-block;"><b>Job Issue Date :</b></h5>
+                        @Html.TextBox("JobIssueDate", "", new { autocomplete = "off", placeholder = "MM-DD-YYYY", @class = "input-group date validateFileds", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d", @style = "width:125px; display: inline-block; font-weight: 500; padding: 0px 2px 0px 5px; font-size: medium" })
+                    </div>
+                    <div style="display: inline-block;margin-left:5px;">
+                        <h5 style="display: inline-block;"><b>JobDiva Ref Number :</b></h5>
+                        @Html.TextBox("Jobdivarefnum", "", new { @Style = "width:154px; display: inline-block; font-weight: 500; padding: 0px 2px 0px 5px; font-size: medium" })
+                    </div>
+                    <div style="display: inline-block;margin-left:5px;">
+                        <h5 style="display: inline-block;"><b>Client ID :</b></h5>
+                        @Html.TextBox("Clientrefnum", "", new { @Style = "display: inline-block; font-weight: 500; padding: 0px 2px 0px 5px; font-size: medium" })
+                    </div>
+                    <div style="display: inline-block;margin-left:5px;">
+                        <h5 style="display: inline-block;"><b>Job Status :</b></h5>
+
+                        <select id="JobStatus" name="JobStatus" value="@ViewBag.JobStatus" style="display: inline-block; font-weight: 500; padding: 1px 16px 5px 2px;font-size: medium">
+                            <option value="All">All Jobs</option>
+                            <option value="CheckOut">Check-Out</option>
+                            <option value="CheckIn">Check-In</option>
+                        </select>
+                    </div>
+                    <div style="display: inline-block;margin-left:3px;">
+                        <h5 style="display: inline-block;"><b>JobDiva Status :</b></h5>
+
+                        <select id="JobDivaStatus" name="JobDivaStatus" value="@ViewBag.JobDivaStatus" style="display: inline-block; font-weight: 500; padding: 1px 16px 5px 2px; font-size: medium">
+                            <option value="All">All</option>
+                            <option value="OPEN">Open</option>
+                            <option value="CLOSED">Closed</option>
+                            <option value="FILLED">Filled</option>
+                            <option value="CANCELLED">Cancelled</option>
+                            <option value="IGNORED">Ignored</option>
+                            <option value="ON HOLD">On Hold</option>
+
+                        </select>
+                    </div>
+
+                </div>
+                <div style="display: inline-block; margin-left: 46%;padding-top:10px; width:12%">
+                    <input id="btnSubmit" type="submit" class="btn btn-primary" value="Search" style="font-weight: bold;" />
+                    <a href="~/ManageJobs/Index" class="btn btn-primary" style="font-weight: bold; margin-left:10%">Clear</a>
+                </div>
+            }
+
+
+        </div>
+        <div>
+            @if (Model != null && Model.Listjobs != null)
+            {
+                <h4>Pending Check-In: @Model.JobsCheckedOut</h4>
+            }
+        </div>
+        <div class="panel-body text-center" style="max-height: 640px">
+            @if (Model != null)
+            {
+                <table id="TblJobs" class="table table-striped table-bordered table-list MainTable">
+                    <thead style="white-space: nowrap;">
+                        <tr>
+                            <th>Action</th>
+                            <th>Comments</th>
+                            <th>JD Ref</th>
+                            <th>Job Title</th>
+                            <th>Company</th>
+                            <th>Issued Dt</th>
+                            <th>JobDiva Status</th>
+                            <th>State</th>
+                            <th>City</th>
+                            <th>Work Loc.</th>
+                            <th>Priority/ Division</th>
+                            <th>Category</th>
+                            <th>Sub Allowed</th>
+                            <th>Int sub</th>
+                            <th>Ext Sub</th>
+                            <th>RMS Ent Dt</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Listjobs.Count; i++)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.HiddenFor(m => m.Listjobs[i].HDRID, new { @class = "HDRID" })
+                                    <div style="margin-top: 1%">
+                                        @if (@Model.Listjobs[i].CheckInStatus)
+                                        {
+                                            <input type="button" class="btn btn-success btnSubmit" value="Check-In" onclick="ShowPopup(this, @Model.Listjobs[i].HDRID,@Model.Listjobs[i].CheckInRefId)" style="font-weight: bold;" />
+                                        }
+                                        else
+                                        {
+                                            <input type="button" class="btn btn-success btnSubmit" value="Check-Out" onclick="ShowPopup(this, @Model.Listjobs[i].HDRID,0)" style="font-weight:bold;" />
+
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    @foreach (var note in Model.Listjobs[i].Notes)
+                                    {
+                                        @Html.Hidden("Note", note, new { @class = "Notes" })
+                                    }
+
+                                    @if (@Model.Listjobs[i].CheckInStatus)
+                                    {
+                                        <input class="Modelbtn btn btn-info" type="button" value="ADD/View" style="font-weight:bold" />
+
+                                    }
+                                    else
+                                    {
+                                        <input class="Modelbtn btn btn-info" type="button" value="ADD/View" style="font-weight:bold" disabled />
+
+                                    }
+                                </td>
+                                <td>
+                                    <a href="https://www1.jobdiva.com/employers/myjobs/vieweditjobform.jsp?jobid=@Model.Listjobs[i].JobID" target="_blank"><b>@Model.Listjobs[i].JobDivaRef</b></a>
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].JobTitle
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].Company
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].JobIssueDate.ToString("MM/dd/yyyy")
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].JobDivaStatus
+                                </td>
+
+                                <td>
+                                    @Model.Listjobs[i].State
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].City
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].WorkLocation
+                                </td>
+                                <td>
+                                    @if (@Model.Listjobs[i].Priority == "")
+                                    {
+                                        @:-
+                                    }
+                                    else
+                                    {
+                                        @Model.Listjobs[i].Priority
+                                    }/
+                                    @if (@Model.Listjobs[i].Division == "")
+                                    {
+                                        @:-
+                                    }
+                                    else
+                                    {
+                                        @Model.Listjobs[i].Division
+                                    }
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].Category
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].MaxSubAllowed
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].InternalSub
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].ExternalSub
+                                </td>
+                                <td>
+                                    @Model.Listjobs[i].CreatedDate
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            }
+        </div>
+    </div>
+</div>
+
+@* Modal ADD comments *@
+<div class="modal fade" id="ModelInstruction" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+    <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title" id="exampleModalLongTitle">Add Comments</h2>
+            </div>
+            <div class="modal-body">
+                <div id="JobNotes" style="margin-top: 2px; border: 2px solid #dad4d4; border-radius: 5px; background-color: #d9ebff">
+                </div>
+                <br />
+                <b>Add Notes: </b>
+                <textarea class="textarea" style="width: 100%; height: 100px;" placeholder="Add Comments..." maxlength="900"></textarea>
+
+            </div>
+            <div class="text-center  justify-content-center" style="padding: 1%;">
+                <button id="btnAdd" type="button" class="btn btn-success btnAdd" style="margin-right: 2%">Save</button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Modal Confirm Job fetch from API*@
+<div class="modal" id="ModelConfirm" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-md vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btn_close_modal_info"><span aria-hidden="true">&times;</span></button>
+                    <div id="confirmContent" class="lead" style="font-weight: normal;">
+                        Do you want to fetch data from Jobdiva?
+                    </div>
+                </div>
+
+                <div class="modal-footer  text-center" id="footer_modal">
+                    <button type="button" class="btn btn-success btn_yes_confirm">Yes</button>
+                    <button type="button" class="btn btn-warning btn_no_confirm" data-dismiss="modal" aria-label="Close">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal show details from JovDiva -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title" id="exampleModalLongTitle">Fetch Details</h2>
+            </div>
+            <div class="modal-body">
+                <div id='myModalContent'>
+
+                </div>
+
+            </div>
+            <div class="text-center  justify-content-center" style="padding: 1%;">
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@* Modal CheckIn/CheckOut *@
+<div class="modal fade" id="ModelCheckOut" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+    <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title" id="exampleModalLongTitle">Job Check-Out/Check-In</h2>
+            </div>
+            <div class="modal-body">
+                <div id="JobNotes" style="margin-top: 2px; border: 2px solid #dad4d4; border-radius: 5px; background-color: #d9ebff">
+                </div>
+                <br />
+                <b>Add Notes: </b>
+                <form action="./UpdateJobs" method="post">
+                    <textarea class="textarea" style="width: 100%; height: 100px;" placeholder="Add Comments..." maxlength="900"></textarea>
+
+                </form>
+                <h5>Total rescource's working on this job : </h5>
+            </div>
+            <div class="modal-footer text-center  justify-content-center" style="padding: 1%;">
+                <button id="btnSave" type="button" class="btn btn-success" style="margin-right: 2%"></button>
+                <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#JobStatus").val($("#JobStatus").attr("value"));
+        $("#JobDivaStatus").val($("#JobDivaStatus").attr("value"));
+
+        if ($('#TblJobs tbody tr').length == 0 && ($("#Jobdivarefnum").val().trim() != "" || $("#Clientrefnum").val().trim() != "")) {
+            $("#ModelConfirm").data({ backdrop: 'static', keyboard: false });
+            $("#ModelConfirm").modal("show");
+        }
+        var PostBackURL = '../ManageJobs/FetchCallAPI';
+        // $(function () {
+        $(".btn_yes_confirm").click(function () {
+
+            $('#ModelConfirm').modal('hide');
+            var Jobdivarefnum = $("#Jobdivarefnum").val().trim();
+            var Clientrefnum = $("#Clientrefnum").val().trim();
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: PostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "Jobdivarefnum": Jobdivarefnum, "Clientrefnum": Clientrefnum },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                    //$("#myModal").dialog();
+                },
+                error: function () {
+                    //alert("Dynamic content load failed.");
+                }
+            });
+        });
+
+        $.fn.tableExport.xlsx = {
+            defaultClass: "xlsx",
+            buttonContent: "Export to xlsx",
+            mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            fileExtension: ".xlsx"
+        };
+        var dt = new Date();
+        $('#TblJobs').tableExport({
+            headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+            footers: false,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+            formats: ["xlsx"],    // (String[]), filetypes for the export
+            fileName: "CheckOut_In" + dt.getDate() + '_' + dt.getMonth() + '_' + dt.getFullYear(),                    // (id, String), filename for the downloaded file
+            bootstrap: true,                   // (Boolean), style buttons using bootstrap
+            position: "bottom",                 // (top, bottom), position of the caption element relative to table
+            ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file(s)
+            ignoreCols: [0, 1],                  // (Number, Number[]), column indices to exclude from the exported file(s)
+            //ignoreCSS: ".tableexport-ignore",  // (selector, selector[]), selector(s) to exclude from the exported file(s)
+            // emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
+            trimWhitespace: true              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
+
+        });
+
+        $('#TblJobs').DataTable({
+            scrollY: "500px",
+            scrollX: true,
+            scrollCollapse: true,
+            search: false,
+            columnDefs: [
+                { width: 50, targets: 1 },
+                { width: 50, targets: 2 },
+                { width: 200, targets: 3 },
+                { width: 150, targets: 4 }
+            ],
+            fixedColumns: true
+        });
+
+        var thisBtn;
+        $('.Modelbtn').click(function () {
+            thisBtn = $(this);
+            $("#ModelInstruction").data({ backdrop: 'static', keyboard: false });
+            $("#ModelInstruction").modal("show");
+
+            $('.textarea').val("");
+            $("#ModelInstruction .modal-body p").text("");
+            $("#JobNotes").text("");
+
+            $(this).closest('tr').find('.Notes').each(function () {
+                $("#JobNotes").append('<p style="margin:0px">' + $(this).val() + '</p>');
+            });
+        });
+
+        $(".btnAdd").click(function () {
+            if ($('.textarea').val().trim().length > 0) {
+                var jobRefId = thisBtn.closest('tr').find('.HDRID').val();
+                var notes = $('.textarea').val().trim();
+
+                var form = $("<form action='UpdateJobs' method='post' style='display:none' ></form>");
+
+                $('<input name="JobRefId" value="' + jobRefId + '"/>').appendTo(form);
+                $('<input name="Notes" value="' + notes + '"/>').appendTo(form);
+                form.appendTo('body').submit();
+
+            } else {
+                alert("Please Enter Notes");
+                $('.textarea').trim().focus();
+                return false;
+            }
+            $("#ModelInstruction").modal("hide");
+        });
+
+        $('#JobIssueDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
+        });
+
+        $('#btnSave').click(function () {
+            var form = $('#ModelCheckOut form');
+            $('<input type="hidden" name="Notes" value="' + $('#ModelCheckOut form .textarea').val() + '"/>').appendTo(form);
+            $('#ModelCheckOut form').submit();
+        });
+
+    });
+
+    function ShowPopup(obj, JobRefId, CheckRefId) {
+        var CheckStatus = "";
+        if (CheckRefId == 0)
+            CheckStatus = "Check-Out";
+        else
+            CheckStatus = "Check-In";
+
+        $('#ModelCheckOut').remove('input');
+        $("#ModelCheckOut #JobNotes").empty();
+        //$('#ModelCheckOut .modal-footer').empty();
+        $("#ModelCheckOut").data({ backdrop: 'static', keyboard: false });
+        $('#ModelCheckOut').modal('show');
+
+        $(obj).closest('tr').find('.Notes').each(function () {
+            $("#ModelCheckOut #JobNotes").append('<p style="margin:0px">' + $(this).val() + '</p>');
+        });
+
+        var form = $('#ModelCheckOut form');
+        $('<input type="hidden" name="JobRefId" value="' + JobRefId + '"/>').appendTo(form);
+        $('<input type="hidden" name="CheckStatus" value="' + CheckStatus + '"/>').appendTo(form);
+        $('<input type="hidden" name="CheckRefId" value="' + CheckRefId + '"/>').appendTo(form);
+        var resCnt = 0;
+        $.get("./GetTotalResourceOnJob" + "?HdrId=" + JobRefId, function (response) {
+             $('#ModelCheckOut h5').empty().append("Total rescource's working on this job : " + response.TotalCount); 
+        });
+
+        $('#btnSave').text(CheckStatus);
+    }
+
+</script>
+

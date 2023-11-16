@@ -1,0 +1,402 @@
+﻿@model IEnumerable<RIC.Models.ClientDashboard>
+@using RIC.CustomHelper
+@using System.Globalization;
+
+	<script src="~/Content/JS/Client/ClientTablePartial.js"></script>
+<link href="~/Content/CSS/ClientDashboard.css" rel="stylesheet" />
+<style>
+    .field-tip {
+    display: none;
+    position: absolute;
+    width: 90px;
+    background-color: #656565;
+    color: whitesmoke;
+    text-align: center;
+    border-radius: 9px;
+    padding-left: 4px;
+    position: absolute;
+    z-index: 2;
+    text-align: center;
+    max-height: 178px;
+    height: 18px;
+    font-size: 12px;
+    padding-top: 1px;
+    padding-top: 3px;
+}
+</style>
+<div>
+
+     <input type="text" placeholder="Search Client" class='table-search form-control searchboxcss' />
+</div>
+
+<table id="myTable" class="table table-striped" style="border: 1px solid #909290;">
+
+    @if (Model.Count() != 0)
+    { 
+        <thead>
+        
+            <tr>
+                <th class="datecss paddingalign">Date</th>
+                <th class="datecss"></th>
+                @foreach (var header in Model.FirstOrDefault().Month)
+                {
+                    float width = (float)73 / (float)Model.FirstOrDefault().Month.Count();  
+                    <th class="datecss textalige">@header.date.Day</th>
+                                                     
+                }
+                <th class="datecss"></th>
+            </tr>
+            <tr class="datecss">
+                <th class="datecss paddingalign">Day</th>
+                <th class="datecss"></th>
+                @foreach (var header in Model.FirstOrDefault().Month)
+                {
+                    float width = (float)73 / (float)Model.FirstOrDefault().Month.Count();   
+                               
+                    <th class="datecss colwidth textalige">@header.date.DayOfWeek.ToString().Substring(0, 3)</th>                                                   
+                }
+                <th class="datecss textalige colwidth" style="width: 4%;">Total</th>
+            </tr>
+
+        </thead>
+        <tbody id="fbody">
+            @Tree(Model)
+            @helper Tree(IEnumerable<RIC.Models.ClientDashboard> foos)
+            {
+                foreach (var item in foos)
+                {
+                    <tr class="company">
+                        <td rowspan="4" class="datecss paddingalign" style="padding: 3%;width: 20% !important;">@Html.DisplayFor(modelItem => item.RJ_Company)</td>
+                        <td class="anchorDetail colwidth" style="background-color: #a7d1f5 !important;">
+                            S
+
+                            <span class="field-tip">
+                                <span class="tip-content">Submissions</span>
+                            </span>
+                        </td>
+                        @foreach (var submissionData in item.Month)
+                        {
+                            if (submissionData.Submission != 0)
+                            {
+                                <td class="datacss" style="background-color: #d3ebff !important;">
+                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@item.EmpCd"
+                                       data-FromDate="@submissionData.date" data-ToDate="@submissionData.date" data-Company="@item.RJ_Company">
+                                        @submissionData.Submission
+                                    </a>
+                                </td>
+
+                            }
+                            else
+                            {
+
+                                <td class="datacss" style="background-color: #d3ebff !important;">@submissionData.Submission</td>
+                            }
+
+                        }
+
+
+                        @if (@item.Submission_Month != 0)
+                        {
+                            <td class="datacss datecss" style="background-color: #a7d1f5 !important;">
+                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@item.EmpCd"
+                                   data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-Company="@item.RJ_Company">
+                                    @Html.DisplayFor(modelItem => item.Submission_Month)
+                                </a>
+                            </td>
+
+                        }
+                        else
+                        {
+
+                            <td class="datacss datecss" style="background-color: #a7d1f5 !important;">@Html.DisplayFor(modelItem => item.Submission_Month)</td>
+                        }
+
+                    </tr>
+                    <tr>
+                        <td class="anchorDetail colwidth" style="background-color: #f1b3b3 !important;">
+                            I
+                            <span class="field-tip">
+                                <span class="tip-content">Interviews</span>
+                            </span>
+                        </td>
+
+
+                        @foreach (var submissionData in item.Month)
+                        {
+                            if (submissionData.Interview != 0)
+                            {
+                                <td class="datacss" style="background-color: #ffd9d9 !important;">
+                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="interview" data-empCD="@item.EmpCd"
+                                       data-FromDate="@submissionData.date" data-ToDate="@submissionData.date" data-Company="@item.RJ_Company">
+                                        @submissionData.Interview
+                                    </a>
+                                </td>
+
+                            }
+                            else
+                            {
+
+                                <td class="datacss" style="background-color: #ffd9d9 !important;">@submissionData.Interview</td>
+                            }
+
+                        }
+
+
+                        @if (@item.Interview_Month != 0)
+                        {
+                            <td class="datacss datecss" style="background-color: #f1b3b3 !important;">
+                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="interview" data-empCD="@item.EmpCd"
+                                   data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-Company="@item.RJ_Company">
+                                    @Html.DisplayFor(modelItem => item.Interview_Month)
+                                </a>
+                            </td>
+
+                        }
+                        else
+                        {
+
+                            <td class="datacss datecss" style="background-color: #f1b3b3 !important;">@Html.DisplayFor(modelItem => item.Interview_Month)</td>
+                        }
+
+                    </tr>
+
+                    <tr>
+                        <td class="anchorDetail colwidth" style="background-color: #dffba2 !important;">
+                            H
+
+                            <span class="field-tip">
+                                <span class="tip-content" ;>Hires</span>
+                            </span>
+                        </td>
+
+
+                        @foreach (var submissionData in item.Month)
+                        {
+                            if (submissionData.Hire != 0)
+                            {
+                                <td class="datacss" style="background-color: #ebffc0 !important;">
+                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire" data-empCD="@item.EmpCd"
+                                       data-FromDate="@submissionData.date" data-ToDate="@submissionData.date" data-Company="@item.RJ_Company">
+                                        @submissionData.Hire
+                                    </a>
+                                </td>
+
+                            }
+                            else
+                            {
+
+                                <td class="datacss" style="background-color: #ebffc0 !important;">@submissionData.Hire</td>
+                            }
+
+                        }
+
+
+                        @if (@item.Hire_Month != 0)
+                        {
+                            <td class="datacss datecss" style="background-color: #dffba2 !important;">
+                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire" data-empCD="@item.EmpCd"
+                                   data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-Company="@item.RJ_Company">
+                                    @Html.DisplayFor(modelItem => item.Hire_Month)
+                                </a>
+                            </td>
+
+                        }
+                        else
+                        {
+
+                            <td class="datacss datecss" style="background-color: #dffba2 !important;">@Html.DisplayFor(modelItem => item.Hire_Month)</td>
+                        }
+
+                    </tr>
+
+                    <tr>
+                        <td class="anchorDetail colwidth" style="background-color: #fdcb84 !important;">
+                            R
+
+                            <span class="field-tip">
+                                <span class="tip-content" ;>Reqs</span>
+                            </span>
+                        </td>
+
+
+                        @foreach (var submissionData in item.Month)
+                        {
+                            if (submissionData.Jobs_Issued != 0)
+                            {
+                                <td class="datacss" style="background-color: #f1e0b3 !important;">
+                                                            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs" data-empCD="@item.EmpCd"
+                                               data-FromDate="@submissionData.date" data-ToDate="@submissionData.date" data-Company="@item.RJ_Company">
+                                                @submissionData.Jobs_Issued
+                                            </a>
+                                    @*@submissionData.Jobs_Issued*@
+                                </td>
+
+                            }
+                            else
+                            {
+
+                                <td class="datacss" style="background-color: #f1e0b3 !important;">@submissionData.Jobs_Issued</td>
+                            }
+
+                        }
+
+
+                        @if (@item.Required_Month != 0)
+                        {
+                            <td class="datacss datecss" style="background-color: #e0c479 !important;">
+                                <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs" data-empCD="@item.EmpCd"
+                                   data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-Company="@item.RJ_Company">
+                                    @Html.DisplayFor(modelItem => item.Required_Month)
+                                </a>
+                                @*@Html.DisplayFor(modelItem => item.Required_Month)*@
+                            </td>
+
+                        }
+                        else
+                        {
+
+                            <td class="datacss datecss" style="background-color: #e0c479 !important;">@Html.DisplayFor(modelItem => item.Required_Month)</td>
+                        }
+
+                    </tr>
+                }
+            }
+        </tbody>
+    }
+</table>
+
+<div class="col-md-12 text-center">
+    <ul class="pagination pagination-sm pager" id="myPager"></ul>
+</div>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
+    $(document).ready(function () {
+
+        $(".table-search").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            var array1 = new Array();
+            var $row = $("#myTable tbody tr");
+            $row.filter(function () {
+                if ($(this).find("td:eq(0)").text().toLowerCase().indexOf(value) > -1) {
+                    array1.push($(this).index());
+                }
+            });
+            $row.hide();
+            for (var i = 0; i < array1.length; i++) {
+                $row.slice(array1[i], array1[i] + 3).show();
+
+            }
+        });
+    });
+</script>
+
+<script>
+    $.fn.pageMe = function (opts) {
+        var $this = this,
+            defaults = {
+                perPage: 7,
+                showPrevNext: false,
+                hidePageNumbers: false
+            },
+            settings = $.extend(defaults, opts);
+
+        var listElement = $this;
+        var perPage = settings.perPage;
+        var children = listElement.children();
+        var pager = $('.pager');
+
+        if (typeof settings.childSelector != "undefined") {
+            children = listElement.find(settings.childSelector);
+        }
+
+        if (typeof settings.pagerSelector != "undefined") {
+            pager = $(settings.pagerSelector);
+        }
+
+        var numItems = children.size();
+        var numPages = Math.ceil(numItems / perPage);
+
+        pager.data("curr", 0);
+
+        if (settings.showPrevNext) {
+            $('<li><a href="#" class="prev_link">«</a></li>').appendTo(pager);
+        }
+
+        var curr = 0;
+        while (numPages > curr && (settings.hidePageNumbers == false)) {
+            $('<li><a href="#" class="page_link">' + (curr + 1) + '</a></li>').appendTo(pager);
+            curr++;
+        }
+
+        if (settings.showPrevNext) {
+            $('<li><a href="#" class="next_link">»</a></li>').appendTo(pager);
+        }
+
+        pager.find('.page_link:first').addClass('active');
+        pager.find('.prev_link').hide();
+        if (numPages <= 1) {
+            pager.find('.next_link').hide();
+        }
+        pager.children().eq(1).addClass("active");
+
+        children.hide();
+        children.slice(0, perPage).show();
+
+        pager.find('li .page_link').click(function () {
+            var clickedPage = $(this).html().valueOf() - 1;
+            goTo(clickedPage, perPage);
+            return false;
+        });
+        pager.find('li .prev_link').click(function () {
+            previous();
+            return false;
+        });
+        pager.find('li .next_link').click(function () {
+            next();
+            return false;
+        });
+
+        function previous() {
+            var goToPage = parseInt(pager.data("curr")) - 1;
+            goTo(goToPage);
+        }
+
+        function next() {
+            goToPage = parseInt(pager.data("curr")) + 1;
+            goTo(goToPage);
+        }
+
+        function goTo(page) {
+            var startAt = page * perPage,
+                endOn = startAt + perPage;
+
+            children.css('display', 'none').slice(startAt, endOn).show();
+
+            if (page >= 1) {
+                pager.find('.prev_link').show();
+            }
+            else {
+                pager.find('.prev_link').hide();
+            }
+
+            if (page < (numPages - 1)) {
+                pager.find('.next_link').show();
+            }
+            else {
+                pager.find('.next_link').hide();
+            }
+
+            pager.data("curr", page);
+            pager.children().removeClass("active");
+            pager.children().eq(page + 1).addClass("active");
+
+        }
+    };
+
+    $('#fbody').pageMe({ pagerSelector: '#myPager', showPrevNext: true, hidePageNumbers: false, perPage: 28 });
+</script>
+
+

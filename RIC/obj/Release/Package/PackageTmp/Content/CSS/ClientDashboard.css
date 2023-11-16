@@ -1,0 +1,81 @@
+﻿.datecss {
+        background-color: beige;
+        font-size: 12px;   
+        border: 1px solid #909290;
+        font-weight: 700;
+       
+    }
+    .table>tbody>tr>td, 
+    .table>tbody>tr>th,
+    .table>thead>tr>td, 
+    .table>thead>tr>th {
+    padding: 8px;
+    line-height: 12px;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+    border: 1px solid #909290;
+    font-size: 12px;
+    
+}
+   
+    .field-tip {
+        display: none;
+        position: absolute;
+        width: 90px;
+        background-color: #656565;
+        color: whitesmoke;
+        text-align: center;
+        border-radius: 9px;
+        padding-left: 5px;
+        position: absolute;
+        z-index: 4;
+        text-align: center;
+        max-height: 150px;
+        height: 17px;
+        font-size: 12px;
+    }
+
+    .anchorDetail:hover .field-tip {
+        display: block;
+    }
+
+    .tip-content {
+        white-space: pre;
+    }
+
+    .tableRowStyle {
+        background-color: #e0e5e8;
+    }
+   .pager li>a, .pager li>span {
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: inherit;
+}
+   
+    .colwidth
+    {
+    width: 3.318182%;
+  
+    }
+
+    .datacss {
+        text-align: center;
+        font-size:smaller;
+        border: 1px solid #909290;
+    }
+
+    .searchboxcss 
+    {
+        width: 20%;
+        margin-left: 79.5%;
+        margin-bottom: 0.5%
+    }
+    .textalige {
+        text-align:center;
+    }
+
+    .paddingalign {
+            padding-left: 1% !important;
+    }

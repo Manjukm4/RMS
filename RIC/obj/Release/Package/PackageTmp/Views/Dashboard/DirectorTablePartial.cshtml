@@ -1,0 +1,70 @@
+﻿@model RIC.Models.Dashboard.DirectorDashboardModel
+<script src="~/Content/JS/Dashboard/DirectorTablePartial.js"></script>
+<table class="table  table-striped CompanyTbl ">
+    <thead>
+        <tr>
+            <td class="LabelHeadStyle1" style="width: 25%">
+                @Html.DisplayName("Team Lead Name")
+            </td>
+            <td class="LabelHeadStyle1" style="text-align: center; width: 25%">
+                @Html.DisplayName("Submissions")
+            </td>
+            <td class="LabelHeadStyle1" style="text-align: center; width: 25%">
+                @Html.DisplayName("Interviews")
+            </td>
+            <td class="LabelHeadStyle1" style="text-align: center; width: 25%">
+                @Html.DisplayName("Hires")
+            </td>
+        </tr>
+    </thead>
+    @foreach (var item in Model.DirectorDashboardTable)
+    {
+        <tr>
+            <td class="LabelStyle2">
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+
+            <td class="TextAlignCenter">
+
+                @if (item.Submissions != 0)
+                { 
+                    <a  href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"  data-empCD="@item.EmpCd"
+                          data-FromDate="@Model.FromDate"   data-ToDate="@Model.ToDate" >
+                        @Html.DisplayFor(modelItem => item.Submissions)
+                    </a>
+                }
+                else
+                { 
+                    @Html.DisplayFor(modelItem => item.Submissions)
+                }
+            </td>
+            <td class="TextAlignCenter">
+                @if (item.Interviews != 0)
+                { 
+                    <a  href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="interview"  data-empCD="@item.EmpCd"
+                          data-FromDate="@Model.FromDate"  data-ToDate="@Model.ToDate" >
+                        @Html.DisplayFor(modelItem => item.Interviews)
+                    </a>
+                }
+                else
+                { 
+                    @Html.DisplayFor(modelItem => item.Interviews)
+                }
+            </td>
+            <td class="TextAlignCenter">
+                @if (item.Hires != 0)
+                { 
+                    <a  href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"  data-empCD="@item.EmpCd"
+                          data-FromDate="@Model.FromDate"  data-ToDate="@Model.ToDate" >
+                        @Html.DisplayFor(modelItem => item.Hires)
+                    </a>
+                }
+                else
+                { 
+                    @Html.DisplayFor(modelItem => item.Hires)
+                }
+            </td>
+        </tr>
+    }
+</table>
+

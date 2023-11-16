@@ -1,0 +1,408 @@
+﻿@model RIC.Models.DashBoardViewModel
+@using System.Globalization;
+@using DBLibrary
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<input type='hidden' value='@Request.QueryString["empCd"]' id='HdnEmpCD_' />
+<input type='hidden' value='0' id='HidMonth_' />
+<input type="hidden" value="@ViewBag.getIndividualRecords" id="HdnGetIndividualRecords" />
+
+<link href="~/Content/CSS/Dashboard.css?v1.3" rel="stylesheet" />
+
+<link href="~/Content/CSS/SideMenu.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="~/Content/TreeView/css/reset.css">
+<!-- CSS reset -->
+<link rel="stylesheet" href="~/Content/TreeView/css/style.css">
+<!-- Resource style -->
+<script src="~/Content/TreeView/js/modernizr.js"></script>
+
+<!-- Modernizr -->
+@*<script src="~/Content/TreeView/js/jquery-2.1.4.js"></script>*@
+
+<!-- Resource jQuery -->
+
+<style type="text/css">
+    .heading {
+        color: #fff;
+        background-color: #337ab7 !important;
+        border-color: #2e6da4;
+        text-align:left;
+    }
+
+    .ÄddReview{
+        color: #1e70ab;
+        cursor:pointer;
+        text-decoration:underline;
+    }
+
+    .modal-content
+    {
+        width:777px !important;
+
+    }
+
+    #myModalReview {
+  padding-left: 225px !important;
+}
+     
+ 
+</style>
+
+<div id="MainBody">
+
+    <div class="form-row">
+
+        @if (ViewBag.ShowUserName == "Y")
+        {
+            <label class="userName textCapitalize" style="font-size: large;width:95%">@ViewBag.userName (@Request.QueryString["empCd"])</label>
+            if (ViewBag.Firstname != null || ViewBag.Empcode != null || ViewBag.RoleIdFilter != null || ViewBag.FilterName != null || ViewBag.Page != null || ViewBag.ReportingID != null)
+            {
+                <label>@Html.ActionLink("Back", "ViewUsers", "Account", new { First_Name = ViewBag.Firstname, Emp_Code = ViewBag.Empcode, RoleID = ViewBag.RoleIdFilter, filterDdl = ViewBag.FilterName, Page = ViewBag.Page, ReportingID = ViewBag.ReportingID }, new { @class = "btn btn-info", @id = "backId" }) </label>
+            }
+        }
+
+        @if (ViewBag.ProgressReport == false)
+        {
+            <!-- Gauge chart partial -->
+            <div id="gaugePartial">
+            </div>
+        }
+        else
+        {
+
+            <div id="ProgressReport">
+            </div>
+        }
+        <!-- submission table partial -->
+        <div id="JobReportPartial_" style="height:515px"></div>
+        <br />
+        <div class="form-group col-md-6" style="padding-right: 15px">
+            <table class="table table-striped">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th class="labelcenter" colspan="5">
+                            @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SystemClock.US_Date.AddMonths(-2).Month)
+                            @SystemClock.US_Date.AddMonths(-2).Year
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%" class="Table1HeadBg"></th>
+                        <th style="width: 25%" class="labelcenter SubmissionsTable1HeadBg">
+                            @Html.DisplayNameFor(model => model.lastTwoMonthData.FirstOrDefault().submission)
+                        </th>
+                        <th style="width: 25%" class="labelcenter InterviewTable1HeadBg">
+                            @Html.DisplayNameFor(model => model.lastTwoMonthData.FirstOrDefault().interviews)
+                        </th>
+                        <th style="width: 25%" class="labelcenter HiresTable1HeadBg">
+                            @Html.DisplayNameFor(model => model.lastTwoMonthData.FirstOrDefault().hires)
+                        </th>
+                    </tr>
+                </thead>
+                <tr>
+                    <th class="labeltextstyle1 Table1HeadBg">Target</th>
+                    <td class="SubmissionsCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-2).Month).SubmissionTarget)
+                    </td>
+                    <td class="InterviewsCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-2).Month).InterviewTarget)
+                    </td>
+                    <td class="HiresCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-2).Month).HiresTarget)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="labeltextstyle1 Table1HeadBg">Achievement</th>
+
+                    <td class="SubmissionsCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-2).Month).submission)
+                    </td>
+                    <td class="InterviewsCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-2).Month).interviews)
+                    </td>
+                    <td class="HiresCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-2).Month).hires)
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="form-group col-md-6" style="padding-left: 15px">
+            <table class="table table-striped">
+                <thead class="thead-inverse">
+                    <tr>
+                        <th class="labelcenter" colspan="5">
+                            @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SystemClock.US_Date.AddMonths(-1).Month)
+                            @SystemClock.US_Date.AddMonths(-1).Year
+                        </th>
+                    </tr>
+                    <tr>
+                        <th style="width: 25%" class="Table1HeadBg"></th>
+
+                        <th style="width: 25%" class="labelcenter SubmissionsTable1HeadBg">
+                            @Html.DisplayNameFor(model => model.lastTwoMonthData.FirstOrDefault().submission)
+                        </th>
+                        <th style="width: 25%" class="labelcenter InterviewTable1HeadBg">
+                            @Html.DisplayNameFor(model => model.lastTwoMonthData.FirstOrDefault().interviews)
+                        </th>
+                        <th style="width: 25%" class="labelcenter HiresTable1HeadBg">
+                            @Html.DisplayNameFor(model => model.lastTwoMonthData.FirstOrDefault().hires)
+                        </th>
+                    </tr>
+                </thead>
+                <tr>
+                    <th class="labeltextstyle1 Table1HeadBg">Target</th>
+                    <td class="SubmissionsCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-1).Month).SubmissionTarget)
+                    </td>
+                    <td class="InterviewsCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-1).Month).InterviewTarget)
+                    </td>
+                    <td class="HiresCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-1).Month).HiresTarget)
+                    </td>
+                </tr>
+                <tr>
+                    <th class="labeltextstyle1 Table1HeadBg">Achievement</th>
+                    <td class="SubmissionsCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-1).Month).submission)
+                    </td>
+                    <td class="InterviewsCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-1).Month).interviews)
+                    </td>
+                    <td class="HiresCountBg">
+                        @Html.DisplayFor(model => model.lastTwoMonthData.FirstOrDefault(s => s.date.Month == SystemClock.US_Date.AddMonths(-1).Month).hires)
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br />
+        @*<div class="container">
+            
+            <div class="form-group col-md-6 " style="left:26%">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th colspan="4" align="center" class="labelcenter">
+                                <b>Last Data Load Run Time</b>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <th class="labelcenter Table1HeadBg">JobDiva</th>
+
+                        <th class="labelcenter Table1HeadBg">Shoretel</th>
+
+                        <th class="labelcenter Table1HeadBg">8x8</th>
+
+                        <th class="labelcenter Table1HeadBg">Access Log</th>
+                    </tr>
+                    <tr>
+                        <td>@ViewBag.JD</td>
+                        <td>@ViewBag.ST</td>
+                        <td>@ViewBag.EC</td>
+                        <td>@ViewBag.AL</td>
+                    </tr>
+                </table>
+            </div>
+        </div>*@
+
+        
+    </div>
+    
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg ">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+
+
+<!-- The Modal -->
+@if (ViewBag.PopupBoolean == true && ViewBag.ViewStatus== true && ViewBag.EmployeeRoleStatus == true)
+{
+
+    <div class="modal fade bd-example-modal-lg" id="myModalReview" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div id='myModalContentReview'>
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3 style="text-align: center;" class="modal-title">Upcoming Reviews - Interim</h3>
+                    </div>
+                    @if (Model.InterimFeedbackNotification.Count() > 0)
+                    {
+                        <h3 style="padding-left:12px;">Interim - Laterals</h3>
+                    }
+                    else
+                    {
+                        <h3 style="padding-left:12px;">Interim - New Joinees</h3>
+
+                    }
+                    <div id="divModel" class="modal-body">
+
+                        <div id="menu3" class="tab-pane fade in">
+                            @if (Model.InterimFeedbackNotification.Count() > 0)
+                            {
+                                <table id="tblReview" class="table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th class="heading">Employee ID</th>
+                                            <th class="heading">Employee Name</th>
+                                            <th class="heading">Next Review Date</th>
+                                            <th class="heading">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.InterimFeedbackNotification)
+                                        {
+
+                                            <tr>
+                                                <td>@item.EmpId</td>
+                                                <td>@item.EmployeeName</td>
+                                                <td>@item.NextReviewDate.ToString("d")</td>
+                                                <td><a class="ÄddReview">Add Review</a></td>
+
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            }
+                            @if (Model.InterimFeedbackNotification.Count() > 0)
+                            {
+                                <h3>Interim - New Joinees</h3>
+                                <br/>
+                            }
+                            <table id="tblInterimReview" class="table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="heading">Employee ID</th>
+                                        <th class="heading">Employee Name</th>
+                                        <th class="heading">Joining Date</th>
+                                        <th class="heading">Scheduled Review Date</th>
+                                        <th class="heading">Action</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.NewJoineeInterimNotification)
+                                    {
+
+                                        <tr>
+                                            <td>@item.EmpId</td>
+                                            <td>@item.EmployeeName</td>
+                                            <td>@item.JoiningDate.ToString("d")</td>
+                                            <td>@item.ReviewDate.ToString("d")</td>
+                                            <td><a class="ÄddReview">Add Review</a></td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+}
+
+<script type="text/javascript">
+	$(document).ready(function () {
+        $('#tblReview').DataTable();
+        $('#tblInterimReview').DataTable();
+
+
+        var options = { "backdrop": "static", keyboard: true };
+
+        $('#myModalReview').modal(options);
+        $('#myModalReview').modal('show');
+
+        //$('#myModalReview').css("background-color","white");
+
+	    $("#@Model.CurrentWeek").addClass("active");
+		var month = $("#HidMonth_").val();
+		var gaugeViewPartialUrl = '@Url.Action("GaugeGraphPartial")';
+	    var jobRepartPartialUrl = '@Url.Action("JobReportPartial")';
+	    var ProgressReportPartialUrl = '@Url.Action("ProgressReportPartial")';
+	    var progressPartialFromDate = '@Model.ProgressReportFromDate';
+	    var progressPartialToDate = '@Model.ProgressReportToDate';
+
+		var options = { "backdrop": "static", keyboard: true };
+		var empCD = $("#HdnEmpCD_").val();
+		var getIndividualRecords = $("#HdnGetIndividualRecords").val();
+        //bind the job report table
+		$.ajax({
+			type: "GET",
+			url: jobRepartPartialUrl,
+			contentType: "application/json; charset=utf-8",
+			data: { "month": month, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+			datatype: "json",
+			success: function (data) {
+
+			    $('#JobReportPartial_').html(data);
+			},
+			error: function () {
+				//alert("Dynamic content load failed.");
+			}
+		});
+        //call the gauge graph partial.
+		$.ajax({
+		    type: "GET",
+		    url: gaugeViewPartialUrl,
+		    contentType: "application/json; charset=utf-8",
+		    data: { "month": month, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+		    datatype: "json",
+		    success: function (data) {
+
+		        $('#gaugePartial').html(data);
+
+		    },
+		    error: function () {
+		       // alert("Dynamic content load failed.");
+		    }
+		});
+
+	    //call the progress report partial.
+		$.ajax({
+		    type: "GET",
+		    url: ProgressReportPartialUrl,
+		    contentType: "application/json; charset=utf-8",
+		    data: { "fromDate": progressPartialFromDate, "toDate": progressPartialToDate ,"empCd": empCD},
+		    datatype: "json",
+		    success: function (data) {
+
+		        $('#ProgressReport').html(data);
+
+		    },
+		    error: function () {
+		        // alert("Dynamic content load failed.");
+		    }
+		});
+
+
+
+        $("#tblReview,#tblInterimReview tbody .ÄddReview").click(function () {
+
+            window.location.href = '@Url.Action("InterimReviewSubmitted", "Review")';
+
+        });
+
+
+	});
+</script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

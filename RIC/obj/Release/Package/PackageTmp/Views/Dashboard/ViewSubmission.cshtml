@@ -1,0 +1,138 @@
+﻿@model   PagedList.IPagedList<DBLibrary.RIC_SubmissionDaily>
+@using PagedList.Mvc;
+@using System.Web.Mvc;
+
+
+@{
+    ViewBag.Title = "ViewSubmission";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+@*@Html.Hidden("Emp_Code",ViewBag.Emp_Code as string,null)
+@Html.Hidden("Start_Data",ViewBag.Start_Data as string,null)
+@Html.Hidden("End_Data",ViewBag.End_Data as string,null)*@
+
+<legend>Submission</legend>
+@*<div style="overflow: hidden">
+    @Html.ActionLink("Upload", "UploadSubmissions", null, new { @class = "mylinkBtn" })
+     @Html.ActionLink("Upload", "UploadSubmissionsDaily", null, new { @class = "mylinkBtn" })
+</div>
+<br />*@
+<div>
+    <br />
+    @using (Html.BeginForm())
+    {
+        <table style="width: 90%" class="table container-fluid">
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.FirstOrDefault().RE_Jobdiva_User_Name)</td>
+                <td>@Html.TextBox("Emp_Code", ViewBag.Emp_Code as string, new { @class = "form-control input-sm chat-input" })</td>
+                <td>@Html.DisplayName("From Date")</td>
+                <td>@Html.TextBox("Start_Data", ViewBag.Start_Data as string, new { @class = "form-control input-sm chat-input" })</td>
+                <td>@Html.DisplayName("To Date")</td>
+                <td>@Html.TextBox("End_Data", ViewBag.End_Data as string, new { @class = "form-control input-sm chat-input" })</td>
+                 <td>                    
+                        <button type="submit" class="btn btn-info">
+                        <span class="glyphicon glyphicon-search"></span>Search</button>
+                </td>
+                
+            </tr>
+  
+        </table>   
+    }
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault(). RS_Emp_Cd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault(). RE_Jobdiva_User_Name)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Submissions)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Interviews)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstOrDefault().RS_Hires)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RS_Emp_Cd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RE_Jobdiva_User_Name)
+
+            </td>
+            <td>
+                @item.RS_Date.Date.ToString("MM-dd-yyyy")
+               @* @Html.DisplayFor(modelItem => item.RS_Date)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RS_Submissions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RS_Interviews)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RS_Hires)
+            </td>
+
+            <td>
+                @*  @Html.ActionLink("Edit", "Edit", new { id=item.RS_Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RS_Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RS_Id })*@
+            </td>
+        </tr>
+    }
+
+</table>
+<div id='Paging' style="text-align: center">
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+    of @Model.PageCount
+    @Html.PagedListPager(Model, page => Url.Action("ViewSubmission", new { page=page }))
+</div>
+<script>
+    $('#Start_Data').datepicker({
+        dateFormat: 'mm-dd-yy',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        },
+        onSelect: function (selected) {
+
+            //var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate() + 1);
+            $("#End_Data").datepicker("option", "minDate", dt);
+        }
+    });
+    $('#End_Data').datepicker({
+        dateFormat: 'mm-dd-yy',
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-arrow-up",
+            down: "fa fa-arrow-down"
+        },
+        onSelect: function (selected) {
+
+            var dt = new Date(selected);
+
+            dt.setDate(dt.getDate() - 1);
+            $("#Start_Data").datepicker("option", "maxDate", dt);
+        }
+    });
+</script>

@@ -1,0 +1,67 @@
+﻿@model Tuple<List<RIC.Models.Client.PositionDashboardMonthly>, string>
+
+@foreach (var data in Model.Item1)
+{
+<tr class="Quarter">
+    <td class="datecss">
+        <span style="padding-left:30px">@data.MonthName</span>
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @if (data.Position > 0)
+        {
+            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@Model.Item2" data-tp="Position"
+               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate">
+                @Html.DisplayFor(model => data.Position)
+            </a>
+        }
+        else
+        { @Html.DisplayFor(model => data.Position)}
+
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @if (data.Submission > 0)
+        {
+            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@Model.Item2"data-tp="Submission"
+               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate">
+                @Html.DisplayFor(model => data.Submission)
+            </a>
+        }
+        else
+        { @Html.DisplayFor(model => data.Submission)}
+
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @if (data.Interview > 0)
+        {
+            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@Model.Item2"data-tp="Interview"
+               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate">
+                @Html.DisplayFor(model => data.Interview)
+            </a>
+        }
+        else
+        { @Html.DisplayFor(model => data.Interview)}
+
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @if (data.Hire > 0)
+        {
+            <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="@Model.Item2"data-tp="Hire"
+               data-FromDate="@data.StartDate" data-ToDate="@data.EndDate">
+                @Html.DisplayFor(model => data.Hire)
+            </a>
+        }
+        else
+        { @Html.DisplayFor(model => data.Hire)}
+
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @Html.DisplayFor(model => data.SubByInterview)%
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @Html.DisplayFor(model => data.SubByHire)%
+    </td>
+    <td class="TextAlignCenter Quarter1">
+        @Html.DisplayFor(model => data.InterviewByHire)%
+    </td>
+</tr>
+}

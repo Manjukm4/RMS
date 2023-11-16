@@ -1,0 +1,152 @@
+﻿@model IEnumerable<DBLibrary.RIC_SubmissionsTemp>
+@using DBLibrary
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+   @* <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script
+        src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">*@
+
+    <meta name="viewport" content="width=device-width" />
+    <style>
+        table, th, td
+        {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        th, td
+        {
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+    <title>Calculator</title>
+</head>
+<body style="font-family:Arial;">
+    <div>
+
+        <table class="table table-striped">
+            <thead >
+                <tr>
+                    <th rowspan="2">Candidate Name</th>
+                    <th rowspan="2">Company</th>
+                    <th rowspan="2">Start Date</th>
+                    <th rowspan="2">End Date</th>
+                    <th colspan="12" class="td_1">@SystemClock.US_Date.AddYears(-1).Year &nbsp;&nbsp; <button id="btnHideT1" type="button" class="btn">></button></th>
+                    <th colspan="12" class="td_2"><button id="btnHideT2" type="button" class="btn"><</button> &nbsp;&nbsp;  @SystemClock.US_Date.Year </th>
+                </tr>
+                <tr>
+                    <th>Jan</th>
+                    <th>Feb</th>
+                    <th>Mar</th>
+                    <th>Apr</th>
+                    <th>May</th>
+                    <th>Jun</th>
+                    <th>Jul</th>
+                    <th>Aug</th>
+                    <th>Sup</th>
+                    <th>Oct</th>
+                    <th>Nov</th>
+                    <th>Dec</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                { 
+                    <tr>
+                        <td>@item.EmpName </td>
+                        <td>@item.CompanyName</td>
+                        <td>@item.StrtDate.ToString("MM/dd/yyyy")</td>
+                        @if (item.EndDate != null)
+                        { 
+                            <td>@item.EndDate.Value.ToString("MM/dd/yyyy")</td>
+                        }
+                        else
+                        { 
+                            <td></td>
+                        }
+                        @{
+                        // DateTime startMonth = @item.StrtDate;
+                        // DateTime endMonth = @item.StrtDate;
+                        DateTime stopMonth = item.StrtDate.AddMonths(12);
+                            <div></div>
+                        
+                        if (item.EndDate != null)
+                        {
+                            stopMonth = item.EndDate.Value;
+                        }
+
+                        for (int j = 1; j >= 0; j--)
+                        {
+                            DateTime dt = new DateTime(SystemClock.US_Date.Year - j, 1, 1);
+
+                            for (int i = 1; i <= 12; i++)
+                            {
+                                if (dt >= item.StrtDate && dt <= stopMonth)
+                                {
+                                    if (j == 1)
+                                    {  
+                                         <td class="td_1">800</td>
+                                    }
+                                    else
+                                    { 
+                                         <td class="td_2">800</td>
+                                    }
+
+                                }
+                                else
+                                {
+                                    if (j == 1)
+                                    {  
+                                        <td class="td_1">0</td>
+                                    }
+                                    else
+                                    { 
+                                        <td class="td_2">0</td>
+                                    }
+                                }
+                                dt = dt.AddMonths(1);
+                            }
+                        }
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+       @* <input id="btnHide" type="button" value="Hide Column 2" />*@
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".td_2").hide()
+        $('#btnHideT1').click(function () {
+            $(".td_1").hide()
+            $(".td_2").show()
+            // if your table has header(th), use this
+            //$('td:nth-child(2),th:nth-child(2)').hide();
+        });
+        $('#btnHideT2').click(function () {
+            $(".td_2").hide()
+            $(".td_1").show()
+            // if your table has header(th), use this
+            //$('td:nth-child(2),th:nth-child(2)').hide();
+        });
+    });
+</script>

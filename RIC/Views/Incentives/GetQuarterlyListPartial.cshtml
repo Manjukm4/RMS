@@ -1,0 +1,147 @@
+﻿@model  List<DBLibrary.RIC_QuarterlyIncentive>
+@{
+    ViewBag.Title = "GetQuarterlyListPartial";
+
+}
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<style>
+    .divTable1 {
+        height: 700px;
+        overflow-y: auto;
+    }
+
+    .alignCSS {
+        text-align: center;
+    }
+</style>
+
+<div class="divTable1">
+    <table id="UserList1" class="table table-striped  table-hover table-bordered">
+        <thead style="background-color: #337ab7; color: white;">
+            <tr>
+                <th class="alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_EmpCd)
+                </th>
+
+                <th class="textCapitalize alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_EmployeeName)
+                </th>
+
+
+                <th class="textCapitalize alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_TeamLead)
+                </th>
+
+                <th class="alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_Candidate)
+                </th>
+                <th class="alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_Company)
+                </th>
+
+                <th class="alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_StartDate)
+                </th>
+
+                <th class="alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_EndDate)
+                </th>
+
+                <th class="alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_NetMargin)
+                </th>
+                <th class="alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_Incentives)
+                </th>
+
+                <th class="alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_Remarks)
+                </th>
+
+                <th class="alignCSS">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().RI_IncentiveCategory)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="alignCSS">
+
+                            @Html.DisplayFor(modelItem => item.RI_EmpCd)
+                        </td>
+
+                        <td class="textCapitalize">
+                            @Html.DisplayFor(modelItem => item.RI_EmployeeName)
+                        </td>
+
+                        <td class="textCapitalize">
+                            @Html.DisplayFor(modelItem => item.RI_TeamLead)
+                        </td>
+
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.RI_Candidate)
+                        </td>
+
+
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.RI_Company)
+                        </td>
+
+                        <td class="alignCSS">
+
+                            @Html.DisplayFor(modelItem => item.RI_StartDate)
+                        </td>
+
+                        <td class="alignCSS">
+
+                            @Html.DisplayFor(modelItem => item.RI_EndDate)
+                        </td>
+
+                        <td class="alignCSS">
+
+                            @Html.DisplayFor(modelItem => item.RI_NetMargin)
+                        </td>
+
+                        <td class="alignCSS">
+
+                            @Html.DisplayFor(modelItem => item.RI_Incentives)
+                        </td>
+
+                        <td class="alignCSS">
+
+                            @Html.DisplayFor(modelItem => item.RI_Remarks)
+                        </td>
+
+                        <td>
+
+                            @Html.DisplayFor(modelItem => item.RI_IncentiveCategory)
+                        </td>
+
+                    </tr>
+                }
+
+            }
+        </tbody>
+    </table>
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('#UserList1').DataTable({
+
+            "columnDefs": [{
+                "targets": [8, 9, 10],
+                "orderable": false
+            }],
+
+        });
+    });
+</script>

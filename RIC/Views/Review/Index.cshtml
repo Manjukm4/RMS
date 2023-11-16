@@ -1,0 +1,201 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    string HrRoleName = System.Configuration.ConfigurationManager.AppSettings["HRRole"];
+    string devLeadRole = System.Configuration.ConfigurationManager.AppSettings["DEV_LeadRole"];
+}
+<style>
+    .sidebar
+    {
+        margin: 0;        padding: 0;        width: 200px;        background-color: #f1f1f1;
+        position: fixed;        height: -webkit-fill-available;        overflow: auto;
+    }
+
+   .sidebar a 
+   {
+       display: block; /*color: black;*/            padding: 16px;            text-decoration: none;  
+   }
+   .sidebar a.active 
+   {
+        background-color: #58d0b3; color: white;
+   }
+
+   .sidebar a:hover:not(.active)
+   {
+        background-color: #555;   color: white; 
+   }
+
+    div.content
+    {
+           margin-left: 200px;      padding: 1px 16px;      /*height: 100px;*/  
+    }
+
+    .subMenu
+    {
+        background-color: #dfeae8;        font-weight: normal;
+    }
+
+    .activeSubmenu
+    {
+        background-color: #c1c1af;        color: white;
+    }
+    .caretStyle
+    {
+        float: right;        margin-top: 8px;
+    }
+ .badge 
+{
+    background: #67a994;
+    border-color: #67a994;  font-size: 12px;    
+}
+
+
+
+</style>
+
+<div id="ReviewSidebar" class=" sidebar ">
+    <ul class="list-unstyled">
+        <li>
+            <a href="@Url.Action("AnnualFeedbackDashboard")">
+                Dashboard
+                @if (Session["ReviewUpdate"] != null && Session["ReviewUpdate"].ToString() != "0")
+                {
+                    <span class="badge"> @Session["ReviewUpdate"]</span>
+                }
+            </a>
+        </li>
+        <li>
+            <a href="#ReviewSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                Annual Review
+                @if (Session["AnnualReviewRequest"] != null && Session["AnnualReviewRequest"].ToString() != "0")
+                {
+                    <span class="badge">@Session["AnnualReviewRequest"]</span>
+                }
+                <b class="caret caretStyle"></b>
+            </a>
+            <ul class="collapse list-unstyled subMenu" id="ReviewSubmenu">
+                @if (!User.IsInRole(HrRoleName))
+                {
+                    <li>
+                        <a href="@Url.Action("AnnualFeedback")">
+                            Review Requests
+                            @if (Session["AnnualReviewRequest"] != null && Session["AnnualReviewRequest"].ToString() != "0")
+                            {
+                                <span class="badge"> @Session["AnnualReviewRequest"]</span>
+                            }
+                        </a>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Submitted", "SubmittedAnnualFeedback")
+                    </li>
+                }
+                @if (User.IsInRole(HrRoleName))
+                {
+                    <li>
+                        <a href="@Url.Action("AnnualFeedbackRequestHr")">
+                            Review Requests
+                            @if (Session["AnnualReviewRequest"] != null && Session["AnnualReviewRequest"].ToString() != "0")
+                            {
+                                <span class="badge">@Session["AnnualReviewRequest"]</span>
+                            }
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+        @if (!User.IsInRole(devLeadRole))
+        {
+            <li>
+                <a href="#PerReviewSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    Interim Review
+                    @if (Session["InterimReviews"] != null && Session["InterimReviews"].ToString() != "0")
+                    {
+                        <span class="badge">@Session["InterimReviews"]</span>
+                    }
+                    <b class="caret caretStyle"></b>
+                </a>
+                <ul class="collapse list-unstyled subMenu" id="PerReviewSubmenu">
+                    <li>
+                        <a href="@Url.Action("InterimReviewRequest")">
+                            Review Requests
+                            @if (Session["InterimReviewRequest"] != null && Session["InterimReviewRequest"].ToString() != "0")
+                            {
+                                <span class="badge">@Session["InterimReviewRequest"]</span>
+                            }
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("InterimReviewSubmitted")">
+                            Submitted
+                            @if (Session["InterimReviewUpdate"] != null && Session["InterimReviewUpdate"].ToString() != "0")
+                            {
+                                <span class="badge">@Session["InterimReviewUpdate"]</span>
+                            }
+
+                        </a>
+                    </li>
+                    @{
+                        RolePrincipal rolePrincipal = (RolePrincipal)User;
+                        var role = rolePrincipal.GetRoles()[0];
+                    }
+                    <li>
+                        <a href="@Url.Action("InterimDrafts")">Drafts </a>
+                    </li>
+                </ul>
+            </li>
+        }
+        @if (User.IsInRole(HrRoleName))
+        {
+            <li>
+                <a href="#HRReviewSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    HR Discussion
+  
+                    <b class="caret caretStyle"></b>
+                </a>
+                <ul class="collapse list-unstyled subMenu" id="HRReviewSubmenu">                    
+                    <li>
+                        <a href="@Url.Action("HRDiscussionSendInvite")">
+                            Send Invite
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("HRDiscussionSubmitted")">
+                            Submitted   
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("HRDiscussionDrafts")">Drafts </a>
+                    </li>
+                </ul>
+            </li>
+        }
+    </ul>
+</div>
+<div class="content">
+    @RenderBody()
+</div>
+<script>
+    $(document).ready(function () {
+        $('#bootstrapMenu a[href="/Review/AnnualFeedbackDashboard"]').addClass("activeNav");
+        $('#ReviewSidebar>ul>li>a.active').removeClass("active");       
+        var path = window.location.href.split('?')[0];
+        $('#ReviewSidebar a').each(function () {
+            var href = $(this).attr('href');
+            var actionInLink = href.substring(href.lastIndexOf("/") + 1, href.length);
+
+            var actionName = path.substring(path.lastIndexOf("/") + 1, path.length);
+
+            if (actionInLink == actionName) {
+
+                // check if sub menu
+                if ($(this).parents('li').length == 2) {
+                    $(this).parents('ul.collapse').siblings('a').addClass('active');
+                    $(this).parents('ul.collapse').css("display", "block");
+                    $(this).addClass("activeSubmenu");
+                } else {
+                    $(this).addClass("active");
+                }
+            }
+        });
+    });
+</script>

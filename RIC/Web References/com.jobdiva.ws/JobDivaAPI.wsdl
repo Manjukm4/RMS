@@ -1,0 +1,2194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ws.jobdiva.com/JobDivaAPI/" name="JobDivaAPI" targetNamespace="http://ws.jobdiva.com/JobDivaAPI/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://ws.jobdiva.com/JobDivaAPI/">
+      <xsd:element name="searchCompany">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="companyid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="company" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="state" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="zip" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="country" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="phone" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="fax" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="url" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="parentcompany" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="showall" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="types" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="ownerids" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="division" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchCompanyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="data" type="tns:DataSet" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createCompany">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="companyname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address1" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address2" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="state" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="zipcode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="country" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="phone" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="fax" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="email" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="url" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="parentcompany" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="companytypes" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="owners" type="tns:OwnerType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createCompanyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="companyid" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCompany">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="companyid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="name" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="parentcompanyid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="addresses" type="tns:CompanyAddressType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="subguidelines" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="maxsubmittals" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="references" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="drugtest" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="backgroundcheck" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="securityclearance" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="Userfields" type="tns:UserfieldsType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="discount" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="discountper" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="percentagediscount" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="financials" type="tns:FinancialsType" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="owners" type="tns:OwnerType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCompanyResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchContact">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="contactid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="firstname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="lastname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="company" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="email" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="title" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="state" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="zip" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="country" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="phone" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="division" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="types" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="showprimary" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="ownerid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="showinactive" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchContactResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="data" type="tns:DataSet" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createContact">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="company" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="firstname" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="lastname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="title" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="department" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="phones" type="tns:PhoneType" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="addresses" type="tns:ContactAddressType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="email" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="alternateemail" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="unbounded" name="types" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="owners" type="tns:OwnerType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="reportsto" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="primary" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="assistantname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="assistantemail" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="assistantphone" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="assistantphoneextension" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="subguidelines" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="maxsubmittals" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="references" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="drugtest" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="backgroundcheck" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="securityclearance" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createContactResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="contactid" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateContact">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="contactid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="firstname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="lastname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="title" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="companyid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="department" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="addresses" type="tns:ContactAddressType" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="phones" type="tns:PhoneType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="reportsto" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="active" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="primary" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="email" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="alternateemail" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="assistantname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="assistantemail" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="assistantphone" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="assistantphoneextension" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="subguidelines" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="maxsubmittals" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="references" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="drugtest" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="backgroundcheck" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="securityclearance" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="Userfields" type="tns:UserfieldsType" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="owners" type="tns:OwnerType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateContactResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createContactNote">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="contactid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="note" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="recruiterid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="action" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="actionDate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="link2AnOpenJob" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="link2ACandidate" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createContactNoteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchJob">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobdivaref" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="optionalref" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="state" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="title" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="contactid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="companyid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="companyname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="status" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="jobtype" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="issuedatefrom" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="issuedateto" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="startdatefrom" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="startdateto" type="xsd:dateTime" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchJobResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="data" type="tns:DataSet" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createJob">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="contacts" type="tns:ContactRoleType" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="title" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="description" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="department" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="companyid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="priority" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="divisionid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="users" type="tns:UserRoleType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="experience" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="status" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="optionalref" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address1" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address2" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="state" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="zipcode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="countryid" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="startdate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="enddate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobtype" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="openings" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="fills" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="maxsubmittals" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="hidemyclient" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="hidemyclientaddress" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="hidemeandmycompany" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="overtime" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="reference" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="travel" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="drugtest" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="backgroundcheck" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="securityclearance" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="remarks" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="submittalinstruction" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="minbillrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="maxbillrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="billratecurrency" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="billrateunit" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="minpayrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="maxpayrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="payratecurrency" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="payrateunit" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="skills" type="tns:SkillType" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="skillstates" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="skillzipcode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="skillzipcodemiles" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="excludedskills" type="tns:SkillType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="harvest" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="resumes" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="attachments" type="tns:Attachment" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="Userfields" type="tns:UserfieldsType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createJobResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobid" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateJob">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="jobid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="optionalref" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="title" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="description" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="postingtitle" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="postingdescription" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="companyid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="contacts" type="tns:ContactRoleType" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="users" type="tns:UserRoleType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address1" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address2" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="state" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="zipcode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="countryid" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="startdate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="enddate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="status" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobtype" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="priority" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="openings" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="fills" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="maxsubmittals" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="hidemyclient" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="hidemyclientaddress" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="hidemeandmycompany" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="overtime" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="reference" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="travel" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="drugtest" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="backgroundcheck" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="securityclearance" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="remarks" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="submittalinstruction" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="minbillrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="maxbillrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="minpayrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="maxpayrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="Userfields" type="tns:UserfieldsType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="harvest" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="resumes" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateJobResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createJobNote">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="jobid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="note" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="recruiterid" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createJobNoteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchCandidateProfile">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="firstname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="lastname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="email" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="phone" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="state" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="maxreturned" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="qualifications" type="tns:QualificationType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchCandidateProfileResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="data" type="tns:DataSet" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createCandidate">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="firstname" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="lastname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="email" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address1" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address2" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="state" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="zipcode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="country" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="homephone" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="workphone" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="cellphone" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="fax" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="currentsalary" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="currentsalaryunit" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="preferredsalary" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="preferredsalaryunit" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="narrative" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="10" name="titleskillcertifications" type="tns:TitleSkillCertificationType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createCandidateResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidateid" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCandidateProfile">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="firstname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="lastname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="email" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="alternateemail" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address1" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="address2" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="state" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="zipcode" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="countryid" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="phones" type="tns:PhoneType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="currentsalary" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="currentsalaryunit" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="preferredsalary" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="preferredsalaryunit" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCandidateProfileResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCandidateUserfields">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="overwrite" type="xsd:boolean" />
+            <xsd:element minOccurs="1" maxOccurs="unbounded" name="Userfields" type="tns:UserfieldsType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCandidateUserfieldsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCandidateQualifications">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="overwrite" type="xsd:boolean" />
+            <xsd:element minOccurs="1" maxOccurs="unbounded" name="Qualifications" type="tns:QualificationType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCandidateQualificationsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCandidateAvailability">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="availablenow" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="unavailableindef" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="unavailableuntil" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="unavailableuntildate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="reason" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCandidateAvailabilityResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCandidateEmailMerge">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="backonemailmerge" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="requestoffemailindef" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="requestoffemailuntil" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="requestoffemailuntildate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="reason" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateCandidateEmailMergeResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createCandidateNote">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="note" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="recruiterid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="action" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="actionDate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="link2AnOpenJob" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="link2AContact" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createCandidateNoteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createCandidateReference">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="contactid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="createdByRecruiterid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="checkedByRecruiterid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="dateChecked" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="notes" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="standardQuestions" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createCandidateReferenceResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchStart">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="optionalref" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobdivaref" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidatefirstname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidatelastname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidateemail" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchStartResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="data" type="tns:DataSet" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateStart">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="startid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="overwrite" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="startdate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="enddate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="positiontype" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="billrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="billratecurrency" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="billrateunit" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="payrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="payratecurrency" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="payrateunit" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="userfields" type="tns:UserfieldsType" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateStartResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createSubmittal">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="jobid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="submit2id" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="submittaldate" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="positiontype" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="recruitedbyid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="primarysalesid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="internalnotes" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="salary" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="feetype" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="fee" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="quotedbillrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="agreedbillrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="payrate" type="xsd:double" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="payratecurrency" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="payrateunit" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="corp2corp" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="agreedon" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="unbounded" name="userfields" type="tns:UserfieldsType" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="filename" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="filecontent" type="xsd:base64Binary" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="textfile" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createSubmittalResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="submittalid" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchSubmittal">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="submittalid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="jobid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="joboptionalref" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="companyname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidatefirstname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidatelastname" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidateemail" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidatephone" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidatecity" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidatestate" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="searchSubmittalResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="data" type="tns:DataSet" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateSubmittal">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="submittalid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="internalnotes" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateSubmittalResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="saveTimeSheet">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="xml" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="saveTimeSheetResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="uploadResume">
+        <xsd:complexType>
+          <xsd:sequence minOccurs="1" maxOccurs="1">
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="filename" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="filecontent" type="xsd:base64Binary" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="textfile" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="resumesource" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="uploadResumeResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="candidateid" type="xsd:long" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createJobApplication">
+        <xsd:complexType>
+          <xsd:sequence minOccurs="1" maxOccurs="1">
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="candidateid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="jobid" type="xsd:long" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="dateapplied" type="xsd:dateTime" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="resumesource" type="xsd:int" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="globalid" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createJobApplicationResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createBillingRecord">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="billingRecord" type="tns:BillingRecord" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createBillingRecordResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="recID" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateBillingRecord">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="billingRecord" type="tns:BillingRecord" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updateBillingRecordResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createPayRecord">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="payRecord" type="tns:PayRecord" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="createPayRecordResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="recID" type="xsd:int" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updatePayRecord">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="clientid" type="xsd:long" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="username" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="password" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="payRecord" type="tns:PayRecord" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="updatePayRecordResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="status" type="xsd:boolean" />
+            <xsd:element minOccurs="0" maxOccurs="1" name="message" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="authenticationFailure" type="xsd:string" />
+      <xsd:element name="invalidClientId" type="xsd:string" />
+      <xsd:element name="invalidCompanyId" type="xsd:string" />
+      <xsd:element name="invalidContactId" type="xsd:string" />
+      <xsd:element name="invalidJobId" type="xsd:string" />
+      <xsd:element name="invalidCandidateId" type="xsd:string" />
+      <xsd:element name="invalidStartId" type="xsd:string" />
+      <xsd:complexType name="DataSet">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="Columns" type="tns:ColumnNames" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="Row" type="tns:RowData" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Pair">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="Name" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Value" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RowData">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="unbounded" name="RowData" type="tns:Pair" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ColumnNames">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="unbounded" name="Column" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="UserfieldsType">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="userfieldid" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="userfieldvalue" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="QualificationType">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="qulificationtypeid" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="qulificationvalue" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="UserRoleType">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="userid" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="role" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="action" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="OwnerType">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="ownerid" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="firstname" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="lastname" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="primary" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="action" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ContactRoleType">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="contactid" type="xsd:long" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="roleid" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="showonjob" type="xsd:boolean" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="action" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="PhoneType">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="phone" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ext" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="type" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="action" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CompanyAddressType">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="addressid" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="default" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="address1" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="address2" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="state" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="zipcode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="phone" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="fax" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="email" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="url" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="action" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ContactAddressType">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="addressid" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="default" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="address1" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="address2" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="city" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="state" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="zipcode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="country" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="label" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="action" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="TitleSkillCertificationType">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="titleskillcertification" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="startdate" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="enddate" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="years" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="LastTaskType">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="datefrom" type="xsd:dateTime" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="dateto" type="xsd:dateTime" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="type" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="LastNoteType">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="datefrom" type="xsd:dateTime" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="dateto" type="xsd:dateTime" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="action" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="FinancialsType">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="1" name="showoninvoice" type="tns:ShowOnInvoiceType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="groupinvoiceby" type="tns:GroupInvoiceByType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="paymentterms" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="timesheetentryformat" type="tns:TimeSheetEntryFormatType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="frequency" type="tns:FrequencyType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="weekending" type="tns:WeekendingType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="hours" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="billingunit" type="tns:BillingUnitType" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="invoicecomment" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="ShowOnInvoiceType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="RESET" />
+          <xsd:enumeration value="ADDRESS" />
+          <xsd:enumeration value="EMAIL" />
+          <xsd:enumeration value="DO_NOT_SEND" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="GroupInvoiceByType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="RESET" />
+          <xsd:enumeration value="JOB" />
+          <xsd:enumeration value="COMPANY" />
+          <xsd:enumeration value="PO_NUMBER" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="TimeSheetEntryFormatType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="RESET" />
+          <xsd:enumeration value="MINUTE" />
+          <xsd:enumeration value="QUARTER" />
+          <xsd:enumeration value="TIME_IN_TIME_OUT" />
+          <xsd:enumeration value="DEFAULT_WHEN_BILLING_UNIT_IS_DAILY" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="FrequencyType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="RESET" />
+          <xsd:enumeration value="BI_WEEKLY" />
+          <xsd:enumeration value="MONTHLY" />
+          <xsd:enumeration value="SEMI_MONTHLY" />
+          <xsd:enumeration value="WEEKLY" />
+          <xsd:enumeration value="WHOLE_PROJECT" />
+          <xsd:enumeration value="MONTHLY_ENDING_WEEKEND" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="WeekendingType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="RESET" />
+          <xsd:enumeration value="SATURDAY" />
+          <xsd:enumeration value="SUNDAY" />
+          <xsd:enumeration value="MONDAY" />
+          <xsd:enumeration value="TUESDAY" />
+          <xsd:enumeration value="WEDNESDAY" />
+          <xsd:enumeration value="THURSDAY" />
+          <xsd:enumeration value="FRIDAY" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="BillingUnitType">
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="RESET" />
+          <xsd:enumeration value="HOURLY" />
+          <xsd:enumeration value="DAILY_BASED_ON_HOURS" />
+          <xsd:enumeration value="DAILY_HALF_DAY" />
+          <xsd:enumeration value="DAILY_HALF_DAY_OT" />
+          <xsd:enumeration value="DAILY_BILL_WHOLE_DAY" />
+          <xsd:enumeration value="DAILY_BILL_WHOLE_DAY_OT" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="SkillType">
+        <xsd:restriction base="xsd:string">
+          <xsd:pattern value="[^~]+~[01]~\d+(\.\d)?~[01]~[01]$" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="Attachment">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="filename" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="filedata" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="description" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="filetype" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="fileid" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="entityid" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="entitytype" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="BillingRecord">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="CandidateID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AssignmentID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="JobID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="RecordID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="CreatedByID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Approved" type="xsd:boolean" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="StartDate" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="EndDate" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="CustomerRefNo" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="HiringManagerID" type="xsd:long" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="BillingContactID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Division" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="InvoiceGroupIndex" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="InvoiceGroup" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="VMSWebsite" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="VMSEmployeeName" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="InvoiceContent" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ExpenseInvoices" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="EnableTimesheet" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AllowEnterTimeOnPortal" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TimesheetInstruction" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ExpenseEnabled" type="xsd:boolean" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="BillRate" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="BillRatePer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OvertimeExempt" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TimesheetEntryFormat" type="xsd:long" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Frequency" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OvertimeByWorkingState" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OvertimeRate" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OvertimeRatePer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="DoubletimeRate" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="DoubletimePer" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="BillingUnit" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="WeekEnding" type="xsd:int" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="HoursPerDay" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="HoursPerHalfDay" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="WorkAddress1" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="WorkAddress2" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="WorkCity" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="WorkState" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="WorkZipcode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="WorkCountry" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="PaymentTerms" type="xsd:string" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="PrimarySalesPersonID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="PrimarySalesPercentage" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SecondarySalesPersonID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SecondarySalesPercentage" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TertiarySalesPersonID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TertiarySalesPercentage" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="PrimaryRecruiterID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="PrimaryRecruiterPercentage" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SecondaryRecruiterID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SecondaryRecruiterPercentage" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TertiaryRecruiterID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TertiaryRecruiterPercentage" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="PayRecord">
+        <xsd:sequence>
+          <xsd:element minOccurs="1" maxOccurs="1" name="CandidateID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="AssignmentID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="JobID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="RecordID" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="Approved" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="CreatedByID" type="xsd:long" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="EffectiveDate" type="xsd:dateTime" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="EndDate" type="xsd:dateTime" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Status" type="xsd:int" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="TaxID" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="PaymentTerms" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SubcontractCompanyID" type="xsd:long" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="PayOnRemittance" type="xsd:boolean" />
+          <xsd:element minOccurs="1" maxOccurs="1" name="Salary" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="SalaryPer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="PerDiem" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="PerDiemPer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OtherExpenses" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OtherExpensesPer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OutsideCommission" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OutsideCommissionPer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OvertimeRate" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OvertimeRatePer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="DoubletimeRate" type="xsd:double" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="DoubletimeRatePer" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="OvertimeExempt" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="FileNo" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ADPCOCODE" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="ADPPAYFREQUENCY" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="createCandidateReferenceRequest">
+    <wsdl:part name="parameters" element="tns:createCandidateReference" />
+  </wsdl:message>
+  <wsdl:message name="updateStartResponse">
+    <wsdl:part name="parameters" element="tns:updateStartResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateSubmittalResponse">
+    <wsdl:part name="parameters" element="tns:updateSubmittalResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchCompanyResponse">
+    <wsdl:part name="parameters" element="tns:searchCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateStartRequest">
+    <wsdl:part name="parameters" element="tns:updateStart" />
+  </wsdl:message>
+  <wsdl:message name="updatePayRecordRequest">
+    <wsdl:part name="parameters" element="tns:updatePayRecord" />
+  </wsdl:message>
+  <wsdl:message name="searchSubmittalRequest">
+    <wsdl:part name="parameters" element="tns:searchSubmittal" />
+  </wsdl:message>
+  <wsdl:message name="createPayRecordFault">
+    <wsdl:part name="parameters" element="tns:createPayRecordFault" />
+  </wsdl:message>
+  <wsdl:message name="createCandidateReferenceResponse">
+    <wsdl:part name="parameters" element="tns:createCandidateReferenceResponse" />
+  </wsdl:message>
+  <wsdl:message name="createContactRequest">
+    <wsdl:part name="parameters" element="tns:createContact" />
+  </wsdl:message>
+  <wsdl:message name="updateCandidateProfileResponse">
+    <wsdl:part name="parameters" element="tns:updateCandidateProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="updatePayRecordFault">
+    <wsdl:part name="parameters" element="tns:updatePayRecordFault" />
+  </wsdl:message>
+  <wsdl:message name="updateContactRequest">
+    <wsdl:part name="parameters" element="tns:updateContact" />
+  </wsdl:message>
+  <wsdl:message name="updateJobResponse">
+    <wsdl:part name="parameters" element="tns:updateJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateInvalidCandidateId">
+    <wsdl:part name="parameters" element="tns:invalidCandidateId" />
+  </wsdl:message>
+  <wsdl:message name="updateCandidateQualificationsRequest">
+    <wsdl:part name="parameters" element="tns:updateCandidateQualifications" />
+  </wsdl:message>
+  <wsdl:message name="updateCandidateQualificationsResponse">
+    <wsdl:part name="parameters" element="tns:updateCandidateQualificationsResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateInvalidCompanyId">
+    <wsdl:part name="parameters" element="tns:invalidCompanyId" />
+  </wsdl:message>
+  <wsdl:message name="createJobApplicationResponse">
+    <wsdl:part name="parameters" element="tns:createJobApplicationResponse" />
+  </wsdl:message>
+  <wsdl:message name="createCandidateNoteResponse">
+    <wsdl:part name="parameters" element="tns:createCandidateNoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateJobRequest">
+    <wsdl:part name="parameters" element="tns:updateJob" />
+  </wsdl:message>
+  <wsdl:message name="uploadResumeResponse">
+    <wsdl:part name="parameters" element="tns:uploadResumeResponse" />
+  </wsdl:message>
+  <wsdl:message name="saveTimeSheetResponse">
+    <wsdl:part name="parameters" element="tns:saveTimeSheetResponse" />
+  </wsdl:message>
+  <wsdl:message name="createSubmittalRequest">
+    <wsdl:part name="parameters" element="tns:createSubmittal" />
+  </wsdl:message>
+  <wsdl:message name="createInvalidClientId">
+    <wsdl:part name="parameters" element="tns:invalidClientId" />
+  </wsdl:message>
+  <wsdl:message name="accountAuthenticationFailure">
+    <wsdl:part name="parameters" element="tns:authenticationFailure" />
+  </wsdl:message>
+  <wsdl:message name="searchInvalidClientId">
+    <wsdl:part name="parameters" element="tns:invalidClientId" />
+  </wsdl:message>
+  <wsdl:message name="createPayRecordRequest">
+    <wsdl:part name="parameters" element="tns:createPayRecord" />
+  </wsdl:message>
+  <wsdl:message name="createContactNoteRequest">
+    <wsdl:part name="parameters" element="tns:createContactNote" />
+  </wsdl:message>
+  <wsdl:message name="updateCandidateAvailabilityResponse">
+    <wsdl:part name="parameters" element="tns:updateCandidateAvailabilityResponse" />
+  </wsdl:message>
+  <wsdl:message name="createInvalidCandidateId">
+    <wsdl:part name="parameters" element="tns:invalidCandidateId" />
+  </wsdl:message>
+  <wsdl:message name="createContactNoteResponse">
+    <wsdl:part name="parameters" element="tns:createContactNoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchJobRequest">
+    <wsdl:part name="parameters" element="tns:searchJob" />
+  </wsdl:message>
+  <wsdl:message name="createBillingRecordFault">
+    <wsdl:part name="parameters" element="tns:authenticationFailure" />
+  </wsdl:message>
+  <wsdl:message name="updateContactResponse">
+    <wsdl:part name="parameters" element="tns:updateContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="createJobResponse">
+    <wsdl:part name="parameters" element="tns:createJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateBillingRecordRequest">
+    <wsdl:part name="parameters" element="tns:updateBillingRecord" />
+  </wsdl:message>
+  <wsdl:message name="searchCandidateProfileRequest">
+    <wsdl:part name="parameters" element="tns:searchCandidateProfile" />
+  </wsdl:message>
+  <wsdl:message name="updateCandidateUserfieldsResponse">
+    <wsdl:part name="parameters" element="tns:updateCandidateUserfieldsResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchContactRequest">
+    <wsdl:part name="parameters" element="tns:searchContact" />
+  </wsdl:message>
+  <wsdl:message name="updateCandidateEmailMergeResponse">
+    <wsdl:part name="parameters" element="tns:updateCandidateEmailMergeResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateCandidateEmailMergeRequest">
+    <wsdl:part name="parameters" element="tns:updateCandidateEmailMerge" />
+  </wsdl:message>
+  <wsdl:message name="updatePayRecordResponse">
+    <wsdl:part name="parameters" element="tns:updatePayRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateCompanyResponse">
+    <wsdl:part name="parameters" element="tns:updateCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="createCandidateNoteRequest">
+    <wsdl:part name="parameters" element="tns:createCandidateNote" />
+  </wsdl:message>
+  <wsdl:message name="uploadResumeRequest">
+    <wsdl:part name="parameters" element="tns:uploadResume" />
+  </wsdl:message>
+  <wsdl:message name="updateSubmittalRequest">
+    <wsdl:part name="parameters" element="tns:updateSubmittal" />
+  </wsdl:message>
+  <wsdl:message name="createJobNoteRequest">
+    <wsdl:part name="parameters" element="tns:createJobNote" />
+  </wsdl:message>
+  <wsdl:message name="updateInvalidContactId">
+    <wsdl:part name="parameters" element="tns:invalidContactId" />
+  </wsdl:message>
+  <wsdl:message name="createBillingRecordRequest">
+    <wsdl:part name="parameters" element="tns:createBillingRecord" />
+  </wsdl:message>
+  <wsdl:message name="updateCandidateAvailabilityRequest">
+    <wsdl:part name="parameters" element="tns:updateCandidateAvailability" />
+  </wsdl:message>
+  <wsdl:message name="searchJobResponse">
+    <wsdl:part name="parameters" element="tns:searchJobResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchStartRequest">
+    <wsdl:part name="parameters" element="tns:searchStart" />
+  </wsdl:message>
+  <wsdl:message name="invalidClientId">
+    <wsdl:part name="parameters" element="tns:invalidClientId" />
+  </wsdl:message>
+  <wsdl:message name="createBillingRecordResponse">
+    <wsdl:part name="parameters" element="tns:createBillingRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="createJobNoteResponse">
+    <wsdl:part name="parameters" element="tns:createJobNoteResponse" />
+  </wsdl:message>
+  <wsdl:message name="createPayRecordResponse">
+    <wsdl:part name="parameters" element="tns:createPayRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateBillingRecordResponse">
+    <wsdl:part name="parameters" element="tns:updateBillingRecordResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateInvalidStartId">
+    <wsdl:part name="parameters" element="tns:invalidStartId" />
+  </wsdl:message>
+  <wsdl:message name="updateInvalidJobId">
+    <wsdl:part name="parameters" element="tns:invalidJobId" />
+  </wsdl:message>
+  <wsdl:message name="saveTimeSheetRequest">
+    <wsdl:part name="parameters" element="tns:saveTimeSheet" />
+  </wsdl:message>
+  <wsdl:message name="createJobRequest">
+    <wsdl:part name="parameters" element="tns:createJob" />
+  </wsdl:message>
+  <wsdl:message name="createCompanyResponse">
+    <wsdl:part name="parameters" element="tns:createCompanyResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchContactResponse">
+    <wsdl:part name="parameters" element="tns:searchContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="searchCandidateProfileResponse">
+    <wsdl:part name="parameters" element="tns:searchCandidateProfileResponse" />
+  </wsdl:message>
+  <wsdl:message name="createCandidateResponse">
+    <wsdl:part name="parameters" element="tns:createCandidateResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateCompanyRequest">
+    <wsdl:part name="parameters" element="tns:updateCompany" />
+  </wsdl:message>
+  <wsdl:message name="createSubmittalResponse">
+    <wsdl:part name="parameters" element="tns:createSubmittalResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateCandidateUserfieldsRequest">
+    <wsdl:part name="parameters" element="tns:updateCandidateUserfields" />
+  </wsdl:message>
+  <wsdl:message name="searchCompanyRequest">
+    <wsdl:part name="parameters" element="tns:searchCompany" />
+  </wsdl:message>
+  <wsdl:message name="createInvalidContactId">
+    <wsdl:part name="parameters" element="tns:invalidContactId" />
+  </wsdl:message>
+  <wsdl:message name="searchStartResponse">
+    <wsdl:part name="parameters" element="tns:searchStartResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateCandidateProfileRequest">
+    <wsdl:part name="parameters" element="tns:updateCandidateProfile" />
+  </wsdl:message>
+  <wsdl:message name="createContactResponse">
+    <wsdl:part name="parameters" element="tns:createContactResponse" />
+  </wsdl:message>
+  <wsdl:message name="createJobApplicationRequest">
+    <wsdl:part name="parameters" element="tns:createJobApplication" />
+  </wsdl:message>
+  <wsdl:message name="searchSubmittalResponse">
+    <wsdl:part name="parameters" element="tns:searchSubmittalResponse" />
+  </wsdl:message>
+  <wsdl:message name="createCompanyRequest">
+    <wsdl:part name="parameters" element="tns:createCompany" />
+  </wsdl:message>
+  <wsdl:message name="createCandidateRequest">
+    <wsdl:part name="parameters" element="tns:createCandidate" />
+  </wsdl:message>
+  <wsdl:message name="updateInvalidClientId">
+    <wsdl:part name="parameters" element="tns:invalidClientId" />
+  </wsdl:message>
+  <wsdl:message name="updateBillingRecordFault">
+    <wsdl:part name="parameters" element="tns:updateBillingRecordFault" />
+  </wsdl:message>
+  <wsdl:portType name="JobDivaAPI">
+    <wsdl:operation name="searchCompany">
+      <wsdl:input message="tns:searchCompanyRequest" />
+      <wsdl:output message="tns:searchCompanyResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="searchInvalidClientId" message="tns:searchInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="createCompany">
+      <wsdl:input message="tns:createCompanyRequest" />
+      <wsdl:output message="tns:createCompanyResponse" />
+      <wsdl:fault name="createInvalidClientId" message="tns:createInvalidClientId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="updateCompany">
+      <wsdl:input message="tns:updateCompanyRequest" />
+      <wsdl:output message="tns:updateCompanyResponse" />
+      <wsdl:fault name="updateInvalidCompanyId" message="tns:updateInvalidCompanyId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="searchContact">
+      <wsdl:input message="tns:searchContactRequest" />
+      <wsdl:output message="tns:searchContactResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="searchInvalidClientId" message="tns:searchInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="createContact">
+      <wsdl:input message="tns:createContactRequest" />
+      <wsdl:output message="tns:createContactResponse" />
+      <wsdl:fault name="createInvalidClientId" message="tns:createInvalidClientId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="updateContact">
+      <wsdl:input message="tns:updateContactRequest" />
+      <wsdl:output message="tns:updateContactResponse" />
+      <wsdl:fault name="updateInvalidContactId" message="tns:updateInvalidContactId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="createContactNote">
+      <wsdl:input message="tns:createContactNoteRequest" />
+      <wsdl:output message="tns:createContactNoteResponse" />
+      <wsdl:fault name="createInvalidClientId" message="tns:createInvalidClientId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="createInvalidContactId" message="tns:createInvalidContactId" />
+    </wsdl:operation>
+    <wsdl:operation name="searchJob">
+      <wsdl:input message="tns:searchJobRequest" />
+      <wsdl:output message="tns:searchJobResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="searchInvalidClientId" message="tns:searchInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="createJob">
+      <wsdl:input message="tns:createJobRequest" />
+      <wsdl:output message="tns:createJobResponse" />
+      <wsdl:fault name="createInvalidClientId" message="tns:createInvalidClientId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="updateJob">
+      <wsdl:input message="tns:updateJobRequest" />
+      <wsdl:output message="tns:updateJobResponse" />
+      <wsdl:fault name="updateInvalidJobId" message="tns:updateInvalidJobId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="createJobNote">
+      <wsdl:input message="tns:createJobNoteRequest" />
+      <wsdl:output message="tns:createJobNoteResponse" />
+      <wsdl:fault name="updateInvalidJobId" message="tns:updateInvalidJobId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="searchCandidateProfile">
+      <wsdl:input message="tns:searchCandidateProfileRequest" />
+      <wsdl:output message="tns:searchCandidateProfileResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="searchInvalidClientId" message="tns:searchInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="createCandidate">
+      <wsdl:input message="tns:createCandidateRequest" />
+      <wsdl:output message="tns:createCandidateResponse" />
+      <wsdl:fault name="createInvalidClientId" message="tns:createInvalidClientId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="updateCandidateProfile">
+      <wsdl:input message="tns:updateCandidateProfileRequest" />
+      <wsdl:output message="tns:updateCandidateProfileResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+      <wsdl:fault name="updateInvalidCandidateId" message="tns:updateInvalidCandidateId" />
+    </wsdl:operation>
+    <wsdl:operation name="updateCandidateUserfields">
+      <wsdl:input message="tns:updateCandidateUserfieldsRequest" />
+      <wsdl:output message="tns:updateCandidateUserfieldsResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+      <wsdl:fault name="updateInvalidCandidateId" message="tns:updateInvalidCandidateId" />
+    </wsdl:operation>
+    <wsdl:operation name="updateCandidateQualifications">
+      <wsdl:input message="tns:updateCandidateQualificationsRequest" />
+      <wsdl:output message="tns:updateCandidateQualificationsResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+      <wsdl:fault name="updateInvalidCandidateId" message="tns:updateInvalidCandidateId" />
+    </wsdl:operation>
+    <wsdl:operation name="updateCandidateAvailability">
+      <wsdl:input message="tns:updateCandidateAvailabilityRequest" />
+      <wsdl:output message="tns:updateCandidateAvailabilityResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+      <wsdl:fault name="updateInvalidCandidateId" message="tns:updateInvalidCandidateId" />
+    </wsdl:operation>
+    <wsdl:operation name="updateCandidateEmailMerge">
+      <wsdl:input message="tns:updateCandidateEmailMergeRequest" />
+      <wsdl:output message="tns:updateCandidateEmailMergeResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+      <wsdl:fault name="updateInvalidCandidateId" message="tns:updateInvalidCandidateId" />
+    </wsdl:operation>
+    <wsdl:operation name="createCandidateNote">
+      <wsdl:input message="tns:createCandidateNoteRequest" />
+      <wsdl:output message="tns:createCandidateNoteResponse" />
+      <wsdl:fault name="createInvalidClientId" message="tns:createInvalidClientId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="createInvalidCandidateId" message="tns:createInvalidCandidateId" />
+    </wsdl:operation>
+    <wsdl:operation name="createCandidateReference">
+      <wsdl:input message="tns:createCandidateReferenceRequest" />
+      <wsdl:output message="tns:createCandidateReferenceResponse" />
+      <wsdl:fault name="createInvalidClientId" message="tns:createInvalidClientId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="createInvalidCandidateId" message="tns:createInvalidCandidateId" />
+      <wsdl:fault name="createInvalidContactId" message="tns:createInvalidContactId" />
+    </wsdl:operation>
+    <wsdl:operation name="searchStart">
+      <wsdl:input message="tns:searchStartRequest" />
+      <wsdl:output message="tns:searchStartResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="searchInvalidClientId" message="tns:searchInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="updateStart">
+      <wsdl:input message="tns:updateStartRequest" />
+      <wsdl:output message="tns:updateStartResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+      <wsdl:fault name="updateInvalidStartId" message="tns:updateInvalidStartId" />
+    </wsdl:operation>
+    <wsdl:operation name="saveTimeSheet">
+      <wsdl:input message="tns:saveTimeSheetRequest" />
+      <wsdl:output message="tns:saveTimeSheetResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="updateInvalidClientId" message="tns:updateInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="createBillingRecord">
+      <wsdl:input message="tns:createBillingRecordRequest" />
+      <wsdl:output message="tns:createBillingRecordResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="createPayRecord">
+      <wsdl:input message="tns:createPayRecordRequest" />
+      <wsdl:output message="tns:createPayRecordResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="updateBillingRecord">
+      <wsdl:input message="tns:updateBillingRecordRequest" />
+      <wsdl:output message="tns:updateBillingRecordResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="updatePayRecord">
+      <wsdl:input message="tns:updatePayRecordRequest" />
+      <wsdl:output message="tns:updatePayRecordResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="uploadResume">
+      <wsdl:input message="tns:uploadResumeRequest" />
+      <wsdl:output message="tns:uploadResumeResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="createJobApplication">
+      <wsdl:input message="tns:createJobApplicationRequest" />
+      <wsdl:output message="tns:createJobApplicationResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="createSubmittal">
+      <wsdl:input message="tns:createSubmittalRequest" />
+      <wsdl:output message="tns:createSubmittalResponse" />
+      <wsdl:fault name="createInvalidClientId" message="tns:createInvalidClientId" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+    <wsdl:operation name="searchSubmittal">
+      <wsdl:input message="tns:searchSubmittalRequest" />
+      <wsdl:output message="tns:searchSubmittalResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+      <wsdl:fault name="searchInvalidClientId" message="tns:searchInvalidClientId" />
+    </wsdl:operation>
+    <wsdl:operation name="updateSubmittal">
+      <wsdl:input message="tns:updateSubmittalRequest" />
+      <wsdl:output message="tns:updateSubmittalResponse" />
+      <wsdl:fault name="accountAuthenticationFailure" message="tns:accountAuthenticationFailure" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="JobDivaAPISOAP" type="tns:JobDivaAPI">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="searchCompany">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/searchCompany" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="searchInvalidClientId">
+        <soap:fault use="literal" name="searchInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createCompany">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createCompany" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="createInvalidClientId">
+        <soap:fault use="literal" name="createInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCompany">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateCompany" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="updateInvalidCompanyId">
+        <soap:fault use="literal" name="updateInvalidCompanyId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="searchContact">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/searchContact" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="searchInvalidClientId">
+        <soap:fault use="literal" name="searchInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createContact">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createContact" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="createInvalidClientId">
+        <soap:fault use="literal" name="createInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateContact">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateContact" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="updateInvalidContactId">
+        <soap:fault use="literal" name="updateInvalidContactId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createContactNote">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createContactNote" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="createInvalidClientId">
+        <soap:fault use="literal" name="createInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="createInvalidContactId">
+        <soap:fault use="literal" name="createInvalidContactId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="searchJob">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/searchJob" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="searchInvalidClientId">
+        <soap:fault use="literal" name="searchInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createJob">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createJob" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="createInvalidClientId">
+        <soap:fault use="literal" name="createInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateJob">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateJob" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="updateInvalidJobId">
+        <soap:fault use="literal" name="updateInvalidJobId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createJobNote">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createJobNote" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="updateInvalidJobId">
+        <soap:fault use="literal" name="updateInvalidJobId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="searchCandidateProfile">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/searchCandidateProfile" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="searchInvalidClientId">
+        <soap:fault use="literal" name="searchInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createCandidate">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createCandidate" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="createInvalidClientId">
+        <soap:fault use="literal" name="createInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCandidateProfile">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateCandidateProfile" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidCandidateId">
+        <soap:fault use="literal" name="updateInvalidCandidateId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCandidateUserfields">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateCandidateUserfields" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidCandidateId">
+        <soap:fault use="literal" name="updateInvalidCandidateId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCandidateQualifications">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateCandidateQualifications" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidCandidateId">
+        <soap:fault use="literal" name="updateInvalidCandidateId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCandidateAvailability">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateCandidateAvailability" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidCandidateId">
+        <soap:fault use="literal" name="updateInvalidCandidateId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCandidateEmailMerge">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateCandidateEmailMerge" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidCandidateId">
+        <soap:fault use="literal" name="updateInvalidCandidateId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createCandidateNote">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createCandidateNote" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="createInvalidClientId">
+        <soap:fault use="literal" name="createInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="createInvalidCandidateId">
+        <soap:fault use="literal" name="createInvalidCandidateId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createCandidateReference">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createCandidateReference" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="createInvalidClientId">
+        <soap:fault use="literal" name="createInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="createInvalidCandidateId">
+        <soap:fault use="literal" name="createInvalidCandidateId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="createInvalidContactId">
+        <soap:fault use="literal" name="createInvalidContactId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="searchStart">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/searchStart" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="searchInvalidClientId">
+        <soap:fault use="literal" name="searchInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createSubmittal">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createSubmittal" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="createInvalidClientId">
+        <soap:fault use="literal" name="createInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateStart">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateStart" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidStartId">
+        <soap:fault use="literal" name="updateInvalidStartId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="saveTimeSheet">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/saveTimeSheet" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="updateInvalidClientId">
+        <soap:fault use="literal" name="updateInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createBillingRecord">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createBillingRecord" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createPayRecord">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createPayRecord" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateBillingRecord">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateBillingRecord" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updatePayRecord">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updatePayRecord" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="uploadResume">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/uploadResume" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createJobApplication">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/createJobApplication" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="searchSubmittal">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/searchSubmittal" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="searchInvalidClientId">
+        <soap:fault use="literal" name="searchInvalidClientId" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateSubmittal">
+      <soap:operation soapAction="http://ws.jobdiva.com/JobDivaAPI/updateSubmittal" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="accountAuthenticationFailure">
+        <soap:fault use="literal" name="accountAuthenticationFailure" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="JobDivaAPI">
+    <wsdl:port name="JobDivaAPISOAP" binding="tns:JobDivaAPISOAP">
+      <soap:address location="http://ws.jobdiva.com/axis2-1.6.1/services/JobDivaAPI/" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

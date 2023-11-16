@@ -1,0 +1,31 @@
+﻿ <canvas id="StartsInsight"></canvas>
+<script>
+    $(document).ready(function () {
+        var ctxStartsInsight = document.getElementById('StartsInsight').getContext('2d');
+        StartsInsightdata = {
+            datasets: [{
+                data: [1, 5, 50],
+                backgroundColor: [
+                    '#77ffbf',
+                    '#f4ff91',
+                    '#f97a7a',
+                ]
+            }],
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: ['>2', '1', '0'],
+        };
+        var StartsInsightPieChart = new Chart(ctxStartsInsight, {
+            type: 'pie',
+            data: StartsInsightdata,
+            options: {
+                plugins: {
+                    labels: {
+                        render: 'value',
+                        fontSize: 12,
+                        fontColor: '#000'
+                    }
+                }
+            }
+        });
+    });
+</script>

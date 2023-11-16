@@ -1,0 +1,385 @@
+﻿@model  RIC.Models.Dashboard.ProgressReportPartialVM
+<script src="~/Content/TreeView/js/main.js"></script>
+<div class="panel panel-default">
+    <div id="panelHeading" class="panel-heading container-fluid" data-spy="affix" data-offset-top="5">
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            Html.RenderAction("TreeViewPartial");
+        }
+
+        <div style="margin:auto;padding-top:5px;     padding-right: 0px;    width: 96%;" class="col-md-11">
+            <div style="padding-left: 0px; margin-bottom: 7px;" class="form-group col-md-4">
+                <label>Include InActive Members</label>
+
+                <input type="checkbox" class="form-check-input" id="IsActive">
+
+            </div>
+
+
+
+            @*<label>Include InActive Members</label>
+
+        <input type="checkbox" class="form-check-input" id="IsActive">*@
+
+
+
+
+            <!--<div style="padding-left: 0px; margin-bottom: 7px;" class="form-group col-md-3">
+        <div style="padding:0px;padding-top: 9px;" class="col-md-6">
+
+
+            <label>From Date</label>
+        </div>
+        <div style="padding:0px" class="col-md-6">
+
+         /*   Html.TextBoxFor(m => m.FromDate, new { style = "background:white", autocomplete = "off", required = "required", placeholder = "MM-DD-YYYY", class = "form-control  input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+        */
+        </div>
+    </div>
+    <div style="padding-left: 0px; margin-bottom: 7px;" class="form-group col-md-3">
+        <div style="padding:0px; padding-top: 9px;" class="col-md-6">    <label for="inputEmail4">To Date</label> </div>
+        <div style="padding:0px" class="col-md-6">
+            Html.TextBoxFor(m => m.ToDate, new { style = "background:white", autocomplete = "off", required = "required", placeholder = "MM-DD-YYYY", class = "form-control  input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+        </div>
+    </div>
+    <div class="col-md-2">
+        <button type="button" id="progressDataBtn" style="    font-size: small;margin-top: 2px;" class="btn btn-primary">Get Details </button>-->
+            @*<button type="button" id="progressDataBtn1" style="    font-size: small;margin-top: 2px;" class="btn btn-primary">Access Log</button>*@
+            <!--</div>-->
+
+        </div>
+        @*<label style="font-size: x-large;">
+                Target for this month
+
+                 (1 days to go)
+                @ViewBag.lableText
+
+            </label><br />
+            <label>Remaining :</label>
+            <label class="lableStyle">
+                Submissions
+
+            </label>
+
+            <label class="lableStyle">
+                Interviews
+
+            </label>
+
+            <label class="lableStyle">
+                Hires
+
+            </label>*@
+
+    </div>
+    <div style="background-color:#fff9d330;" class="panel-body">
+        <div style="" class="col-md-6">
+            @{
+
+                string submissionStyle = "p" + (Model.SubmissionsPer > 100 ? 100 : Model.SubmissionsPer);
+                string submissionColor = Model.SubmissionsPer >= 70 ? "green" : Model.SubmissionsPer <= 70 && Model.SubmissionsPer >= 50 ? "yellow" : "red";
+
+                string interviewStyle = "p" + (Model.InterviewsPer > 100 ? 100 : Model.InterviewsPer);
+                string interviewColor = Model.InterviewsPer >= 70 ? "green" : Model.InterviewsPer <= 70 && Model.InterviewsPer >= 50 ? "yellow" : "red";
+
+                string hireStyle = "p" + (Model.HiresPer > 100 ? 100 : Model.HiresPer);
+                string hiresColor = Model.HiresPer >= 70 ? "green" : Model.HiresPer <= 70 && Model.HiresPer >= 50 ? "yellow" : "red";
+
+            }
+            <div style="width:100%;text-align:center;padding:10px">
+                @if (Model.Role == "Employee")
+                {
+                <label style=" font-size: x-large;
+                                      padding: 0px 0px 20px 0px;">My Performance </label>
+                }
+
+                else
+                {
+            <label style=" font-size: x-large;
+                                      padding: 0px 0px 20px 0px;">Team Performance </label>   
+                }
+            </div>
+            <div class=" col-sm-4">
+                <div id="SubmissionChart" data-tooltip title="Click to view submissions" data-Jr="Submission" data-FromDate="@Model.FromDate" data-ToDate="@Model.ToDate" style=" cursor:pointer;" class="c100 @submissionStyle md @submissionColor">
+                    <span>@Model.SubmissionsPer%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                @*<div class="progress1 blue">
+                        <span class="progress-left ">
+                            <span class="progress-bar"></span>
+                        </span>
+                        <span class="progress-right">
+                            <span class="progress-bar"></span>
+                        </span>
+                        <div class="progress-value">90%</div>
+                    </div>*@
+
+                <label style="text-align: center; padding: 20px 0px 0px 10px;">Submissions @Model.Submissions/@Model.SubmissionTarget </label>
+            </div>
+            <div class="col-sm-4">
+                <div id="InterviewsChart" data-tooltip title="Click to view interviews" data-Jr="interview" data-FromDate="@Model.FromDate" data-ToDate="@Model.ToDate" style=" cursor:pointer;" class="c100 @interviewStyle md @interviewColor">
+                    <span>@Model.InterviewsPer%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                @* <div class="progress1 green">
+                        <span class="progress-left">
+                            <span class="progress-bar"></span>
+                        </span>
+                        <span class="progress-right">
+                            <span class="progress-bar"></span>
+                        </span>
+                        <div class="progress-value">55%</div>
+                    </div>*@
+                <label style="text-align: center; padding: 20px 0px 0px 24px;">Interviews @Model.Interviews/@Model.InterviewTarget </label>
+            </div>
+            <div class="col-sm-4">
+                <div id="HiresChart" data-tooltip title="Click to view hires" data-Jr="Hire" data-FromDate="@Model.FromDate" data-ToDate="@Model.ToDate" style=" cursor:pointer;" class="c100 @hireStyle md @hiresColor">
+                    <span>@Model.HiresPer%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+                @*<div class="progress1 yellow">
+                        <span class="progress-left">
+                            <span class="progress-bar"></span>
+                        </span>
+                        <span class="progress-right">
+                            <span class="progress-bar"></span>
+                        </span>
+                        <div class="progress-value">55%</div>
+                    </div>*@
+                <label style="text-align: center; padding: 20px 0px 0px 47px;">Hires @Model.Hires/@Model.HiresTarget </label>
+            </div>
+
+        </div>
+        <div class="col-md-6" style="overflow: auto; height: 280px;     font-size: 12px;">
+            @foreach (var item in Model.EmployeeList)
+            {
+                <div class="notice @item.AvgProgressClass">
+                    <strong style="width:10%">
+                        <i style="font-size: xx-large;" class="fas fa-user"></i>
+                    </strong>
+                    <label class="employeeNameCls textCapitalize">
+                        @item.EmployeeName
+                    </label>
+                    @*@foreach (var item1 in Model.EmployeeTargetList)
+                    {*@ 
+                    <div style="float: right;" class="col-md-7">
+                        <div class="row">
+                            <div class="col-md-2">S</div>
+                            <div class="col-md-8">
+                                <div style="margin-bottom: 5px; height: 10px;" class="progress">
+                                    <div class="progress-bar @item.SubmissionsProgressColor" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: @item.SubmissionsProgress%"></div>
+                                </div>
+                            </div>
+                            @*@if (Model.Role=="Employee")
+                            {
+                        <div class="col-md-2">@Model.Submissions/@Model.SubmissionTarget </div>
+
+                            }
+                            else
+                            {*@
+                                <div class="col-md-2">@item.Submissions/@item.SubmissionsTarget </div>
+
+                              @*}*@
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-2">I</div>
+                            <div class="col-md-8">
+                                <div style="margin-bottom: 5px; height: 10px;" class="progress">
+                                    <div class="progress-bar @item.InterviewsProgressColor" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: @item.InterviewsProgress%"></div>
+                                </div>
+                            </div>
+                            @*@if (Model.Role == "Employee")
+                            {
+                                <div class="col-md-2">@Model.Interviews/@Model.InterviewTarget </div>
+
+                            }
+                            else
+                            {*@
+                                <div class="col-md-2">@item.Interviews/@item.InterviewTarget </div>
+                            @*}*@
+                            </div>
+                        <div class="row">
+                            <div class="col-md-2">H</div>
+                            <div class="col-md-8">
+                                <div style="margin-bottom: 5px; height: 10px;" class="progress">
+                                    <div class="progress-bar @item.HiresProgressColor" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: @item.HiresProgress%"></div>
+                                </div>
+                            </div>
+                            @*@if (Model.Role == "Employee")
+                            {
+                                <div class="col-md-2">@Model.Hires/@Model.HiresTarget </div>
+
+                            }
+                            else
+                            {*@
+                                <div class="col-md-2">@item.Hires/@item.HiresTarget</div>
+                            @*}*@
+                            </div>
+                    </div>
+                    @* } *@
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var DetailPostBackURL = '@Url.Action("ViewDetailsPopup")';
+        $("#SubmissionChart").click(function () {
+            //debugger;
+            var empCD = $("#HdnEmpCD_").val();
+            var $buttonClicked = $(this);
+            var fromDate = $buttonClicked.attr('data-FromDate');
+            var toDate = $buttonClicked.attr('data-ToDate');
+            var jr = $buttonClicked.attr('data-Jr');
+            var getIndividualRecords = $("#HdnGetIndividualRecords").val();
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: DetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                    //$("#myModal").dialog();
+                },
+                error: function () {
+                    //alert("Dynamic content load failed.");
+                }
+            });
+        });
+
+        $("#InterviewsChart").click(function () {
+
+            var empCD = $("#HdnEmpCD_").val();
+            var $buttonClicked = $(this);
+            var fromDate = $buttonClicked.attr('data-FromDate');
+            var toDate = $buttonClicked.attr('data-ToDate');
+            var jr = $buttonClicked.attr('data-Jr');
+            var getIndividualRecords = $("#HdnGetIndividualRecords").val();
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: DetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                    //$("#myModal").dialog();
+                },
+                error: function () {
+                    //alert("Dynamic content load failed.");
+                }
+            });
+        });
+
+        $("#HiresChart").click(function () {
+
+            var empCD = $("#HdnEmpCD_").val();
+            var $buttonClicked = $(this);
+            var fromDate = $buttonClicked.attr('data-FromDate');
+            var toDate = $buttonClicked.attr('data-ToDate');
+            var jr = $buttonClicked.attr('data-Jr');
+            var getIndividualRecords = $("#HdnGetIndividualRecords").val();
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: DetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                    //$("#myModal").dialog();
+                },
+                error: function () {
+                    //	alert("Dynamic content load failed.");
+                }
+            });
+        });
+        $('#IsActive').click(function () {
+            var data = $(this).is(':checked');
+            $.ajax({
+                url: 'Dashboard/Index',
+                type: "GET",
+                data: { "IsActive": data}
+            })
+        })
+        $('#FromDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+
+                ////var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate());
+                $("#ToDate").datepicker("option", "minDate", dt);
+            }
+        });
+        $('#ToDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+
+                var dt = new Date(selected);
+
+                dt.setDate(dt.getDate());
+                $("#FromDate").datepicker("option", "maxDate", dt);
+            }
+        });
+        var empCD = $("#HdnEmpCD_").val();
+        $('#progressDataBtn').click(function () {
+            var progressPartialFromDate = $('#FromDate').val();
+            var progressPartialToDate = $('#ToDate').val();
+            var ProgressReportPartialUrl = '@Url.Action("ProgressReportPartial")';
+            $.ajax({
+                type: "GET",
+                url: ProgressReportPartialUrl,
+                contentType: "application/json; charset=utf-8",
+                data: { "fromDate": progressPartialFromDate, "toDate": progressPartialToDate, "empCd": empCD },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#ProgressReport').html(data);
+
+                },
+                error: function () {
+                    // alert("Dynamic content load failed.");
+                }
+            });
+        });
+
+    });
+</script>

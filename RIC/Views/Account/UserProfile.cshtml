@@ -1,0 +1,130 @@
+﻿@model DBLibrary.RIC_Employee
+
+@{
+    ViewBag.Title = "UserProfile";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.RE_Emp_Cd)
+        @Html.HiddenFor(model => model.RE_Create_Dt)
+        @Html.HiddenFor(model => model.RE_EmpId)
+        @Html.HiddenFor(model => model.RoleID)
+        @Html.HiddenFor(model=>model.RE_Password)
+        @Html.HiddenFor(model=>model.ConfirmPassword)
+        @Html.HiddenFor(model=>model.RE_Start_Date)
+        @Html.HiddenFor(model=>model.RE_End_Date)
+        @Html.HiddenFor(model=>model.RE_Exp)
+        @Html.HiddenFor(model=>model.RE_Sub_Rule_ID)
+        @Html.HiddenFor(model=>model.RE_Jobdiva_User_Name)
+        @Html.HiddenFor(model=>model.RE_Shortel_Name)
+    <fieldset>
+        <legend>User Profile</legend>
+       <br /><br />
+           @if (ViewBag.Message != null)
+           {
+             <h3 style="color: green">@ViewBag.Message </h3>
+           }
+               
+                    <table style="width: 50%; height: 100%" class="table container-fluid">
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.RE_Emp_Cd)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(model => model.RE_Emp_Cd, new { @class = "form-control input-sm chat-input", @disabled = "disabled" })
+                                @Html.ValidationMessageFor(model => model.RE_Emp_Cd, null, new { @style = "color:red;" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.RE_Employee_Name)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(model => model.RE_Employee_Name, new { @class = "form-control input-sm chat-input", required = "required" })
+                                @Html.ValidationMessageFor(model => model.RE_Employee_Name, null, new { @style = "color:red;" })
+                            </td>
+                        </tr>
+                       @* <tr>
+                            <td>
+                                @Html.LabelFor(model => model.RE_Last_Name)
+                            </td>
+                            <td>
+
+                                @Html.TextBoxFor(model => model.RE_Last_Name, new { @class = "form-control input-sm chat-input", required = "required" })
+                                @Html.ValidationMessageFor(model => model.RE_Last_Name, null, new { @style = "color:red;" })
+                            </td>
+                        </tr>*@
+                         <tr>
+                            <td>
+                                @Html.LabelFor(model => model.RE_AKA_Name)
+                            </td>
+                            <td>
+
+                                @Html.TextBoxFor(model => model.RE_AKA_Name, new { @class = "form-control input-sm chat-input", required = "required" })
+                                @Html.ValidationMessageFor(model => model.RE_AKA_Name, null, new { @style = "color:red;" })
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.RE_Email)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(model => model.RE_Email, new { @class = "form-control input-sm chat-input",required = "required", type="email" })
+                                @Html.ValidationMessageFor(model => model.RE_Email, null, new { @style = "color:red;" })
+                            </td>
+                        </tr>
+                 @*       <tr>
+                            <td>
+                                @Html.LabelFor(model => model.RE_Password)
+                            </td>
+                            <td>
+
+                                @Html.PasswordFor(model => model.RE_Password, new { @class = "form-control input-sm chat-input" })
+                                @Html.ValidationMessageFor(model => model.RE_Password)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.ConfirmPassword)
+                            </td>
+                            <td>
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control input-sm chat-input" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                            </td>
+                        </tr>*@
+                        <tr>
+                            <td>
+                                @Html.LabelFor(model => model.RE_Contact_Num)
+                            </td>
+                            <td>
+                                @Html.TextBoxFor(model => model.RE_Contact_Num, new { @class = "form-control input-sm chat-input",pattern="^\\d{10}$", title="Invalid Phone Number" })
+                                @Html.ValidationMessageFor(model => model.RE_Contact_Num, null, new { @style = "color:red;" })
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="col-md-12 text-right">
+                                    <input type="submit" class="btn btn-primary" value="Save" />
+                                </div>
+
+                            </td>
+                            <td>
+                                <div class="col-md-12 text-left">
+                                    <button type="reset" class="btn btn-danger" value="Reset">Reset</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                
+    </fieldset>
+    
+   
+}
+
+

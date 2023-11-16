@@ -1,0 +1,920 @@
+﻿@model Tuple<List<RIC.Models.Client.ClientDashboardQuaterly>, List<RIC.Models.Client.ClientDashboardMonthly>, List<RIC.Models.Client.ClientDashboardMonthly>>
+
+
+<style>
+    .TextAlignCenter {
+        text-align: center;
+    }
+
+    /*.Quarter1 {
+        background-color: #d3ebff;
+    }
+
+    .Quarter2 {
+        background-color: #ffd9d9 !important;
+    }
+
+    .Quarter3 {
+        background-color: #ebffc0 !important;
+    }
+
+    .Quarter4 {
+        background-color: #adefd6;
+    }*/
+
+    .table, .table th, .table td {
+        border: 1px solid black !important;
+        padding: 6px !important;
+    }
+
+        .table td {
+            padding-left: 5px !important;
+            padding-right: 5px !important;
+            vertical-align: middle !important;
+        }
+
+    .datecss {
+        background-color: beige;
+        font-size: 13px;
+        border: 1px solid #909290;
+        font-weight: 700;
+        width: 3%;
+    }
+
+    .custab {
+        border: 1px solid #ccc;
+        padding: 5px;
+        /*margin: 5% 0;*/
+        box-shadow: 3px 3px 2px #ccc;
+        transition: 0.5s;
+    }
+
+        .custab:hover {
+            box-shadow: 3px 3px 0px transparent;
+            transition: 0.5s;
+        }
+
+    tr:nth-child(odd) {
+        background-color: #eee;
+    }
+
+    .Quarter, .QuarterHead {
+        display: none;
+    }
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.min.js"></script>
+
+
+
+
+
+<table class="table table-bordered table-striped custab" style="border: 1px solid #909290;" id="tblpartial">
+    <thead>
+        <tr>
+            <th class="TextAlignCenter datecss">
+                Quarter
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Requirements)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Responded)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().TotPercentage)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().TotalRecruiters)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().TotalActiveRecruiters)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Submissions)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Interviews)
+            </th>
+
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().Hires)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().SubByInterview)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().SubByHire)
+            </th>
+            <th class="TextAlignCenter datecss">
+                @Html.DisplayNameFor(model => model.Item1.FirstOrDefault().InterviewByHire)
+            </th>
+
+        </tr>
+    </thead>
+    <tbody id="fbody">
+        @{
+            var item = Model.Item1;
+
+        }
+        <tr>
+            <td class="datecss">
+                <a style="cursor:pointer;" class="fas fa-user-plus spanClick" data-quater="Quater1"></a>
+                Quarter 1
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Requirements)*@
+
+                @if (item.FirstOrDefault().Q1Requirements > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q1EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q1Requirements)
+                    </a>
+
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q1Requirements)
+                }
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @Html.DisplayFor(model => item.FirstOrDefault().Q1Responded)
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @Html.DisplayFor(model => item.FirstOrDefault().Q1Percentage)%
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @if (item.FirstOrDefault().Q1Rectuiters > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="TotalRecriter"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q1EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q1Rectuiters)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q1Rectuiters)
+                }
+
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Rectuiters)*@
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @if (item.FirstOrDefault().Q1ActiveRec > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="ActiveRecriter"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q1EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q1ActiveRec)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q1ActiveRec)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q1ActiveRec)*@
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @if (item.FirstOrDefault().Q1Submissions > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q1EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)
+                }
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @if (item.FirstOrDefault().Q1Interviews > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q1EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q1Interviews)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Interviews)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q1Interviews)
+                }
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @if (item.FirstOrDefault().Q1Hires > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q1EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q1Hires)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Hires)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q1Hires)
+                }
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q1SubByInterview)%
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q1SubByHire)%
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q1InterviewByHire)%
+            </td>
+        </tr>
+        @{
+            var items1 = Model.Item2.Where(s => (s.Monthnum == 1 || s.Monthnum == 2 || s.Monthnum == 3)).ToList();
+        }
+        @foreach (var data in items1)
+        {
+            var companylst = Model.Item3.Where(s => s.Monthnum == data.Monthnum).ToList();
+            var tuple = new Tuple<RIC.Models.Client.ClientDashboardMonthly, int>(data, companylst.Count());
+
+
+            @Html.Partial("_Portfolio_Month_Deatails_Partial", tuple)
+
+            @Html.Partial("_Portfolio_Company_details", companylst)
+        }
+
+        <tr>
+            <td class="datecss">
+                <a style="cursor:pointer;" class="fas fa-user-plus spanClick" data-quater="Quater2"></a>
+                Quarter 2
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q2Requirements)*@
+                @if (item.FirstOrDefault().Q2Requirements > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                       data-FromDate="@item.FirstOrDefault().Q2StartDate" data-ToDate="@item.FirstOrDefault().Q2EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q2Requirements)
+
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q2Requirements)
+                }
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @Html.DisplayFor(model => item.FirstOrDefault().Q2Responded)
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @Html.DisplayFor(model => item.FirstOrDefault().Q2Percentage)%
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @if (item.FirstOrDefault().Q2Rectuiters > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="TotalRecriter"
+                       data-FromDate="@item.FirstOrDefault().Q2StartDate" data-ToDate="@item.FirstOrDefault().Q2EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q2Rectuiters)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q2Rectuiters)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q2Rectuiters)*@
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @if (item.FirstOrDefault().Q2ActiveRec > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="ActiveRecriter"
+                       data-FromDate="@item.FirstOrDefault().Q2StartDate" data-ToDate="@item.FirstOrDefault().Q2EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q2ActiveRec)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q2ActiveRec)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q2ActiveRec)*@
+
+            </td>
+            <td class="TextAlignCenter Quarter2">
+                @if (item.FirstOrDefault().Q2Submissions > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                       data-FromDate="@item.FirstOrDefault().Q2StartDate" data-ToDate="@item.FirstOrDefault().Q2EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q2Submissions)
+
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q2Submissions)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q2Submissions)*@
+            </td>
+            <td class="TextAlignCenter Quarter2">
+                @if (item.FirstOrDefault().Q2Interviews > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                       data-FromDate="@item.FirstOrDefault().Q2StartDate" data-ToDate="@item.FirstOrDefault().Q2EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q2Interviews)
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q2Interviews)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q2Interviews)*@
+            </td>
+            <td class="TextAlignCenter Quarter2">
+
+                @if (item.FirstOrDefault().Q2Hires > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                       data-FromDate="@item.FirstOrDefault().Q2StartDate" data-ToDate="@item.FirstOrDefault().Q2EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q2Hires)
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q2Hires)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q2Hires)*@
+            </td>
+            <td class="TextAlignCenter Quarter2">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q2SubByInterview)%
+            </td>
+            <td class="TextAlignCenter Quarter2">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q2SubByHire)%
+            </td>
+            <td class="TextAlignCenter Quarter2">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q2InterviewByHire)%
+            </td>
+        </tr>
+        @{ var items2 = Model.Item2.Where(s => (s.Monthnum == 4 || s.Monthnum == 5 || s.Monthnum == 6)).ToList();}
+
+        @foreach (var data in items2)
+        {
+            var companylst = Model.Item3.Where(s => s.Monthnum == data.Monthnum).ToList();
+            var tuple = new Tuple<RIC.Models.Client.ClientDashboardMonthly, int>(data, companylst.Count());
+
+
+            @Html.Partial("_Portfolio_Month_Deatails_Partial", tuple)
+
+            @Html.Partial("_Portfolio_Company_details", companylst)
+
+        }
+
+        <tr>
+            <td class="datecss">
+                <a style="cursor:pointer;" class="fas fa-user-plus spanClick " data-quater="Quater3"></a>
+                Quarter 3
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q3Requirements)*@
+
+                @if (item.FirstOrDefault().Q3Requirements > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                       data-FromDate="@item.FirstOrDefault().Q3StartDate" data-ToDate="@item.FirstOrDefault().Q3EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q3Requirements)
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q3Requirements)
+                }
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @Html.DisplayFor(model => item.FirstOrDefault().Q3Responded)
+
+            </td>
+
+            <td class="TextAlignCenter Quarter1">
+
+                @Html.DisplayFor(model => item.FirstOrDefault().Q3Percentage)%
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @if (item.FirstOrDefault().Q3Rectuiters > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="TotalRecriter"
+                       data-FromDate="@item.FirstOrDefault().Q3StartDate" data-ToDate="@item.FirstOrDefault().Q3EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q3Rectuiters)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q3Rectuiters)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q3Rectuiters)*@
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @if (item.FirstOrDefault().Q3ActiveRec > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="ActiveRecriter"
+                       data-FromDate="@item.FirstOrDefault().Q3StartDate" data-ToDate="@item.FirstOrDefault().Q3EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q3ActiveRec)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q3ActiveRec)
+                }
+
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q3ActiveRec)*@
+
+            </td>
+            <td class="TextAlignCenter Quarter3">
+
+                @if (item.FirstOrDefault().Q3Submissions > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                       data-FromDate="@item.FirstOrDefault().Q3StartDate" data-ToDate="@item.FirstOrDefault().Q3EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q3Submissions)
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q3Submissions)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q3Submissions)*@
+            </td>
+            <td class="TextAlignCenter Quarter3">
+
+                @if (item.FirstOrDefault().Q3Interviews > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                       data-FromDate="@item.FirstOrDefault().Q3StartDate" data-ToDate="@item.FirstOrDefault().Q3EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q3Interviews)
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q3Interviews)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q3Interviews)*@
+            </td>
+            <td class="TextAlignCenter Quarter3">
+
+                @if (item.FirstOrDefault().Q3Hires > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                       data-FromDate="@item.FirstOrDefault().Q3StartDate" data-ToDate="@item.FirstOrDefault().Q3EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q3Hires)
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q3Hires)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q3Hires)*@
+            </td>
+            <td class="TextAlignCenter Quarter3">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q3SubByInterview)%
+            </td>
+            <td class="TextAlignCenter Quarter3">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q3SubByHire)%
+            </td>
+            <td class="TextAlignCenter Quarter3">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q3InterviewByHire)%
+            </td>
+        </tr>
+        @{var items3 = Model.Item2.Where(s => (s.Monthnum == 7 || s.Monthnum == 8 || s.Monthnum == 9)).ToList();
+        }
+        @foreach (var data in items3)
+        {
+            var companylst = Model.Item3.Where(s => s.Monthnum == data.Monthnum).ToList();
+            var tuple = new Tuple<RIC.Models.Client.ClientDashboardMonthly, int>(data, companylst.Count());
+
+
+            @Html.Partial("_Portfolio_Month_Deatails_Partial", tuple)
+
+            @Html.Partial("_Portfolio_Company_details", companylst)
+        }
+
+        <tr>
+            <td class="datecss">
+                <a style="cursor:pointer;" class="fas fa-user-plus spanClick" data-quater="Quater4"></a>
+                Quarter 4
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q4Requirements)*@
+                @if (item.FirstOrDefault().Q4Requirements > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                       data-FromDate="@item.FirstOrDefault().Q4StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q4Requirements)
+
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q4Requirements)
+                }
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @Html.DisplayFor(model => item.FirstOrDefault().Q4Responded)
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @Html.DisplayFor(model => item.FirstOrDefault().Q4Percentage)%
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @if (item.FirstOrDefault().Q4Rectuiters > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="TotalRecriter"
+                       data-FromDate="@item.FirstOrDefault().Q4StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q4Rectuiters)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q4Rectuiters)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q4Rectuiters)*@
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @if (item.FirstOrDefault().Q4ActiveRec > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="ActiveRecriter"
+                       data-FromDate="@item.FirstOrDefault().Q4StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q4ActiveRec)
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q4ActiveRec)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q4ActiveRec)*@
+
+            </td>
+            <td class="TextAlignCenter Quarter4">
+                @if (item.FirstOrDefault().Q4Submissions > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                       data-FromDate="@item.FirstOrDefault().Q4StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q4Submissions)
+
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q4Submissions)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q4Submissions)*@
+            </td>
+            <td class="TextAlignCenter Quarter4">
+                @if (item.FirstOrDefault().Q4Interviews > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                       data-FromDate="@item.FirstOrDefault().Q4StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q4Interviews)
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q4Interviews)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q4Interviews)*@
+            </td>
+            <td class="TextAlignCenter Quarter4">
+
+                @if (item.FirstOrDefault().Q4Hires > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                       data-FromDate="@item.FirstOrDefault().Q4StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().Q4Hires)
+                    </a>
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().Q4Hires)
+                }
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q4Hires)*@
+            </td>
+            <td class="TextAlignCenter Quarter4">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q4SubByInterview)%
+            </td>
+            <td class="TextAlignCenter Quarter4">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q4SubByHire)%
+            </td>
+            <td class="TextAlignCenter Quarter4">
+                @Html.DisplayFor(model => item.FirstOrDefault().Q4InterviewByHire)%
+            </td>
+        </tr>
+        @{
+            var items4 = Model.Item2.Where(s => (s.Monthnum == 10 || s.Monthnum == 11 || s.Monthnum == 12)).ToList();
+        }
+        @foreach (var data in items4)
+        {
+            var companylst = Model.Item3.Where(s => s.Monthnum == data.Monthnum).ToList();
+            var tuple = new Tuple<RIC.Models.Client.ClientDashboardMonthly, int>(data, companylst.Count());
+
+
+            @Html.Partial("_Portfolio_Month_Deatails_Partial", tuple)
+
+            @Html.Partial("_Portfolio_Company_details", companylst)
+        }
+
+        <tr>
+            <td class="datecss">
+                <a style="cursor:pointer;padding-left:5px;" data-quater="Quater1"></a>
+                Total
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Requirements)  class="fas fa-user-plus spanClick"*@
+
+                @if (item.FirstOrDefault().TotalRequirements > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Reqs"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().TotalRequirements)
+
+                    </a>
+
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().TotalRequirements)
+
+                }
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @Html.DisplayFor(model => item.FirstOrDefault().TotalResponse)
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @Html.DisplayFor(model => item.FirstOrDefault().TotPercentage)%
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @*@if (item.FirstOrDefault().TotalRecruiters > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="TotalRecriter"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().TotalRecruiters)
+
+                    </a>
+                   
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().TotalRecruiters)
+
+                }*@
+
+                @Html.DisplayFor(model => item.FirstOrDefault().TotalRecruiters)
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+
+                @*@if (item.FirstOrDefault().TotalActiveRecruiters > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="ActiveRecriter"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().TotalActiveRecruiters)
+
+                    </a>
+                    
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().TotalActiveRecruiters)
+
+                }*@
+                @Html.DisplayFor(model => item.FirstOrDefault().TotalActiveRecruiters)
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @if (item.FirstOrDefault().TotalSubmissons > 0)
+                {
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().TotalSubmissons)
+
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Submissions)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().TotalSubmissons)
+
+                }
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @if (item.FirstOrDefault().TotalInterviews > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Interview"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().TotalInterviews)
+
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Interviews)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().TotalInterviews)
+
+                }
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @if (item.FirstOrDefault().TotalHires > 0)
+                {
+
+                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Hire"
+                       data-FromDate="@item.FirstOrDefault().Q1StartDate" data-ToDate="@item.FirstOrDefault().Q4EndDate" data-company="">
+                        @Html.DisplayFor(model => item.FirstOrDefault().TotalHires)
+
+                    </a>
+                    @*@Html.DisplayFor(model => item.FirstOrDefault().Q1Hires)*@
+                }
+                else
+                {
+                    @Html.DisplayFor(model => item.FirstOrDefault().TotalHires)
+
+
+                }
+
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @Html.DisplayFor(model => item.FirstOrDefault().TotalSubByInterview)%
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @Html.DisplayFor(model => item.FirstOrDefault().TotalSubByHire)%
+            </td>
+            <td class="TextAlignCenter Quarter1">
+                @Html.DisplayFor(model => item.FirstOrDefault().TotalInterviewByHire)%
+            </td>
+        </tr>
+
+    </tbody>
+
+</table>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg ">
+        <div id='myModalContent'></div>
+    </div>
+</div>
+
+
+
+<script>
+
+
+    $(document).ready(function () {
+
+        var TeamDetailPostBackURL = '../ClientMonthyDashboard/DetailsViewPopup';
+        // $(function () {
+        $(".anchorDetail").click(function () {
+
+            //debugger;
+            // var empCD = $("#HdnEmpCD").val();
+            var $buttonClicked = $(this);
+            var fromDate = $buttonClicked.attr('data-FromDate');
+            var toDate = $buttonClicked.attr('data-ToDate');
+            var jr = $buttonClicked.attr('data-Jr');
+            var company = $buttonClicked.attr('data-company');
+            var $AM = $("#ddlAM").val();
+            var $client = $("#ddlClient").val();
+            //alert(company);
+            if (company == "" && $client!=null) {
+                company = $client + "";
+                //alert($client);
+            }
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "company": company, "Account": $AM},
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                    //$("#myModal").dialog();
+                },
+                error: function () {
+                    //alert("Dynamic content load failed.");
+                }
+            });
+        });
+
+
+        $(".spanClick").click(function () {
+
+            var $rowIndex = $(this).closest('td').parent()[0].sectionRowIndex;
+            // debugger;
+            var $buttonClicked = $(this);
+            var quater = $buttonClicked.attr('data-quater');
+            if (quater == "Quater1") {
+                $rowIndex = 0;
+            }
+            else if (quater == "Quater2") {
+                $rowIndex = 3;
+            }
+            else if (quater == "Quater3") {
+                $rowIndex = 6;
+            }
+            else if (quater == "Quater4") {
+                $rowIndex = 9;
+            }
+            // console.log($rowIndex);
+            var $row = $(".QuarterHead");
+            if ($(this).attr("class").includes("plus")) {
+                $(this).attr("class", "fas fa-user-minus spanClick");
+                //$("#tblpartial tbody tr").slice($rowIndex + 1, $rowIndex + 4).show();
+                $row.slice($rowIndex + 0, $rowIndex + 3).show();
+            }
+            else {
+                $(this).attr("class", "fas fa-user-plus spanClick");
+                //$("#tblpartial tbody tr").slice($rowIndex + 1, $rowIndex + 4).hide();
+                $row.slice($rowIndex + 0, $rowIndex + 3).hide();
+
+            }
+
+        });
+
+
+        $(".quarterClick").click(function () {
+            var $rowIndex = $(this).closest('td').parent()[0].sectionRowIndex;
+            var $row = $(".Quarter");
+
+            var $buttonClicked = $(this);
+            var count = parseInt($buttonClicked.attr('data-count'));
+            if ($(this).attr("class").includes("plus")) {
+                $(this).attr("class", "fas fa-user-minus spanClick");
+                $("#tblpartial tbody tr").slice($rowIndex + 1, $rowIndex + count + 1).show();
+            }
+            else {
+                $(this).attr("class", "fas fa-user-plus spanClick");
+                $("#tblpartial tbody tr").slice($rowIndex + 1, $rowIndex + count + 1).hide();
+
+            }
+        });
+    });
+
+</script>

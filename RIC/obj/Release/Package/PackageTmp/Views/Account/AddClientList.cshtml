@@ -1,0 +1,513 @@
+﻿@model IEnumerable<RIC.Models.Client.ClientMapping>
+@{
+    ViewBag.Title = "AddClientList";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+    var student = ViewBag.JobUserName;
+}
+<style>
+    .textCapitalize {
+        text-transform: capitalize;
+    }
+
+    .btn-all {
+        background-color: #a9e0f1;
+    }
+
+    #UserList_length {
+        display: none;
+    }
+    /*model style*/
+    .modal-confirm {
+        color: #636363;
+        width: 400px;
+    }
+
+        .modal-confirm .modal-content {
+            padding: 20px;
+            border-radius: 5px;
+            border: none;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .modal-confirm .modal-header {
+            border-bottom: none;
+            position: relative;
+        }
+
+        .modal-confirm h4 {
+            text-align: center;
+            font-size: 26px;
+            margin: 30px 0 -10px;
+        }
+
+        .modal-confirm .close {
+            position: absolute;
+            top: -5px;
+            right: -2px;
+        }
+
+        .modal-confirm .modal-body {
+            color: #999;
+        }
+
+        .modal-confirm .modal-footer {
+            border: none;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 13px;
+            padding: 10px 15px 25px;
+        }
+
+            .modal-confirm .modal-footer a {
+                color: #999;
+            }
+
+        .modal-confirm .icon-box {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            border-radius: 50%;
+            z-index: 9;
+            text-align: center;
+            border: 3px solid #f15e5e;
+        }
+
+            .modal-confirm .icon-box i {
+                color: #f15e5e;
+                font-size: 46px;
+                display: inline-block;
+                margin-top: 13px;
+            }
+
+        .modal-confirm .btn {
+            color: #fff;
+            border-radius: 4px;
+            background: #60c7c1;
+            text-decoration: none;
+            transition: all 0.4s;
+            line-height: normal;
+            min-width: 120px;
+            border: none;
+            min-height: 40px;
+            border-radius: 3px;
+            margin: 0 5px;
+            outline: none !important;
+        }
+
+        .modal-confirm .btn-info {
+            background: #c1c1c1;
+        }
+
+            .modal-confirm .btn-info:hover, .modal-confirm .btn-info:focus {
+                background: #a8a8a8;
+            }
+
+        .modal-confirm .btn-danger {
+            background: #f15e5e;
+        }
+
+            .modal-confirm .btn-danger:hover, .modal-confirm .btn-danger:focus {
+                background: #ee3535;
+            }
+
+    .trigger-btn {
+        display: inline-block;
+        margin: 100px auto;
+    }
+</style>
+
+<script>
+
+    function moveItems(origin, dest) {
+        $(origin).find(':selected').appendTo(dest);
+    }
+
+
+    function moveAllItems(origin, dest) {
+        $(origin).children().appendTo(dest);
+    }
+
+    $(document).ready(function () {
+
+        $('#multiselect_leftSelected').click(function () {
+            moveItems('#multiselect_to', '#multiselect_from');
+        });
+
+        $('#multiselect_rightSelected').on('click', function () {
+            moveItems('#multiselect_from', '#multiselect_to');
+        });
+
+        $('#multiselect_leftAll').on('click', function () {
+            moveAllItems('#multiselect_to', '#multiselect_from');
+        });
+
+        $('#multiselect_rightAll').on('click', function () {
+            moveAllItems('#multiselect_from', '#multiselect_to');
+        });
+
+        $("#btnsubmit").on("click", function () {
+            var $getValues = new Array();
+            var $getLength = $("#multiselect_to option").length;
+
+
+            if ($getLength == 0) {
+                alert("Select atleast one Client");
+                return false
+            }
+            for (var i = 0; i < $getLength; i++) {
+                var $getValue = $("#multiselect_to").find("option:eq('" + i + "') ").val();
+                $getValues.push($getValue);
+            }
+            $("#AccountId").val($getValues);
+            console.log($("#AccountId").val());
+
+        });
+
+
+        $("#searchClient1").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#multiselect_from option").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $("#searchClient2").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#multiselect_to option").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form1" }))
+{
+    @Html.HiddenFor(model => model.FirstOrDefault().EmpId)
+    <div class="form-group">
+        <div class="row">
+
+            <label class="userName textCapitalize" style="font-size: small;width:90%;padding-left: 17px;">Account Manager: @ViewBag.JobUserName</label>
+            <label>@Html.ActionLink("Back", "ViewUsers", new { First_Name = ViewBag.Firstname, Emp_Code = ViewBag.Empcode, RoleID = ViewBag.RoleIdFilter, filterDdl = ViewBag.FilterName, Page = ViewBag.Page }, new { @class = "btn btn-info", @id = "backId", @style = "margin-left: 95%;margin-top:0%" })</label>
+        </div>
+    </div>
+    <input id="AccountId" type="hidden" name="AccountId" />
+
+
+    <div class="panel panel-primary" style="margin-top: -12px;">
+        <div class="panel-heading">Client Details</div>
+        <div class="panel-body" style="padding-bottom: 10px">
+            <div class="form-group">
+                <div class="row" style="padding: 10px; margin: 0PX;margin-top: -21px;">
+
+                    <div class="col-sm-3 border">
+                        <label for="inputEmail4">Select Team Lead</label>
+                        @*@Html.DropDownList("TeamLeadId", ViewBag.MgrList as List<SelectListItem>, "--Select--", new { @id = "ddlTeamLead", required = "required", @class = "form-control input-sm chat-input textCapitalize", onchange = "this.form.submit();" })*@
+                        @Html.DropDownList("TeamLeadId", ViewBag.MgrList as List<SelectListItem>, "--Select--", new { @id = "ddlTeamLead", required = "required", @class = "form-control input-sm chat-input textCapitalize" })
+
+
+                    </div>
+                    <div class="col-sm-3 border">
+                        <label for="inputEmail4">Start Date</label>
+                        @Html.TextBoxFor(s => s.FirstOrDefault().RCM_StartDate, null, new { @id = "ddlTeamLead2", required = "required", autocomplete = "off", placeholder = "MM-DD-YYYY", @class = "form-control  input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+
+                    </div>
+                    <div class="col-sm-3 border">
+                        <label for="inputEmail4">End Date</label>
+                        @Html.TextBoxFor(s => s.FirstOrDefault().RCM_EndDate, new { autocomplete = "off", placeholder = "MM-DD-YYYY", @class = "form-control  input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                    </div>
+
+                </div>
+
+                <div class="row" style="padding: 10px; margin: 0PX;">
+                    <div class="col-sm-5 border">
+                        @Html.TextBox("searchClient1", null, new { @class = "form-control input-sm chat-input", @placeholder = "Search Client" })
+                        @Html.DropDownListFor(m => m.FirstOrDefault().RCM_ClientId, ViewBag.ClientList as List<SelectListItem>, new { @id = "multiselect_from", @class = "form-control", @style = "border-color:#d2a5a5fc;height:300px", multiple = "multiple" })
+                        @*  @Html.ValidationMessageFor(m => m.RCM_ClientId, null, new { @style = "color:red;" })*@
+                    </div>
+
+                    @*Added by Dinesh*@
+                    <div style="color:gray">
+                        @*<button id="myButton" style="background-color: #337ab7;color:azure;font-size:medium">Manage Client</button> color:azure;*@
+                    </div>
+
+                    <div class="col-sm-2" style="padding-top: 10px">
+                        <button id="myButton" style="background-color: #337ab7;color:azure;font-size:medium" class="btn btn-block btn-all">Manage Client</button>
+                        <div style="padding-top: 100px">
+
+                        </div>
+                        <button type="button" id="multiselect_rightAll" class="btn btn-block btn-all"><i class="glyphicon glyphicon-forward" style="color:black;"></i></button>
+                        <button type="button" id="multiselect_rightSelected" class="btn btn-block btn-info"><i class="glyphicon glyphicon-chevron-right " style="color:black"></i></button>
+                        <button type="button" id="multiselect_leftSelected" class="btn btn-block btn-info"><i class="glyphicon glyphicon-chevron-left" style="color:black"></i></button>
+                        <button type="button" id="multiselect_leftAll" class="btn btn-block btn-all"><i class="glyphicon glyphicon-backward" style="color:black"></i></button>
+                    </div>
+
+                    <div class="col-sm-5 border">
+                        @Html.TextBox("searchClient2", null, new { @class = "form-control input-sm chat-input", @placeholder = "Search Client" })
+                        @Html.DropDownListFor(m => m.FirstOrDefault().RCM_ClientId, ViewBag.ClientList2 as List<SelectListItem>, new { @id = "multiselect_to", @class = "form-control", @style = "border-color:#d2a5a5fc;height:300px", multiple = "multiple" })
+                        @*<select name="to[]" id="multiselect_to" class="form-control" size="8" multiple="multiple" style="border-color: #d2a5a5fc"></select>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 text-center">
+        <input type="submit" id="btnsubmit" class="btn btn-primary" value="Save" />
+    </div>
+
+    <div style="margin-top: 63px;">
+        <table id="UserList" class="table table-striped  table-hover table-bordered">
+            <thead style="background-color: #337ab7; color: white;">
+                <tr>
+
+                    <th style="text-align: center">
+                        Sl. No.
+                    </th>
+
+                    <th style="text-align: center">
+                        AM Name
+                    </th>
+                    <th style="text-align: center">
+                        Manager Name
+                    </th>
+
+                    <th style="text-align: center">
+                        Company Name
+                    </th>
+                    <th style="text-align: center">
+                        Start Date
+                    </th>
+                    <th style="text-align: center">
+                        End Date
+                    </th>
+
+
+                    <th style="text-align:center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{int RowNo = 0;}
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td style="text-align:center">
+
+                            @{RowNo++;} @RowNo
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AccountManagerName)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TeamLeadName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClinetName)
+                        </td>
+                        <td style="text-align:center">
+                            @Convert.ToDateTime(item.RCM_StartDate).ToString("MM/dd/yyyy")
+
+                        </td>
+                        <td style="text-align:center">
+                            @if (item.RCM_EndDate != null)
+                            {
+                                @Convert.ToDateTime(item.RCM_EndDate).ToString("MM/dd/yyyy")
+                            }
+                        </td>
+                        <td style="text-align:center">
+                            @*<a href="@Url.Action("AddClientList",new { ClientMappingId = item.RCM_ClientId})" data-toggle="tooltip" data-placement="bottom" title="Delete">*@
+                            <a href="#" onclick="submitClientMapping(@item.RCM_ClientId)" data-toggle="tooltip" data-placement="bottom" title="Delete">
+
+                                <span class="fas fa-trash-alt" data-toggle="tooltip" data-placement="bottom" title="Delete"></span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+    </div>
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog modal-confirm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Are you sure?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you really want to delete the record? This process cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+                    <button type="button" id="deleteBtn" class="btn btn-danger deleteBtn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+                window.onload = function () {
+                    alert("@ViewBag.Message");
+
+            };
+    </script>
+}
+
+@*Added by Dinesh*@
+<!-- Modal -->
+<div class="modal fade" id="MyModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div id='MyModalContent'></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#UserList').DataTable({});
+        $('#RCM_StartDate,#RCM_EndDate').val("");
+
+        $('#RCM_StartDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate());
+                $("#RCM_EndDate").datepicker("option", "minDate", dt);
+            }
+        });
+        $('#RCM_EndDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+
+                var dt = new Date(selected);
+
+                dt.setDate(dt.getDate());
+                $("#RCM_StartDate").datepicker("option", "maxDate", dt);
+            }
+        });
+
+
+        $("#ddlTeamLead").change(function () {
+            var getUrl = window.location.href;
+            var res = getUrl.split("?");
+            const params = new URLSearchParams(res[1]);
+            params.delete('TeamLeadId');
+            params.delete('ClientMappingId');
+            window.location.href = res[0] + "?" + params + "&TeamLeadId=" + $(this).val();
+
+        });
+
+    });
+
+    function submitClientMapping(ClinetMappingId) {
+
+        $("#myModal").modal();
+
+        document.getElementById("deleteBtn").onclick = function () {
+            var getUrl = window.location.href;
+            var res = getUrl.replace("#", "").split("?");
+            const params = new URLSearchParams(res[1]);
+            params.delete('ClientMappingId');
+            window.location.href = res[0] + "?" + params + "&ClientMappingId=" + ClinetMappingId;
+        };
+
+
+    }
+
+
+    /*Added by Dinesh*/
+
+        $(document).ready(function () {
+
+        var TeamDetailPostBackURL = '../ManageClientList';
+        $("#myButton").click(function () {
+
+           // debugger;
+
+            var $buttonClicked = $(this);
+
+            var empcd = '@ViewBag.Empcode';
+
+
+            @*var RC_Id = '@ViewBag.RC_Id';*@
+
+            $('#ddlTeamLead').removeAttr('required');
+            $('#ddlTeamLead2').removeAttr('required');
+           // $('#ddlTeamLead2').prop('required',false);
+            $('#ddlTeamLead2').val('');
+
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "empCd": empcd },
+
+                datatype: "json",
+                success: function (data) {
+                    //alert(data);
+                    $('#MyModalContent').html(data);
+                    $('#MyModal').modal(options);
+                    $('#MyModal').modal('show');
+                    //loaddata();
+
+                },
+                error: function () {
+
+                }
+            });
+
+
+            $("#form1").submit(function (e) { // note that it's better to use form Id to select form
+                if ($("#ddlTeamLead").val() == 0 || $("#ddlTeamLead").val() == '') // here you check your drop down selected value
+                {
+                    e.preventDefault(); // here you stop submitting form
+                }
+            });
+        });
+
+            $('#MyModal').on('hidden.bs.modal', function () {
+                location.reload();
+                
+            });
+
+
+
+        });
+    $(document).ready(function () {
+        $('#MyModal').on('shown.bs.modal', function () {
+            $('#txtName').focus();
+
+        });
+    });
+</script>
+
+
+
+
+
+
+

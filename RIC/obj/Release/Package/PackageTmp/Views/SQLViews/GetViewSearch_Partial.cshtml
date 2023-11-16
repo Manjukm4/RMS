@@ -1,0 +1,147 @@
+﻿
+
+@model System.Data.DataTable
+@using PagedList.Mvc;
+@using PagedList;
+<style>
+    .tablecontainer {
+        width: 100%;
+        overflow-y: auto;
+        height: 500px;
+    }
+
+    #JD_Table {
+        background-color: #337ab7;
+        border-color: #337ab7;
+    }
+
+        #JD_Table th {
+            color: white;
+            border-color: white;
+        }
+
+        #JD_Table td {
+            color: black;
+            border-color: #337ab7;
+            padding-left: 18px;
+        }
+
+    thead {
+        background-color: #337ab7;
+    }
+
+    .modal-dialog {
+        width: 94% !important;
+    }
+
+    table thead th {
+        color: #fff;
+    }
+
+    .paginationcss {
+        margin-top: 1%;
+        text-align: center;
+        margin-bottom: -30px;
+    }
+</style>
+
+
+<script>
+    $(document).ready(function () {
+
+        if ($('#JD_Table tbody tr').length > 0) {
+
+            $('#JD_Table').DataTable({
+                //"scrollY": 500,
+                //"scrollX": true,
+                "paging": false,
+                "searching": false,
+                "info": false,
+                "ordering": false
+            });
+            $('.dataTables_length').addClass('bs-select');
+
+            $(".table-striped,.dataTables_scrollHeadInner").css("width", "100%");
+        }
+
+
+
+        $(".paginationcss ul li").click(function () {
+
+            var pageNumber = $(this).text().trim();
+            var nextorprevClass = $(this).attr("class");
+
+            var activePageNumber;
+
+            $(".paginationcss ul li").each(function () {
+                if ($(this).attr("class") == "active")
+                    activePageNumber = $(this).text();
+            })
+
+
+            if (!isNaN(pageNumber)) {
+
+                LoadReport(pageNumber);
+            }
+            else if (nextorprevClass == "PagedList-skipToNext") {
+                activePageNumber = parseInt(activePageNumber) + 1;
+                LoadReport(activePageNumber);
+            }
+            else if (nextorprevClass == "PagedList-skipToLast") {
+                LoadReport($(".pagecount").text().trim());
+            }
+            else if (nextorprevClass == "PagedList-skipToPrevious") {
+                activePageNumber = parseInt(activePageNumber) - 1;
+                LoadReport(activePageNumber);
+            }
+            else if (nextorprevClass == "PagedList-skipToFirst") {
+                LoadReport(1);
+            }
+        });
+
+    });
+
+
+</script>
+
+@if (Model != null)
+{
+    <div class="tablecontainer container">
+        <table id="JD_Table" class="table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    @foreach (System.Data.DataColumn dc in Model.Columns)
+                    {
+                        <th class="header">@dc.ColumnName</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (System.Data.DataRow dr in Model.Rows)
+                {
+                    <tr>
+                        @foreach (var Cell in dr.ItemArray)
+                        {
+                            <td style="">@Cell</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+
+<div id='Paging position-fixed' class="paginationcss">
+
+    Page @(ViewBag.PageCount < ViewBag.PageNumber ? 0 : ViewBag.PageNumber) of @ViewBag.PageCount
+    <span class="pagecount" style="display:none">
+        @ViewBag.PageCount
+    </span>
+
+    @Html.PagedListPager((IPagedList)ViewBag.ViewData, page => "#")
+
+</div>
+
+
+

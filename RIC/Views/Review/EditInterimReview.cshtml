@@ -1,0 +1,259 @@
+﻿@model RIC.Models.Review.EditInterimReviewVM
+@{
+    ViewBag.Title = "EditInterimReview";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<style>
+    .HeaderStyle
+    {
+        text-align: center;
+    }
+
+    form
+    {
+        width: 95%;
+        margin: auto;
+    }
+
+    .CandidateDdl
+    {
+        width: 48%;
+    }
+
+    .TableStyle
+    {
+        margin-top: 4%;
+        margin-bottom: 0px;
+    }
+
+    .textArea
+    {
+        width: 100%;
+        height: 150px !important;
+    }
+
+    .DivPadding
+    {
+        /*padding-left: 35px;*/
+    }
+
+    .ReviewDiv
+    {
+        margin-bottom: 0px;
+        background-color: whitesmoke;
+        padding: 25px;
+    }
+
+    .btn-group-vertical > .btn.active, .btn-group-vertical > .btn:active, .btn-group-vertical > .btn:focus, .btn-group-vertical > .btn:hover, .btn-group > .btn.active, .btn-group > .btn:active, .btn-group > .btn:focus, .btn-group > .btn:hover
+    {
+        z-index: 0;
+        opacity: 1;
+    }
+
+    .CheckBoxStyle
+    {
+        opacity: 0.70;
+    }
+
+    .linkStyle
+    {
+        color: white;
+        padding: 7px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .linkStyle:hover, .linkStyle:active
+    {
+        text-decoration: none;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model=>model.ReviewID)
+     <input type="hidden" id="ReviewerNames" name="ReviewerNames"/>
+    <div style="margin: auto; width: 75%" class="form-row printTable printTableHidden">
+        <div style="margin-bottom: 0px;" class="form-group col-md-12 ReviewDiv">
+            <h2 id="PageHeader" style="text-decoration: underline; margin-top: 0px;" class="HeaderStyle">Edit Review</h2>
+            <br>
+            <div style="margin-bottom: 0px;" class="form-group col-md-12">
+                <div class="form-group col-md-12">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.EmployeeName):                      
+                       <span class="textCapitalize">@Model.EmployeeName</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ReviewerName):
+                        <span class="textCapitalize" >@Model.ReviewerName</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ReviewDate):
+                        <span>@Html.DisplayFor(model => model.ReviewDate)</span>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.FromDate):
+                       <span>@Html.DisplayFor(model => model.FromDate)</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.ToDate):
+                       <span>@Html.DisplayFor(model => model.ToDate)</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.NextReviewDate):
+                       <span>@Html.DisplayFor(model => model.NextReviewDate)</span>
+                    </div>
+                </div>
+                @if (Model.LastUpdatedDate != null)
+                { 
+                 <div class="form-group col-md-12">
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.LastUpdatedBy):
+                       <span>@Html.DisplayFor(model => model.LastUpdatedBy)</span>
+                    </div>
+                    <div class="col-md-4">
+                        @Html.LabelFor(model => model.LastUpdatedDate):
+                       <span>@Html.DisplayFor(model => model.LastUpdatedDate)</span>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+                }
+            </div>
+            <div style="padding-bottom:20px" class="col-md-12">
+                <table class="table table-bordered TableStyle" style="margin-top: -10px" id="content">
+                    <tr class="bg-primary">
+                        <td>@Html.LabelFor(model => model.SubmissionAchivement)</td>
+                        <td>@Html.LabelFor(model => model.InterviewAchivement)</td>
+                        <td>@Html.LabelFor(model => model.HiresAchivements)</td>
+                        <td>@Html.LabelFor(model => model.CallsAchivements)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.DisplayFor(model => model.SubmissionAchivement)</td>
+                        <td>@Html.DisplayFor(model => model.InterviewAchivement)</td>
+                        <td>@Html.DisplayFor(model => model.HiresAchivements)</td>
+                        <td>@Html.DisplayFor(model => model.CallsAchivements)</td>
+                    </tr>
+                </table>
+            </div>
+            @for (int i = 0; i < Model.ReviewerList.Count;i++ )
+            { 
+                @Html.HiddenFor(model=>model.ReviewerList[i].Id)
+                @Html.HiddenFor(model=>model.ReviewerList[i].EmployeeName)
+                 <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <label class="textCapitalize getreviewname">@Model.ReviewerList[i].EmployeeName</label>
+                            </h3>
+                        </div>
+                        <div style="padding:0px" class="panel-body">
+                            <div style="padding: 0px;" class="col-md-12">
+                                <table style="padding: 0px;margin: 0px;" class="table table-bordered">
+                                    <tr>
+                                        <td style="width:30%"><label>Findings:</label></td>
+                                        <td style="width:70%">@Html.TextAreaFor(model=>model.ReviewerList[i].Findings, new { required = "required", @class = "form-control pb-cmnt-textarea", placeholder = "Write what improvements required!" })</td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>Improvements Required:</label></td>
+                                        <td>@Html.TextAreaFor(model=>model.ReviewerList[i].ImprovementsRequired, new { required = "required", @class = "form-control pb-cmnt-textarea", placeholder = "Write what improvements required!" })</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                 </div>
+            }               
+            @if (Model.HrReviewStatus)
+            { 
+                <div class="form-group  col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <label class="textCapitalize getreviewHr">@Model.HrName</label>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            @Html.TextAreaFor(model => model.HrComments, new { required = "required", @class = "form-control pb-cmnt-textarea textArea", placeholder = "Write what improvements required!" })
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.DirectorReviewStatus)
+            { 
+                <div class="form-group  col-md-12 ">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <label class="textCapitalize">@Model.DirectorName</label>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            @Html.TextAreaFor(model => model.DirectorComments, new { required = "required", @class = "form-control pb-cmnt-textarea textArea", placeholder = "Write what improvements required!" })
+                        </div>
+                    </div>
+                </div>
+            }
+                <div class="col-md-12">
+                     <div class="col-md-3">
+                         @Html.LabelFor(model => model.SubmissionTarget)
+                         @Html.TextBoxFor(model => model.SubmissionTarget, new { required = "required", @class = "form-control", placeholder = "Submissions", type = "number" })
+                     </div>
+                     <div class="col-md-3">
+                         @Html.LabelFor(model => model.InterviewTarget)
+                         @Html.TextBoxFor(model => model.InterviewTarget, new { required = "required", @class = "form-control", placeholder = "Submissions", type = "number" })
+                     </div>
+                     <div class="col-md-3">
+                         @Html.LabelFor(model => model.HiresTarget)
+                         @Html.TextBoxFor(model => model.HiresTarget, new { required = "required", @class = "form-control", placeholder = "Submissions", type = "number" })
+                     </div>
+                     <div class="col-md-3">
+                         @Html.LabelFor(model => model.CallsTarget)
+                         @Html.TextBoxFor(model => model.CallsTarget, new { required = "required", @class = "form-control", placeholder = "Submissions", type = "number" })
+                     </div>
+                </div>
+                <div style="text-align:center;padding-top:15px" class="col-md-12">   
+                    <div >               
+                         <input style="margin:5px" class="btn btn-primary" type="submit" value="Save" id="ReviewId"/>
+                         <a class="linkStyle btn-primary" href="@ViewBag.retUrl">Back To List</a>
+                     </div>   
+                </div>
+        </div>
+    </div>
+}
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#ReviewId").click(function () {
+            debugger;
+            var $reviewNames = "";
+            var count = 0;
+            $(".getreviewname").each(function () {
+                if (count == 0)
+                    $reviewNames += $(this).text().replace(",", "");
+
+                else
+                    $reviewNames += "," + $(this).text().replace(",", "");
+
+                count++;
+
+            });
+            $reviewNames += "?" + $(".getreviewHr").text();
+            $("#ReviewerNames").val($reviewNames);
+
+            //console.log($reviewNames);
+            //return false;
+        });
+    });
+</script>

@@ -1,0 +1,185 @@
+﻿@model Tuple<List<RIC.Models.MonthlyTarget.MonthlyTargetsEmployee>, bool, string, int>
+
+@if (Model.Item1.Count > 0)
+{
+    <tr>
+        <td colspan="12">
+            <table class="table table-striped  table-hover table-bordered table-fixed innertable">
+                <thead class="theadStyle">
+                    <tr>
+
+                        <td class="tableHead text-center" style="width: 10%">
+                            <label>Employee ID</label>
+                        </td>
+                        <td class="tableHead text-center" style="width: 14%">
+                            <label>Employee Name</label>
+                        </td>
+                        <td class="tableHead text-center" style="width: 6%">
+                            <label>Margin</label>
+                        </td>
+
+                        <td class="tableHead text-center" style="width: 6%">
+                            <label>Submissions</label>
+                        </td>
+                        <td class="tableHead text-center" style="width: 6%">
+                            <label>Interviews</label>
+                        </td>
+                        <td class="tableHead text-center" style="width: 6%">
+                            <label>Hires</label>
+                        </td>
+                        <td class="tableHead text-center" style="width: 17%">
+                            <label>Team Comments</label><br />
+                            <i class='fas fa-comments' style='font-size:24px' title="Please enter the support needed from team to achieve the goals"></i>
+                        </td>
+                        <td class="tableHead text-center" style="width: 17%">
+                            <label>Supervisor Comments</label><br />
+                            <i class='fas fa-comments' style='font-size:24px' title="Please enter the support needed from supervisor to achieve the goals"></i>
+                        </td>
+                        <td class="tableHead text-center" style="width: 10%">
+                            <label>Status</label>
+                        </td>
+                        <td class="text-center" style="width: 8%">
+                            <label>Action</label>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item2 in Model.Item1)
+                    {
+                        if (Model.Item2 == false)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @Html.TextBox("Emp_Cd", item2.Emp_Cd, new { disabled = "true", style = "width:100px;" })
+                                    <input type="hidden" name="Month" value="@Model.Item3" />
+                                    <input type="hidden" name="Year" value="@Model.Item4" />
+                                </td>
+
+                                <td class="text-center">
+                                    @*@Html.DisplayFor(m => m.Emp_Name)*@
+                                    @Html.TextBox("Emp_Name", item2.Emp_Name, new { disabled = "true", style = "width:190px;" })
+                                </td>
+
+                                <td class="text-center">
+                                    @Html.TextBox("Margin", item2.Margin, new { style = "width:70px;", @class = "mymargin", @onkeypress = "return OnlyNumeric(this, event);" })
+                                </td>
+
+                                <td class="text-center">
+                                    @Html.TextBox("SubmissionTarget", item2.SubmissionTarget, new { style = "width:70px;", @class = "subtarget", @type = "number" })
+                                </td>
+                                <td class="text-center">
+                                    @Html.TextBox("InterviewTarget", item2.InterviewTarget, new { style = "width:70px;", @class = "intetarget", @type = "number" })
+                                </td>
+                                <td class="text-center">
+                                    @Html.TextBox("HireTarget", item2.HireTarget, new { style = "width:70px;", @class = "hiretarget", @type = "number" })
+                                </td>
+
+
+                                <td class="text-center">
+                                    @Html.TextArea("Team_Comments", item2.Team_Comments, new { @class = "form-control input-sm chat-input chkEdit teamcomments" })
+                                </td>
+                                <td class="text-center">
+                                    @Html.TextArea("Supervisor_Comments", item2.Supervisor_Comments, new { @class = "form-control input-sm chat-input chkEdit supervisorcomments" })
+                                </td>
+                                <td class="text-center">
+                                    @Html.Label("Status", item2.Status)
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="Emp_Cd" value="@item2.Emp_Cd" />
+                                    <input type="hidden" name="Emp_Name" value="@item2.Emp_Name" />
+
+
+                                    @if (item2.Status == "Accepted")
+                                    {
+                                        <input name="updatedata" id="update" value="Update" type="submit" class="btn btn-primary btn-block btn-employee" />
+
+                                    }
+                                    else if (item2.Status == "Pending")
+                                    {
+                                        <input name="savedata" id="savedata" value="Save" type="submit" class="btn btn-primary btn-block btn-employee" />
+
+                                    }
+                                    else /*if(item.Status == "Submitted")*/
+                                    {
+                                        <input name="Approve" id="Approve" value="Approve" type="submit" class="btn btn-primary btn-block btn-employee" />
+
+                                    }
+
+                                </td>
+
+                            </tr>
+
+                        }
+                        else
+                        {
+                            <tr>
+                                <td class="text-center">
+
+                                    @Html.TextBox("Emp_Cd", item2.Emp_Cd, new { disabled = "true", style = "width:100px;" })
+                                    <input type="hidden" name="Month" value="@Model.Item3" />
+                                    <input type="hidden" name="Year" value="@Model.Item4" />
+
+                                </td>
+                                <td class="text-center">
+                                    @*@Html.DisplayFor(m => m.Emp_Name)*@
+                                    @Html.TextBox("Emp_Name", item2.Emp_Name, new { disabled = "true", style = "width:190px;" })
+                                </td>
+                                <td class="text-center">
+                                    @Html.TextBox("Margin", item2.Margin, new { style = "width:70px;", @class = "mymargin", @onkeypress = "return OnlyNumeric(this, event);", disabled = "true" })
+                                </td>
+
+                                <td class="text-center">
+                                    @Html.TextBox("SubmissionTarget", item2.SubmissionTarget, new { style = "width:70px;", @class = "subtarget", @type = "number", disabled = "true" })
+                                </td>
+                                <td class="text-center">
+                                    @Html.TextBox("InterviewTarget", item2.InterviewTarget, new { style = "width:70px;", @class = "intetarget", @type = "number", disabled = "true" })
+                                </td>
+                                <td class="text-center">
+                                    @Html.TextBox("HireTarget", item2.HireTarget, new { style = "width:70px;", @class = "hiretarget", @type = "number", disabled = "true" })
+                                </td>
+
+
+                                <td class="text-center">
+                                    @Html.TextArea("Team_Comments", item2.Team_Comments, new { @class = "form-control input-sm chat-input chkEdit teamcomments", disabled = "true" })
+                                </td>
+                                <td class="text-center">
+                                    @Html.TextArea("Supervisor_Comments", item2.Supervisor_Comments, new { @class = "form-control input-sm chat-input chkEdit supervisorcomments", disabled = "true" })
+                                </td>
+                                <td class="text-center">
+                                    @Html.Label("Status", item2.Status)
+                                </td>
+                                <td class="text-center">
+
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="Emp_Cd" value="@item2.Emp_Cd" />
+                                    <input type="hidden" name="Emp_Name" value="@item2.Emp_Name" />
+
+
+                                    @if (item2.Status == "Accepted")
+                                    {
+                                        <input name="updatedata" id="update" value="Update" type="submit" class="btn btn-primary btn-block btn-employee" disabled />
+
+                                    }
+                                    else if (item2.Status == "Pending")
+                                    {
+                                        <input name="savedata" id="savedata" value="Save" type="submit" class="btn btn-primary btn-block btn-employee" disabled />
+
+                                    }
+                                    else /*if(item.Status == "Submitted")*/
+                                    {
+                                        <input name="Approve" id="Approve" value="Approve" type="submit" class="btn btn-primary btn-block btn-employee" disabled />
+
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </td>
+    </tr>
+}

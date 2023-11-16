@@ -1,0 +1,70 @@
+﻿@model IEnumerable<DBLibrary.RIC_Menu_Module>
+
+@{
+    ViewBag.Title = "ViewMenu";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Menu Items</h2>
+
+<p>
+    @Html.ActionLink("Create New", "CreateMenu")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RM_MenuParentId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RM_MenuName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RM_ControllerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RM_ActionName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RM_Sort_Order)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RM_Menuitem_Level)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RM_Roles)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.RM_MenuParentId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RM_MenuName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RM_ControllerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RM_ActionName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RM_Sort_Order)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RM_Menuitem_Level)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RM_Roles)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RM_MenuID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RM_MenuID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RM_MenuID })
+        </td>
+    </tr>
+}
+
+</table>

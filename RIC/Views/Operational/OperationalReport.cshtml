@@ -1,0 +1,256 @@
+﻿@model RIC.Models.Operational.OperationalReportView
+@{
+    ViewBag.Title = "OperationalFilter";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<style>
+    .DivBorder
+    {
+        /*border-top-left-radius: 15px;*/
+    }
+    .panelHead
+    {
+        padding: 6px 15px;
+    }
+    #OperationalTable_filter
+    {
+        display: none;
+    }
+    #OperationalTable
+    {
+        font-size: 12px;
+    }
+    .btn-toolbar .btn, .btn-toolbar .btn-group, .btn-toolbar .input-group
+    {
+        float: right;
+    }
+    .tblPading
+    {
+        position: relative;
+        min-height: 1px;
+        padding-right: 5px;
+        padding-left: 5px;
+    }
+</style>
+<legend>Operational Report</legend>
+@using (Html.BeginForm())
+{ 
+    <div class="container ">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-primary DivBorder">
+                    <div class="panel-heading DivBorder panelHead">Search Criteria</div>
+                    <div class="panel-body">
+                        <div class="form-row tblPading">
+                            <div class="form-group col-md-4 tblPading">
+                                <div class=" col-md-4 ">
+                                    @Html.LabelFor(model => model.Submissions, new { @class = "form" })
+                                </div>
+                                <div class=" col-md-3 tblPading">
+                                    @Html.DropDownListFor(model => model.SubSelected, Model.SubmissionSelectList, new { @class = "form-control input-sm CandidateDdl" })
+                                </div>
+                                <div class=" col-md-5 tblPading">
+                                    @Html.TextBoxFor(model => model.Submissions, new { @type = "number", @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 tblPading">
+                                <div class="col-md-4">
+                                    @Html.LabelFor(model => model.Calls, new { @class = "form" })
+                                </div>
+                                <div class=" col-md-3">
+                                    @Html.DropDownListFor(model => model.CallSelect, Model.CallsSelectList, new { @class = "form-control input-sm CandidateDdl" })
+
+                                </div>
+                                <div class="col-md-5">
+                                    @Html.TextBoxFor(model => model.Calls, new { @type = "number", @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 tblPading">
+                                <div style="padding-left: 0px;" class=" col-md-5">
+                                    <label for="inputEmail4">Select Experience</label>
+                                </div>
+                                <div style="padding-left: 0px;" class=" col-md-7">
+                                     @Html.DropDownListFor(model => model.ExpSelected, Model.ExpSelectList, new {required = "required", @class = "form-control input-sm CandidateDdl" })
+                                </div>
+                            </div>
+
+                            <div style="margin: auto; width: 65%" class="form-group">
+                                <div class="form-group col-md-12">
+                                    <div style="padding-left: 0px;" class=" col-md-2">
+                                        <label for="inputEmail4">From Date</label>
+                                    </div>
+                                    <div style="padding-left: 0px;" class=" col-md-4">
+                                        @Html.TextBoxFor(model => model.FromDate, "{0:MM-dd-yyyy}", new { required = "required", placeholder = "MM-DD-YYYY", @class = "form-control input-sm chat-input input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+
+                                    </div>
+                                    <div class=" col-md-2">
+                                        <label for="inputEmail4">To Date</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @Html.TextBoxFor(model => model.ToDate, "{0:MM-dd-yyyy}", new { required = "required", placeholder = "MM-DD-YYYY", @class = "form-control input-sm chat-input input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-left: 37%;" class="form-group">
+                                <div class="form-group col-md-4 offset-md-4">
+                                    @Html.CheckBoxFor(model => model.IncludeTL)
+                                    @Html.DisplayNameFor(model => model.IncludeTL)
+                                </div>
+                                <div class="form-group col-md-4">
+                                    @Html.CheckBoxFor(model => model.RemoveInactiveMember)
+                                    @Html.DisplayNameFor(model => model.RemoveInactiveMember)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin: auto; width: 25%; padding-left: 7%" class="form-group">
+                            <div class="form-group col-md-6">
+                                <input type="submit" class="btn btn-primary" value="Search" />
+                            </div>
+                            <div class="form-group col-md-6">
+                                <input id="ResetBtn" type="reset" class="btn btn-danger" value="Clear" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@if (ViewBag.ShowTable == true)
+{ 
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading panelHead">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-4">
+                                <span class="glyphicon glyphicon-list-alt" style="padding-top: 7px;"></span>Search Result  
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-4">
+                                <div style="z-index: 0;" class="input-group">
+                                    <input type="text" id="myInputTextField" class="form-control input-md" name="search">
+                                    <div class="input-group-btn">
+                                        <button type="button" class="btn btn-md btn-warning"><span class=" glyphicon glyphicon-search"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body table-responsive">
+                        <table id="OperationalTable" class="table table-hover ">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(m => m.FilterData.FirstOrDefault().EmpCd)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FilterData.FirstOrDefault().EmployeeName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FilterData.FirstOrDefault().TeamLeadName)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FilterData.FirstOrDefault().Submissions)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FilterData.FirstOrDefault().Interviews)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FilterData.FirstOrDefault().Hires)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FilterData.FirstOrDefault().CallConnectedIn)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FilterData.FirstOrDefault().VoiceMessageIn)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FilterData.FirstOrDefault().CallConnectedOut)</th>
+                                    <th>@Html.DisplayNameFor(m => m.FilterData.FirstOrDefault().VoiceMessageOut)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.FilterData)
+                                {         
+                                <tr>
+                                    <td>@item.EmpCd</td>
+                                    <td>@item.EmployeeName</td>
+                                    <td>@item.TeamLeadName</td>
+                                    <td>@item.Submissions</td>
+                                    <td>@item.Interviews</td>
+                                    <td>@item.Hires</td>
+                                    <td>@item.CallConnectedIn</td>
+                                    <td>@item.VoiceMessageIn</td>
+                                    <td>@item.CallConnectedOut</td>
+                                    <td>@item.VoiceMessageOut</td>
+                                </tr>        
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {       
+        //reset the data
+        $('#ResetBtn').click(function () {
+            var jobRepartPartialUrl = '@Url.Action("OperationalReport")';
+            window.location.replace(jobRepartPartialUrl);
+        });
+
+        if ('@User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["DirectorRole"])' == 'True'
+            ||'@User.IsInRole(System.Configuration.ConfigurationManager.AppSettings["StaffingDirector"])' == 'True'
+            ) {
+            $.fn.tableExport.xlsx = {
+                defaultClass: "xlsx",
+                buttonContent: "Export to Excel",
+                mimeType: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileExtension: ".xlsx"
+            };
+
+            $('#OperationalTable').tableExport({
+                headings: true,                    // (Boolean), display table headings (th/td elements) in the <thead>
+                footers: false,                     // (Boolean), display table footers (th/td elements) in the <tfoot>
+                formats: ["xlsx"],    // (String[]), filetypes for the export
+                fileName: "Operational Report",                    // (id, String), filename for the downloaded file
+                bootstrap: true,                   // (Boolean), style buttons using bootstrap
+                position: "bottom",                 // (top, bottom), position of the caption element relative to table
+                ignoreRows: null,                  // (Number, Number[]), row indices to exclude from the exported file(s)
+                ignoreCols: null,                  // (Number, Number[]), column indices to exclude from the exported file(s)
+                //ignoreCSS: ".tableexport-ignore",  // (selector, selector[]), selector(s) to exclude from the exported file(s)
+                // emptyCSS: ".tableexport-empty",    // (selector, selector[]), selector(s) to replace cells with an empty string in the exported file(s)
+                trimWhitespace: true              // (Boolean), remove all leading/trailing newlines, spaces, and tabs from cell text in the exported file(s)
+
+            });
+
+        }
+        var t = $('#OperationalTable').DataTable({
+        });
+        $('#myInputTextField').keyup(function () {
+            t.search($(this).val()).draw();
+        })
+
+        $('#FromDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
+            ,
+            onSelect: function (selected) {
+
+                //var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate());
+                $("#ToDate").datepicker("option", "minDate", dt);
+            }
+        });
+        $('#ToDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+
+                //var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate() - 1);
+                $("#FromDate").datepicker("option", "maxDate", dt);
+            }
+        });
+    });
+</script>

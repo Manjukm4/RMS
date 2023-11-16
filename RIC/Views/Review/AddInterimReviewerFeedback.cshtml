@@ -1,0 +1,141 @@
+﻿@model RIC.Models.Review.AddInterimReviewerFeedbackVM
+@{
+    ViewBag.Title = "DirectorReview";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<style>
+    .HeaderStyle
+    {
+        text-align: center;
+    }
+
+    form
+    {
+        width: 95%;
+        margin: auto;
+    }
+
+    .textArea
+    {
+        width: 100%;
+        height: 150px !important;
+    }
+
+    .TableStyle
+    {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .ReviewDiv
+    {
+        margin-bottom: 0px;
+        background-color: whitesmoke;
+        padding: 25px;
+    }
+
+    .linkStyle
+    {
+        color: white;
+        padding: 7px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .linkStyle:hover, .linkStyle:active
+        {
+            text-decoration: none;
+        }
+</style>
+@using (Html.BeginForm())
+{ 
+    @Html.HiddenFor(model => model.ReviewID)
+    <div style="margin: auto; width: 70%" class="form-row">
+        <div style="margin-bottom: 0px;" class="form-group col-md-12 ReviewDiv">
+            <h2 style="text-decoration: underline; margin-top: 0px;" class="HeaderStyle">Add Review</h2>
+            <br>
+            <div style="margin-bottom: 0px;" class="form-group col-md-12 ">
+                <div class="form-group col-md-12">
+                    <label for="inputEmail4">@Html.DisplayNameFor(model => model.CandidateName) :</label>
+                    <span class="textCapitalize">@Html.DisplayFor(model => model.CandidateName)</span>
+
+                </div>
+                <div class="form-group col-md-12">
+                    <div style="padding-left: 0px; margin-bottom: 7px;" class="form-group col-md-6">
+                        <label for="inputEmail4">@Html.DisplayNameFor(model => model.FromDate) :</label>
+                        <span>@Html.DisplayFor(model => model.FromDate) </span>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">@Html.DisplayNameFor(model => model.ToDate) :</label>
+                        <span>@Html.DisplayFor(model => model.ToDate)</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group col-md-12">
+                <table class="table table-bordered TableStyle">
+                    <thead>
+                        <tr class="bg-primary">
+                            <td>@Html.DisplayNameFor(model => model.Submissions)</td>
+                            <td>@Html.DisplayNameFor(model => model.Interviews)</td>
+                            <td>@Html.DisplayNameFor(model => model.Hires)</td>
+                            <td>@Html.DisplayNameFor(model => model.Calls)</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Html.DisplayFor(model => model.Submissions)</td>
+                            <td>@Html.DisplayFor(model => model.Interviews)</td>
+                            <td>@Html.DisplayFor(model => model.Hires)</td>
+                            <td>@Html.DisplayFor(model => model.Calls)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+           
+            <div class="form-group  col-md-12 DivPadding">
+                <label for="inputEmail4">@Html.DisplayNameFor(model => model.TargetForNextReview):</label>
+                <span>@Html.DisplayFor(model => model.TargetForNextReview)</span>
+            </div>         
+            <div class="form-group  col-md-12 DivPadding ">
+                <label for="inputAddress">@Html.DisplayNameFor(model => model.Findings)</label>
+                <span>
+                    @Html.TextAreaFor(model => model.Findings, new {required = "required", @class = "form-control pb-cmnt-textarea textArea", @placeholder = "Write Comments !" })
+                </span>
+            </div>
+                 
+            <div class="form-group  col-md-12 DivPadding ">
+                <label for="inputAddress">@Html.DisplayNameFor(model => model.Improvements)</label>
+                <span>
+                    @Html.TextAreaFor(model => model.Improvements, new {required = "required", @class = "form-control pb-cmnt-textarea textArea", @placeholder = "Write Comments !" })
+                </span>
+
+            </div>
+
+            <br />
+            <div class="form-group">
+                <div class="form-group  col-md-12 text-center">
+                    <button type="submit" style="margin-right: 35px;" class="btn btn-primary">Submit</button>
+                    <a class="linkStyle btn-primary" href="@ViewBag.retUrl">Back To List</a>
+                    @*<button type="submit" class="btn btn-primary">Save As Draft</button>*@
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+}
+<script>
+    $(document).ready(function () {
+      
+        // add the active tab in review and feedback 
+        $('#bootstrapMenu a[href="/Review/ViewAllReviews"]').addClass("activeNav");
+
+
+    });
+
+</script>

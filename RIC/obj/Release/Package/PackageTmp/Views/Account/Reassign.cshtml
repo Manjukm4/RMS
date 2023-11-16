@@ -1,0 +1,163 @@
+﻿@model RIC.Models.Account.ReassignManagerVM
+
+@{
+    ViewBag.Title = "Reassign";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<style>
+    .textCapitalize
+    {
+        text-transform: capitalize;
+    }
+</style>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model=>model.EmployeeCd)
+    
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+
+    <fieldset>
+        <legend>Re Assign</legend>
+        <span>@Html.ActionLink("Back", "ViewUsers", new { First_Name= ViewBag.Firstname,Emp_Code=ViewBag.Empcode,RoleID=ViewBag.RoleIdFilter,filterDdl=ViewBag.FilterName,Page=ViewBag.Page}, new { @class="btn btn-info",@id="backId",@style="margin-left: 95%;margin-top:-1%"}) </span>
+        <table style="width: 50%; height: 100%" class="table container-fluid">
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.JobdivaUserName)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.JobdivaUserName , new { @class = "form-control input-sm chat-input textCapitalize", required = "required", @disabled = "disabled" })
+                    @Html.ValidationMessageFor(model => model.JobdivaUserName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.ManagerList)
+                </td>
+                <td>
+                     @Html.DropDownListFor(model=> model.ManagerId ,Model.ManagerList, new { @class = "form-control input-sm chat-input textCapitalize" })
+        
+                    @Html.ValidationMessageFor(model => model.ManagerId)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.FromDate)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.FromDate, "{0:MM-dd-yyyy}", new { @class = "form-control input-sm chat-input input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d", required = "required" })
+                    @Html.ValidationMessageFor(model => model.FromDate)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.ToDate)
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.ToDate, "{0:MM-dd-yyyy}", new { @class = "form-control input-sm chat-input input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                    @Html.ValidationMessageFor(model => model.ToDate)
+                </td>
+            </tr>
+           
+             <tr>
+                <td>
+                    <div class="col-md-12 text-right">
+                        <input type="submit" class="btn btn-primary" value="Save" id="SubmitReassign" />
+                    </div>
+
+                </td>
+                <td>
+                    <div class="col-md-12 text-left">
+                        <button type="reset" class="btn btn-danger" value="Reset">Reset</button>
+                    </div>
+                </td>
+            </tr>
+
+        </table>
+    </fieldset>
+}
+
+<script>
+    $(document).ready(function () {
+
+        //debugger;
+        var dt1 = new Date('@Model.FromDate');
+        dt1.setDate(dt1.getDate() + 1);
+        // $("#RR_ToDate").datepicker("option", "minDate", dt);
+        $("#FromDate").datepicker("option", "minDate", dt1);
+        
+
+        $('#FromDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+                //debugger;
+                //var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+                 var dt = new Date(selected);
+                dt.setDate(dt.getDate() + 1);
+               // $("#RR_ToDate").datepicker("option", "minDate", dt);
+                $("#ToDate").datepicker("option", "minDate", dt);
+            }
+
+        });
+        $('#ToDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+
+                //var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate() - 1);
+                $("#FromDate").datepicker("option", "maxDate", dt);
+            }
+        });
+        
+
+        $("#SubmitReassign").click(function () {
+
+            var $fromDate = $("#FromDate").val().trim();
+            var $toDate = $("#ToDate").val().trim();
+            var $todayDate = new Date();
+
+            if (Date.parse($fromDate) > $todayDate) {
+                alert("Start Date cannot be Future Date");
+                return false;
+            }
+
+            if ($toDate != "") {
+                if (Date.parse($fromDate) > Date.parse($toDate)) {
+                alert("Start Date cannot be after End Date!")
+                return false;
+                }
+            }
+
+        });
+       
+
+    });
+
+</script>
+
+
+
+
+
+
+
+
+@*@Html.ActionLink("Back to List", "Index")*@
+
+

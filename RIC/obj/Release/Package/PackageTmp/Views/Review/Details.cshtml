@@ -1,0 +1,361 @@
+﻿@model RIC.Models.Review.InterimReviewDetailsModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<style>
+     #content {
+        visibility:hidden
+    }
+    .HeaderStyle
+    {
+        text-align: center;
+    }
+    form
+    {
+        width: 95%;
+        margin: auto;
+    }
+    .textArea
+    {
+        width: 100%;
+        height: 150px !important;
+    }
+    .TableStyle
+    {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    .ReviewDiv
+    {
+        margin-bottom: 0px;
+        background-color: whitesmoke;
+        padding: 25px;
+    }
+    .linkStyle
+    {
+        color: white;
+        padding: 7px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    .linkStyle:hover, .linkStyle:active
+    {
+        text-decoration: none;
+    }
+    .clickable
+    {
+        cursor: pointer;
+    }
+    .panel-heading span
+    {
+        margin-top: -20px;
+        font-size: 15px;
+    }
+    .printLogo
+    {
+        display: none;  padding:2px
+    }
+    .Footerstyle {
+        visibility:hidden;
+        color: red !important;
+        font-size:15px;
+    }
+    @@media print
+    {
+        /*.printTableHidden { visibility: hidden; }*/
+        .printTableVisible { visibility: visible; }
+        .DivPadding{
+        page-break-inside: avoid;
+        padding:10px;
+
+   }
+            #content {
+        visibility:visible
+    }
+
+        footer{
+        visibility:hidden;
+        }
+        .Footerstyle {
+            visibility:visible;
+        }
+        #DivMenuHead { visibility: hidden; }
+        .printTable
+        {
+            width:100% !Important;
+            padding:0px !Important ;
+            margin:-120px 0px 0px 0px  !Important;
+        }
+        .printLogo
+        {
+            display: block
+        }
+        #PageHeader
+        {
+            visibility:hidden
+        }
+
+        #pagecontent {
+            visibility:hidden
+        }
+        .linkButtons
+        {
+            display:none;
+        }
+    @@page { margin: 0; }
+        body { margin: 0px; }
+    }
+    @@media print {
+      body, html {
+          width: 100%;
+      }
+}
+   
+</style>
+@Html.HiddenFor(model => model.ReviewID)
+<div style="margin: auto; width: 75%" class="form-row printTable printTableHidden">
+    <div style="margin-bottom: 0px;" class="form-group col-md-12 ReviewDiv">
+        <div class="col-md-5 col-sm-4 printLogo">
+         <img src="~/Image/SBS_Trans_Logo_small.png" style="display: inline-block; max-height: 70px">
+        </div>
+        <h2 id="PageHeader" style="text-decoration: underline; margin-top: 0px;" class="HeaderStyle">Review Details</h2>
+        <br>
+
+
+         <div class="form-group col-md-12">
+
+               <div style="margin-bottom: 0px ;" class="form-group col-md-12  " id="pagecontent">
+    <div class="form-group col-md-12">
+        <div  class="form-group col-md-4">
+            <label  for="inputEmail4">@Html.DisplayNameFor(model => model.CandidateName) :</label>
+            <span class="textCapitalize">@Html.DisplayFor(model => model.CandidateName)</span>
+        </div>
+        <div  class="form-group col-md-4">
+            <label  for="inputEmail4">@Html.DisplayNameFor(model => model.ReviewerName) :</label>
+            <span class="textCapitalize">@Html.DisplayFor(model => model.ReviewerName)</span>
+        </div>
+        <div  class="form-group col-md-4">
+            <label for="inputEmail4">@Html.DisplayNameFor(model => model.ReviewDate) :</label>
+            <span>@Html.DisplayFor(model => model.ReviewDate)</span>
+        </div>
+    </div>
+    <div class="form-group col-md-12">
+        <div  class="form-group col-md-4">
+            <label for="inputEmail4">@Html.DisplayNameFor(model => model.FromDate) :</label>
+            <span>@Html.DisplayFor(model => model.FromDate) </span>
+        </div>
+        <div  class="form-group col-md-4">
+            <label for="inputEmail4">@Html.DisplayNameFor(model => model.ToDate) :</label>
+            <span>@Html.DisplayFor(model => model.ToDate)</span>
+        </div>
+        <div  class="form-group col-md-4">
+            <label for="inputEmail4">@Html.DisplayNameFor(model => model.NextReviewDate) :</label>
+            <span>@Html.DisplayFor(model => model.NextReviewDate)</span>
+        </div>
+    </div>
+</div>
+
+        <table class="table table-bordered TableStyle" style="margin-top: -262px;"  id="content">
+    <tr>
+        <td>
+            <label>@Html.DisplayNameFor(model => model.CandidateName)  </label>
+        </td>
+        <td>@Html.DisplayFor(model => model.CandidateName)</td>
+        <td> <label>@Html.DisplayNameFor(model => model.ReviewerName)  </label></td>
+        <td>@Html.DisplayFor(model => model.ReviewerName)</td>
+         <td>
+            <label>@Html.DisplayNameFor(model => model.ReviewDate) </label>
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.ReviewDate)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label>@Html.DisplayNameFor(model => model.FromDate) </label>
+        </td>
+        <td>
+            @Html.DisplayFor(model => model.FromDate)
+        </td>
+        <td>
+            <label>@Html.DisplayNameFor(model => model.ToDate) </label>
+        </td>
+        <td>
+           @Html.DisplayFor(model => model.ToDate)
+        </td>
+          <td>
+            <label>@Html.DisplayNameFor(model => model.NextReviewDate) </label>
+        </td>
+        <td>
+           @Html.DisplayFor(model => model.NextReviewDate)
+        </td>
+    </tr>
+</table>
+             </div>
+            
+        <div class="form-group col-md-12" >
+            <table class="table table-bordered TableStyle">
+                <thead>
+                    <tr class="bg-primary">
+                        <td></td>
+                        <td>@Html.DisplayNameFor(model => model.Submissions)</td>
+                        <td>@Html.DisplayNameFor(model => model.Interviews)</td>
+                        <td>@Html.DisplayNameFor(model => model.Hires)</td>
+                        <td>@Html.DisplayNameFor(model => model.Calls)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Achievements</th>
+                        <td>@Html.DisplayFor(model => model.Submissions)</td>
+                        <td>@Html.DisplayFor(model => model.Interviews)</td>
+                        <td>@Html.DisplayFor(model => model.Hires)</td>
+                        <td>@Html.DisplayFor(model => model.Calls)</td>
+                    </tr>
+                    <tr>
+                        <th>Target For Next Review</th>
+                        <td>@Html.DisplayFor(model => model.SubmissionTarget)</td>
+                        <td>@Html.DisplayFor(model => model.InterviewTarget)</td>
+                        <td>@Html.DisplayFor(model => model.HireTarget)</td>
+                        <td>@Html.DisplayFor(model => model.CallsTarget)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+         <div class="form-group col-md-12"><label>Reviewers:</label></div>
+        @foreach (var item in Model.ReviewerDtl)
+        { 
+            <div class="form-group  col-md-12 DivPadding">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                           <label class="textCapitalize">@item.ReviewerName</label> 
+                        </h3>
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Findings:</label>
+                            </div>
+                            <div class="col-md-8">
+                                @if (item.Status == "Completed")
+                                { 
+                                      @item.Findings
+                                }else
+                                {
+                                     <i style="font-size: 15px" class="fa ">&#xf251;</i>
+                                }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Improvements Required:</label>
+                            </div>
+                            <div class="col-md-8">
+                                @if (item.Status == "Completed")
+                                {
+                                @item.Improvement
+                                }else
+                                {
+                                 <i style="font-size: 15px" class="fa ">&#xf251;</i>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Model.ShowDirectorReview)
+        { 
+         <div class="form-group  col-md-12 DivPadding">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <label class="textCapitalize">@Model.DirectorName</label>
+                        </h3>
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Comments:</label>
+                            </div>
+                            <div class="col-md-8">
+                                @Model.DirectorComments
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        }
+        @if (Model.ShowHrReview)
+        { 
+               <div class="form-group  col-md-12 DivPadding">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">
+                            <label class="textCapitalize">@Model.HrName</label>
+                        </h3>
+                        <span class="pull-right clickable"><i class="glyphicon glyphicon-chevron-up"></i></span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Comments:</label>
+                            </div>
+                            <div class="col-md-8">
+                                @Model.HrComments
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+        }
+        <br />
+        <div class="form-group linkButtons">
+            <div class="form-group  col-md-12 text-center ">
+                <a class="linkStyle btn-primary" href="@ViewBag.retUrl">Back To List</a>
+                 @if (Model.ShowHrReview)
+                 { 
+                     <a id="PrintBtn" class="linkStyle btn-primary glyphicon glyphicon-print" style="padding:10px; font-size: 15px;" href="#"> Print</a>
+                 }
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="Footerstyle">
+    Confidential
+</footer>
+<script>
+    $(document).ready(function () {
+        // add the active tab in review and feedback 
+        $('#bootstrapMenu a[href="/Review/ViewAllReviews"]').addClass("activeNav");
+        $(".container").on("contextmenu", function (e) {
+            return false;
+        });
+        $(document).on('click', '.panel-heading span.clickable', function (e) {
+            var $this = $(this);
+            if (!$this.hasClass('panel-collapsed')) {
+            $this.parents('.panel').find('.panel-body').slideUp();
+            $this.addClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-down');
+            } else {
+            $this.parents('.panel').find('.panel-body').slideDown();
+            $this.removeClass('panel-collapsed');
+            $this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-up');
+            }
+        })
+        $('#PrintBtn').click(function () {
+            $('.printTable').removeClass('printTableHidden')
+            window.print();
+            $('.printTable').addClass('printTableHidden')
+        });
+    });
+
+</script>

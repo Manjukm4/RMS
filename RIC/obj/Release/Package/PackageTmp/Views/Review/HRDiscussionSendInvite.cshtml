@@ -1,0 +1,217 @@
+﻿@model IEnumerable<RIC.Models.Review.HRDiscussionSendInvite>
+
+@{
+    ViewBag.Title = "HRDiscussionSendInvite";
+    Layout = "~/Views/Review/Index.cshtml";
+}
+
+<style>
+    .linkStyle {
+        color: white;
+        padding: 7px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .linkStyle:hover, .linkStyle:active {
+            text-decoration: none;
+        }
+
+    #ReviewTbl_length {
+        display: none;
+    }
+</style>
+<h2 style="text-align: center">HR Discussion</h2>
+<div class="dropdown">
+    <a class="linkStyle btn-primary" href="@Url.Action("AddHRDiscussion")"><span class="glyphicon glyphicon-plus"></span>&nbsp Add HR Dicussion</a>
+    <a class="linkStyle btn-primary" href="@Url.Action("HRDiscussionDrafts")"><span class="fas fa-pen-square"></span>&nbsp Drafts</a>
+</div>
+<input type="hidden" id="EmployeeId" value="0" />
+<div style="height: 50%" class="table-responsive">
+    <table id="ReviewTbl" class="table table-striped table-bordered">
+
+        <thead>
+            <tr>
+                <th style="text-align: center">
+                    Sl. No.
+                </th>
+                <th style="text-align: center">
+                    @Html.DisplayNameFor(model => model.EmpCd)
+                </th>
+                <th style="text-align: center">
+                    @Html.DisplayNameFor(model => model.CandidateName)
+                </th>
+                <th style="text-align: center">
+                    @Html.DisplayNameFor(model => model.ManagerName)
+                </th>
+                <th style="text-align:center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{int RowNo = 0;}
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="text-align:center">
+                        @{RowNo++;} @RowNo
+                    </td>
+                    <td style="text-align: center">
+                        @Html.DisplayFor(modelItem => item.EmpCd)
+                    </td>
+                    <td class="textCapitalize">
+                        @Html.DisplayFor(modelItem => item.CandidateName)
+                    </td>
+                    <td class="textCapitalize">
+                        @Html.DisplayFor(modelItem => item.ManagerName)
+                    </td>
+                    <td style="text-align:center">
+                        <a href="#" onclick="submitEmployee(@item.EmployeePrimaryId)" data-toggle="modal" data-target="#modalForm" title="Send Invite"> <span class="fa fa-calendar"></span> </a>
+
+                        @*<button type="button" class="glyphicon glyphicon-calendar SendInivite" onclick="submitEmployee(@item.EmployeePrimaryId)" data-toggle="modal" data-target="#modalForm" style="color: #337ab7;text-decoration: none;" title="Send Invite" />*@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- Button to trigger modal -->
+<!-- Modal -->
+<div class="modal fade" id="modalForm" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">HR Discussion</h4>
+            </div>
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p class="statusMsg"></p>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="inputName">Subject</label>
+                        <input type="text" class="form-control" id="inputSubject" placeholder="Enter your subject" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail">Location</label>
+                        <input type="email" class="form-control" id="inputLocation" placeholder="Enter your Location" autocomplete="off" />
+                    </div>
+                    <div class="form-group">
+                        <label for="inputMessage">Start Date</label>
+                        <div class='input-group date'>
+                            <input type='text' id="inputStartDate" class="form-control input-sm chat-input input-group date" autocomplete="off" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputMessage">End Date</label>
+                        <div class='input-group date'>
+                            <input type='text' id="inputEndDate" class="form-control input-sm chat-input input-group date" autocomplete="off" />
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputMessage">Message</label>
+                        <textarea class="form-control" id="inputMessage" placeholder="Enter your message" style="height: 150px;"></textarea>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" id="sendmailBtn" class="btn btn-primary submitBtn" onclick="submitHRDiscussionForm()">Send Mail</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css">
+
+<script>
+    $(document).ready(function () {
+
+        $('#inputStartDate,#inputEndDate').datetimepicker();
+     
+        $("span .glyphicon-calendar").click(function () {
+            $(this).parent().prev().focus();
+        });
+
+        $('#ReviewTbl').DataTable({
+        });
+
+    });
+
+    function submitEmployee(EmployeeId) {
+        $("#EmployeeId").val(EmployeeId);
+        return false;
+    }
+
+       function submitHRDiscussionForm() {
+
+        var getEmployeeId = $("#EmployeeId").val();
+
+        var getSubject = $('#inputSubject').val();
+        var getLocation = $('#inputLocation').val();
+        var getStartDate = $('#inputStartDate').val();
+        var geEndDate = $('#inputEndDate').val();
+        var getMessage = $('#inputMessage').val();
+
+        var startDate = new Date($('#inputStartDate').val());
+        var endDate = new Date($('#inputEndDate').val());
+
+        var fromdate =  startDate.toISOString().slice(0, 10);
+
+        var todate=endDate.toISOString().slice(0,10);
+
+
+        if (getSubject.trim() == '') {
+            alert('Please enter your subject.');
+            $('#inputSubject').focus();
+            return false;
+        } else if (getLocation.trim() == '') {
+            alert('Please enter your location.');
+           $('#inputLocation').focus();
+            return false;
+        } else if (getStartDate.trim() == '') {
+            alert('Please enter your start date.');
+            $('#inputStartDate').focus();
+            return false;
+        } else if (geEndDate.trim() == '') {
+            alert('Please enter your end date.');
+            $('#inputEndDate').focus();
+            return false;
+        }
+        else if (getMessage.trim() == '') {
+            alert('Please enter your message.');
+            $('#inputMessage').focus();
+            return false;
+        } else if (fromdate > todate) {
+            alert("Start Date can not be greater than End Date");
+            return false;
+        }
+
+        else {
+                    window.location.href = '@Url.Action("HRDiscussionSendEmail","Review")?id='+getEmployeeId+'&subject=' + getSubject + '&location=' + getLocation + '&StartDate=' + getStartDate + '&EndDate=' + geEndDate + '&Body=' + getMessage+'&StatusMail=sendinvite';
+
+
+        }
+
+
+    }
+
+</script>

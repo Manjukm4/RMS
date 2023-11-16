@@ -1,0 +1,225 @@
+﻿@using System.Globalization;
+<input type='hidden' value='0' id='HidMonth' />
+
+@{
+    ViewBag.Title = "ManageJobsDashboard";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<link href="~/Content/CSS/TeamDashboard.css?V1.1" rel="stylesheet" />
+<link href="~/Content/CSS/TeamDashboardGraph.css" rel="stylesheet" />
+<link href="~/Content/CSS/Dashboard/bootstrap-treefy.css" rel="stylesheet" />
+<script src="~/Content/JS/Dashboard/bootstrap-treefy.js"></script>
+<style>
+    @@import url('//cdn.datatables.net/1.10.2/css/jquery.dataTables.css');
+
+    td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+        cursor: pointer;
+    }
+
+    tr.shown td.details-control {
+        background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+    }
+
+    [data-toggle="toggle"] {
+        display: none;
+    }
+
+    .Col1Width {
+        width: 23% !important;
+    }
+</style>
+
+<div id="exTab1" class="container">
+    <div class="panel panel-default ">
+        <div style="text-align: center;" class="panel-heading headingStyle" data-spy="affix" data-offset-top="5">
+            <button id='previousMonthBtn' class="btn btn-primary"><i class="fas fa-angle-double-left"></i></button>
+            <label class="LblHeader">
+                Job's check-Out For
+                <label id="monthTextLable"></label>
+            </label>
+            <button id='nextMonthBtn' class="btn btn-primary"><i class="fas fa-angle-double-right"></i> </button>
+
+        </div>
+        <div id="ManagejobReportPartial" class="panelStyle"></div>
+    </div>
+
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg ">
+        <div id='myModalContent'></div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        changeButtonState()
+        debugger;
+        var months = ["January", "February", "March", "April", "May", "June",
+               "July", "August", "September", "October", "November", "December"];
+        var month = $("#HidMonth").val();
+        var managejobReportPartial = '@Url.Action("ManageJobReportPartial","ManageJobs")';
+        var options = { "backdrop": "static", keyboard: true };
+        $.ajax({
+            type: "GET",
+            url: managejobReportPartial,
+            contentType: "application/json; charset=utf-8",
+            data: { "month": month },
+            datatype: "json",
+            success: function (data) {
+                $('#ManagejobReportPartial').html(data);
+            },
+            error: function () {
+                //alert("Dynamic content load failed.");
+            }
+        });
+
+        var date = new Date();
+        var m = date.getMonth();
+        $('#monthTextLable').text(months[m]);
+
+
+
+
+        $("#previousMonthBtn").click(function () {
+
+            //debugger;
+            //disable the buttons.
+            $("#nextMontBtn").prop('disabled', true);
+            $("#previousMontBtn").prop('disabled', true);
+
+            var month = $("#HidMonth").val();
+            var monthInt = parseInt(month) - 1;
+            $("#HidMonth").val(monthInt);
+
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: managejobReportPartial,
+                contentType: "application/json; charset=utf-8",
+                data: { "month": monthInt },
+                datatype: "json",
+                success: function (data) {
+                    $('#ManagejobReportPartial').html(data);
+
+
+                },
+                error: function () {
+                   // alert("Dynamic content load failed.");
+                }
+            });
+            var date = new Date();
+            date.setMonth(date.getMonth() + monthInt);
+            var m = date.getMonth();
+            $('#monthTextLable').text(months[m]);
+            changeButtonState()
+            return false;
+        })//, 1000);
+
+
+
+
+
+        $("#nextMonthBtn").click(function () {
+            //disable the buttons.
+            $("#nextMontBtn").prop('disabled', true);
+            $("#previousMontBtn").prop('disabled', true);
+            var month = $("#HidMonth").val();
+            var monthInt = parseInt(month) + 1;
+            $("#HidMonth").val(monthInt);
+
+
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: managejobReportPartial,
+                contentType: "application/json; charset=utf-8",
+                data: { "month": monthInt },
+                datatype: "json",
+                success: function (data) {
+
+
+                    $('#ManagejobReportPartial').html(data);
+
+
+                },
+                error: function () {
+                   // alert("Dynamic content load failed.");
+                }
+            });
+
+            var date = new Date();
+            date.setMonth(date.getMonth() + monthInt);
+            var m = date.getMonth();
+            $('#monthTextLable').text(months[m]);
+            changeButtonState()
+            return false;
+        })//, 1000);
+
+
+    });
+
+    function changeButtonState() {
+
+        var month = $("#HidMonth").val();
+
+
+        if (month == 0) {
+            $("#nextMonthBtn").prop('disabled', true);
+            $("#previousMonthBtn").prop('disabled', false);
+        }
+        else if (month == -2) {
+            $("#nextMonthBtn").prop('disabled', false);
+            $("#previousMonthBtn").prop('disabled', true);
+
+        }
+        else {
+            $("#nextMonthBtn").prop('disabled', false);
+            $("#previousMonthBtn").prop('disabled', false);
+        }
+
+
+    }
+
+
+    function format(value) {
+        return value;
+    }
+    $(document).ready(function () {
+
+
+
+        var table = $('#example').DataTable({});
+
+        // Add event listener for opening and closing details
+        $('#example').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            } else {
+                // Open this row
+                row.child(format(tr.data('child-value'))).show();
+                tr.addClass('shown');
+            }
+        });
+    });
+
+
+
+</script>
+
+<script>
+    $(function () {
+        $("#table").treeFy({
+            treeColumn: 0
+        });
+    });
+</script>
+

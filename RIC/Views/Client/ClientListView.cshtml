@@ -1,0 +1,269 @@
+﻿@model RIC.Models.Client.ClientListView
+ 
+@{
+    ViewBag.Title = "ClientListView";
+     
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<style type="text/css">
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        /*height: 20px;*/
+        height: 34px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            /*position: absolute;*/
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+    .textCapitalize {
+        text-transform: capitalize;
+    }
+
+    .custom-checkbox {
+        min-height: 1rem;
+        padding-left: 0;
+        margin-right: 0;
+        cursor: pointer;
+    }
+
+        .custom-checkbox .custom-control-indicator {
+            content: "";
+            display: inline-block;
+            position: relative;
+            width: 30px;
+            height: 10px;
+            background-color: #818181;
+            border-radius: 15px;
+            margin-right: 10px;
+            -webkit-transition: background .3s ease;
+            transition: background .3s ease;
+            vertical-align: middle;
+            margin: 0 16px;
+            box-shadow: none;
+        }
+
+            .custom-checkbox .custom-control-indicator:after {
+                content: "";
+                position: absolute;
+                display: inline-block;
+                width: 18px;
+                height: 18px;
+                background-color: #f1f1f1;
+                border-radius: 21px;
+                box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.4);
+                left: -2px;
+                top: -4px;
+                -webkit-transition: left .3s ease, background .3s ease, box-shadow .1s ease;
+                transition: left .3s ease, background .3s ease, box-shadow .1s ease;
+            }
+
+        .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator {
+            background-color: #84c7c1;
+            background-image: none;
+            box-shadow: none !important;
+        }
+
+            .custom-checkbox .custom-control-input:checked ~ .custom-control-indicator:after {
+                background-color: #84c7c1;
+                left: 15px;
+            }
+
+        .custom-checkbox .custom-control-input:focus ~ .custom-control-indicator {
+            box-shadow: none !important;
+        }
+
+    .commentsGold {
+        font-size: 20px;
+        color: gold;
+    }
+
+    .commentsGreen {
+        font-size: 20px;
+        color: aquamarine;
+    }
+
+    .popover-content {
+        height: 100px;
+        width: 200px;
+        overflow: auto;
+    }
+
+    .popover-title {
+        font-weight: bold;
+        font-size: 12px;
+    }
+    /*align center*/
+    .flex-parent {
+        display: flex;
+    }
+
+    .jc-center {
+        justify-content: center;
+    }
+
+    button.margin-right {
+        margin-right: 0px;
+    }
+</style>
+<link href="~/Content/CSS/Account/AddTargets.css" rel="stylesheet" />
+@*<h2>ClientListView</h2>*@
+
+<legend>Client List</legend>
+<div class="container-fluid bg-light resultContainer ">
+    <div class="tablediv" style="height:auto">
+        <table id="UserList" class="table table-striped  table-hover table-bordered table-fixed">
+            <thead class="theadStyle">
+                <tr>
+
+                    <td class="tableHead text-center" style="width: 10%">
+                        <label>Client ID</label>
+                    </td>
+                    <td class="tableHead text-center" style="width: 14%">
+                        <label>Client Name</label>
+                    </td>
+                    <td class="tableHead text-center" style="width: 6%">
+                        <label>Created Date</label>
+                    </td>
+
+                    <td class="tableHead text-center" style="width: 6%">
+                        <label>Created by</label>
+                    </td>
+
+                    <td class="text-center" style="width: 8%">
+                        <label>Action</label>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.clientList.Any())
+                {
+                    foreach (var item in Model.clientList)
+                    {
+                        using (Html.BeginForm("AcceptTargetsBySupervisor", "Client", FormMethod.Post))
+
+                        {
+                            if (Model.IsDisable == false)
+                            {
+
+                                <tr>
+
+                                    <td class="text-center">
+                                        <label>@item.RC_Id</label>
+
+                                    </td>
+                                    <td class="text-center">
+                                        @*@Html.DisplayFor(m => m.Emp_Name)*@
+
+                                        @Html.TextBox("Client Name", item.RC_ClientName, new { disabled = "true", style = "width:190px;" })
+
+                                    </td>
+                                    <td class="text-center">
+                                        @*@Html.DisplayFor(m => m.Emp_Name)*@
+                                        @Html.TextBox("Created date", item.RC_CreatedDate, new { style = "width:70px;" })
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        @Html.TextBox("Createdby", item.RC_CreatedBy, new { required = "required", style = "width:70px;" })
+
+                                    </td>
+
+
+
+                                    <td class="text-center">
+
+
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="RC_Id" value="@item.RC_Id" />
+                                       @* <input type="hidden" name="Emp_Name" value="@item.Emp_Name" />*@
+                                        <button name="submit" id="submit" value="submit" type="submit" class="btn btn-primary btn-block">Edit</button>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        }
+
+
+                    }
+                }
+
+
+
+            </tbody>
+
+        </table>
+    </div>
+    </div>
+<script>
+    $(document).ready(function () {
+        //alert("Hi");
+        $('#UserList').DataTable({
+           
+        });
+         
+        //$('#submit').prop('disabled', true);
+        ////alert("Hii");
+       
+        //$("#submit").on("click", function () {
+        //    alert("Targets Submitted Successfully");
+        //});
+        
+    });
+     
+</script>

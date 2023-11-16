@@ -1,0 +1,434 @@
+﻿@model RIC.Models.Review.AddInterimReviewModel
+@{
+    ViewBag.Title = "ReviewUser";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";    
+}
+<style>
+    .HeaderStyle
+    {
+        text-align: center;
+    }
+
+    form
+    {
+        width: 95%;
+        margin: auto;
+    }
+
+    .CandidateDdl
+    {
+        width: 48%;
+    }
+
+    .TableStyle
+    {
+        margin-top: 4%;
+        margin-bottom: 0px;
+    }
+
+    .textArea
+    {
+        width: 100%;
+        height: 150px !important;
+    }
+
+    .DivPadding
+    {
+        /*padding-left: 35px;*/
+    }
+
+    .ReviewDiv
+    {
+        margin-bottom: 0px;
+        background-color: whitesmoke;
+        padding: 25px;
+    }
+
+    .btn-group-vertical > .btn.active, .btn-group-vertical > .btn:active, .btn-group-vertical > .btn:focus, .btn-group-vertical > .btn:hover, .btn-group > .btn.active, .btn-group > .btn:active, .btn-group > .btn:focus, .btn-group > .btn:hover
+    {
+        z-index: 0;
+        opacity: 1;
+    }
+
+    .CheckBoxStyle
+    {
+        opacity: 0.70;
+    }
+
+    .linkStyle
+    {
+        color: white;
+        padding: 7px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .linkStyle:hover, .linkStyle:active
+    {
+        text-decoration: none;
+    }
+</style>
+@using (Html.BeginForm())
+{ 
+    <div style="margin: auto; width: 70%" class="form-row">
+        <div style="margin-bottom: 0px;" class="form-group col-md-12 ReviewDiv">
+            <h2 style="text-decoration: underline; margin-top: 0px;" class="HeaderStyle">Review / Feedback </h2>
+            <br>
+            <div style="margin-bottom: 0px;" class="form-group col-md-12 ">
+                <div class="form-group col-md-12">
+                    <label for="inputEmail4">Select Employee</label>
+                    @if (ViewBag.showReamingFields == true)
+                    { 
+                        @Html.DropDownListFor(s => s.EmpCd, Model.CandidateList, "--Select--", new { required = "required", @class = " form-control  CandidateDdl textCapitalize ", disabled = "disabled" })
+                    }
+                    else
+                    { 
+                        @Html.DropDownListFor(s => s.EmpCd, Model.CandidateList, "--Select--", new { required = "required", @class = " form-control  CandidateDdl  textCapitalize" })
+                    }
+                </div>
+                <div class="form-group col-md-12">
+                    <div style="padding-left: 0px; margin-bottom: 7px;" class="form-group col-md-6">
+                        <label for="inputEmail4">From Date</label>
+                        @if (ViewBag.showReamingFields == true)
+                        { 
+                            @Html.TextBoxFor(s => s.FromDate, null, new { required = "required", placeholder = "MM-DD-YYYY", @class = "form-control  input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d", disabled = "disabled" })
+                        }
+                        else
+                        {                        
+                            @Html.TextBoxFor(s => s.FromDate, new { @style = "background:white",autocomplete="off", required = "required", placeholder = "MM-DD-YYYY", @class = "form-control  input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                        }
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">To Date</label>
+                        @if (ViewBag.showReamingFields == true)
+                        {
+                            @Html.TextBoxFor(s => s.ToDate, new { required = "required", placeholder = "MM-DD-YYYY", @class = "form-control  input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d", disabled = "disabled" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(s => s.ToDate, new { @style = "background:white",autocomplete="off", required = "required", placeholder = "MM-DD-YYYY", @class = "form-control  input-group date", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                        }
+                    </div>
+                </div>
+                @if (ViewBag.showReamingFields != true)
+                {
+                    <div class=" col-md-12">
+                        <button type="submit" name="submit" value="GetDatabtn" id="GetDataBtn" style="margin-right: 35px;" class="btn btn-primary">Get Data</button>
+                        <a class="linkStyle btn-primary" href="@Url.Action("InterimReviewSubmitted")">Back To List</a>
+                    </div>
+                }
+            </div>
+            @if (ViewBag.showReamingFields == true)
+            { 
+                @Html.HiddenFor(model => model.EmpCd)
+                @Html.HiddenFor(model => model.FromDate)
+                @Html.HiddenFor(model => model.ToDate) 
+                @Html.HiddenFor(model => model.Submissions)
+                @Html.HiddenFor(model => model.Interviews)
+                @Html.HiddenFor(model => model.Hires)
+                @Html.HiddenFor(model => model.Calls)                
+                <div class="form-group col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-bordered  TableStyle">
+                            <thead>
+                                <tr class="bg-primary">
+                                    <td>Submissions</td>
+                                    <td>Interviews</td>
+                                    <td>Hires</td>
+                                    <td>Number Of Calls</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Model.Submissions</td>
+                                    <td>@Model.Interviews</td>
+                                    <td>@Model.Hires</td>
+                                    <td>@Model.Calls</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="form-group  col-md-12 DivPadding ">
+                    <label for="inputAddress">Findings</label>
+                    @if (Model.EmployeeRole == "HR Manager")
+                    {
+                        @Html.TextAreaFor(s => s.TeamLeadReview, new { @class = "form-control pb-cmnt-textarea textArea", placeholder = "Write your findings here!" })
+                    }
+                    else
+                    {
+                        @Html.TextAreaFor(s => s.TeamLeadReview, new { required = "required", @class = "form-control pb-cmnt-textarea textArea", placeholder = "Write your findings here!" })
+                    }
+                </div>
+                <div class="form-group  col-md-12 DivPadding ">
+                    <label for="inputAddress">Improvements Required</label>
+                    @if (Model.EmployeeRole == "HR Manager")
+                    {
+                        @Html.TextAreaFor(s => s.ImprovementsRequired, new { @class = "form-control pb-cmnt-textarea textArea", placeholder = "Write what improvements required!" })
+                    }
+                    else
+                    {
+                        @Html.TextAreaFor(s => s.ImprovementsRequired, new { required = "required", @class = "form-control pb-cmnt-textarea textArea", placeholder = "Write what improvements required!" })
+                    }
+                </div>           
+                <div class="form-group  col-md-6 DivPadding">
+                    <label for="inputEmail4">Next Review Date</label>
+                    @Html.TextBoxFor(s => s.NextReviewDate, new { @style = "background:white",autocomplete="off", required = "required", @class = "form-control", placeholder = "MM-DD-YYYY", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                </div>
+                <div class="form-group  col-md-12 DivPadding">
+                    <label for="inputEmail4">Target For Next Review</label><br />
+                    <div class="form-group  col-md-3 DivPadding">
+                    @if (Model.EmployeeRole == "HR Manager")
+                    {
+                        @Html.TextBoxFor(s => s.SubmissionTarget, new { @class = "form-control", placeholder = "Submissions", type = "number" })
+
+                    }
+                    else
+                    {
+                        @Html.TextBoxFor(s => s.SubmissionTarget, new { required = "required", @class = "form-control", placeholder = "Submissions", type = "number" })
+
+                    }
+                    </div>
+                    <div class="form-group  col-md-3 DivPadding">
+                        @if (Model.EmployeeRole == "HR Manager")
+                        {
+                            @Html.TextBoxFor(s => s.InterviewsTarget, new { @class = "form-control", placeholder = "Interviews", type = "number" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(s => s.InterviewsTarget, new { required = "required", @class = "form-control", placeholder = "Interviews", type = "number" })
+
+                        }
+                    </div>
+                    <div class="form-group  col-md-3 DivPadding">
+                        @if (Model.EmployeeRole == "HR Manager")
+                        {
+                            @Html.TextBoxFor(s => s.HiresTarget, new {  @class = "form-control", placeholder = "Hires", type = "number" })
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(s => s.HiresTarget, new { required = "required", @class = "form-control", placeholder = "Hires", type = "number" })
+
+                        }
+                    </div>
+                    <div class="form-group  col-md-3 DivPadding">
+                        @if (Model.EmployeeRole == "HR Manager")
+                        {
+                            @Html.TextBoxFor(s => s.CallsTarget, new {  @class = "form-control", placeholder = "Calls", type = "number" })
+
+                        }
+                        else
+                        {
+                            @Html.TextBoxFor(s => s.CallsTarget, new { required = "required", @class = "form-control", placeholder = "Calls", type = "number" })
+
+                        }
+                    </div>
+                </div>
+                 <div class="from-group col-md-12 DivPadding">  
+                    <label>Select Director</label>
+                 </div>
+                <div class="from-group col-md-12 DivPadding">                    
+                      <div>
+                          @Html.DropDownListFor(m=>m.DirectorID, Model.DirectorList, "--Select--", new {required = "required", @class = "form-control textCapitalize ", @style = "  z-index: 0" })
+                      </div>
+                </div>                
+                <div class="form-group  col-md-12 DivPadding">
+                     <label>Add Reviewers:</label>  
+                     <label class="radio-inline">
+                       <input type="radio" name="optradio" value="Yes" class="reviewerRadio" checked>Yes
+                     </label>
+                     <label class="radio-inline">
+                     <input type="radio" name="optradio" value="No" class="reviewerRadio">No
+                     </label>
+                    <div class="form-group multiple-form-group" data-max="5">
+                <div id="ReviewerDdl" class="form-group input-group">
+                @Html.DropDownList("Reviewer_List", Enumerable.Empty<SelectListItem>(), "--Select--", new { required = "required", @class = "form-control  selectInput textCapitalize", @style = "  z-index: 0" })
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default btn-add">
+                        +					
+                    </button>
+                </span>
+                </div>
+                </div>
+                </div>                
+                <br />
+                <div class="form-group">
+                    <div class="form-group  col-md-12 text-center">                       
+                        <div class="form-group  col-md-10 DivPadding">
+                            <button type="submit" id="DraftBtn" value="true" name="SaveAsDraft" style="margin-right: 55px;" class="btn btn-primary">Save As Draft</button>
+                            <button type="submit" id="SaveBtn" name="submit" style="margin-right: 55px;" class="btn btn-primary">Submit</button>
+                            <button type="reset" id="ResetBtn" style="margin-right: 55px;" class="btn btn-primary">Reset</button>
+                            <a class="linkStyle btn-primary" href="@Url.Action("InterimReviewSubmitted")">Back To List</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        // add the active tab in review and feedback 
+        $('#bootstrapMenu a[href="/Review/ViewAllReviews"]').addClass("activeNav");
+
+        $('#DirFeedbackCheckBoxYes').click(function ()
+        {
+            $('#DirectorCd').prop("disabled", false)
+        });
+
+        $('#DirFeedbackCheckBoxNo').click(function () {
+            $('#DirectorCd').prop("disabled", true) 
+        });
+
+        $('#HrFeedbackCheckBoxNo').click(function () {
+
+            $('#HrCd').prop("disabled",true)
+        });
+        $('#HrFeedbackCheckBoxYes').click(function () {
+
+            $('#HrCd').prop("disabled", false)
+        });
+
+        $('#GetDataBtn').click(function () {
+
+            $('#FromDate').tooltip('toggle');
+        });
+
+        $('#FromDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+
+                ////var dt = new Date(selected.replace(/(\d{2})-(\d{2})-(\d{4})/, "$2/$1/$3"));
+                var dt = new Date(selected);
+                dt.setDate(dt.getDate());
+                $("#ToDate").datepicker("option", "minDate", dt);
+            }
+        });
+        $('#ToDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            },
+            onSelect: function (selected) {
+
+                var dt = new Date(selected);
+
+                dt.setDate(dt.getDate());
+                $("#FromDate").datepicker("option", "maxDate", dt);
+            }
+        });
+        //$("#FromDate").keydown(function (event) {
+        //    event.preventDefault();
+        //});
+        //$("#ToDate").keydown(function (event) {
+        //    event.preventDefault();
+        //});
+        //$("#NextReviewDate").keydown(function (event) {
+        //    event.preventDefault();
+        //});
+        //$(".readonly").keydown(function (e) {
+        //    e.preventDefault();
+        //});
+       
+        $('#NextReviewDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
+        });
+        //reset the data
+        $('#ResetBtn').click(function () {
+            var jobRepartPartialUrl = '@Url.Action("AddInterimReview")';
+            window.location.replace(jobRepartPartialUrl);
+        });
+        //bind the reviewer dropdown.
+        $(function () {
+            var addFormGroup = function (event) {
+                event.preventDefault();
+
+                var $formGroup = $(this).closest('.form-group');
+                var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+                var $formGroupClone = $formGroup.clone();
+                $(this)
+                    .toggleClass('btn-default btn-add btn-danger btn-remove ')
+                    .html('–');
+
+                $formGroupClone.find('input').val('');
+                $formGroupClone.insertAfter($formGroup);
+
+                var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
+                    $lastFormGroupLast.find('.btn-add').attr('disabled', true);
+                }
+            };
+
+            var removeFormGroup = function (event) {
+                event.preventDefault();
+
+                var $formGroup = $(this).closest('.form-group');
+                var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+
+                var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+                if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
+                    $lastFormGroupLast.find('.btn-add').attr('disabled', false);
+                }
+
+                $formGroup.remove();
+            };
+
+            var countFormGroup = function ($form) {
+                return $form.find('.form-group').length;
+            };
+
+            $(document).on('click', '.btn-add', addFormGroup);
+            $(document).on('click', '.btn-remove', removeFormGroup);
+        });
+        addReviewerList()
+        function addReviewerList() {
+            $.getJSON('@Url.Action("GetReviewerList", "Review")', function (data) {
+                //$('<option>',
+                //      {
+                //          value: null,
+                //          text: "Select Reporting Manager",
+                //      }).val(data.Value).appendTo(".selectInput");
+
+                $.each(data, function (i, data) {
+                    // bind the dropdown list using json result                    
+                    $('<option>',
+                   {
+                       value: data.Value,
+                       text: data.Text,
+                       selected: false
+                   }).val(data.Value).appendTo(".selectInput");
+
+                    //}
+                });
+                return false;
+            });
+        }
+        $('.reviewerRadio').change(function () {
+            debugger;
+            if (this.value == 'Yes') {
+                $('#Reviewer_List').prop('disabled', false)
+            } else {
+                $('#Reviewer_List').prop('disabled', true)
+            }
+        });
+    });
+</script>

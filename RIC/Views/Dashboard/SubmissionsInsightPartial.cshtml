@@ -1,0 +1,34 @@
+﻿<canvas id="SubmissionsInsight"></canvas>
+<script>
+
+    $(document).ready(function () {
+
+        var ctxSubmissionsInsight = document.getElementById('SubmissionsInsight').getContext('2d');
+        SubmissionsInsightdata = {
+            datasets: [{
+                data: [4, 21, 17, 45],
+                backgroundColor: [
+                     '#91e3ff',
+                    '#77ffbf',
+                    '#f4ff91',
+                    '#f97a7a',
+                ]
+            }],
+            // These labels appear in the legend and in the tooltips when hovering different arcs
+            labels: ['> = 10 ', '7 - 9', '5 - 6', '>4'],
+        };
+        var SubmissionsInsightPieChart = new Chart(ctxSubmissionsInsight, {
+            type: 'pie',
+            data: SubmissionsInsightdata,
+            options: {
+                plugins: {
+                    labels: {
+                        render: 'value',
+                        fontSize: 12,
+                        fontColor: '#000'
+                    }
+                }
+            }
+        });
+    });
+</script>

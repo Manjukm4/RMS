@@ -1,0 +1,465 @@
+﻿@model RIC.Models.Review.AnnualFeedbackDetailsVM
+
+@{
+    ViewBag.Title = "AnnualFeedbackDetails";
+    //Layout = "~/Views/Review/Index.cshtml";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+<style>
+    .row
+    {
+        overflow: hidden;
+        border: 1px solid;
+        border-collapse: collapse;
+    }
+    .checked
+    {
+        color: #45a6e0;
+    }
+    .starStyle
+    {
+        font-size: 16px;
+    }
+    .HeaderStyle
+    {
+        TEXT-ALIGN: -webkit-center;
+        color: #802d34;
+        font-size: larger;
+        font-weight: bold;
+    }
+    .divFrom
+    {
+        width: 95%;
+        margin: auto;
+        height: 100%;
+        border: none;
+        webkit-box-shadow: none;
+        box-shadow: none;
+        -webkit-transition: none;
+        -o-transition: none;
+        transition: none;
+    }
+    .col-container
+    {
+        display: table;
+        width: 100%;
+    }
+    .col
+    {
+        display: table-cell;
+        padding: 16px;
+    }
+    .submissionAnalysys, .submissionAnalysys th, .submissionAnalysys td 
+    {
+        border: 1px solid black !important;
+        border-collapse: collapse;
+        padding: 4px !important;
+    }
+   .LabelHeadStyle1
+    {
+      background-color: #656565;
+      color: white;
+      font-size: 15px;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+   .LabelStyle2 
+   {
+        text-align: left;
+        letter-spacing: 1px;
+        font-size: 13px;
+        font-weight: bold;
+        background-color: #EED !important;
+        padding: 4px 0px 4px 2px !important;
+    }
+    .reviewerNameLbl
+    {
+        font-weight: unset;
+        font-style: italic;
+    }
+    .rowStyle
+    {
+        background-color: #f5f4f2;
+    }
+    @@media print
+    {
+      body
+      {
+          display:none;
+      }
+    }
+</style>
+<div class="form-control divFrom">
+    <a href="@Model.ReturnUrl" type="button" class="btn btn-default navbar-btn pull-left">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <div id="PrintableDiv">
+
+        <h2 style="text-align: center">Feedback Details</h2>
+        <!-- Trigger the modal with a button -->
+        <h6>
+            <a href="#" style="float: right" type="button" class="" data-toggle="modal" data-target="#InterimReviewPopup">View Interim Reviews</a>
+        </h6>
+        <br />
+        <div style="border:none" class="row">
+            <div class=" col-md-12 table-responsive">
+                @if (Model.QuarterSubmissionAnalysys.Count >0)
+                { 
+                <table class="table table-bordered table-striped  submissionAnalysys">
+                    <thead >
+                        <tr>
+                            <th class="LabelHeadStyle1" >Particulars</th>
+                            <th style="text-align:center" class="LabelHeadStyle1">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter1</th>
+                            <th style="text-align:center" class="LabelHeadStyle1">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter2</th>
+                            <th style="text-align:center" class="LabelHeadStyle1">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter3</th>
+                            <th style="text-align:center" class="LabelHeadStyle1">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Quarter4</th>
+                            <th style="text-align:center" class="LabelHeadStyle1">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="LabelStyle2">Submissions</th>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q1Submissions</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q2Submissions</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q3Submissions</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q4Submissions</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().TotalSubmissons</td>
+                        </tr>
+                        <tr>
+                            <th class="LabelStyle2">Interviews</th>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q1Interviews</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q2Interviews</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q3Interviews</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q4Interviews</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().TotalInterviews</td>
+                        </tr>
+                        <tr>
+                            <th class="LabelStyle2">Hires</th>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q1Hires</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q2Hires</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q3Hires</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().Q4Hires</td>
+                            <td style="text-align:center">@Model.QuarterSubmissionAnalysys.FirstOrDefault().TotalHires</td>
+                        </tr>
+                    </tbody>
+                </table>
+                }
+            </div>
+        </div>
+
+        <div class="row rowStyle">
+            <div class="col-md-3 colStyle">
+                <label>@Html.DisplayNameFor(m => m.EmployeeID) / @Html.DisplayNameFor(m => m.EmployeeName): </label>
+            </div>
+            <div class="col-md-5 colStyle textCapitalize">
+                @Html.DisplayFor(m => m.EmployeeID) / @Html.DisplayFor(m => m.EmployeeName)
+            </div>
+            <div class="col-md-2 colStyle">
+                <label>@Html.DisplayNameFor(m => m.JoiningDate) : </label>
+            </div>
+            <div class="col-md-2 colStyle">
+                @Html.DisplayFor(m => m.JoiningDate)
+            </div>
+        </div>
+        <div class="row rowStyle">
+            <div class=" col-md-3 colStyle">
+                <label>@Html.DisplayNameFor(m => m.Designation):</label>
+            </div>
+            <div class=" col-md-5 colStyle">
+                @Html.DisplayFor(m => m.Designation)
+            </div>
+            <div class=" col-md-2 colStyle">
+                <label>@Html.DisplayNameFor(m => m.ReviewDate):</label>
+            </div>
+            <div class=" col-md-2 colStyle">
+                @Html.DisplayFor(m => m.ReviewDate)
+            </div>
+        </div>
+
+        <div class="row rowStyle">
+            <div class="col-md-4 colStyle">
+                <label>Evaluation of Performance</label>
+            </div>
+            <div class=" col-md-3  colStyle ">
+                <label>Rating (on a scale of 1-5)</label>
+            </div>
+            @{ string commentLblCss = Model.ShowAvgRating ? " col-md-3 colStyle" : " col-md-5 colStyle";  }
+            @if (Model.ShowAvgRating)
+            { 
+                <div class=" col-md-2 colStyle">
+                    <label>Avg Rating</label>
+                </div>
+            }
+            <div style="text-align:center" class="@commentLblCss">
+                @if (Model.AttributHeaders.Count() != 0)
+                { 
+                <label>Comments</label>
+                }
+            </div>
+        </div>
+
+        @foreach (var header in Model.AttributHeaders)
+        {
+            <div class="row rowStyle">
+                <div class="col-sm-12 colStyle HeaderStyle">
+                    <label>@Html.DisplayFor(m => header.HeaderName) </label>
+                </div>
+            </div>
+        
+            foreach (var item in header.Attributes)
+            {
+                //row-eq-height   string Comments = "";
+                bool showRow = true;
+            <div class="row row-eq-height rowStyle">
+
+                <div class="col-sm-2 colStyle ">
+                    <label>@item.AttrName :</label>
+                </div>
+                <div class="col-md-10 colStyle">
+                    @foreach (var reviewer in item.rating)
+                    {
+
+                        // Comments += reviewer.ReviewerName + ":" + reviewer.Comments;
+                        <div style="" class="col-sm-12 colStyle">
+
+                            <div class=" col-md-3 colStyle">
+                                <label class="reviewerNameLbl">@reviewer.ReviewerName</label>
+                            </div>
+                            <div class="col-md-3 colStyle">
+                                @for (int i = 1; i <= 5; i++)
+                                {
+                                    if (i <= reviewer.Rating)
+                                    { 
+                                    <span class="fa fa-star checked starStyle"></span>
+                                    }
+                                    else
+                                    { 
+                                    <span class="far fa-star starStyle"></span>                        
+                                    }
+                                }
+                            </div>
+                            @{string commentCss = Model.ShowAvgRating ? " col-md-4 colStyle" : " offset-md-2 col-md-4 colStyle";  }
+
+                            @if (Model.ShowAvgRating && showRow)
+                            {
+                                showRow = false;
+                                <div class=" col-md-2 colStyle">
+                                    <span style="width: 30px; margin-top: 10%;" class="badge">
+                                        @Math.Round(Convert.ToDecimal(item.rating.Average(a => a.Rating)), 1)
+                                    </span>
+                                </div>
+                            }
+                            else
+                            { 
+                                <div class=" col-md-2 colStyle"></div>
+                            }
+                            <div style="padding: 0px;"  class="@commentCss">
+                                @if (!string.IsNullOrEmpty(reviewer.Comments))
+                                {         
+                                    <label class="reviewerNameLbl">@reviewer.ReviewerName:</label>   @reviewer.Comments      
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>            
+            </div>
+            }
+        }
+        @if (Model.ShowHrReview == true)
+        {       
+            <div class="row rowStyle">
+                <div class="col-sm-12 colStyle HeaderStyle">
+                    <label>HR Review </label>
+                </div>
+            </div>
+            <div class="row rowStyle">
+                <div class="col-sm-5 colStyle">
+                    <label>Leave Taken /  Leaves taken on LOP:</label>
+                </div>
+                <div class=" col-md-7 colStyle">
+                    @Html.DisplayFor(m => m.Hr_LeaveTaken)  /  @Html.DisplayFor(m => m.Hr_LeaveTakenOnLop)
+                </div>
+            </div>      
+            <div class="row rowStyle">
+                <div class="col-sm-5 colStyle">
+                    <label>Warnings given in the last 12 months:</label>
+                </div>
+                <div class=" col-md-7 colStyle">
+                    @Html.DisplayFor(m => m.Hr_Warnings)
+                </div>
+            </div>
+            <div class="row rowStyle">
+                <div style="width: 39%" class="col-sm-5 colStyle">
+                    <label>Shows loyalty to Sunrise company values:</label>
+                </div>
+                <div class=" col-md-7 colStyle">
+
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= Model.Hr_CompanyValue)
+                        { 
+                        <span class="fa fa-star checked starStyle"></span>
+                        }
+                        else
+                        { 
+                        <span class="far fa-star starStyle"></span>                        
+                        }
+                    }
+                </div>
+            </div>
+            <div class="row rowStyle">
+                <div style="width: 39%;" class="col-sm-5 colStyle">
+                    <label>Is behaving according to our cultural values:</label>
+                </div>
+                <div class=" col-md-7 colStyle">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= Model.Hr_CultValue)
+                        { 
+                        <span class="fa fa-star checked starStyle"></span>
+                        }
+                        else
+                        { 
+                        <span class="far fa-star starStyle"></span>                        
+                        }
+                    }
+                </div>
+            </div>
+            <div class="row rowStyle">
+                <div style="width: 39%;" class="col-sm-5 colStyle">
+                    <label>Respects differences in culture between people:</label>
+                </div>
+                <div class=" col-md-7 colStyle">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= Model.Hr_CultPeople)
+                        { 
+                        <span class="fa fa-star checked starStyle"></span>
+                        }
+                        else
+                        { 
+                        <span class="far fa-star starStyle"></span>                        
+                        }
+                    }
+                </div>
+            </div>
+            <div class="row HeaderStyle rowStyle">
+                <div class="col-sm-12 colStyle">
+                    <label>General</label>
+                </div>
+            </div>
+       
+        }
+        @if (Model.ShowAvgRating)
+        { 
+            <div class="row rowStyle">
+                <div class=" col-md-7 colStyle">
+                    <label>Average Rating</label>
+                </div>
+                <div class=" col-md-4 colStyle">
+                    <span style="width: 30px; margin: 5px;" class="badge">
+                        @Html.DisplayFor(m => m.AverageRating)
+                    </span>
+                </div>
+            </div>      
+        }
+        <div class="row rowStyle">
+            <div class="col-sm-4 colStyle">
+                <label>Additional Comments:</label>
+            </div>
+            <div class=" col-md-8 colStyle">
+                @foreach (var additionalComments in Model.AdditionalComments)
+                { 
+                    <div class="row ">
+                        <div class=" col-md-3 ">
+                            <label>@additionalComments.ReviewerName </label>
+                        </div>
+                        <div class=" col-md-9">
+                            <label>:</label>
+                            @additionalComments.Comments
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="row rowStyle">
+            <div class="col-sm-4 colStyle">
+                <label>Improvements Recommended:</label>
+            </div>
+            <div class=" col-md-8 colStyle">
+                @foreach (var improvementComments in Model.ImprovementsRecommended)
+                { 
+                    <div class="row ">
+                        <div class=" col-md-3 ">
+                            <label>@improvementComments.ReviewerName </label>
+                        </div>
+                        <div class=" col-md-9">
+                            <label>:</label>
+                            @improvementComments.Comments
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+       @if (Model.ShowHrReview == true)
+        {
+          <div style="text-align: center">
+              @Html.ActionLink("Click to Print This Form", "AnuulaFeedbackPrint", new { reviewID = Model.ReviewID, showComments = "Yes"}, new { target = "_blank" })
+              <br />
+              @Html.ActionLink("Click to Print This Form Without Comments", "AnuulaFeedbackPrint", new { reviewID = Model.ReviewID, showComments = "No" }, new { target = "_blank" })
+          </div>
+        }
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="InterimReviewPopup" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Interim Reviews</h4>
+            </div>
+            <div class="modal-body">
+                <table id="InterimReviewTbl" class="table">
+                    <thead>
+                        <tr>
+                            <th>Reviewer Name</th>
+                            <th>Review Date</th>
+                            <th>From Date</th>
+                            <th>To Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.InterimReviewDetails)
+                        { 
+                            <tr>
+                                <td>@Html.DisplayFor(m => item.ReviewerName)</td>
+                                <td>@Html.DisplayFor(m => item.Date)</td>
+                                <td>@Html.DisplayFor(m => item.FromDate)</td>
+                                <td>@Html.DisplayFor(m => item.ToDate)</td>
+                                <td>@Html.ActionLink("Details", "Details", new { id = item.InterimReviewID, retUrl = Request.Url })</td>
+                            </tr>                            
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var InterimReviewTbl = $('#InterimReviewTbl').DataTable();
+        $(".container").on("contextmenu", function (e) {
+            return false;
+        });
+    });
+</script>

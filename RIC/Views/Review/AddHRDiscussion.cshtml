@@ -1,0 +1,212 @@
+﻿@model RIC.Models.Review.AddHRDicussionModel
+@{
+    ViewBag.Title = "AddHRDiscussion";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+
+}
+
+<style>
+    .HeaderStyle {
+        text-align: center;
+    }
+
+    form {
+        width: 95%;
+        margin: auto;
+    }
+
+    .TableStyle {
+        margin-top: 4%;
+        margin-bottom: 0px;
+    }
+
+    .textArea {
+        width: 100%;
+        height: 150px !important;
+    }
+
+    .DivPadding {
+        /*padding-left: 35px;*/
+    }
+
+    .ReviewDiv {
+        margin-bottom: 0px;
+        background-color: whitesmoke;
+        padding: 25px;
+    }
+
+    .btn-group-vertical > .btn.active, .btn-group-vertical > .btn:active, .btn-group-vertical > .btn:focus, .btn-group-vertical > .btn:hover, .btn-group > .btn.active, .btn-group > .btn:active, .btn-group > .btn:focus, .btn-group > .btn:hover {
+        z-index: 0;
+        opacity: 1;
+    }
+
+    .CheckBoxStyle {
+        opacity: 0.70;
+    }
+
+    .linkStyle {
+        color: white;
+        padding: 7px 12px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .linkStyle:hover, .linkStyle:active {
+            text-decoration: none;
+        }
+</style>
+@using (Html.BeginForm())
+{
+    <div style="margin: auto; width: 70%" class="form-row">
+        <div style="margin-bottom: 0px;" class="form-group col-md-12 ReviewDiv">
+            <h2 style="text-decoration: underline; margin-top: 0px;" class="HeaderStyle">HR Discussion</h2>
+            <br>
+            <div style="margin-bottom: 0px;" class="form-group col-md-12 ">
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Select Employee</label>
+                        @Html.DropDownListFor(s => s.EmpCd, Model.CandidateList, "--Select--", new { required = "required", @class = " form-control textCapitalize " })
+
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Discussion Date</label>
+                        @Html.TextBoxFor(s => s.DiscussionDate, new { required = "required", autocomplete = "off", placeholder = "MM-DD-YYYY", @class = "form-control  input-group date validateFileds", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Select Agenda Type</label>
+                        @Html.DropDownListFor(s => s.AgendaType, Model.AgendaTypeList, "--Select--", new { required = "required", @class = "form-control validateFileds" })
+
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Description</label>
+                        @Html.TextBoxFor(s => s.Description, new { @class = "form-control validateFileds", placeholder = "Write brief discussion" })
+
+                    </div>
+                </div>
+
+                <div class="form-group  col-md-12 DivPadding ">
+                    <label for="inputAddress">Discussion Notes</label>
+                    @Html.TextAreaFor(s => s.DiscussionNotes, new { required = "required", @class = "form-control pb-cmnt-textarea textArea validateFileds", placeholder = "Write your Discussion Notes here!" })
+
+                </div>
+
+                <div class="form-group  col-md-12 DivPadding ">
+                    <label for="inputAddress">Action Items</label>
+                    @Html.TextAreaFor(s => s.ActionItems, new { required = "required", @class = "form-control pb-cmnt-textarea textArea validateFileds", placeholder = "Write your Action Items here!" })
+
+                </div>
+
+                <div class="form-group  col-md-6 DivPadding">
+                    <label>Next Meetup Required:</label>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" value="Yes" class="reviewerRadio" checked>Yes
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" value="No" class="reviewerRadio">No
+                    </label>
+                    <br />
+                    @Html.TextBoxFor(s => s.NextMeetUpDate, new { autocomplete = "off", @class = "form-control validateFileds", placeholder = "MM-DD-YYYY", pattern = "(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\\d\\d" })
+                </div>
+                <div class="form-group  col-md-12 DivPadding ">
+                    <label for="inputAddress">HR Internal Comments</label>
+                    @Html.TextAreaFor(s => s.HRInternalComments, new { required = "required", @class = "form-control pb-cmnt-textarea textArea validateFileds", placeholder = "Write your HR InternalComments here!" })
+
+                </div>
+                <div class="form-group">
+                    <div class="form-group  col-md-12 text-center">
+                        <div class="form-group  col-md-10 DivPadding">
+
+                            <button type="submit" id="DraftBtn" value="GetDatabtnDraft" name="GetDatabtnDraft" style="margin-right: 55px;" class="btn btn-primary">Save As Draft</button>
+                            <button type="submit" id="SaveBtn" name="submit" style="margin-right: 55px;" class="btn btn-primary">Submit</button>
+                            <button type="reset" id="ResetBtn" style="margin-right: 55px;" class="btn btn-primary">Reset</button>
+                            <a class="linkStyle btn-primary" href="@Url.Action("HRDiscussionSubmitted")">Back To List</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+<script>
+
+
+    $(document).ready(function () {
+
+        $('#DiscussionDate,#NextMeetUpDate').val("");
+
+
+        if ($('.reviewerRadio').val() == "Yes") {
+            $('#NextMeetUpDate').prop('required', true);
+        }
+        else {
+            $('#NextMeetUpDate').prop('required',false);
+        }
+
+          $('#DiscussionDate,#NextMeetUpDate').datepicker({
+            dateFormat: 'mm-dd-yy',
+            icons: {
+                time: "fa fa-clock-o",
+                date: "fa fa-calendar",
+                up: "fa fa-arrow-up",
+                down: "fa fa-arrow-down"
+            }
+          });
+
+
+        $('.reviewerRadio').change(function () {
+            if (this.value == 'Yes') {
+                $('#NextMeetUpDate').prop('disabled', false);
+                $('#NextMeetUpDate').prop('required', true);
+            } else {
+                $('#NextMeetUpDate').prop('disabled', true);
+                $('#NextMeetUpDate').prop('required',false).val("");
+            }
+        });
+
+
+        $("#DraftBtn").click(function () {
+
+            if($("#EmpCd option:selected").val() != "")
+            {
+                $(".validateFileds").prop('required', false);
+
+            }
+
+        });
+
+
+         $('#ResetBtn').click(function () {
+            var jobRepartPartialUrl = '@Url.Action("AddHRDiscussion")';
+            window.location.replace(jobRepartPartialUrl);
+         });
+
+        $("#AgendaType").change(function () {
+
+            if ($(this).val() == "Others") {
+                $("#Description").prop('required',true);
+            }
+            else {
+                $("#Description").prop('required',false);
+            }
+
+        });
+
+
+
+
+    });
+
+
+
+</script>

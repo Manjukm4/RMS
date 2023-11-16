@@ -1,0 +1,712 @@
+﻿@*@model List<RIC.Models.JobRepoartWeek>*@
+@model RIC.Models.JobReportPartial
+@using RIC.CustomHelper
+@using System.Net;
+@using System.Globalization;
+<input type="hidden" id="monthInt" value="0"/>
+<div class="form-group col-md-12">
+    <div class="table-responsive">
+        <table class="table">
+            <thead class="MainTableHeadBg">
+                <tr>
+                    <th class="labelcenter" colspan="40">
+                        @if (ViewBag.ShowPreviousBtn == "N")
+                        {
+                            <button id='' class="btn btn-primary" disabled="disabled">
+                                <i class="fas fa-angle-double-left"></i>
+                            </button>
+                        }
+                        else
+                        {
+                            <button id='previousMontBtn_@Model.idText' class="btn btn-primary">
+                                <i class="fas fa-angle-double-left"></i>
+                            </button>
+                        }
+                        &nbsp;&nbsp;
+                        @{
+                            DateTime date = ViewBag.date;
+                        }
+                        @CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(date.Month)
+                        @date.Year
+                        &nbsp;&nbsp;
+                        <button id="nextMontBtn_@Model.idText" class="btn btn-primary">
+                            <i class="fas fa-angle-double-right"></i>
+                        </button>
+                    </th>
+                </tr>
+                <tr>
+                    <th></th>
+                    @foreach (var item in Model.JobReportWeek)
+                    {
+                        int colspan = item.dayCount + 1;
+                        <th class="labelcenter" style="font-size: large; " colspan="+@colspan+">Week @item.weekNumber</th>
+
+                    }
+                </tr>
+                <tr>
+                    <th class="labeltextstyle1">Date</th>
+                    @foreach (var item in Model.JobReportWeek)
+                    {
+                        foreach (var jrData in item.jrData)
+                        {
+                            <th class="labelcenter">@jrData.date.Day </th>
+                        }
+                        <th></th>
+                    }
+                </tr>
+                <tr>
+                    <th class="labeltextstyle1">Day</th>
+                    @foreach (var item in Model.JobReportWeek)
+                    {
+                        foreach (var jrData in item.jrData)
+                        {
+                            <th class="labelcenter" style="font-size: 13px;">@jrData.date.DayOfWeek.ToString().Substring(0, 3)</th>
+                        }
+                        <th class="labelcenter" style="font-size: 13px;">Total</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @*Prod Recruter*@
+                @if (ViewBag.showProdRecruter == true)
+                {
+                    <tr>
+                        <th class="ProdRecrutersHeadBg">
+                            Submitters
+                            <i class="fas fa-info-circle" title="Number of Submitters daily"></i>
+
+                        </th>
+                        @foreach (var item in Model.JobReportWeek)
+                        {
+                            foreach (var jrData in item.jrData)
+                            {
+                                <td class="ProdRecrutersCountBg">
+                                    @jrData.Prod_Recruiters
+                                </td>
+                            }
+                            <td class="ProdRecrutersTotalBg">
+                                @item.Prod_RecruitersWk
+                            </td>
+                        }
+                    </tr>
+                    <tr>
+                        <th class="ProdCallsHeadBg">
+                            Callers
+                            <i class="fas fa-info-circle" title="Number of Callers daily"></i>
+                        </th>
+                        @foreach (var item in Model.CallStatisticsWeek)
+                        {
+
+                            foreach (var callStats in item.TotalCalls)
+                            {
+                                <td class="ProdCallsCountBg">
+                                    @callStats.ProdCalls
+                                </td>
+                            }
+                            <td class="ProdCallsTotalBg"></td>
+                        }
+                    </tr>
+                }
+                @*Submission*@
+                <tr>
+                    <th class="SubmissionsHeadBg">
+                        Submissions
+                        <i class="fas fa-info-circle" title="Total Submissions daily"></i>
+                    </th>
+
+                    @foreach (var item in Model.JobReportWeek)
+                    {
+                        //  string Total = "";
+                        foreach (var jrData in item.jrData)
+                        {
+
+                            <td class="SubmissionsCountBg">
+                                @if (jrData.submission != 0 && jrData.submission != null)
+                                {
+
+                                    //Total = Total + jrData.submissionToolTip.Replace(",", "<br/>");
+                                    <a href="javascript:void(0);" class="linkColor anchorDetail" data-Jr="Submission" data-FromDate="@jrData.date" data-ToDate="@jrData.date">
+                                        @jrData.submission
+                                        @*  <span class="field-tip">
+                                                <span class="tip-content"> JDRef     Count<br />@Html.Raw(@jrData.submissionToolTip.Replace(",", "<br/>"))</span>
+                                            </span>*@
+                                    </a>
+                                }
+                                else
+                                {
+                                    @jrData.submission
+                                }
+                            </td>
+                        }
+                        <td class="SubmissionsTotalBg">
+                            @*total bg color*@
+                            @if (item.totalSubmission != 0)
+                            {
+                                <a id="q1" href="javascript:void(0);" class="linkColor anchorDetail" data-Jr="Submission" data-FromDate="@item.jrData.FirstOrDefault().date" data-ToDate="@item.jrData.LastOrDefault().date">
+                                    @item.totalSubmission
+                                    @*  <span class="field-tip">
+                                            <span class="tip-content"> JDRef     Count<br />@Html.Raw(Total)</span>
+                                        </span>*@
+                                </a>
+                            }
+                            else
+                            {
+                                @item.totalSubmission
+                            }
+
+                        </td>
+                    }
+                </tr>
+
+                @*Interview*@
+                <tr>
+                    <th class="InterviewHeadBg">
+                        Interviews
+                        <i class="fas fa-info-circle" title="Total Interviews daily"></i>
+                    </th>
+                    @foreach (var item in Model.JobReportWeek)
+                    {
+                        //string Total = "";
+                        foreach (var jrData in item.jrData)
+                        {
+                            <td class="InterviewsCountBg">
+                                @if (jrData.interviews != 0 && jrData.interviews != null)
+                                {
+                                    //Total = Total + jrData.InterviewToolTip.Replace(",", "<br>");
+                                    <a href="javascript:void(0);" class="linkColor anchorDetail" data-Jr="interview" data-FromDate="@jrData.date" data-ToDate="@jrData.date">
+                                        @jrData.interviews
+                                        @* <span class="field-tip">
+                                                <span class="tip-content"> JDRef     Count<br />@Html.Raw(@jrData.InterviewToolTip.Replace(",", "<br/>"))</span>
+                                            </span>*@
+                                    </a>
+                                }
+                                else
+                                {
+                                    @jrData.interviews
+                                }
+                            </td>
+                        }
+                        <td class="InterviewTotalBg">
+                            @*total bg color*@
+                            @if (item.totalInterviews != 0)
+                            {
+                                <a href="javascript:void(0);" class="linkColor anchorDetail" data-Jr="interview" data-FromDate="@item.jrData.FirstOrDefault().date" data-ToDate="@item.jrData.LastOrDefault().date">
+                                    @item.totalInterviews
+                                    @* <span class="field-tip">
+                                            <span class="tip-content"> JDRef     Count<br />@Html.Raw(Total)</span>
+                                        </span>*@
+                                </a>
+                            }
+                            else
+                            {
+                                @item.totalInterviews
+                            }
+                        </td>
+                    }
+                </tr>
+
+                @*Hires*@
+                <tr>
+                    <th class="HiresHeadBg">
+                        Hires
+
+                        <i class="fas fa-info-circle" title="Total Hires daily"></i>
+                    </th>
+                    @foreach (var item in Model.JobReportWeek)
+                    {
+                        // string Total = "";
+                        foreach (var jrData in item.jrData)
+                        {
+                            <td class="HiresCountBg">
+                                @if (jrData.hires != 0 && jrData.hires != null)
+                                {
+                                    // Total = Total + jrData.HireToolTip.Replace(",", "<br>");
+                                    <a href="javascript:void(0);" class="linkColor anchorDetail" data-Jr="Hire" data-FromDate="@jrData.date" data-ToDate="@jrData.date">
+                                        @jrData.hires
+                                        @*  <span class="field-tip">
+                                                <span class="tip-content"> JDRef     Count<br />@Html.Raw(@jrData.HireToolTip.Replace(",", "<br/>"))</span>
+                                            </span>*@
+                                    </a>
+
+                                }
+                                else
+                                {
+                                    @jrData.hires
+                                }
+                            </td>
+                        }
+                        <td class="HiresTotalBg">
+                            @*total bg color*@
+                            @if (item.totalHires != 0)
+                            {
+                                <a href="javascript:void(0);" class="linkColor anchorDetail" data-Jr="Hire" data-FromDate="@item.jrData.FirstOrDefault().date" data-ToDate="@item.jrData.LastOrDefault().date">
+                                    @item.totalHires
+                                    @* <span class="field-tip">
+                                            <span class="tip-content"> JDRef     Count<br />@Html.Raw(Total)</span>
+                                        </span>*@
+                                </a>
+                            }
+                            else
+                            {
+                                @item.totalHires
+                            }
+                        </td>
+                    }
+                </tr>
+                @* Total Calls *@
+                <tr>
+                    <th class="ProdCallsHeadBg">
+                        Call Connected
+                        <i class="fas fa-info-circle" title="Total Calls Connected daily"></i>
+                    </th>
+                    @foreach (var item in Model.CallStatisticsWeek)
+                    {
+
+                        foreach (var callStats in item.TotalCalls)
+                        {
+                            <td class="ProdCallsCountBg">
+                                @callStats.Call_Connected
+                            </td>
+                        }
+                        <td class="ProdCallsTotalBg">
+                            @item.TotalCallsConnected
+                        </td>
+                    }
+                </tr>
+
+                @*Call statistics IN *@
+                <tr>
+                    <th class="CallConnectedInHeadBg">
+                        Call Connected(In)
+                        <i class="fas fa-info-circle" title="Total Incoming Calls daily.Calls In less than a minute are ignored in RMS"></i>
+                    </th>
+                    @foreach (var item in Model.CallStatisticsWeek)
+                    {
+
+                        foreach (var callStats in item.InCallStatus)
+                        {
+                            <td class="CallCountInBg">
+                                @callStats.Call_Connected
+                            </td>
+                        }
+                        <td class="CallConnectedInTotalBg">
+                            @item.InTotalCallConnected
+                        </td>
+                    }
+                </tr>
+                <tr>
+                    <th class="VoiceMessageInHeadBg">
+                        Voice Messages(In)
+                        <i class="fas fa-info-circle" title="Total Incoming Voice Messages daily"></i>
+                    </th>
+                    @foreach (var item in Model.CallStatisticsWeek)
+                    {
+
+                        foreach (var callStats in item.InCallStatus)
+                        {
+                            <td class="VoiceMessageInBg">
+                                @callStats.Voice_Message
+                            </td>
+                        }
+                        <td class="VoiceMessageTotalInBg">
+                            @item.InTotalVoiceMessage
+                        </td>
+                    }
+                </tr>
+                <tr>
+                    <th class="DurationHeadInBg">
+                        Total Duration(In)
+                        <i class="fas fa-info-circle" title="Total duration of Incoming Calls daily.The duration in HH:MM (Hours:Minutes) format, seconds part ignored in RMS"></i>
+                    </th>
+                    @foreach (var item in Model.CallStatisticsWeek)
+                    {
+
+                        foreach (var callStats in item.InCallStatus)
+                        {
+                            <td class="DurationInBg">
+                                @CustomHelper.TimeSpanString(callStats.Duration)
+                                @Html.DisplayFor(modelitem => callStats.Duration)
+                            </td>
+                        }
+                        <td class="TotalDurationInBg">
+                            @CustomHelper.TimeSpanString(item.InTotalDuration)
+                            @Html.DisplayFor(modelitem => item.InTotalDuration)
+                        </td>
+                    }
+                </tr>
+                @*Call statistics Out *@
+                <tr>
+                    <th class="CallConnectedOutHeadBg">
+                        Call Connected(Out)
+
+                        <i class="fas fa-info-circle" title="Total Outgoing Calls daily. Calls In less than a minute are ignored in RMS"></i>
+                    </th>
+                    @foreach (var item in Model.CallStatisticsWeek)
+                    {
+
+                        foreach (var callStats in item.OutCallStatus)
+                        {
+                            <td class="CallCountOutBg">
+                                @callStats.Call_Connected
+                            </td>
+                        }
+                        <td class="CallConnectedOutTotalBg">
+                            @item.OutTotalCallConnected
+                        </td>
+                    }
+                </tr>
+                <tr>
+                    <th class="VoiceMessageOutHeadBg">
+                        Voice Messages(Out)
+                        <i class="fas fa-info-circle" title="Total Outgoing Voice Messages daily"></i>
+                    </th>
+                    @foreach (var item in Model.CallStatisticsWeek)
+                    {
+
+                        foreach (var callStats in item.OutCallStatus)
+                        {
+                            <td class="VoiceMessageOutBg">
+                                @callStats.Voice_Message
+                            </td>
+                        }
+                        <td class="VoiceMessageTotalOutBg">
+                            @item.OutTotalVoiceMessage
+                        </td>
+                    }
+                </tr>
+                <tr>
+                    <th class="DurationHeadOutBg">
+                        Total Duration(Out)
+                        <i class="fas fa-info-circle" title="Total duration of Outgoing Calls daily.The duration in HH:MM (Hours:Minutes) format, seconds part ignored in RMS"></i>
+                        @*"Line 1 of long text. &#013;
+                        Long text &#013; Long text &#013;"*@
+
+                    </th>
+                    @foreach (var item in Model.CallStatisticsWeek)
+                    {
+
+                        foreach (var callStats in item.OutCallStatus)
+                        {
+                            <td class="DurationOutBg">
+                                @CustomHelper.TimeSpanString(callStats.Duration)
+                                @*@Html.DisplayFor(modelitem => callStats.Duration)*@
+                            </td>
+                        }
+                        <td class="TotalDurationOutBg">
+                            @CustomHelper.TimeSpanString(item.OutTotalDuration)
+                            @* @Html.DisplayFor(modelitem => item.OutTotalDuration)*@
+                        </td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/black-tie/jquery-ui.min.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+<script>
+
+
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip({ content: "<strong>tootipxyxshdbshjjksdhdkdnsjdksjdjhhhffbbchjkxjsjdhhxbjsjkksjdhdhjjkdjcjjhhdbdbbcbdhhdhdhhdhdhdhdhhdhddhhdh!</strong>"});
+        //$('i').tooltip({
+        //    /*content: "<strong>tootipxyxshdbshjjksdhdkdnsjdksjdjhhhffbbchjkxjsjdhhxbjsjkksjdhdhjjkdjcjjhhdbdbbcbdhhdhdhhdhdhdhdhhdhddhhdh!</strong>",*/
+        //    /*position: { my: "left+15 center", at: "right center" },*/
+        //    tooltipClass: "mytt",
+        //    classes: {
+        //        "ui-tooltip": "highlight",
+
+        //    }
+        //});
+        var toolTipMax = 3;
+
+        function chunk(s) {
+            var dl = "\r";
+            if (s.indexOf("\r\n") > 1) {
+                dl = "\r\n";
+            } else if (s.indexOf("\r") < 0 && s.indexOf("\n") > 1) {
+                dl = "\n";
+            }
+            return s.split(dl);
+        }
+        $('i').tooltip({
+            tooltipClass: "mytooltip",
+            content: function () {
+                var c = $(this).attr("title");
+                var sArr = chunk(c);
+                var part = sArr.slice(0, toolTipMax);
+                return part.join("<br />");
+            },
+            classes: {
+                "ui-tooltip": "highlight"
+           }
+        });
+        var month = $("#HidMonth_@Model.idText").val();
+
+
+        if (month == 0) {
+            $("#nextMontBtn_@Model.idText").prop('disabled', true);
+            $("#previousMontBtn_@Model.idText").prop('disabled', false);
+        }
+        else if (month == -2) {
+            $("#nextMontBtn_@Model.idText").prop('disabled', false);
+            $("#previousMontBtn_@Model.idText").prop('disabled', true);
+
+        }
+        else {
+            $("#nextMontBtn_@Model.idText").prop('disabled', false);
+            $("#previousMontBtn").prop('disabled', false);
+        }
+        var gaugeViewPartialUrl = '@Url.Action("GaugeGraphPartial")';
+        //debugger;
+
+        var month = $("#HidMonth_@Model.idText").val();
+        var empCD = $("#HdnEmpCD_@Model.idText").val();
+        var getIndividualRecords = $("#HdnGetIndividualRecords").val();
+        //call the gauge graph partial.
+        $.ajax({
+            type: "GET",
+            url: gaugeViewPartialUrl,
+            contentType: "application/json; charset=utf-8",
+            data: { "month": month, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+            datatype: "json",
+            success: function (data) {
+
+                $('#gaugePartial').html(data);
+            },
+            error: function () {
+
+            }
+        });
+
+        var TeamDetailPostBackURL = '@Url.Action("ViewDetailsPopup")';
+        // $(function () {
+        $(".anchorDetail").click(function () {
+
+            var $buttonClicked = $(this);
+            var fromDate = $buttonClicked.attr('data-FromDate');
+            var toDate = $buttonClicked.attr('data-ToDate');
+            var jr = $buttonClicked.attr('data-Jr');
+
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: TeamDetailPostBackURL,
+                contentType: "application/json; charset=utf-8",
+                data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "empCd": empCD, "getIndividualRecord": getIndividualRecords },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#myModalContent').html(data);
+                    $('#myModal').modal(options);
+                    $('#myModal').modal('show');
+                },
+                error: function () {
+                }
+            });
+        });
+
+
+        var empCd = $("#HdnEmpCD_@Model.idText").val();
+        var idText = '@Model.idText';
+        $("#previousMontBtn_@Model.idText").click(function () {
+            $("#nextMontBtn_@Model.idText").prop('disabled', true);
+            $("#previousMontBtn").prop('disabled', true);
+
+            var monthInt = parseInt(month) - 1;
+            $("#HidMonth_@Model.idText").val(monthInt);
+
+            var jobRepartPartialUrl = '@Url.Action("JobReportPartial")';
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: jobRepartPartialUrl,
+                contentType: "application/json; charset=utf-8",
+                data: { "month": monthInt, "empCd": empCd, "idText": idText, "getIndividualRecord": getIndividualRecords },
+                datatype: "json",
+                success: function (data) {
+                    $('#JobReportPartial_@Model.idText').html(data);
+                   //$('#progressDataBtn').trigger('click');
+                    callgetdet();
+                },
+                error: function () {
+                }
+            });
+           
+            return false;
+        })//, 1000);
+        $("#nextMontBtn_@Model.idText").click(function () {
+
+            $("#nextMontBtn_@Model.idText").prop('disabled', true);
+            $("#previousMontBtn_@Model.idText").prop('disabled', true);
+
+            var monthInt = parseInt(month) + 1;
+            $("#HidMonth_@Model.idText").val(monthInt);
+
+            var jobRepartPartialUrl = '@Url.Action("JobReportPartial")';
+            var options = { "backdrop": "static", keyboard: true };
+            $.ajax({
+                type: "GET",
+                url: jobRepartPartialUrl,
+                contentType: "application/json; charset=utf-8",
+                data: { "month": monthInt, "empCd": empCd, "idText": idText, "getIndividualRecord": getIndividualRecords },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#JobReportPartial_@Model.idText').html(data);
+                    //$('#progressDataBtn').trigger('click');
+                    callgetdet();
+                },
+                error: function () {
+                }
+            });
+          
+            return false;
+        })//, 1000);
+       
+
+            
+       
+
+        function callgetdet() {
+             var monthInt = parseInt($("#HidMonth_@Model.idText").val())
+                // alert(monthInt)
+            var date = new Date();
+             
+            var firstDay = new Date(date.getFullYear(), date.getMonth() + monthInt, 1);
+            var lastDay = new Date(date.getFullYear(), date.getMonth() + 1 + monthInt, 0);
+            var month = firstDay.getMonth() + 1; var fday = firstDay.getDate();
+            var year = firstDay.getFullYear(); var lday = lastDay.getDate();
+            var FromDate = month + '/' + fday + '/' + year;
+            var ToDate = month + '/' + lday + '/' + year;
+            //alert(FromDate), alert(ToDate);
+           //      date.setMonth(date.getMonth() + monthInt);
+           // var m = date.getMonth();
+           // var year = date.getFullYear();
+           //      m = m + 1;
+           //     var days = '/30/';
+           // if (m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
+           //     days = '/31/';
+           // }
+           // else if (m == 2) {
+           //     days = '/28/';
+                
+           // }
+           
+           // alert(firstDay);
+           // alert(lastDay);
+           //  //    $('#monthInt').val(monthInt);
+
+           //     if (m == 1) {
+           //         days = '/31/';
+           //        // year = year - 1;
+           //         if (monthInt == -1) {
+           //             progressPartialFromDate = '12' + '/01/' + year;
+           //             progressPartialToDate = '12' + days + year;
+           //         }
+           //         else if (monthInt == -2) {
+           //             progressPartialFromDate = '11' + '/01/' + year;
+           //             progressPartialToDate = '11' + '/30/' + year;
+           //         }
+           //     }
+           //     else if (m == 2) {
+           //         if (monthInt == -1) {
+           //             progressPartialFromDate = '01' + '/01/' + year;
+           //             progressPartialToDate = '01' + '/31/' + year;
+           //         }
+           //         else if (monthInt == -2) {
+           //           //  year = year - 1;
+           //             progressPartialFromDate = '12' + '/01/' + year;
+           //             progressPartialToDate = '12' + '/31/' + year;
+           //         }
+           //     }
+           //else if (m >= 3) {
+           //     if (monthInt == -1 || monthInt == -2) {
+           //         progressPartialFromDate = m + '/01/' + year;
+           //         progressPartialToDate = m + days + year;
+           //         // $('#FromDate').val(progressPartialFromDate);
+           //         // $('#ToDate').val(progressPartialToDate);
+           //         //// alert(progressPartialFromDate);
+
+           //     }
+           // }
+   
+           //     else if (monthInt == 0) {
+           //         var d = new Date();
+           //         var c = d.getMonth()+1;
+           //         progressPartialFromDate = c + '/01/' + date.getFullYear();
+           //         progressPartialToDate = c + '/30/' + date.getFullYear();
+           //         //$('#FromDate').val(progressPartialFromDate);
+           //         //$('#ToDate').val(progressPartialToDate);
+           //     }
+
+
+            var ProgressReportPartialUrl = '@Url.Action("ProgressReportPartial")';
+            //debugger;
+            $.ajax({
+                type: "GET",
+                url: ProgressReportPartialUrl,
+                async: false,
+                contentType: "application/json; charset=utf-8",
+                data: { "fromDate": FromDate, "toDate": ToDate, "empCd": empCD },
+                datatype: "json",
+                success: function (data) {
+
+                    $('#ProgressReport').html(data);
+
+                },
+                error: function () {
+                     alert(" content load failed.");
+                }
+            });
+                 return false;
+        }
+
+    });
+
+
+</script>
+
+<style>
+    .field-tip {
+        display: none;
+        position: absolute;
+        width: 120px;
+        background-color: rgb(76, 68, 68);
+        color: whitesmoke;
+        text-align: center;
+        border-radius: 6px;
+        padding-left: 5px;
+        position: absolute;
+        z-index: 1;
+        text-align: left;
+        overflow: scroll;
+        overflow-x: hidden;
+        max-height: 150px;
+    }
+
+    .anchorDetail:hover .field-tip {
+        display: block;
+    }
+
+    .tip-content {
+        white-space: pre;
+    }
+
+    .mytooltip {
+        width: auto;
+        border-top: solid 1px #BBBBBB;
+        border-bottom: solid 1px #444444;
+        padding: 5px 20px;
+        border-radius: 0;
+        box-shadow: 0 0 4px grey;
+        margin: 2px;
+        font-stretch: condensed;
+        white-space: pre-line;
+    }
+    .mytt {
+        width: auto;
+    }
+</style>

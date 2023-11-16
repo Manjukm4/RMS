@@ -1,0 +1,319 @@
+﻿@model IEnumerable<RIC.Models.TeamDashboardListModel>
+@using RIC.CustomHelper
+
+<input type="text" class="form-control" placeholder="Search" style="width: 20%;margin-left: 79.9%;" id="filter" name="filter">
+
+<div class="row">
+
+    <div class="tab" role="tabpanel">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist " id="PanelId">
+            @*<li role="presentation" class="active"><a href="#Submissions" aria-controls="home" role="tab" data-toggle="tab">Submissions</a></li>
+                <li role="presentation"><a href="#Interviews" aria-controls="profile" role="tab" data-toggle="tab">Interviews</a></li>
+                <li role="presentation"><a href="#Hires" aria-controls="messages" role="tab" data-toggle="tab">Hires</a></li>
+
+                <li role="presentation"><a href="#InCallConnected" aria-controls="messages" role="tab" data-toggle="tab">Call Connected(In)</a></li>
+                <li role="presentation"><a href="#InVoiceMessages" aria-controls="messages" role="tab" data-toggle="tab">Voice Messages(In)</a></li>*@
+            @* <li role="presentation"><a href="#InTotalDuration" aria-controls="messages" role="tab" data-toggle="tab">Total Duration(In)</a></li>*@
+
+            @*<li role="presentation"><a href="#OutCallConnected" aria-controls="messages" role="tab" data-toggle="tab">Call Connected(Out)</a></li>
+                <li role="presentation"><a href="#OutVoiceMessages" aria-controls="messages" role="tab" data-toggle="tab">Voice Messages(Out)</a></li>
+                <li role="presentation"><a href="#OutTotalDuration" aria-controls="messages" role="tab" data-toggle="tab">Total Duration(Out)</a></li>*@
+        </ul>
+    </div>
+</div>
+<div class="tab-content clearfix textCapitalize">
+    @if (Model.Count() != 0)
+    {
+        <div class="tab-pane active table-responsive" id="Submissions">
+            <div style="width: 100%; ">
+                <div style="padding: 20px;font-size: smaller;" class="">
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label> Date</label></div>
+                        <div style="width:3%" class="column "></div>
+                        @foreach (var header in Model.FirstOrDefault().Month)
+                        {
+                            float width = (float)73 / (float)Model.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.Day</label>
+                            </div>
+                        }
+                        @*<div style="width:4%" class="column">&nbsp;</div>*@
+                    </div>
+                    <div class="row Tableheader">
+                        <div class="column Col1Width"><label>Day</label></div>
+                        <div style="width:3%" class="column "><label>Tar.</label></div>
+                        @foreach (var header in Model.FirstOrDefault().Month)
+                        {
+                            float width = (float)73 / (float)Model.FirstOrDefault().Month.Count();
+                            <div style="width:@width%" class="column">
+                                <label> @header.date.DayOfWeek.ToString().Substring(0, 3)</label>
+                            </div>
+                        }
+                        @*<div style="width:4%" class="column"><label>Total</label></div>*@
+                    </div>
+
+                    @ShowSubmissionTree(Model.Where(s => s.EmployeeLvl == 0), "SubTable", 0)
+                    @helper ShowSubmissionTree(IEnumerable<RIC.Models.TeamDashboardListModel> foos, string id, int padding)
+                    {
+                        float width = (float)73 / (float)Model.FirstOrDefault().Month.Count();
+                        string paddingStyle = "padding-left:" + padding + "px";
+                        <div class="collapse " id="@id">
+                            @foreach (var item in foos)
+                            {
+
+                                //var items = Model.Where(s => s.MgrCd + "T" == item.EmpCd
+                                //    && (s.MgrName == s.Job_Diva_User_Name ? s.MgrName == item.Job_Diva_User_Name && s.Id == item.Id : s.MgrName == item.Job_Diva_User_Name)
+                                //    ).ToList();
+                                var empID = item.EmpCd.Substring(item.EmpCd.Length - 1) == "T" ? item.EmpCd.Remove(item.EmpCd.Length - 1) : item.EmpCd;
+                                var items = Model.Where(s => s.MgrCd + "T" == item.EmpCd && s.Id.Contains(item.Id));
+
+                                if (items.Count() > 0)
+                                {
+                                    string targetID = "Submission_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer" class="fas fa-user-plus spanClick" data-toggle="collapse" data-target="#@targetID"></a>
+                                                @Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+
+
+
+                                            </label>
+
+                                        </div>
+                                        <div style="width:3%" class="column TableTargetStyle">
+                                            @Math.Round(item.Submissions_Target, 1)
+                                        </div>
+                                        @foreach (var submissionData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @if (submissionData.Submission != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID"
+                                                       data-FromDate="@submissionData.date" data-ToDate="@submissionData.date" data-IndividualRecord="No">@submissionData.Submission</a>
+                                                }
+                                                else
+                                                {
+                                                  
+                                                    @submissionData.Submission
+                                                }
+                                            </div>
+                                        }
+                                        @*<div style="width:4%" class="column tableTotalStyle">
+                                                @if (item.Submission_Month != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID"
+                                                       data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-IndividualRecord="No">
+                                                        @item.Submission_Month
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    @item.Submission_Month
+                                                }
+                                            </div>*@
+                                    </div>
+                                    @ShowSubmissionTree(items, targetID, padding + 15)
+
+                                }
+
+
+                                else
+                                {
+
+                                    string targetID = "Submission_" + item.EmpCd + "_" + item.Id;
+                                    <div class="row">
+                                        <div class="column Col1Width Tableheader">
+                                            <label style="@paddingStyle">
+                                                <a style="cursor:pointer" class="fas fa-user-plus spanClick" data-toggle="collapse" data-target="#@targetID"></a>
+                                                @*@Html.DisplayFor(modelItem => item.Job_Diva_User_Name)
+                                                @Html.ActionLink("Dashboard", "Index")*@
+                                                @Html.ActionLink( item.Job_Diva_User_Name, "Index", "Accesslog")
+
+
+
+                                            </label>
+
+                                        </div>
+                                        <div style="width:3%" class="column TableTargetStyle">
+                                            @Math.Round(item.Submissions_Target, 1)
+                                        </div>+
+                                        @foreach (var submissionData in item.Month)
+                                        {
+                                            <div style="width:@width%" class="column tableRowStyle1">
+                                                @if (submissionData.Submission != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID"
+                                                       data-FromDate="@submissionData.date" data-ToDate="@submissionData.date" data-IndividualRecord="No">@submissionData.Submission</a>
+                                                }
+                                                else
+                                                {
+                                                    <div>
+                                                        9:00am - 6:00pm
+                                                    </div>
+                                                    // @submissionData.Submission
+                                                }
+                                            </div>
+                                        }
+                                        @*<div style="width:4%" class="column tableTotalStyle">
+                                                @if (item.Submission_Month != 0 && empID != "Total")
+                                                {
+                                                    <a href="javascript:void(0);" class="linkColor anchorDetail linkStyle" data-Jr="Submission" data-empCD="@empID"
+                                                       data-FromDate="@item.FromDate" data-ToDate="@item.ToDate" data-IndividualRecord="No">
+                                                        @item.Submission_Month
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    @item.Submission_Month
+                                                }
+                                            </div>*@
+                                    </div>
+
+                                    @ShowSubmissionTree(items, targetID, padding + 15)
+
+
+
+
+                                }
+                            }
+                            </div>
+
+                        }
+                        </div>
+                    </div>
+                </div>
+                    }
+                </div>
+                <script>
+    //toggle the first row.
+    $('#SubTable').toggle();
+    $('#SubTable1').toggle();
+    $('#InterviewTable').toggle();
+    $('#HiresTable').toggle();
+    $('#InCallConnectedTable').toggle();
+    $('#InVoiceConnectedTable').toggle();
+    $('#OutCallConnectedTable').toggle();
+    $('#OutVoiceMessagesTable').toggle();
+    $('#InDurationTable').toggle();
+    $('#OutDurationTable').toggle();
+    //change the toggle icon.
+    $('.spanClick').click(function () {
+        var cs = $(this).attr("class");
+        //console.log(cs);
+        if (cs.indexOf('fas fa-user-plus') != -1)
+        {
+            $(this).removeClass('fas fa-user-plus').addClass('fas fa-user-minus');
+            if ($("#filter").val().trim() != "") {
+                var teamFilterId = $(this).attr("data-target");
+                if ($(teamFilterId).find(".collapse").length <= 1) {
+                    $(teamFilterId).find(".row").show();
+                }
+            }
+
+        }
+        else
+        {
+            $(this).removeClass('fas fa-user-minus').addClass('fas fa-user-plus');
+
+        }
+    });
+    var TeamDetailPostBackURL = '@Url.Action("ViewDetailsPopup")';
+     // $(function () {
+     $(".anchorDetail").click(function () {
+         // var empCD = $("#HdnEmpCD").val();
+         var $buttonClicked = $(this);
+         var fromDate = $buttonClicked.attr('data-FromDate');
+         var toDate = $buttonClicked.attr('data-ToDate');
+         var jr = $buttonClicked.attr('data-Jr');
+         var empCD = $buttonClicked.attr('data-empCD');
+         var getIndividualRecord = $buttonClicked.attr('data-IndividualRecord');
+         var options = { "backdrop": "static", keyboard: true };
+         $.ajax({
+             type: "GET",
+             url: TeamDetailPostBackURL,
+             contentType: "application/json; charset=utf-8",
+             data: { "fromDate": fromDate, "toDate": toDate, "data_Jr": jr, "empCd": empCD, "getIndividualRecord": getIndividualRecord },
+             datatype: "json",
+             success: function (data) {
+                 $('#myModalContent').html(data);
+                 $('#myModal').modal(options);
+                 $('#myModal').modal('show');
+             },
+             error: function () {
+             }
+         });
+     });
+
+     $(document).ready(function () {
+         getId('#SubTable');
+          getId('#SubTable1');
+
+         var $currentTabId = '#' + $(".active .collapse:eq(0)").attr("id");
+         $("#PanelId li a").click(function () {
+
+             getId('#' + $($(this).attr("href")).find(".collapse:eq(0)").attr("id"));
+             $currentTabId = '#' + $($(this).attr("href")).find(".collapse:eq(0)").attr("id");
+             $("#filter").keyup();
+         });
+
+         $("#filter").on("keyup", function () {
+             var $getCurrentTabId = '#' + $(".active .collapse:eq(0)").attr("id");
+             if ($getCurrentTabId != $currentTabId) {
+                 $getCurrentTabId = $currentTabId;
+             }
+             var value = $(this).val().trim().toLowerCase();
+             var array1 = new Array();
+             if (value.length > 0) {
+                 $($getCurrentTabId).find(".collapse").addClass("in");
+                 $($getCurrentTabId).find(".spanClick:gt(0)").removeClass('fa-user-plus').addClass('fas fa-user-minus');
+             }
+             else {
+                 $($getCurrentTabId).find(".collapse").removeClass("in");
+                 getId($getCurrentTabId);
+                 $($getCurrentTabId).find(".collapse:gt(0)").removeClass("in");
+                 $($getCurrentTabId).find(".spanClick:gt(0)").removeClass('fa-user-minus').addClass('fa-user-plus');
+             }
+             $($getCurrentTabId).find(".row").filter(function () {
+                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                 if ($(this).text().toLowerCase().indexOf(value) > -1) {
+                     array1 = new Array();
+                     array1.push($(this).parent().attr("id"));
+                 }
+             });
+             if (value.length > 0) {
+                 if (array1.length > 0) {
+                     for (var i = 0; i < array1.length; i++) {
+                         getParentId(array1[i]);
+                     }
+                 }
+                 else if (array1.length == 0) {
+                     getParentId(array1[0]);
+                 }
+             }
+         });
+
+
+
+     });
+
+
+
+
+     function getId(PanelId) {
+         $(PanelId).find(".collapse:eq(0)").addClass("in");
+         $(PanelId).find(".spanClick:eq(0)").removeClass('fas fa-user-plus').addClass('fas fa-user-minus');
+     }
+
+    function getParentId(parentId) {
+        var $generateId = '#' + parentId;
+        $($generateId).prev().show();
+        if ($($generateId).parent().attr("id") != "" || $($generateId).parent().attr("id") != undefined)
+            getParentId($($generateId).parent().attr("id"));
+    }
+
+
+
+
+                </script>
